@@ -1,22 +1,98 @@
 [versions]
 agp = "8.5.2"
+firebaseCrashlyticsGradle = "3.0.2"
+googleServices = "4.4.2"
+gradle = "8.5.2"
 kotlin = "1.9.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
+library = "5.12.4"
 material = "1.12.0"
+constraintlayout = "2.2.0"
+navigation = "2.8.4"
+firebaseBom = "33.6.0"
+lifecycle = "2.8.7"
+coroutines = "1.8.1"
+lottie = "6.5.2"
+stetho = "1.5.1"
+hilt = "2.52"
+moshi = "1.15.0"
+okhttp = "4.12.0"
+retrofit = "2.11.0"
+symbolProcessingGradlePlugin = "2.0.21-1.0.25"
+timber = "5.0.1"
+room = "2.6.1"
+billing = "7.1.1"
+fragmentKtx = "1.8.5"
+activityKtx = "1.9.3"
+playReviewKtx = "2.0.2"
+databindingRuntime = "8.7.3"
+gsonVersion = "2.10.1"
+retrofitConvert = "2.11.0"
+itext7 = "7.1.15"
+firebaseConfigKtx = "22.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
+google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+library = { module = "io.branch.sdk.android:library", version.ref = "library" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-
-[plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
+navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
+stetho-okhttp3 = { group = "com.facebook.stetho", name = "stetho-okhttp3", version.ref = "stetho" }
+hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hiltCompiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
+moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
+symbol-processing-gradle-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "symbolProcessingGradlePlugin" }
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version = "4.16.0" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
+billing-ktx = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billing" }
+fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
+activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
+play-review-ktx = { group = "com.google.android.play", name = "review-ktx", version.ref = "playReviewKtx" }
+androidx-databinding-runtime = { group = "androidx.databinding", name = "databinding-runtime", version.ref = "databindingRuntime" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
+converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitConvert" }
+blurkit = { group = "jp.wasabeef", name = "blurry", version = "4.0.1" }
+dotsindicator = { group = "com.tbuonomo", name = "dotsindicator", version = "4.2" }
+mlkit-text-recognition = { group = "com.google.mlkit", name = "text-recognition", version = "16.0.1" }
+camera-core = { group = "androidx.camera", name = "camera-core", version = "1.4.0" }
+camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version = "1.4.0" }
+camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version = "1.4.0" }
+camera-view = { group = "androidx.camera", name = "camera-view", version = "1.4.0" }
+ml-kit-doc = { group = "com.google.android.gms", name = "play-services-mlkit-document-scanner", version = "16.0.0-beta1" }
+dropbox-core-sdk = { group = "com.dropbox.core", name = "dropbox-core-sdk", version = "5.1.1" }
+revenuecat = { group = "com.revenuecat.purchases", name = "purchases", version = "7.0.0" }
+sentry = { group = "io.sentry", name = "sentry-android", version = "7.18.1" }
+firebase-config-ktx = { group = "com.google.firebase", name = "firebase-config-ktx", version.ref = "firebaseConfigKtx" }
+swipe = { group = "com.github.chthai64", name = "SwipeRevealLayout", version = "1.4.0" }
 
