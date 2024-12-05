@@ -1,8 +1,10 @@
 package com.codepad.foodai
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import com.codepad.foodai.helpers.FirebaseRemoteConfigManager
+import com.codepad.foodai.helpers.LocaleHelper
 import com.codepad.foodai.helpers.ModelPreferencesManager
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
@@ -24,6 +26,10 @@ class FoodAIApplication : Application() {
 
     private fun initModelPrefManager() {
         ModelPreferencesManager.with(this)
+    }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(LocaleHelper.setLocale(base, LocaleHelper.getLanguage(base)))
     }
 }
 
