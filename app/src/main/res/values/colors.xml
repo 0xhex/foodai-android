@@ -9,4 +9,6 @@
     <color name="custom_white">#FFFFFF</color>
     <color name="custom_dark_gray">#2C2C2C</color>
     <color name="custom_light_gray">#F5F5F5</color>
+    <color name="rounded_snack_bg">#ffffff</color>
+
 </resources>
