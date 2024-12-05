@@ -12,7 +12,7 @@ plugins {
 
 android {
     namespace = "com.codepad.foodai"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.codepad.foodai"
