@@ -11,7 +11,6 @@ import com.codepad.foodai.ui.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SplashFragment: BaseFragment<SplashFragmentBinding>() {
