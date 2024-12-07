@@ -12,9 +12,10 @@ import com.codepad.foodai.helpers.ModelPreferencesManager
 import com.codepad.foodai.helpers.UserSession
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel constructor(
+class SplashViewModel @Inject constructor(
     private val getUserDataUseCase: GetUserDataUseCase,
 ) : ViewModel() {
 
