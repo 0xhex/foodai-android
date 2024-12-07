@@ -1,7 +1,6 @@
 package com.codepad.foodai.ui.onboarding
 
-import android.os.Bundle
-import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.airbnb.lottie.LottieAnimationView
 import com.codepad.foodai.R
@@ -13,6 +12,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OnboardingFragment : BaseFragment<OnboardingFragmentBinding>() {
+    private val viewModel: OnboardingViewModel by viewModels()
+
     private lateinit var viewPager: ViewPager2
     private lateinit var nextButton: MaterialButton
     private lateinit var lottieAnimation: LottieAnimationView
@@ -36,10 +37,12 @@ class OnboardingFragment : BaseFragment<OnboardingFragmentBinding>() {
                         lottieAnimation.setAnimation(R.raw.scan)
                         nextButton.setText(R.string.next)
                     }
+
                     1 -> {
                         lottieAnimation.setAnimation(R.raw.food_calorie)
                         nextButton.setText(R.string.next)
                     }
+
                     2 -> {
                         lottieAnimation.setAnimation(R.raw.slim_figure)
                         nextButton.setText(R.string.get_started)
