@@ -21,7 +21,7 @@ class SplashViewModel constructor(
     private val _userDataResponse = MutableLiveData<User?>()
     val userDataResponse: LiveData<User?> get() = _userDataResponse
 
-    fun checkOnboardingAndFetchUserData(isUserPremium: Boolean) {
+    fun checkOnboardingAndFetchUserData() {
         if (isOnboardingSkipped()) {
             fetchUserData()
         } else {
