@@ -45,6 +45,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        dataBinding true
+    }
 }
 
 dependencies {
@@ -114,7 +118,7 @@ dependencies {
     implementation(libs.mlkit.text.recognition)
     implementation(libs.ml.kit.doc)
     implementation(libs.revenuecat)
-    implementation(libs.sentry)
+    // TODO - Reenable with manifest configurations  - implementation(libs.sentry)
     implementation(libs.swipe)
 }
 

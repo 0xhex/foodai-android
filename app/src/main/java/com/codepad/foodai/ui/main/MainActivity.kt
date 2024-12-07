@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.ActivityMainBinding
+import com.codepad.foodai.helpers.LocaleHelper
 import com.codepad.foodai.ui.core.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +20,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun attachBaseContext(base: Context) {
-        // TODO: super.attachBaseContext(LocaleHelper.setLocale(base, LocaleHelper.getLanguage(base)))
+        super.attachBaseContext(LocaleHelper.setLocale(base, LocaleHelper.getLanguage(base)))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
