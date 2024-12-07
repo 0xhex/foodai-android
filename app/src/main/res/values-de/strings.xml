@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="food_ai_people">  ...   Über 1000 Food-AI-Nutzer</string>
+    <string name="quote">„%@“</string>
+    <string name="weight_speed_per_week">%@ Gewichtsgeschwindigkeit pro Woche</string>
+    <string name="duration">⏱ Dauer</string>
+    <string name="workouts_per_week">Einige Workouts pro Woche</string>
+    <string name="access_unlimited">Unbegrenzter Zugriff</string>
+    <string name="calorie_tracking">Genaues Kalorienzählen hat mir geholfen, effizient Gewicht zu verlieren. Ich empfehle Food AI jedem, der seine Fitnessziele ernst nimmt.</string>
+    <string name="weight_gain_goals">Habe meine Ziele zur Gewichtszunahme durch genaues Makro- und Mikronährstoff-Tracking erreicht. Food AI ist unverzichtbar!</string>
+    <string name="add_exercise">Übung hinzufügen</string>
+    <string name="adjust_goals">Ziele anpassen</string>
+    <string name="advanced_nutrition_tracking">Fortgeschrittenes Ernährungstracking</string>
+    <string name="age">Alter</string>
+    <string name="ai_solutions">KI-Lösungen</string>
+    <string name="Analytics">Analytik</string>
+    <string name="Analyzing_food">Analysiere Lebensmittel...</string>
+    <string name="Apple_Health">Apple Gesundheit</string>
+    <string name="Applying_BMR_formula">Anwenden der BMR-Formel...</string>
+    <string name="Delete_account_confirmation">Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Diese Aktion ist unwiderruflich und entfernt dauerhaft alle Ihre Daten aus unserem System.</string>
+    <string name="Authorization_failed">Autorisierung fehlgeschlagen</string>
+    <string name="Authorize">Autorisieren</string>
+    <string name="Authorize_Apple_Health">Apple Gesundheit autorisieren</string>
+    <string name="Billed_every_month">Monatliche Abrechnung</string>
+    <string name="Billed_every_week">Wöchentliche Abrechnung</string>
+    <string name="Billed_every_year">Jährliche Abrechnung</string>
+    <string name="BMI_guidelines">BMI-Kategorien und Berechnungen basieren auf Richtlinien der Weltgesundheitsorganisation.</string>
+    <string name="Boost_energy_mood">Meine Energie und Stimmung steigern</string>
+    <string name="Busy_schedule">Voller Terminkalender</string>
+    <string name="Calculating_nutrients">Berechne Nährstoffe...</string>
+    <string name="Calories_burned">Verbrannte Kalorien</string>
+    <string name="Calories_left">Verbleibende Kalorien</string>
+    <string name="Camera_scan">Kamera-Scan</string>
+    <string name="Cancel">Abbrechen</string>
+    <string name="carbs_left">Verbleibende Kohlenhydrate</string>
+    <string name="choose_your_gender">Wählen Sie Ihr Geschlecht</string>
+    <string name="citations">Zitate</string>
+    <string name="classic">Klassisch</string>
+    <string name="completed">Abgeschlossen %%%lld</string>
+    <string name="confirm_account_deletion">Kontolöschung bestätigen</string>
+    <string name="congratulations_custom_plan">Glückwunsch \nIhr individueller Plan ist fertig!</string>
+    <string name="connect_apple_health">Verbinden Sie Apple Health, um Ihre Schritte zu verfolgen.</string>
+    <string name="connect_with_apple_health">Mit Apple Gesundheit verbinden</string>
+    <string name="connected">Verbunden</string>
+    <string name="continuee">Weiter</string>
+    <string name="create_recipe">Rezept Erstellen</string>
+    <string name="created_by_ai">Erstellt von KI</string>
+    <string name="current_weight">Aktuelles Gewicht</string>
+    <string name="custom_duration">Benutzerdefinierte Dauer</string>
+    <string name="customization">Anpassung</string>
+    <string name="customized_recipes">Individuell für jeden Benutzer erstellte Rezepte</string>
+    <string name="daily_food_recipes">Tägliche Lebensmittelrezepte</string>
+    <string name="daily_recommendation">Tägliche Empfehlung</string>
+    <string name="daily_score">Tägliche Punktzahl</string>
+    <string name="date" translatable="false">Datum</string>
+    <string name="day" translatable="false">Tag</string>
+    <string name="day_streak" translatable="false">Tage in Folge: %lld</string>
+    <string name="dedicated_athlete" translatable="false">Engagierter Athlet</string>
+    <string name="delete_account" translatable="false">Konto löschen</string>
+    <string name="delete_exercise" translatable="false">Übung löschen</string>
+    <string name="delete_food" translatable="false">Lebensmittel löschen</string>
+    <string name="describe_exercise" translatable="false">Übung beschreiben</string>
+    <string name="describe_what_needs_to_be_fixed" translatable="false">Beschreiben Sie, was behoben werden muss</string>
+    <string name="describe_workout_time_intensity_etc" translatable="false">Beschreiben Sie Trainingszeit, Intensität usw.</string>
+    <string name="do_you_follow_a_specific_diet" translatable="false">Folgen Sie einer speziellen Diät?</string>
+    <string name="done" translatable="false">Fertig</string>
+    <string name="drag_over_the_chart_to_see_weight_details" translatable="false">Über das Diagramm ziehen, um Gewichtsdetails zu sehen</string>
+    <string name="eat_and_live_healthier" translatable="false">Gesünder essen und leben</string>
+    <string name="edit_weight" translatable="false">Gewicht bearbeiten</string>
+    <string name="edit_weight_goal" translatable="false">Gewichtsziel bearbeiten</string>
+    <string name="enjoy_unlimited_features_with_this_plan" translatable="false">Genießen Sie unbegrenzte Funktionen mit diesem Plan.</string>
+    <string name="enter_value" translatable="false">Geben Sie %@ ein</string>
+    <string name="estimating_your_metabolic_age">Schätze Ihr metabolisches Alter...</string>
+    <string name="every_day_matters">Jeder Tag zählt, um Ihr Ziel zu erreichen!</string>
+    <string name="example_rowed">Beispiel: 30 Min. gerudert, Arme und Rücken müde</string>
+    <string name="example_frappuccino">Beispiel: Dem Frappuccino fehlt das Karamell-Topping und die Schlagsahne.</string>
+    <string name="experience_food_ai">Erleben Sie die volle Leistung von Food-AI</string>
+    <string name="fat_left">Verbleibendes Fett</string>
+    <string name="feel_better">Mich besser in meinem Körper fühlen</string>
+    <string name="female">Weiblich</string>
+    <string name="finalizing_results">Schließe Ergebnisse ab...</string>
+    <string name="finalizing">Abschließen...</string>
+    <string name="fix_result">Ergebnis korrigieren</string>
+    <string name="food_ai">Food AI</string>
+    <string name="food_ai_tracking">Food AI hat das Tracking meiner täglichen Kalorien und Makros einfach gemacht, was zu einer effektiven Gewichtskontrolle führte.</string>
+    <string name="food_ai_for_you">Food AI wurde für Menschen wie Sie gemacht</string>
+    <string name="food_ai_comprehensive_tracking">Das umfassende Ernährungstracking von Food AI ermöglichte es mir, meine Aufnahme genau zu überwachen, was zu erheblichem Gewichtsverlust führte.</string>
+    <string name="food_ai_scanner">food-ai-scanner.com</string>
+    <string name="gain_weight">Zunehmen</string>
+    <string name="gained_10lbs">Ich habe 10 Pfund Muskelmasse zugelegt, indem ich den maßgeschneiderten Ernährungsplänen folgte. Die Mikronährstoff-Tracking-Funktion ist ausgezeichnet!</string>
+    <string name="gaining_muscle_breeze">Muskelaufbau war ein Kinderspiel dank des detaillierten Mikronährstoff-Trackings. Food AI ist ein Wendepunkt!</string>
+    <string name="gallery">Galerie</string>
+    <string name="get_in_depth_info">Erhalten Sie detaillierte Informationen über den Nährwertgehalt Ihrer Mahlzeiten.</string>
+    <string name="get_started">LOSLEGEN</string>
+    <string name="give_us_rating">Geben Sie uns eine Bewertung</string>
+    <string name="goal_progress">Ziel Fortschritt</string>
+    <string name="health_access_denied">Gesundheitszugriff verweigert</string>
+    <string name="health_integration">Gesundheitsintegration</string>
+    <string name="health_score">Gesundheitswert</string>
+    <string name="healthy">Gesund</string>
+    <string name="height">Größe</string>
+    <string name="height_and_weight">Größe &amp; Gewicht</string>
+    <string name="hello_world">Hallo, Welt!</string>
+    <string name="home">Startseite</string>
+    <string name="how_fast_goal">Wie schnell möchten Sie Ihr Ziel erreichen?</string>
+    <string name="how_many_workouts">Wie viele Workouts machen Sie pro Woche?</string>
+    <string name="lost_15lbs">Ich habe in 2 Monaten 15 Pfund verloren! Das Tracking meiner Kalorien und Makros mit Food AI machte es so einfach, auf Kurs zu bleiben.</string>
+    <string name="imperial">Imperial</string>
+    <string name="ingredients">Zutaten</string>
+    <string name="lack_of_consistency">Mangel an Konsistenz</string>
+    <string name="lack_of_meal_inspiration">Mangel an Mahlzeiteninspiration</string>
+    <string name="lack_of_support">Mangel an Unterstützung</string>
+    <string name="learn_more_bmi">Erfahren Sie mehr über den BMI von der WHO</string>
+    <string name="legal">Rechtliches</string>
+    <string name="limited_time_offer">Zeitlich begrenztes Angebot: 3-tägige kostenlose Testversion ausprobieren!</string>
+    <string name="loading_subscription_options">Abonnementoptionen werden geladen...</string>
+    <string name="loading">Lädt...</string>
+    <string name="log_exercise">Übung protokollieren</string>
+    <string name="lose_weight">Abnehmen</string>
+    <string name="lost_20lbs">Ich habe in 3 Monaten 20 Pfund verloren, indem ich meine Nahrungsaufnahme mit Food AI sorgfältig verfolgte. Die Erkenntnisse der App sind unbezahlbar.</string>
+    <string name="maintain">Beibehalten</string>
+    <string name="male">Männlich</string>
+    <string name="metric">Metrisch</string>
+    <string name="mock_data">Testdaten</string>
+    <string name="monthly">Monatlich</string>
+    <string name="most_popular">AM BELIEBTESTEN</string>
+    <string name="na">N/V</string>
+    <string name="next">WEITER</string>
+    <string name="no">Nein</string>
+    <string name="no_ingredients_available">Keine Zutaten verfügbar</string>
+    <string name="no_reviews_available">Keine Bewertungen verfügbar</string>
+    <string name="no_screenshot_available">Kein Screenshot verfügbar.</string>
+    <string name="no_subscription_options_available">Derzeit sind keine Abonnementoptionen verfügbar.</string>
+    <string name="not_connected">Nicht verbunden</string>
+    <string name="obese">Fettleibig</string>
+    <string name="ok">OK</string>
+    <string name="on_analytics_section">Im Analysebereich können Sie Ihre Fortschritte mit Gewichtstagebüchern und Grafiken verfolgen.</string>
+    <string name="open_settings">Einstellungen öffnen</string>
+    <string name="overview">Übersicht</string>
+    <string name="overweight">Übergewicht</string>
+    <string name="personal_details">Persönliche Daten</string>
+    <string name="personal_details_title">Persönliche Daten</string>
+    <string name="pescatarian">Pescatarian</string>
+    <string name="please_enable_health_permissions_in_settings_to_allow_the_app_to_access_your_step_count_data">
+        Bitte aktivieren Sie in den Einstellungen die Gesundheitsberechtigungen, damit die App auf Ihre Schrittzähldaten zugreifen kann.
+    </string>
+    <string name="please_enable_health_permissions_in_settings">
+        Bitte aktivieren Sie die Gesundheitsberechtigungen in den Einstellungen.
+    </string>
+    <string name="please_select_a_accomplish">Bitte wählen Sie eine Leistung aus!</string>
+    <string name="please_select_a_birth_date">Bitte wählen Sie ein Geburtsdatum aus!</string>
+    <string name="please_select_a_desired_weight">Bitte wählen Sie ein gewünschtes Gewicht aus!</string>
+    <string name="please_select_a_diet">Bitte wählen Sie eine Diät aus!</string>
+    <string name="please_select_a_gender">Bitte wählen Sie ein Geschlecht aus!</string>
+    <string name="please_select_a_goal">Bitte wählen Sie ein Ziel aus!</string>
+    <string name="please_select_a_reaching_goal">Bitte wählen Sie ein zu erreichendes Ziel aus!</string>
+    <string name="please_select_a_workout">Bitte wählen Sie ein Training aus!</string>
+    <string name="please_select_height_and_weight">Bitte wählen Sie Größe und Gewicht aus!</string>
+    <string name="privacy_policy">Datenschutzrichtlinie</string>
+    <string name="processing_diet_type">Verarbeite Diättyp</string>
+    <string name="processing_your_food_edits">Verarbeite Ihre Lebensmitteländerungen...</string>
+    <string name="processing">Verarbeitung...</string>
+    <string name="protein_left">Verbleibendes Eiweiß</string>
+    <string name="purchase_successful">Kauf erfolgreich!</string>
+    <string name="quick_calorie_tracking">Schnelles Kalorientracking</string>
+    <string name="reach_your_health_goals">Erreichen Sie Ihre Gesundheitsziele</string>
+    <string name="remember_to_update_this_at_least_once_a_week_so_we_can_adjust_your_plan_to_hit_your_goal">
+        Denken Sie daran, dies mindestens einmal pro Woche zu aktualisieren, damit wir Ihren Plan anpassen können, um Ihr Ziel zu erreichen.
+    </string>
+    <string name="restore_purchases">Käufe wiederherstellen</string>
+    <string name="revert">Zurücksetzen</string>
+    <string name="run">Laufen</string>
+    <string name="save">Speichern</string>
+    <string name="save_changes">ÄNDERUNGEN SPEICHERN</string>
+    <string name="scan_food_and_get_the_macro_micro_details_of_your_food">
+        Scannen Sie Lebensmittel und erhalten Sie die Makro- und Mikronährstoffdetails Ihrer Nahrung
+    </string>
+    <string name="select_an_option">Wählen Sie eine Option</string>
+    <string name="set_birthday">Geburtstag festlegen</string>
+    <string name="set_gender">Geschlecht festlegen</string>
+    <string name="set_height_and_weight">Größe und Gewicht festlegen</string>
+    <string name="set_intensity">Intensität festlegen</string>
+    <string name="settings">Einstellungen</string>
+    <string name="start_tracking_meals">Beginnen Sie damit, die heutigen Mahlzeiten zu verfolgen, indem Sie ein schnelles Foto machen.</string>
+    <string name="stay_motivated">Bleiben Sie motiviert und konsequent</string>
+    <string name="step">Schritt</string>
+    <string name="step_count">Schrittzahl</string>
+    <string name="step_data_not_found">Schrittdaten nicht gefunden.</string>
+    <string name="steps_today">Schritte heute</string>
+    <string name="support_email">Support-E-Mail</string>
+    <string name="fast_photo_of_food">Machen Sie ein schnelles Foto Ihres Essens und lassen Sie unsere App das Zählen übernehmen.</string>
+    <string name="terms_and_conditions">Geschäftsbedingungen</string>
+    <string name="terms_of_use">Nutzungsbedingungen</string>
+    <string name="thank_you_for_purchase">Vielen Dank für Ihren Kauf. Sie haben alle Premium-Funktionen freigeschaltet.</string>
+    <string name="macros_breakdown_feedback">Die Makro-Aufschlüsselung ist fantastisch. Ich habe es geschafft, gesund zuzunehmen, indem ich den Empfehlungen der App folgte.</string>
+    <string name="calorie_intake_plan">Dies hilft uns, einen Plan für Ihre Kalorienaufnahme zu erstellen.</string>
+    <string name="calibration_for_custom_plan">Dies wird verwendet, um Ihren individuellen Plan zu kalibrieren</string>
+    <string name="time_range">Zeitraum</string>
+    <string name="track_progress">Verfolgen Sie Ihren Fortschritt</string>
+    <string name="tracking_easy">Das Tracking meiner Kalorien und Makros war noch nie so einfach. Food AI half mir, meine Gewichtsabnahmeziele nahtlos zu erreichen.</string>
+    <string name="try_free">Testen Sie 3 Tage KOSTENLOS</string>
+    <string name="unable_to_access_healthkit">HealthKit-Daten können nicht abgerufen werden.</string>
+    <string name="unable_to_authorize_apple_health_access">Zugriff auf Apple Health konnte nicht autorisiert werden.</string>
+    <string name="underweight">Untergewicht</string>
+    <string name="unhealthy_eating_habits">Ungesunde Essgewohnheiten</string>
+    <string name="unlock_all_features">Alle Funktionen freischalten</string>
+    <string name="unlock_unlimited_access_and_exclusive_features">Schalten Sie unbegrenzten Zugriff und exklusive Funktionen frei, indem Sie auf Premium upgraden. Genießen Sie die App weiterhin ohne Einschränkungen!</string>
+    <string name="update">Aktualisieren</string>
+    <string name="update_exercise">Übung aktualisieren</string>
+    <string name="update_your_weight">Aktualisieren Sie Ihr Gewicht</string>
+    <string name="updating_database">Aktualisiere Datenbank...</string>
+    <string name="upgrade">UPGRADE</string>
+    <string name="upgrade_to_premium_and_enjoy_all_features">Upgraden Sie auf Premium und genießen Sie alle Funktionen ohne Einschränkungen.</string>
+    <string name="uploading_image">Lade Bild hoch...</string>
+    <string name="uploading">Hochladen...</string>
+    <string name="vegan">Vegan</string>
+    <string name="vegetarian">Vegetarisch</string>
+    <string name="view_recipe">Rezept ansehen</string>
+    <string name="we_use_your_step_count_data_from_apple_health">Wir verwenden Ihre Schrittzähldaten von Apple Health, um personalisierte Einblicke zu bieten</string>
+    <string name="step_count_data">Wir verwenden Ihre Schrittzähldaten von Apple Health, um personalisierte Einblicke zu bieten und Ihnen zu helfen, Ihre Fitnessziele zu erreichen.</string>
+    <string name="notify_when_done">Wir benachrichtigen Sie, wenn wir fertig sind!</string>
+    <string name="setting_up">Wir richten alles für Sie ein</string>
+    <string name="weekly">Wöchentlich</string>
+    <string name="weight">Gewicht</string>
+    <string name="weight_progress_displayed">Gewichtsfortschritt wird hier angezeigt!</string>
+    <string name="weight_format">Gewicht: %1$lld kg am %2$@</string>
+    <string name="goal_question">Was hindert Sie daran, Ihre Ziele zu erreichen?</string>
+    <string name="desired_weight">Was ist Ihr Wunschgewicht?</string>
+    <string name="goal">Was ist Ihr Ziel?</string>
+    <string name="accomplish">Was möchten Sie erreichen?</string>
+    <string name="birth_date">Wann sind Sie geboren?</string>
+    <string name="workouts_now_and_then">Ab und zu Workouts</string>
+    <string name="yearly">Jährlich</string>
+    <string name="yes">Ja</string>
+    <string name="edit_anytime">Sie können dies jederzeit bearbeiten</string>
+    <string name="unsaved_changes">Sie haben ungespeicherte Änderungen. Möchten Sie die Änderungen speichern?</string>
+    <string name="no_food_uploaded">Sie haben keine Lebensmittel hochgeladen</string>
+    <string name="daily_limit_reached">Sie haben das heutige Limit erreicht!</string>
+    <string name="bmi">Ihr BMI</string>
+    <string name="step_count_source">Ihre Schrittzähldaten stammen von Apple Health.</string>
+    <string name="weight_is">Ihr Gewicht ist</string>
+
+</resources>
