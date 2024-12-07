@@ -1,5 +1,7 @@
 package com.codepad.foodai.di
 
+import com.codepad.foodai.domain.api.RestApi
+import com.codepad.foodai.helpers.Constants
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -52,10 +54,9 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create(gson))
     }
 
-    // TODO
-    //@Provides
-    //fun provideRestApi(retrofit: Retrofit.Builder): RestApi {
-    //    return retrofit.baseUrl(Constants.URL.BASE_URL).build().create(RestApi::class.java)
-    //}
+    @Provides
+    fun provideRestApi(retrofit: Retrofit.Builder): RestApi {
+        return retrofit.baseUrl(Constants.URL.BASE_URL).build().create(RestApi::class.java)
+    }
 
 }
