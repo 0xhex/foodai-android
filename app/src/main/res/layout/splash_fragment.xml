@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="com.codepad.quicknotes.ui.splash.SplashViewModel" />
+        <import type="com.codepad.foodai.ui.splash.SplashViewModel" />
 
         <variable
             name="viewModel"
