@@ -10,5 +10,4 @@ interface RestApi {
     @GET("users/{userID}/data")
     suspend fun getUserData(@Path("userID") userID: String): APIResponse<User>
 
-
 }
