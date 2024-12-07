@@ -6,6 +6,7 @@ import android.util.Log
 import com.codepad.foodai.helpers.FirebaseRemoteConfigManager
 import com.codepad.foodai.helpers.LocaleHelper
 import com.codepad.foodai.helpers.ModelPreferencesManager
+import com.codepad.foodai.helpers.UserSession
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
@@ -15,6 +16,7 @@ class FoodAIApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         initModelPrefManager()
+        UserSession.init(this)
         FirebaseRemoteConfigManager.setUpRemoteConfig()
         if (BuildConfig.DEBUG) {
             plant(Timber.DebugTree())
