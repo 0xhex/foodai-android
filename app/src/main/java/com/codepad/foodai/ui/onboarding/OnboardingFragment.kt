@@ -60,5 +60,13 @@ class OnboardingFragment : BaseFragment<OnboardingFragmentBinding>() {
                 // Handle the end of the onboarding
             }
         }
+
+        viewModel.registerUserResponse.observe(viewLifecycleOwner) { registerUserResponse ->
+            if (registerUserResponse != null) {
+                // login revenue cat user
+            }
+        }
+
+        viewModel.registerUser()
     }
 }
