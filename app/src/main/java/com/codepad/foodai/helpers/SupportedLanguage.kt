@@ -1,6 +1,9 @@
 package com.codepad.foodai.helpers
 
 enum class SupportedLanguage(val code: String) {
+    GERMAN("de"),
+    ESPANOL("es"),
+    FRENCH("fr"),
     ENGLISH("en");
 
     companion object {
