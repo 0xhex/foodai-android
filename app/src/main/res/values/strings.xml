@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">FoodAI</string>
-    <string name="okey">Okey</string>
-    <string name="food_ai_people">  ...   1000+ Food AI people</string>
-    <string name="quote">“%@”</string>
-    <string name="weight_speed_per_week">%@ weight speed per week</string>
+    <string name="app_name" translatable="false">FoodAI</string>
+    <string name="okey" translatable="false">Okey</string>
+    <string name="food_ai_people">  …   1000+ Food AI people</string>
+    <string name="quote">“%%s”</string>
+    <string name="weight_speed_per_week">%%s weight speed per week</string>
     <string name="duration">⏱ Duration</string>
     <string name="workouts_per_week">A few workouts per week</string>
     <string name="access_unlimited">Access Unlimited</string>
@@ -15,9 +15,9 @@
     <string name="age">Age</string>
     <string name="ai_solutions">AI Solutions</string>
     <string name="analytics">Analytics</string>
-    <string name="analyzing_food">Analyzing food...</string>
+    <string name="analyzing_food">Analyzing food…</string>
     <string name="apple_health">Apple Health</string>
-    <string name="applying_bmr_formula">Applying BMR formula...</string>
+    <string name="applying_bmr_formula">Applying BMR formula…</string>
     <string name="delete_account_confirmation">Are you sure you want to delete your account? This action is irreversible and will permanently remove all your data from our system.</string>
     <string name="authorization_failed">Authorization Failed</string>
     <string name="authorize">Authorize</string>
@@ -25,14 +25,14 @@
     <string name="billed_every_month">Billed every month</string>
     <string name="billed_every_week">Billed every week</string>
     <string name="billed_every_year">Billed every year</string>
-    <string name="bmi_guidelines">BMI categories and calculations are based on guidelines from the World Health Organization.</string>
-    <string name="boost_energy_mood">Boost my energy and mood</string>
-    <string name="busy_schedule">Busy schedule</string>
-    <string name="calculating_nutrients">Calculating nutrients...</string>
-    <string name="calories_burned">Calories burned</string>
-    <string name="calories_left">Calories left</string>
-    <string name="camera_scan">Camera Scan</string>
-    <string name="cancel">Cancel</string>
+    <string name="BMI_guidelines">BMI categories and calculations are based on guidelines from the World Health Organization.</string>
+    <string name="Boost_energy_mood">Boost my energy and mood</string>
+    <string name="Busy_schedule">Busy schedule</string>
+    <string name="Calculating_nutrients">Calculating nutrients…</string>
+    <string name="Calories_burned">Calories burned</string>
+    <string name="Calories_left">Calories left</string>
+    <string name="Camera_scan">Camera Scan</string>
+    <string name="Cancel">Cancel</string>
     <string name="carbs_left">Carbs left</string>
     <string name="choose_your_gender">Choose your Gender</string>
     <string name="citations">Citations</string>
@@ -70,8 +70,8 @@
     <string name="edit_weight">Edit Weight</string>
     <string name="edit_weight_goal">Edit Weight Goal</string>
     <string name="enjoy_unlimited_features_with_this_plan">Enjoy unlimited features with this plan.</string>
-    <string name="enter_value">Enter %@</string>
-    <string name="estimating_your_metabolic_age">Estimating your metabolic age...</string>
+    <string name="enter_value">Enter %%s</string>
+    <string name="estimating_your_metabolic_age">Estimating your metabolic age…</string>
     <string name="every_day_matters">Every day matters for hitting your goal!</string>
     <string name="example_rowed">Example: Rowed for 30 mins, arms and back tired</string>
     <string name="example_frappuccino">Example: The frappuccino is missing the caramel drizzle and whipped topping.</string>
@@ -79,8 +79,8 @@
     <string name="fat_left">Fat left</string>
     <string name="feel_better">Feel better about my body</string>
     <string name="female">Female</string>
-    <string name="finalizing_results">Finalizing results...</string>
-    <string name="finalizing">Finalizing...</string>
+    <string name="finalizing_results">Finalizing results…</string>
+    <string name="finalizing">Finalizing…</string>
     <string name="fix_result">Fix Result</string>
     <string name="food_ai">Food AI</string>
     <string name="food_ai_tracking">Food AI made tracking my daily calories and macros straightforward, resulting in effective weight management.</string>
@@ -114,8 +114,8 @@
     <string name="learn_more_bmi">Erfahren Sie mehr über den BMI von der WHO</string>
     <string name="legal">Rechtliches</string>
     <string name="limited_time_offer">Zeitlich begrenztes Angebot: 3-tägige kostenlose Testversion ausprobieren!</string>
-    <string name="loading_subscription">Abonnementoptionen werden geladen...</string>
-    <string name="loading">Lädt...</string>
+    <string name="loading_subscription">Abonnementoptionen werden geladen…</string>
+    <string name="loading">Lädt…</string>
     <string name="log_exercise">Übung protokollieren</string>
     <string name="lose_weight">Abnehmen</string>
     <string name="lost_20_lbs">Ich habe in 3 Monaten 20 Pfund verloren, indem ich meine Nahrungsaufnahme mit Food AI sorgfältig verfolgte. Die Erkenntnisse der App sind unbezahlbar.</string>
@@ -159,8 +159,8 @@
     <string name="please_select_height_and_weight">Please select height and weight!</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="processing_diet_type">Processing diet type</string>
-    <string name="processing_your_food_edits">Processing your food edits...</string>
-    <string name="processing">Processing...</string>
+    <string name="processing_your_food_edits">Processing your food edits…</string>
+    <string name="processing">Processing…</string>
     <string name="protein_left">Protein left</string>
     <string name="purchase_successful">Purchase successful!</string>
     <string name="quick_calorie_tracking">Quick calorie tracking</string>
@@ -209,11 +209,11 @@
     <string name="update">Update</string>
     <string name="update_exercise">Update Exercise</string>
     <string name="update_your_weight">Update your weight</string>
-    <string name="updating_database">Updating database...</string>
+    <string name="updating_database">Updating database…</string>
     <string name="upgrade">UPGRADE</string>
     <string name="upgrade_to_premium_and_enjoy_all_features">Upgrade to Premium and enjoy all features without limitations.</string>
-    <string name="uploading_image">Uploading Image...</string>
-    <string name="uploading">Uploading...</string>
+    <string name="uploading_image">Uploading Image…</string>
+    <string name="uploading">Uploading…</string>
     <string name="vegan">Vegan</string>
     <string name="vegetarian">Vegetarian</string>
     <string name="view_recipe">View Recipe</string>
@@ -224,7 +224,7 @@
     <string name="weekly">Weekly</string>
     <string name="weight">Weight</string>
     <string name="weight_progress_displayed">Weight progress will be displayed here!</string>
-    <string name="weight_format">Weight: %1$lld kg on %2$@</string>
+    <string name="weight_format">Weight: %1$lld kg on %2$%s</string>
     <string name="goal_question">What is stopping you from reaching your goals?</string>
     <string name="desired_weight">What is your desired weight?</string>
     <string name="goal">What is your goal?</string>

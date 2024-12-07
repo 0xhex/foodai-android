@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="food_ai_people">  ...   Plus de 1000 personnes Food AI</string>
-    <string name="quote">« %@ »</string>
-    <string name="weight_speed_per_week">%@ vitesse de poids par semaine</string>
+    <string name="food_ai_people">  …   Plus de 1000 personnes Food AI</string>
+    <string name="quote">« %%s »</string>
+    <string name="weight_speed_per_week">%%s vitesse de poids par semaine</string>
     <string name="duration">⏱ Durée</string>
     <string name="workouts_per_week">Quelques entraînements par semaine</string>
     <string name="access_unlimited">Accès illimité</string>
@@ -13,21 +13,21 @@
     <string name="advanced_nutrition_tracking">Suivi avancé de la nutrition</string>
     <string name="age">Âge</string>
     <string name="ai_solutions">Solutions IA</string>
-    <string name="Analytics">Analyses</string>
-    <string name="Analyzing_food">Analyse des aliments...</string>
-    <string name="Apple_Health">Apple Santé</string>
-    <string name="Applying_BMR_formula">Application de la formule BMR...</string>
-    <string name="Delete_account_confirmation">Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible et supprimera définitivement toutes vos données de notre système.</string>
-    <string name="Authorization_failed">Échec de l\nautorisation</string>
-    <string name="Authorize">Autoriser</string>
-    <string name="Authorize_Apple_Health">Autoriser Apple Santé</string>
-    <string name="Billed_every_month">Facturé tous les mois</string>
-    <string name="Billed_every_week">Facturé chaque semaine</string>
-    <string name="Billed_every_year">Facturé chaque année</string>
+    <string name="analytics">Analyses</string>
+    <string name="analyzing_food">Analyse des aliments…</string>
+    <string name="apple_health">Apple Santé</string>
+    <string name="applying_bmr_formula">Application de la formule BMR…</string>
+    <string name="delete_account_confirmation">Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible et supprimera définitivement toutes vos données de notre système.</string>
+    <string name="authorization_failed">Échec de l\nautorisation</string>
+    <string name="authorize">Autoriser</string>
+    <string name="authorize_apple_health">Autoriser Apple Santé</string>
+    <string name="billed_every_month">Facturé tous les mois</string>
+    <string name="billed_every_week">Facturé chaque semaine</string>
+    <string name="billed_every_year">Facturé chaque année</string>
     <string name="BMI_guidelines">Les catégories et calculs de l\nIMC sont basés sur les directives de l\nOrganisation mondiale de la santé.</string>
     <string name="Boost_energy_mood">Booster mon énergie et mon humeur</string>
     <string name="Busy_schedule">Emploi du temps chargé</string>
-    <string name="Calculating_nutrients">Calcul des nutriments...</string>
+    <string name="Calculating_nutrients">Calcul des nutriments…</string>
     <string name="Calories_burned">Calories brûlées</string>
     <string name="Calories_left">Calories restantes</string>
     <string name="Camera_scan">Scan caméra</string>
@@ -69,8 +69,8 @@
     <string name="edit_weight" translatable="false">Modifier le poids</string>
     <string name="edit_weight_goal" translatable="false">Modifier l\nobjectif de poids</string>
     <string name="enjoy_unlimited_features_with_this_plan" translatable="false">Profitez de fonctionnalités illimitées avec ce plan.</string>
-    <string name="enter_value" translatable="false">Entrez %@</string>
-    <string name="estimating_your_metabolic_age">Estimation de votre âge métabolique...</string>
+    <string name="enter_value" translatable="false">Entrez %%s</string>
+    <string name="estimating_your_metabolic_age">Estimation de votre âge métabolique…</string>
     <string name="every_day_matters">Chaque jour compte pour atteindre votre objectif !</string>
     <string name="example_rowed">Exemple : A ramé pendant 30 min, bras et dos fatigués</string>
     <string name="example_frappuccino">Exemple : Le frappuccino manque de filet de caramel et de crème fouettée.</string>
@@ -78,8 +78,8 @@
     <string name="fat_left">Lipides restants</string>
     <string name="feel_better">Me sentir mieux dans mon corps</string>
     <string name="female">Femme</string>
-    <string name="finalizing_results">Finalisation des résultats...</string>
-    <string name="finalizing">Finalisation...</string>
+    <string name="finalizing_results">Finalisation des résultats…</string>
+    <string name="finalizing">Finalisation…</string>
     <string name="fix_result">Corriger le résultat</string>
     <string name="food_ai">Food AI</string>
     <string name="food_ai_tracking">Food AI a rendu le suivi de mes calories et macros quotidiennes simple, ce qui a entraîné une gestion efficace du poids.</string>
@@ -113,8 +113,8 @@
     <string name="learn_more_bmi">En savoir plus sur l\nIMC de l\nOMS</string>
     <string name="legal">Mentions légales</string>
     <string name="limited_time_offer">Offre à durée limitée : Essayez l\nessai gratuit de 3 jours !</string>
-    <string name="loading_subscription">Chargement des options d\nabonnement...</string>
-    <string name="loading">Chargement...</string>
+    <string name="loading_subscription">Chargement des options d\nabonnement…</string>
+    <string name="loading">Chargement…</string>
     <string name="log_exercise">Enregistrer un exercice</string>
     <string name="lose_weight">Perdre du poids</string>
     <string name="lost_20_lbs">J\nai perdu 20 livres en 3 mois en suivant assidûment mon apport alimentaire avec Food AI. Les insights de l\napplication sont inestimables.</string>
@@ -158,8 +158,8 @@
     <string name="please_select_height_and_weight">Veuillez sélectionner la taille et le poids !</string>
     <string name="privacy_policy">Politique de confidentialité</string>
     <string name="processing_diet_type">Traitement du type de régime</string>
-    <string name="processing_your_food_edits">Traitement de vos modifications alimentaires...</string>
-    <string name="processing">Traitement...</string>
+    <string name="processing_your_food_edits">Traitement de vos modifications alimentaires…</string>
+    <string name="processing">Traitement…</string>
     <string name="protein_left">Protéines restantes</string>
     <string name="purchase_successful">Achat réussi !</string>
     <string name="quick_calorie_tracking">Suivi rapide des calories</string>
@@ -208,11 +208,11 @@
     <string name="update">Mettre à jour</string>
     <string name="update_exercise">Mettre à jour l\nexercice</string>
     <string name="update_your_weight">Mettez à jour votre poids</string>
-    <string name="updating_database">Mise à jour de la base de données...</string>
+    <string name="updating_database">Mise à jour de la base de données…</string>
     <string name="upgrade">METTRE À NIVEAU</string>
     <string name="upgrade_to_premium_and_enjoy_all_features">Passez à Premium et profitez de toutes les fonctionnalités sans limitations.</string>
-    <string name="uploading_image">Téléchargement de l\nimage...</string>
-    <string name="uploading">Téléchargement...</string>
+    <string name="uploading_image">Téléchargement de l\nimage…</string>
+    <string name="uploading">Téléchargement…</string>
     <string name="vegan">Végan</string>
     <string name="vegetarian">Végétarien</string>
     <string name="view_recipe">Voir la recette</string>
@@ -223,7 +223,7 @@
     <string name="weekly">Hebdomadaire</string>
     <string name="weight">Poids</string>
     <string name="weight_progress_displayed">La progression du poids sera affichée ici !</string>
-    <string name="weight_format">Poids : %1$lld kg le %2$@</string>
+    <string name="weight_format">Poids : %1$lld kg le %2$%s</string>
     <string name="goal_question">Qu\nest-ce qui vous empêche d\natteindre vos objectifs ?</string>
     <string name="desired_weight">Quel est votre poids souhaité ?</string>
     <string name="goal">Quel est votre objectif ?</string>
