@@ -1,8 +1,10 @@
 package com.codepad.foodai.ui.splash
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.SplashFragmentBinding
+import com.codepad.foodai.helpers.FirebaseRemoteConfigManager
 import com.codepad.foodai.ui.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,5 +18,7 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>() {
     }
 
     override fun onReadyView() {
+        binding.viewModel = viewModel
+        FirebaseRemoteConfigManager.fetchRemoteConfigurations(requireActivity() as AppCompatActivity, {})
     }
 }

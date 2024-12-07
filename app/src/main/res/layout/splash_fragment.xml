@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.codepad.quicknotes.ui.splash.SplashViewModel" />
+            type="com.codepad.foodai.ui.splash.SplashViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
