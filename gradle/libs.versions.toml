@@ -95,4 +95,5 @@ revenuecat = { group = "com.revenuecat.purchases", name = "purchases", version =
 sentry = { group = "io.sentry", name = "sentry-android", version = "7.18.1" }
 firebase-config-ktx = { group = "com.google.firebase", name = "firebase-config-ktx", version.ref = "firebaseConfigKtx" }
 swipe = { group = "com.github.chthai64", name = "SwipeRevealLayout", version = "1.4.0" }
+dotindicator = { group = "com.tbuonomo", name = "dotsindicator", version = "4.3" }
 
