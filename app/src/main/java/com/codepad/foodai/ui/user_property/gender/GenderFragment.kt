@@ -21,12 +21,6 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
     override fun onReadyView() {
         binding.viewModel = sharedViewModel
 
-        sharedViewModel.showWarning.observe(viewLifecycleOwner) { showWarning ->
-            if (showWarning) {
-                Toast.makeText(requireContext(), R.string.please_select_a_gender, Toast.LENGTH_SHORT).show()
-            }
-        }
-
         sharedViewModel.selectedGender.observe(viewLifecycleOwner) { gender ->
             updateButtonStyles(gender)
         }

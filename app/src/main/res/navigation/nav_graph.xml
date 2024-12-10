@@ -31,9 +31,7 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_onBoardingFragment_to_userPropertyFragment"
-            app:destination="@id/userPropertyFragment"
-            app:popUpTo="@id/onBoardingFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/userPropertyFragment" />
     </fragment>
 
     <fragment

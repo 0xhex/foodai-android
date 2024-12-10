@@ -46,6 +46,7 @@ class UserPropertySharedViewModel @Inject constructor(
                     updateGender()
                 }
             }
+
             2 -> {
                 if (_selectedWorkout.value == null) {
                     _showWarning.value = true
@@ -61,8 +62,7 @@ class UserPropertySharedViewModel @Inject constructor(
         val userID = UserSession.user?.id ?: return
 
         viewModelScope.launch {
-            val result = updateUserFieldUseCase.updateUserFields(userID, "gender", gender)
-            // Handle the result (e.g., navigate to the next screen)
+            updateUserFieldUseCase.updateUserFields(userID, "gender", gender)
         }
     }
 
@@ -71,8 +71,17 @@ class UserPropertySharedViewModel @Inject constructor(
         val userID = UserSession.user?.id ?: return
 
         viewModelScope.launch {
-            val result = updateUserFieldUseCase.updateUserFields(userID, "workoutsPerWeek", workout)
-            // Handle the result (e.g., navigate to the next screen)
+            updateUserFieldUseCase.updateUserFields(userID, "workoutsPerWeek", workout)
         }
+    }
+
+    fun invalidateShowWarning() {
+        _showWarning.value = false
+    }
+
+    fun invalidateAll() {
+        _selectedGender.value = null
+        _selectedWorkout.value = null
+        _isNextEnabled.value = false
     }
 }

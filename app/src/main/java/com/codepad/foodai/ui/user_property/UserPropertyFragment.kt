@@ -1,10 +1,12 @@
 package com.codepad.foodai.ui.user_property
 
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentUserPropertyBinding
 import com.codepad.foodai.ui.core.BaseFragment
@@ -24,48 +26,60 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
         binding.ivBack.setOnClickListener { onBackPressed() }
         binding.btnNext.setOnClickListener { onNextPressed() }
 
-        // Set initial state of btnNext
-        binding.btnNext.isEnabled = true
-        binding.btnNext.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
-        binding.btnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-
-        sharedViewModel.isNextEnabled.observe(viewLifecycleOwner) { isEnabled ->
-            binding.btnNext.isEnabled = isEnabled
-            binding.btnNext.setBackgroundColor(
-                if (isEnabled) ContextCompat.getColor(requireContext(), R.color.blue_button)
-                else ContextCompat.getColor(requireContext(), R.color.white)
-            )
-            binding.btnNext.setTextColor(
-                if (isEnabled) ContextCompat.getColor(requireContext(), R.color.white)
-                else ContextCompat.getColor(requireContext(), R.color.black)
-            )
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            onBackPressed()
         }
 
-        loadFragment(GenderFragment())
+        sharedViewModel.isNextEnabled.observe(viewLifecycleOwner) { isEnabled ->
+            updateNextButtonState()
+        }
+
+        loadFragment(GenderFragment(), true)
     }
 
     private fun onBackPressed() {
-        if (currentStep > 1) {
-            currentStep--
+        if (currentStep == 1) {
+            currentStep = 0
+            sharedViewModel.invalidateAll()
+            findNavController().popBackStack()
+        } else {
+            currentStep = currentStep.dec()
             updateProgress()
             childFragmentManager.popBackStack()
-        } else {
-            // Navigate back to OnboardingFragment
-            parentFragmentManager.popBackStack()
         }
     }
 
     private fun onNextPressed() {
         sharedViewModel.onNextClicked(currentStep)
         if (sharedViewModel.showWarning.value == true) {
-            Toast.makeText(requireContext(), R.string.please_select_a_gender, Toast.LENGTH_SHORT).show()
+            displaySelectionWarning()
+            sharedViewModel.invalidateShowWarning()
         } else {
             if (currentStep < totalSteps) {
-                currentStep++
-                updateProgress()
                 // Load the next fragment
-                loadFragment(WorkoutFragment())
+                when (currentStep) {
+                    1 -> loadFragment(WorkoutFragment())
+                    2 -> {
+                        //loadFragment(WorkoutFragment())
+                    }
+                }
             }
+        }
+    }
+
+    private fun displaySelectionWarning() {
+        if (currentStep == 1) {
+            Toast.makeText(
+                requireContext(),
+                R.string.please_select_a_gender,
+                Toast.LENGTH_SHORT
+            ).show()
+        } else if (currentStep == 2) {
+            Toast.makeText(
+                requireContext(),
+                R.string.please_select_a_workout,
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -73,10 +87,30 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
         binding.progressBar.progress = currentStep
     }
 
-    private fun loadFragment(fragment: Fragment) {
+    private fun loadFragment(fragment: Fragment, initialLoad: Boolean = false) {
+        if (!initialLoad) {
+            currentStep = currentStep.inc()
+            updateProgress()
+        }
         childFragmentManager.commit {
             replace(R.id.fragmentContainer, fragment)
             addToBackStack(null)
         }
+    }
+
+    private fun updateNextButtonState() {
+        val isEnabled = when (currentStep) {
+            1 -> sharedViewModel.selectedGender.value != null
+            2 -> sharedViewModel.selectedWorkout.value != null
+            else -> true
+        }
+        binding.btnNext.setBackgroundColor(
+            if (isEnabled) ContextCompat.getColor(requireContext(), R.color.blue_button)
+            else ContextCompat.getColor(requireContext(), R.color.white)
+        )
+        binding.btnNext.setTextColor(
+            if (isEnabled) ContextCompat.getColor(requireContext(), R.color.white)
+            else ContextCompat.getColor(requireContext(), R.color.black)
+        )
     }
 }
