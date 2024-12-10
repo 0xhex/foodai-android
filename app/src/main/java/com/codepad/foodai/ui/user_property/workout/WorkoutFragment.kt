@@ -1,7 +1,5 @@
 package com.codepad.foodai.ui.user_property.workout
 
-import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -23,7 +21,11 @@ class WorkoutFragment : BaseFragment<FragmentWorkoutBinding>() {
 
         sharedViewModel.showWarning.observe(viewLifecycleOwner) { showWarning ->
             if (showWarning) {
-                Toast.makeText(requireContext(), R.string.please_select_a_workout, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    R.string.please_select_a_workout,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -41,47 +43,68 @@ class WorkoutFragment : BaseFragment<FragmentWorkoutBinding>() {
     }
 
     private fun updateButtonStyles(selectedWorkout: String?) {
-        val lowButton = binding.btnLow
-        val mediumButton = binding.btnMedium
-        val highButton = binding.btnHigh
+        val lowCard = binding.btnLow
+        val mediumCard = binding.btnMedium
+        val highCard = binding.btnHigh
+
+        val lowText = binding.textLow
+        val mediumText = binding.textMedium
+        val highText = binding.textHigh
+
+        val subLowText = binding.subtextLow
+        val subMediumText = binding.subtextMedium
+        val subHighText = binding.subtextHigh
 
         val selectedColor = ContextCompat.getColor(requireContext(), R.color.blue_button)
         val unselectedColor = ContextCompat.getColor(requireContext(), R.color.white)
         val selectedTextColor = ContextCompat.getColor(requireContext(), R.color.white)
         val unselectedTextColor = ContextCompat.getColor(requireContext(), R.color.black)
+        val unselectedSubTextColor = ContextCompat.getColor(requireContext(), R.color.gray)
 
         when (selectedWorkout) {
             "0-2" -> {
-                lowButton.setBackgroundColor(selectedColor)
-                lowButton.setTextColor(selectedTextColor)
-                mediumButton.setBackgroundColor(unselectedColor)
-                mediumButton.setTextColor(unselectedTextColor)
-                highButton.setBackgroundColor(unselectedColor)
-                highButton.setTextColor(unselectedTextColor)
+                lowCard.setCardBackgroundColor(selectedColor)
+                lowText.setTextColor(selectedTextColor)
+                subLowText.setTextColor(selectedTextColor)
+                mediumCard.setCardBackgroundColor(unselectedColor)
+                mediumText.setTextColor(unselectedTextColor)
+                subMediumText.setTextColor(unselectedSubTextColor)
+                highCard.setCardBackgroundColor(unselectedColor)
+                highText.setTextColor(unselectedTextColor)
+                subHighText.setTextColor(unselectedSubTextColor)
             }
             "3-5" -> {
-                mediumButton.setBackgroundColor(selectedColor)
-                mediumButton.setTextColor(selectedTextColor)
-                lowButton.setBackgroundColor(unselectedColor)
-                lowButton.setTextColor(unselectedTextColor)
-                highButton.setBackgroundColor(unselectedColor)
-                highButton.setTextColor(unselectedTextColor)
+                mediumCard.setCardBackgroundColor(selectedColor)
+                mediumText.setTextColor(selectedTextColor)
+                subMediumText.setTextColor(selectedTextColor)
+                lowCard.setCardBackgroundColor(unselectedColor)
+                lowText.setTextColor(unselectedTextColor)
+                subLowText.setTextColor(unselectedSubTextColor)
+                highCard.setCardBackgroundColor(unselectedColor)
+                highText.setTextColor(unselectedTextColor)
+                subHighText.setTextColor(unselectedSubTextColor)
             }
             "6+" -> {
-                highButton.setBackgroundColor(selectedColor)
-                highButton.setTextColor(selectedTextColor)
-                lowButton.setBackgroundColor(unselectedColor)
-                lowButton.setTextColor(unselectedTextColor)
-                mediumButton.setBackgroundColor(unselectedColor)
-                mediumButton.setTextColor(unselectedTextColor)
+                highCard.setCardBackgroundColor(selectedColor)
+                highText.setTextColor(selectedTextColor)
+                subHighText.setTextColor(selectedTextColor)
+                lowCard.setCardBackgroundColor(unselectedColor)
+                lowText.setTextColor(unselectedTextColor)
+                subLowText.setTextColor(unselectedSubTextColor)
+                mediumCard.setCardBackgroundColor(unselectedColor)
+                mediumText.setTextColor(unselectedTextColor)
+                subMediumText.setTextColor(unselectedSubTextColor)
             }
             else -> {
-                lowButton.setBackgroundColor(unselectedColor)
-                lowButton.setTextColor(unselectedTextColor)
-                mediumButton.setBackgroundColor(unselectedColor)
-                mediumButton.setTextColor(unselectedTextColor)
-                highButton.setBackgroundColor(unselectedColor)
-                highButton.setTextColor(unselectedTextColor)
+                lowCard.setCardBackgroundColor(unselectedColor)
+                lowText.setTextColor(unselectedTextColor)
+                subLowText.setTextColor(unselectedSubTextColor)
+                mediumCard.setCardBackgroundColor(unselectedColor)
+                mediumText.setTextColor(unselectedTextColor)
+                subMediumText.setTextColor(unselectedSubTextColor)
+                highCard.setCardBackgroundColor(unselectedColor)
+                highText.setTextColor(unselectedTextColor)
+                subHighText.setTextColor(unselectedSubTextColor)
             }
         }
     }

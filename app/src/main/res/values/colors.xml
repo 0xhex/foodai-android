@@ -12,5 +12,6 @@
     <color name="rounded_snack_bg">#ffffff</color>
     <color name="color_splash_bg">#121622</color>
     <color name="blue_button">#007aff</color>
+    <color name="gray">#8e8e93</color>
 
 </resources>
