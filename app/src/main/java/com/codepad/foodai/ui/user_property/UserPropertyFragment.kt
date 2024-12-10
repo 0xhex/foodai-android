@@ -9,6 +9,7 @@ import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentUserPropertyBinding
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.gender.GenderFragment
+import com.codepad.foodai.ui.user_property.workout.WorkoutFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,22 +48,23 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
         if (currentStep > 1) {
             currentStep--
             updateProgress()
-            // Load the previous fragment
+            childFragmentManager.popBackStack()
+        } else {
+            // Navigate back to OnboardingFragment
+            parentFragmentManager.popBackStack()
         }
     }
 
     private fun onNextPressed() {
-        if (sharedViewModel.selectedGender.value == null) {
+        sharedViewModel.onNextClicked(currentStep)
+        if (sharedViewModel.showWarning.value == true) {
             Toast.makeText(requireContext(), R.string.please_select_a_gender, Toast.LENGTH_SHORT).show()
         } else {
             if (currentStep < totalSteps) {
                 currentStep++
                 updateProgress()
-                // Reset btnNext state
-                binding.btnNext.isEnabled = true
-                binding.btnNext.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
-                binding.btnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                 // Load the next fragment
+                loadFragment(WorkoutFragment())
             }
         }
     }
@@ -74,6 +76,7 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
     private fun loadFragment(fragment: Fragment) {
         childFragmentManager.commit {
             replace(R.id.fragmentContainer, fragment)
+            addToBackStack(null)
         }
     }
 }
