@@ -29,6 +29,17 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/onBoardingFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_onBoardingFragment_to_userPropertyFragment"
+            app:destination="@id/userPropertyFragment"
+            app:popUpTo="@id/onBoardingFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userPropertyFragment"
+        android:name="com.codepad.foodai.ui.user_property.UserPropertyFragment">
+
     </fragment>
 
     <fragment

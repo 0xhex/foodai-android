@@ -11,5 +11,6 @@
     <color name="custom_light_gray">#F5F5F5</color>
     <color name="rounded_snack_bg">#ffffff</color>
     <color name="color_splash_bg">#121622</color>
+    <color name="blue_button">#007aff</color>
 
 </resources>
