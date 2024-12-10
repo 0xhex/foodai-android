@@ -26,6 +26,13 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (sharedViewModel.selectedGender.value != null) {
+            sharedViewModel.selectGender(sharedViewModel.selectedGender.value!!)
+        }
+    }
+
     private fun updateButtonStyles(selectedGender: String?) {
         val maleButton = binding.btnMale
         val femaleButton = binding.btnFemale

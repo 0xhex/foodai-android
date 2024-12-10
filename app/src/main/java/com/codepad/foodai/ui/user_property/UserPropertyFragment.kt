@@ -96,14 +96,15 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             replace(R.id.fragmentContainer, fragment)
             addToBackStack(null)
         }
+        updateNextButtonState(false)
     }
 
-    private fun updateNextButtonState() {
+    private fun updateNextButtonState(enable: Boolean = true) {
         val isEnabled = when (currentStep) {
             1 -> sharedViewModel.selectedGender.value != null
             2 -> sharedViewModel.selectedWorkout.value != null
             else -> true
-        }
+        } && enable
         binding.btnNext.setBackgroundColor(
             if (isEnabled) ContextCompat.getColor(requireContext(), R.color.blue_button)
             else ContextCompat.getColor(requireContext(), R.color.white)

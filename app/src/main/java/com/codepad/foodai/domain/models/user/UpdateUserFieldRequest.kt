@@ -1,12 +1,13 @@
 package com.codepad.foodai.domain.models.user
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UpdateUserFieldRequest(
-    val fieldName: String,
-    val fieldValue: String
+    @SerializedName("field_name") val fieldName: String,
+    @SerializedName("field_value") val fieldValue: String
 ) : Parcelable
 
 @Parcelize

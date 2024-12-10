@@ -32,6 +32,14 @@ class WorkoutFragment : BaseFragment<FragmentWorkoutBinding>() {
         }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        if (sharedViewModel.selectedWorkout.value != null) {
+            sharedViewModel.selectWorkout(sharedViewModel.selectedWorkout.value!!)
+        }
+    }
+
     private fun updateButtonStyles(selectedWorkout: String?) {
         val lowButton = binding.btnLow
         val mediumButton = binding.btnMedium
