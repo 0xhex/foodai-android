@@ -12,6 +12,7 @@ import com.codepad.foodai.databinding.FragmentUserPropertyBinding
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.birth.BirthFragment
 import com.codepad.foodai.ui.user_property.gender.GenderFragment
+import com.codepad.foodai.ui.user_property.goal.GoalFragment
 import com.codepad.foodai.ui.user_property.heightweight.HeightWeightFragment
 import com.codepad.foodai.ui.user_property.workout.WorkoutFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,6 +64,10 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                     1 -> loadFragment(WorkoutFragment())
                     2 -> loadFragment(HeightWeightFragment())
                     3 -> loadFragment(BirthFragment())
+                    4 -> loadFragment(GoalFragment())
+                    else -> {
+                        // Do nothing
+                    }
                 }
             }
         }
@@ -93,6 +98,12 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                 R.string.please_select_a_birth_date,
                 Toast.LENGTH_SHORT
             ).show()
+        } else if (currentStep == 5) {
+            Toast.makeText(
+                requireContext(),
+                R.string.please_select_a_goal,
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -118,6 +129,7 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             2 -> sharedViewModel.selectedWorkout.value != null
             3 -> sharedViewModel.isHeightWeightSet.value == true
             4 -> sharedViewModel.dateOfBirth.value != null
+            5 -> sharedViewModel.selectedGoal.value != null
             else -> true
         } && enable
         binding.btnNext.setBackgroundColor(

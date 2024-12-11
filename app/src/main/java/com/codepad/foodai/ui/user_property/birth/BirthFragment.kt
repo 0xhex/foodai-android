@@ -35,6 +35,10 @@ class BirthFragment : BaseFragment<FragmentBirthBinding>() {
         calendar.add(Calendar.YEAR, -120)
         val startDate = calendar.timeInMillis
 
+        val defaultDate = Calendar.getInstance().apply {
+            set(1994, Calendar.JANUARY, 2)
+        }.timeInMillis
+
         val constraintsBuilder = CalendarConstraints.Builder()
             .setStart(startDate)
             .setEnd(today)
@@ -44,6 +48,7 @@ class BirthFragment : BaseFragment<FragmentBirthBinding>() {
             .setTitleText(R.string.birth_date)
             .setCalendarConstraints(constraintsBuilder.build())
             .setTheme(R.style.MaterialCalendarTheme)
+            .setSelection(defaultDate)
             .build()
 
         datePicker.addOnPositiveButtonClickListener { selection ->

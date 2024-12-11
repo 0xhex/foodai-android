@@ -55,6 +55,9 @@ class UserPropertySharedViewModel @Inject constructor(
     private val _dateOfBirth = MutableLiveData<Date>()
     val dateOfBirth: LiveData<Date> get() = _dateOfBirth
 
+    private val _selectedGoal = MutableLiveData<String?>()
+    val selectedGoal: LiveData<String?> get() = _selectedGoal
+
     init {
         _height.value = 160
         _weight.value = 60
@@ -67,6 +70,11 @@ class UserPropertySharedViewModel @Inject constructor(
 
     fun selectGender(gender: String) {
         _selectedGender.value = gender
+        _isNextEnabled.value = true
+    }
+
+    fun selectGoal(goal: String) {
+        _selectedGoal.value = goal
         _isNextEnabled.value = true
     }
 
@@ -153,6 +161,14 @@ class UserPropertySharedViewModel @Inject constructor(
                     updateUserBirthDate()
                 }
             }
+
+            5 -> {
+                if (_selectedGoal.value == null) {
+                    _showWarning.value = true
+                } else {
+                    updateUserGoal()
+                }
+            }
         }
     }
 
@@ -226,6 +242,15 @@ class UserPropertySharedViewModel @Inject constructor(
 
         viewModelScope.launch {
             updateUserFieldUseCase.updateUserFields(userID, "dateOfBirth", formattedDate)
+        }
+    }
+
+    fun updateUserGoal() {
+        val goal = _selectedGoal.value ?: return
+        val userID = UserSession.user?.id ?: return
+
+        viewModelScope.launch {
+            updateUserFieldUseCase.updateUserFields(userID, "goal", goal)
         }
     }
 }
