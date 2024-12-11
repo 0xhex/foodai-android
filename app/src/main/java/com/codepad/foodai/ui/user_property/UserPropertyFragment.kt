@@ -87,6 +87,12 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                 R.string.please_select_weight_and_height,
                 Toast.LENGTH_SHORT
             ).show()
+        } else if (currentStep == 4) {
+            Toast.makeText(
+                requireContext(),
+                R.string.please_select_a_birth_date,
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -111,6 +117,7 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             1 -> sharedViewModel.selectedGender.value != null
             2 -> sharedViewModel.selectedWorkout.value != null
             3 -> sharedViewModel.isHeightWeightSet.value == true
+            4 -> sharedViewModel.dateOfBirth.value != null
             else -> true
         } && enable
         binding.btnNext.setBackgroundColor(

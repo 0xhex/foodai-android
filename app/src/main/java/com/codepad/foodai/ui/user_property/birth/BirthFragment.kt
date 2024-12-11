@@ -11,6 +11,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -25,10 +26,6 @@ class BirthFragment : BaseFragment<FragmentBirthBinding>() {
 
         binding.etBirthDate.setOnClickListener {
             showDatePickerDialog()
-        }
-
-        sharedViewModel.selectedGender.observe(viewLifecycleOwner) { gender ->
-
         }
     }
 
@@ -50,6 +47,7 @@ class BirthFragment : BaseFragment<FragmentBirthBinding>() {
             .build()
 
         datePicker.addOnPositiveButtonClickListener { selection ->
+            sharedViewModel.setDateOfBirth(Date(selection))
             val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selection)
             binding.etBirthDate.setText(selectedDate)
         }
@@ -59,8 +57,12 @@ class BirthFragment : BaseFragment<FragmentBirthBinding>() {
 
     override fun onResume() {
         super.onResume()
-        if (sharedViewModel.selectedGender.value != null) {
-            sharedViewModel.selectGender(sharedViewModel.selectedGender.value!!)
+        if (sharedViewModel.dateOfBirth.value != null) {
+            val selectedDate = SimpleDateFormat(
+                "dd/MM/yyyy",
+                Locale.getDefault()
+            ).format(sharedViewModel.dateOfBirth.value!!)
+            binding.etBirthDate.setText(selectedDate)
         }
     }
 }

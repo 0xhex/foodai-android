@@ -9,6 +9,9 @@ import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.user_property.heightweight.MeasurementUnit
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -48,6 +51,9 @@ class UserPropertySharedViewModel @Inject constructor(
 
     private val _measurementUnit = MutableLiveData<MeasurementUnit>()
     val measurementUnit: LiveData<MeasurementUnit> get() = _measurementUnit
+
+    private val _dateOfBirth = MutableLiveData<Date>()
+    val dateOfBirth: LiveData<Date> get() = _dateOfBirth
 
     init {
         _height.value = 160
@@ -94,6 +100,11 @@ class UserPropertySharedViewModel @Inject constructor(
         checkHeightWeightSet()
     }
 
+    fun setDateOfBirth(date: Date) {
+        _dateOfBirth.value = date
+        _isNextEnabled.value = true
+    }
+
     private fun checkHeightWeightSet() {
         _isHeightWeightSet.value = when (_measurementUnit.value) {
             MeasurementUnit.METRIC -> _height.value != 160 && _weight.value != 60
@@ -134,6 +145,14 @@ class UserPropertySharedViewModel @Inject constructor(
                     updateHeightWeight()
                 }
             }
+
+            4 -> {
+                if (_dateOfBirth.value == null) {
+                    _showWarning.value = true
+                } else {
+                    updateUserBirthDate()
+                }
+            }
         }
     }
 
@@ -170,6 +189,7 @@ class UserPropertySharedViewModel @Inject constructor(
         _measurementUnit.value = MeasurementUnit.METRIC
         _isNextEnabled.value = false
         _isHeightWeightSet.value = false
+        _dateOfBirth.value = null
     }
 
     private fun updateHeightWeight() {
@@ -195,6 +215,17 @@ class UserPropertySharedViewModel @Inject constructor(
                 "isMetric",
                 (_measurementUnit.value == MeasurementUnit.METRIC).toString()
             )
+        }
+    }
+
+    fun updateUserBirthDate() {
+        val date = _dateOfBirth.value ?: return
+        val formattedDate =
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault()).format(date)
+        val userID = UserSession.user?.id ?: return
+
+        viewModelScope.launch {
+            updateUserFieldUseCase.updateUserFields(userID, "dateOfBirth", formattedDate)
         }
     }
 }
