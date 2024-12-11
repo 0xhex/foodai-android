@@ -67,6 +67,9 @@ class UserPropertySharedViewModel @Inject constructor(
     private val _selectedAccomplishment = MutableLiveData<String?>()
     val selectedAccomplishment: LiveData<String?> get() = _selectedAccomplishment
 
+    private val _desiredWeight = MutableLiveData<Int>()
+    val desiredWeight: LiveData<Int> get() = _desiredWeight
+
     init {
         _height.value = 160
         _weight.value = 60
@@ -79,6 +82,11 @@ class UserPropertySharedViewModel @Inject constructor(
 
     fun selectAccomplishment(accomplishment: String) {
         _selectedAccomplishment.value = accomplishment
+        _isNextEnabled.value = true
+    }
+
+    fun setDesiredWeight(weight: Int) {
+        _desiredWeight.value = weight
         _isNextEnabled.value = true
     }
 
@@ -194,7 +202,15 @@ class UserPropertySharedViewModel @Inject constructor(
                 }
             }
 
-            6 -> { // TODO order will change
+            6 -> {
+                if (_desiredWeight.value == null) {
+                    _showWarning.value = true
+                } else {
+                    updateDesiredWeight()
+                }
+            }
+
+            7 -> { // TODO order will change
                 if (_selectedReachingGoal.value == null) {
                     _showWarning.value = true
                 } else {
@@ -202,7 +218,7 @@ class UserPropertySharedViewModel @Inject constructor(
                 }
             }
 
-            7 -> { // TODO order will change
+            8 -> { // TODO order will change
                 if (_selectedDiet.value == null) {
                     _showWarning.value = true
                 } else {
@@ -210,7 +226,7 @@ class UserPropertySharedViewModel @Inject constructor(
                 }
             }
 
-            8 -> { // TODO order will change
+            9 -> { // TODO order will change
                 if (_selectedAccomplishment.value == null) {
                     _showWarning.value = true
                 } else {
@@ -330,6 +346,15 @@ class UserPropertySharedViewModel @Inject constructor(
                 "accomplishments",
                 arrayFieldValue = listOf(accomplishment)
             )
+        }
+    }
+
+    fun updateDesiredWeight() {
+        val desiredWeight = _desiredWeight.value?.toString() ?: return
+        val userID = UserSession.user?.id ?: return
+
+        viewModelScope.launch {
+            updateUserFieldUseCase.updateUserFields(userID, "targetWeight", desiredWeight)
         }
     }
 

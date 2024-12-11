@@ -12,6 +12,7 @@ import com.codepad.foodai.databinding.FragmentUserPropertyBinding
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.accomplish.AccomplishFragment
 import com.codepad.foodai.ui.user_property.birth.BirthFragment
+import com.codepad.foodai.ui.user_property.desiredweight.DesiredWeightFragment
 import com.codepad.foodai.ui.user_property.diet.DietFragment
 import com.codepad.foodai.ui.user_property.gender.GenderFragment
 import com.codepad.foodai.ui.user_property.goal.GoalFragment
@@ -68,9 +69,10 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                     2 -> loadFragment(HeightWeightFragment())
                     3 -> loadFragment(BirthFragment())
                     4 -> loadFragment(GoalFragment())
-                    5 -> loadFragment(ReachingGoalsFragment()) // TODO order will change
-                    6 -> loadFragment(DietFragment())  // TODO order will change
-                    7 -> loadFragment(AccomplishFragment()) // TODO order will change
+                    5 -> loadFragment(DesiredWeightFragment())
+                    6 -> loadFragment(ReachingGoalsFragment()) // TODO order will change
+                    7 -> loadFragment(DietFragment())  // TODO order will change
+                    8 -> loadFragment(AccomplishFragment()) // TODO order will change
                     else -> {
                         // Do nothing
                     }
@@ -113,16 +115,22 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
         } else if (currentStep == 6) {
             Toast.makeText(
                 requireContext(),
-                R.string.please_select_a_reaching_goal,
+                R.string.please_select_a_desired_weight,
                 Toast.LENGTH_SHORT
             ).show()
         } else if (currentStep == 7) {
             Toast.makeText(
                 requireContext(),
-                R.string.please_select_a_diet,
+                R.string.please_select_a_reaching_goal,
                 Toast.LENGTH_SHORT
             ).show()
         } else if (currentStep == 8) {
+            Toast.makeText(
+                requireContext(),
+                R.string.please_select_a_diet,
+                Toast.LENGTH_SHORT
+            ).show()
+        } else if (currentStep == 9) {
             Toast.makeText(
                 requireContext(),
                 R.string.please_select_an_accomplishment,
@@ -154,9 +162,10 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             3 -> sharedViewModel.isHeightWeightSet.value == true
             4 -> sharedViewModel.dateOfBirth.value != null
             5 -> sharedViewModel.selectedGoal.value != null
-            6 -> sharedViewModel.selectedReachingGoal.value != null // TODO order will change
-            7 -> sharedViewModel.selectedDiet.value != null // TODO order will change
-            8 -> sharedViewModel.selectedAccomplishment.value != null // TODO order will change
+            6 -> sharedViewModel.desiredWeight.value != null
+            7 -> sharedViewModel.selectedReachingGoal.value != null // TODO order will change
+            8 -> sharedViewModel.selectedDiet.value != null // TODO order will change
+            9 -> sharedViewModel.selectedAccomplishment.value != null // TODO order will change
             else -> true
         } && enable
         binding.btnNext.setBackgroundColor(
