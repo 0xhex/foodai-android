@@ -3,6 +3,7 @@ package com.codepad.foodai.domain.api
 import com.codepad.foodai.domain.models.APIResponse
 import com.codepad.foodai.domain.models.user.RegisterRequest
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequest
+import com.codepad.foodai.domain.models.user.UpdateUserFieldRequestArray
 import com.codepad.foodai.domain.models.user.UpdateUserFieldResponseData
 import com.codepad.foodai.domain.models.user.User
 import retrofit2.http.Body
@@ -24,5 +25,11 @@ interface RestApi {
     suspend fun updateUserFields(
         @Path("userID") userID: String,
         @Body request: UpdateUserFieldRequest,
+    ): APIResponse<UpdateUserFieldResponseData>
+
+    @PATCH("users/{userID}")
+    suspend fun updateUserFieldsArray(
+        @Path("userID") userID: String,
+        @Body request: UpdateUserFieldRequestArray,
     ): APIResponse<UpdateUserFieldResponseData>
 }
