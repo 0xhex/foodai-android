@@ -11,6 +11,7 @@ import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentUserPropertyBinding
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.gender.GenderFragment
+import com.codepad.foodai.ui.user_property.heightweight.HeightWeightFragment
 import com.codepad.foodai.ui.user_property.workout.WorkoutFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -59,9 +60,7 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                 // Load the next fragment
                 when (currentStep) {
                     1 -> loadFragment(WorkoutFragment())
-                    2 -> {
-                        //loadFragment(WorkoutFragment())
-                    }
+                    2 -> loadFragment(HeightWeightFragment())
                 }
             }
         }
@@ -78,6 +77,12 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             Toast.makeText(
                 requireContext(),
                 R.string.please_select_a_workout,
+                Toast.LENGTH_SHORT
+            ).show()
+        } else if (currentStep == 3) {
+            Toast.makeText(
+                requireContext(),
+                R.string.please_select_weight_and_height,
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -103,6 +108,7 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
         val isEnabled = when (currentStep) {
             1 -> sharedViewModel.selectedGender.value != null
             2 -> sharedViewModel.selectedWorkout.value != null
+            3 -> sharedViewModel.isHeightWeightSet.value == true
             else -> true
         } && enable
         binding.btnNext.setBackgroundColor(

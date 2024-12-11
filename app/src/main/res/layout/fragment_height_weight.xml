@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.codepad.foodai.ui.user_property.UserPropertySharedViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#1e1e1e"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_32dp"
+            android:layout_marginTop="@dimen/dimen_32dp"
+            android:fontFamily="@font/euro_stile_bold"
+            android:text="@string/height_and_weight"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toTopOf="@id/tvSubtitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_32dp"
+            android:layout_marginTop="@dimen/dimen_24dp"
+            android:fontFamily="@font/euro_stile_regular"
+            android:text="@string/calibration_for_custom_plan"
+            android:textAlignment="center"
+            android:textColor="#8e8e93"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+
+        <TextView
+            android:id="@+id/txt_imperial"
+            app:layout_constraintEnd_toStartOf="@id/toggleMeasurementUnit"
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/toggleMeasurementUnit"
+            app:layout_constraintBottom_toBottomOf="@id/toggleMeasurementUnit"
+            android:text="@string/imperial"
+            android:textSize="18sp"
+            android:textColor="@color/gray"
+            android:fontFamily="@font/euro_stile_bold"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/txt_metric"
+            app:layout_constraintStart_toEndOf="@id/toggleMeasurementUnit"
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/toggleMeasurementUnit"
+            app:layout_constraintBottom_toBottomOf="@id/toggleMeasurementUnit"
+            android:text="@string/metric"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/dimen_12dp"
+            android:fontFamily="@font/euro_stile_bold"
+            android:layout_height="wrap_content"/>
+
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/toggleMeasurementUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_32dp"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@id/heightPicker"
+            android:checked="true"
+            app:thumbTint="@color/white"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
+
+        <TextView
+            android:id="@+id/txt_height"
+            android:layout_width="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/heightPicker"
+            app:layout_constraintStart_toStartOf="@id/heightPicker"
+            app:layout_constraintEnd_toEndOf="@id/heightPicker"
+            android:text="@string/height"
+            android:textSize="18sp"
+            android:textColor="#8e8e93"
+            android:fontFamily="@font/euro_stile_bold"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/heightPicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_60dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toStartOf="@id/weightPicker"
+            android:layout_marginBottom="@dimen/dimen_60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toggleMeasurementUnit">
+
+            <NumberPicker
+                android:id="@+id/heightPicker1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/dimen_24dp"
+                android:theme="@style/AppTheme.Picker"
+                android:visibility="gone" />
+
+            <NumberPicker
+                android:id="@+id/heightPicker2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.Picker"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_weight"
+            android:layout_width="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/weightPicker"
+            app:layout_constraintStart_toStartOf="@id/weightPicker"
+            app:layout_constraintEnd_toEndOf="@id/weightPicker"
+            android:text="@string/weight"
+            android:textSize="18sp"
+            android:textColor="#8e8e93"
+            android:fontFamily="@font/euro_stile_bold"
+            android:layout_height="wrap_content"/>
+
+        <NumberPicker
+            android:id="@+id/weightPicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_24dp"
+            android:theme="@style/AppTheme.Picker"
+            app:layout_constraintBottom_toBottomOf="@id/heightPicker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/heightPicker"
+            app:layout_constraintTop_toTopOf="@id/heightPicker" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
