@@ -58,6 +58,9 @@ class UserPropertySharedViewModel @Inject constructor(
     private val _selectedGoal = MutableLiveData<String?>()
     val selectedGoal: LiveData<String?> get() = _selectedGoal
 
+    private val _selectedReachingGoal = MutableLiveData<String?>()
+    val selectedReachingGoal: LiveData<String?> get() = _selectedReachingGoal
+
     init {
         _height.value = 160
         _weight.value = 60
@@ -66,6 +69,11 @@ class UserPropertySharedViewModel @Inject constructor(
         _weightLB.value = 132
         _measurementUnit.value = MeasurementUnit.METRIC
         _isHeightWeightSet.value = false
+    }
+
+    fun selectReachingGoal(goal: String) {
+        _selectedReachingGoal.value = goal
+        _isNextEnabled.value = true
     }
 
     fun selectGender(gender: String) {
@@ -169,6 +177,14 @@ class UserPropertySharedViewModel @Inject constructor(
                     updateUserGoal()
                 }
             }
+
+            6 -> {
+                if (_selectedReachingGoal.value == null) {
+                    _showWarning.value = true
+                } else {
+                    updateUserReachingGoal()
+                }
+            }
         }
     }
 
@@ -251,6 +267,15 @@ class UserPropertySharedViewModel @Inject constructor(
 
         viewModelScope.launch {
             updateUserFieldUseCase.updateUserFields(userID, "goal", goal)
+        }
+    }
+
+    fun updateUserReachingGoal() {
+        val goal = _selectedReachingGoal.value ?: return
+        val userID = UserSession.user?.id ?: return
+
+        viewModelScope.launch {
+            updateUserFieldUseCase.updateUserFields(userID, "stopping", goal)
         }
     }
 }
