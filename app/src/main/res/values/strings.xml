@@ -242,4 +242,5 @@
     <string name="weight_is">Your weight is</string>
     <string name="start_now_to_transform_your_body">Start now to transform your body and enhance your well-being.</string>
     <string name="please_select_weight_and_height"><![CDATA[Please select height & weight]]></string>
+    <string name="enter_birth_date">Enter birth date</string>
 </resources>

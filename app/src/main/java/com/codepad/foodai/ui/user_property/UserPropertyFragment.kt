@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentUserPropertyBinding
 import com.codepad.foodai.ui.core.BaseFragment
+import com.codepad.foodai.ui.user_property.birth.BirthFragment
 import com.codepad.foodai.ui.user_property.gender.GenderFragment
 import com.codepad.foodai.ui.user_property.heightweight.HeightWeightFragment
 import com.codepad.foodai.ui.user_property.workout.WorkoutFragment
@@ -61,6 +62,7 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                 when (currentStep) {
                     1 -> loadFragment(WorkoutFragment())
                     2 -> loadFragment(HeightWeightFragment())
+                    3 -> loadFragment(BirthFragment())
                 }
             }
         }
