@@ -11,6 +11,7 @@ import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentUserPropertyBinding
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.birth.BirthFragment
+import com.codepad.foodai.ui.user_property.diet.DietFragment
 import com.codepad.foodai.ui.user_property.gender.GenderFragment
 import com.codepad.foodai.ui.user_property.goal.GoalFragment
 import com.codepad.foodai.ui.user_property.heightweight.HeightWeightFragment
@@ -67,6 +68,7 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                     3 -> loadFragment(BirthFragment())
                     4 -> loadFragment(GoalFragment())
                     5 -> loadFragment(ReachingGoalsFragment()) // TODO order will change
+                    6 -> loadFragment(DietFragment())  // TODO order will change
                     else -> {
                         // Do nothing
                     }
@@ -112,6 +114,12 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                 R.string.please_select_a_reaching_goal,
                 Toast.LENGTH_SHORT
             ).show()
+        } else if (currentStep == 7) {
+            Toast.makeText(
+                requireContext(),
+                R.string.please_select_a_diet,
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -139,6 +147,7 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             4 -> sharedViewModel.dateOfBirth.value != null
             5 -> sharedViewModel.selectedGoal.value != null
             6 -> sharedViewModel.selectedReachingGoal.value != null // TODO order will change
+            7 -> sharedViewModel.selectedDiet.value != null // TODO order will change
             else -> true
         } && enable
         binding.btnNext.setBackgroundColor(
