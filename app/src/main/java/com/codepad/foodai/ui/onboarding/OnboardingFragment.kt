@@ -1,6 +1,7 @@
 package com.codepad.foodai.ui.onboarding
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.airbnb.lottie.LottieAnimationView
 import com.codepad.foodai.R
@@ -57,7 +58,7 @@ class OnboardingFragment : BaseFragment<OnboardingFragmentBinding>() {
             if (nextItem < adapter.itemCount) {
                 viewPager.currentItem = nextItem
             } else {
-                // Handle the end of the onboarding
+                findNavController().navigate(R.id.action_onBoardingFragment_to_userPropertyFragment)
             }
         }
 

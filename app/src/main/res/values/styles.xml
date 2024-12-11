@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="colorControlNormal">@color/gray</item>
+        <item name="colorControlActivated">@color/white</item>
+    </style>
+
+    <style name="ThemeOverlay.App.DatePicker" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="materialCalendarStyle">@style/Widget.MaterialComponents.MaterialCalendar</item>
+        <item name="materialCalendarTheme">@style/ThemeOverlay.App.DatePicker</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/custom_black</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/darker_gray</item>
+    </style>
+
+    <style name="MaterialCalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="materialCalendarHeaderLayout">@style/MaterialCalendar.HeaderLayout1</item>
+        <item name="materialCalendarHeaderSelection">@style/MaterialCalendar.HeaderSelection</item>
+        <item name="materialCalendarHeaderTitle">@style/MaterialCalendar.HeaderTitle</item>
+        <item name="materialCalendarHeaderToggleButton">@style/MaterialCalendar.HeaderToggle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/TextButton.Dialog1</item>
+        <item name="buttonBarNegativeButtonStyle">@style/TextButton.Dialog1</item>
+        <item name="materialCalendarStyle">@style/DefaultCalendarStyle</item>
+        <item name="colorPrimary">@color/custom_black</item>
+        <item name="colorOnPrimary">@color/custom_black</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="textInputStyle">@style/MaterialDatePicker.TextInputStyle</item>
+    </style>
+
+    <style name="MaterialCalendar.HeaderLayout1" parent="Widget.MaterialComponents.MaterialCalendar.HeaderLayout">
+        <item name="android:background">@color/custom_black</item>
+    </style>
+
+    <style name="MaterialCalendar.HeaderSelection" parent="Widget.MaterialComponents.MaterialCalendar.HeaderSelection">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="MaterialCalendar.HeaderTitle" parent="Widget.MaterialComponents.MaterialCalendar.HeaderTitle">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="MaterialCalendar.HeaderToggle" parent="Widget.MaterialComponents.MaterialCalendar.HeaderToggleButton">
+        <item name="android:tint">@android:color/white</item>
+    </style>
+
+    <style name="TextButton.Dialog1" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="backgroundTint">@color/custom_black</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="DefaultCalendarStyle" parent="Widget.MaterialComponents.MaterialCalendar">
+        <item name="daySelectedStyle">@style/DefaultDaySelectedStyle</item>
+        <item name="yearSelectedStyle">@style/DefaultDaySelectedStyle</item>
+    </style>
+
+    <style name="DefaultDaySelectedStyle" parent="Widget.MaterialComponents.MaterialCalendar.Day.Selected">
+        <item name="itemFillColor">@color/custom_black</item>
+        <item name="itemTextColor">@android:color/white</item>
+    </style>
+
+    <style name="MaterialDatePicker.TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxStrokeColor">@color/custom_black</item>
+        <item name="boxBackgroundColor">@android:color/white</item>
+        <item name="colorSurface">@color/white</item>
+    </style>
+
+</resources>
