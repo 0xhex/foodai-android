@@ -18,6 +18,7 @@ import com.codepad.foodai.ui.user_property.gender.GenderFragment
 import com.codepad.foodai.ui.user_property.goal.GoalFragment
 import com.codepad.foodai.ui.user_property.heightweight.HeightWeightFragment
 import com.codepad.foodai.ui.user_property.reachinggoals.ReachingGoalsFragment
+import com.codepad.foodai.ui.user_property.weightspeed.WeightSpeedSelectionFragment
 import com.codepad.foodai.ui.user_property.workout.WorkoutFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,24 +58,59 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
     }
 
     private fun onNextPressed() {
+        val requireDesiredWeight = sharedViewModel.goalNavigationParams.value?.first == true
+        val isGain = sharedViewModel.goalNavigationParams.value?.second == true
+
         sharedViewModel.onNextClicked(currentStep)
         if (sharedViewModel.showWarning.value == true) {
             displaySelectionWarning()
             sharedViewModel.invalidateShowWarning()
         } else {
             if (currentStep < totalSteps) {
-                // Load the next fragment
                 when (currentStep) {
                     1 -> loadFragment(WorkoutFragment())
                     2 -> loadFragment(HeightWeightFragment())
                     3 -> loadFragment(BirthFragment())
                     4 -> loadFragment(GoalFragment())
-                    5 -> loadFragment(DesiredWeightFragment())
-                    6 -> loadFragment(ReachingGoalsFragment()) // TODO order will change
-                    7 -> loadFragment(DietFragment())  // TODO order will change
-                    8 -> loadFragment(AccomplishFragment()) // TODO order will change
+                    5 -> {
+                        if (requireDesiredWeight) {
+                            loadFragment(DesiredWeightFragment(isGain))
+                        } else {
+                            loadFragment(ReachingGoalsFragment())
+                        }
+                    }
+
+                    6 -> {
+                        if (requireDesiredWeight) {
+                            loadFragment(WeightSpeedSelectionFragment(isGain))
+                        } else {
+                            loadFragment(DietFragment())
+                        }
+                    }
+
+                    7 -> {
+                        if (requireDesiredWeight) {
+                            loadFragment(ReachingGoalsFragment())
+                        } else {
+                            loadFragment(AccomplishFragment())
+                        }
+                    }
+
+                    8 -> {
+                        if (requireDesiredWeight) {
+                            loadFragment(DietFragment())
+                        } else {
+                            // Complete flow
+                        }
+                    }
+
+                    9 -> {
+                        if (requireDesiredWeight) {
+                            loadFragment(AccomplishFragment())
+                        }
+                    }
                     else -> {
-                        // Do nothing
+                        // Complete flow
                     }
                 }
             }

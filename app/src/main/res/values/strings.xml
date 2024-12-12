@@ -244,4 +244,6 @@
     <string name="please_select_weight_and_height"><![CDATA[Please select height & weight]]></string>
     <string name="enter_birth_date">Enter birth date</string>
     <string name="please_select_an_accomplishment">Please select a accomplish!</string>
+    <string name="gain_weight_speed">Gain weight speed per week</string>
+    <string name="lose_weight_speed">Lose weight speed per week</string>
 </resources>

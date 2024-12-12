@@ -3,6 +3,7 @@ package com.codepad.foodai.ui.user_property
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.codepad.foodai.domain.use_cases.user.UpdateUserFieldUseCase
 import com.codepad.foodai.helpers.UserSession
@@ -69,6 +70,12 @@ class UserPropertySharedViewModel @Inject constructor(
 
     private val _desiredWeight = MutableLiveData<Int>()
     val desiredWeight: LiveData<Int> get() = _desiredWeight
+
+    val goalNavigationParams = _selectedGoal.map {
+        val requireWeightSelection = it != "maintain"
+        val isGain = it == "gain_weight"
+        Pair(requireWeightSelection, isGain)
+    }
 
     init {
         _height.value = 160
