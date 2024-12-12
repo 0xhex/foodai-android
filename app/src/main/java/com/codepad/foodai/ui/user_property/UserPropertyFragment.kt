@@ -9,6 +9,7 @@ import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentUserPropertyBinding
+import com.codepad.foodai.helpers.FirebaseRemoteConfigManager
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.accomplish.AccomplishFragment
 import com.codepad.foodai.ui.user_property.birth.BirthFragment
@@ -17,6 +18,7 @@ import com.codepad.foodai.ui.user_property.diet.DietFragment
 import com.codepad.foodai.ui.user_property.gender.GenderFragment
 import com.codepad.foodai.ui.user_property.goal.GoalFragment
 import com.codepad.foodai.ui.user_property.heightweight.HeightWeightFragment
+import com.codepad.foodai.ui.user_property.rating.RatingFragment
 import com.codepad.foodai.ui.user_property.reachinggoals.ReachingGoalsFragment
 import com.codepad.foodai.ui.user_property.weightspeed.WeightSpeedSelectionFragment
 import com.codepad.foodai.ui.user_property.workout.WorkoutFragment
@@ -100,7 +102,11 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                         if (requireDesiredWeight) {
                             loadFragment(DietFragment())
                         } else {
-                            // Complete flow
+                            if (isPassedStore()) {
+                                loadFragment(RatingFragment())
+                            } else {
+                                // loading fragment
+                            }
                         }
                     }
 
@@ -109,13 +115,20 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                             loadFragment(AccomplishFragment())
                         }
                     }
+
                     else -> {
-                        // Complete flow
+                        if (isPassedStore()) {
+                            loadFragment(RatingFragment())
+                        } else {
+                            // loading fragment
+                        }
                     }
                 }
             }
         }
     }
+
+    private fun isPassedStore() = FirebaseRemoteConfigManager.getBoolean("isPassedStore")
 
     private fun displaySelectionWarning() {
         if (currentStep == 1) {

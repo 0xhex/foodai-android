@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/fragment_gender.xml -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.codepad.foodai.ui.user_property.UserPropertySharedViewModel" />
@@ -21,20 +22,26 @@
             android:layout_marginHorizontal="@dimen/dimen_32dp"
             android:layout_marginTop="@dimen/dimen_32dp"
             android:fontFamily="@font/euro_stile_bold"
-            android:text="@string/desired_weight"
+            android:text="@string/give_us_rating"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="28sp"
+            app:layout_constraintBottom_toTopOf="@id/tvSubtitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <NumberPicker
-            android:id="@+id/weightPicker"
+        <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:theme="@style/AppTheme.Picker"
+            android:layout_marginHorizontal="@dimen/dimen_32dp"
+            android:layout_marginTop="@dimen/dimen_24dp"
+            android:fontFamily="@font/euro_stile_regular"
+            android:text="@string/calibration_for_custom_plan"
+            android:textAlignment="center"
+            android:textColor="#8e8e93"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
