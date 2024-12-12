@@ -195,17 +195,17 @@ class UserPropertySharedViewModel @Inject constructor(
             }
 
             8 -> if (requireDesiredWeight) {
-                handleStep(_selectedDiet.value, ::updateUserDiet)
+                handleStep(_selectedReachingGoal.value, ::updateUserReachingGoal)
             } else {
                 handleStep(_selectedAccomplishment.value, ::updateUserAccomplishment)
             }
 
             9 -> if (requireDesiredWeight) {
-                handleStep(_selectedAccomplishment.value, ::updateUserAccomplishment)
+                handleStep(_selectedDiet.value, ::updateUserDiet)
             }
 
             10 -> if (requireDesiredWeight) {
-                // Add logic for step 10 if required
+                handleStep(_selectedAccomplishment.value, ::updateUserAccomplishment)
             }
         }
     }

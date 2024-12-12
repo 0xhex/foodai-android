@@ -136,9 +136,9 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             5 -> sharedViewModel.selectedGoal.value != null
             6 -> if (requireDesiredWeight) sharedViewModel.desiredWeight.value != null else sharedViewModel.selectedReachingGoal.value != null
             7 -> if (requireDesiredWeight) sharedViewModel.weightSpeed.value != null else sharedViewModel.selectedDiet.value != null
-            8 -> if (requireDesiredWeight) sharedViewModel.selectedDiet.value != null else sharedViewModel.selectedAccomplishment.value != null
-            9 -> if (requireDesiredWeight) sharedViewModel.selectedAccomplishment.value != null else isPassedStore()
-            10 -> if (requireDesiredWeight) isPassedStore() else true
+            8 -> if (requireDesiredWeight) sharedViewModel.selectedReachingGoal.value != null else sharedViewModel.selectedAccomplishment.value != null
+            9 -> if (requireDesiredWeight) sharedViewModel.selectedDiet.value != null else isPassedStore()
+            10 -> if (requireDesiredWeight)sharedViewModel.selectedAccomplishment.value != null else true
             else -> true
         } && enable
 

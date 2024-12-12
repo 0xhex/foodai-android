@@ -44,7 +44,7 @@ class WeightSpeedSelectionFragment(private val isGain: Boolean) :
 
     private fun recommendedText(weight: Double): String {
         return when (weight) {
-            in 0.1..0.4 -> getString(R.string.slow_and_steady)
+            in 0.0..0.4 -> getString(R.string.slow_and_steady)
             in 0.4..1.1 -> getString(R.string.recommended)
             in 1.1..1.5 -> getString(R.string.you_may_feel_very_tired_and_develop_loose_skin)
             else -> getString(R.string.recommended)
