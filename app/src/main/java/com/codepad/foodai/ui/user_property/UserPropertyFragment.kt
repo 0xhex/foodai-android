@@ -172,18 +172,21 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
     }
 
     private fun updateNextButtonState(enable: Boolean = true) {
+        val requireDesiredWeight = sharedViewModel.goalNavigationParams.value?.first == true
         val isEnabled = when (currentStep) {
             1 -> sharedViewModel.selectedGender.value != null
             2 -> sharedViewModel.selectedWorkout.value != null
             3 -> sharedViewModel.isHeightWeightSet.value == true
             4 -> sharedViewModel.dateOfBirth.value != null
             5 -> sharedViewModel.selectedGoal.value != null
-            6 -> sharedViewModel.desiredWeight.value != null
-            7 -> sharedViewModel.selectedReachingGoal.value != null // TODO order will change
-            8 -> sharedViewModel.selectedDiet.value != null // TODO order will change
-            9 -> sharedViewModel.selectedAccomplishment.value != null // TODO order will change
+            6 -> if (requireDesiredWeight) sharedViewModel.desiredWeight.value != null else sharedViewModel.selectedReachingGoal.value != null
+            7 -> if (requireDesiredWeight) sharedViewModel.selectedReachingGoal.value != null else sharedViewModel.selectedDiet.value != null
+            8 -> if (requireDesiredWeight) sharedViewModel.selectedDiet.value != null else sharedViewModel.selectedAccomplishment.value != null
+            9 -> if (requireDesiredWeight) sharedViewModel.selectedAccomplishment.value != null else isPassedStore()
+            10 -> if (requireDesiredWeight) isPassedStore() else true
             else -> true
         } && enable
+
         binding.btnNext.setBackgroundColor(
             if (isEnabled) ContextCompat.getColor(requireContext(), R.color.blue_button)
             else ContextCompat.getColor(requireContext(), R.color.white)

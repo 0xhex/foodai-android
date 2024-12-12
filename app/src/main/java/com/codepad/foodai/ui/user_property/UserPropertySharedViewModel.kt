@@ -167,6 +167,8 @@ class UserPropertySharedViewModel @Inject constructor(
     }
 
     fun onNextClicked(currentStep: Int) {
+        val requireDesiredWeight = goalNavigationParams.value?.first == true
+
         when (currentStep) {
             1 -> {
                 if (_selectedGender.value == null) {
@@ -175,7 +177,6 @@ class UserPropertySharedViewModel @Inject constructor(
                     updateGender()
                 }
             }
-
             2 -> {
                 if (_selectedWorkout.value == null) {
                     _showWarning.value = true
@@ -183,7 +184,6 @@ class UserPropertySharedViewModel @Inject constructor(
                     updateWorkout()
                 }
             }
-
             3 -> {
                 if (_height.value == null || _weight.value == null) {
                     _showWarning.value = true
@@ -191,7 +191,6 @@ class UserPropertySharedViewModel @Inject constructor(
                     updateHeightWeight()
                 }
             }
-
             4 -> {
                 if (_dateOfBirth.value == null) {
                     _showWarning.value = true
@@ -199,7 +198,6 @@ class UserPropertySharedViewModel @Inject constructor(
                     updateUserBirthDate()
                 }
             }
-
             5 -> {
                 if (_selectedGoal.value == null) {
                     _showWarning.value = true
@@ -207,36 +205,65 @@ class UserPropertySharedViewModel @Inject constructor(
                     updateUserGoal()
                 }
             }
-
             6 -> {
-                if (_desiredWeight.value == null) {
-                    _showWarning.value = true
+                if (requireDesiredWeight) {
+                    if (_desiredWeight.value == null) {
+                        _showWarning.value = true
+                    } else {
+                        updateDesiredWeight()
+                    }
                 } else {
-                    updateDesiredWeight()
+                    if (_selectedReachingGoal.value == null) {
+                        _showWarning.value = true
+                    } else {
+                        updateUserReachingGoal()
+                    }
                 }
             }
-
-            7 -> { // TODO order will change
-                if (_selectedReachingGoal.value == null) {
-                    _showWarning.value = true
+            7 -> {
+                if (requireDesiredWeight) {
+                    if (_selectedReachingGoal.value == null) {
+                        _showWarning.value = true
+                    } else {
+                        updateUserReachingGoal()
+                    }
                 } else {
-                    updateUserReachingGoal()
+                    if (_selectedDiet.value == null) {
+                        _showWarning.value = true
+                    } else {
+                        updateUserDiet()
+                    }
                 }
             }
-
-            8 -> { // TODO order will change
-                if (_selectedDiet.value == null) {
-                    _showWarning.value = true
+            8 -> {
+                if (requireDesiredWeight) {
+                    if (_selectedDiet.value == null) {
+                        _showWarning.value = true
+                    } else {
+                        updateUserDiet()
+                    }
                 } else {
-                    updateUserDiet()
+                    if (_selectedAccomplishment.value == null) {
+                        _showWarning.value = true
+                    } else {
+                        updateUserAccomplishment()
+                    }
                 }
             }
-
-            9 -> { // TODO order will change
-                if (_selectedAccomplishment.value == null) {
-                    _showWarning.value = true
+            9 -> {
+                if (requireDesiredWeight) {
+                    if (_selectedAccomplishment.value == null) {
+                        _showWarning.value = true
+                    } else {
+                        updateUserAccomplishment()
+                    }
                 } else {
-                    updateUserAccomplishment()
+
+                }
+            }
+            10 -> {
+                if (requireDesiredWeight) {
+
                 }
             }
         }
