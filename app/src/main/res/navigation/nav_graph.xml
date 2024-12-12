@@ -37,13 +37,20 @@
     <fragment
         android:id="@+id/userPropertyFragment"
         android:name="com.codepad.foodai.ui.user_property.UserPropertyFragment">
-
+        <action
+            android:id="@+id/action_userPropertyFragment_to_loadingFragment"
+            app:destination="@id/loadingFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.codepad.foodai.ui.home.HomeFragment"
         android:label="HomeFragment"></fragment>
+
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.codepad.foodai.ui.user_property.loading.LoadingFragment"
+        android:label="LoadingFragment"></fragment>
 
 
 </navigation>

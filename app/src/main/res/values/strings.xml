@@ -220,7 +220,7 @@
     <string name="we_use_your_step_count_data_from_apple_health">We use your step count data from Apple Health to provide personalized insights</string>
     <string name="step_count_data">We use your step count data from Apple Health to provide personalized insights and help you achieve your fitness goals.</string>
     <string name="notify_when_done">We\nll notify you when done!</string>
-    <string name="setting_up">We\nre setting everything up for you</string>
+    <string name="setting_up">We\'re setting everything up for you</string>
     <string name="weekly">Weekly</string>
     <string name="weight">Weight</string>
     <string name="weight_progress_displayed">Weight progress will be displayed here!</string>
@@ -244,4 +244,10 @@
     <string name="please_select_weight_and_height"><![CDATA[Please select height & weight]]></string>
     <string name="enter_birth_date">Enter birth date</string>
     <string name="please_select_an_accomplishment">Please select a accomplish!</string>
+    <string name="gain_weight_speed">Gain weight speed per week</string>
+    <string name="lose_weight_speed">Lose weight speed per week</string>
+    <string name="select_a_weight_speed">Please select a weight speed</string>
+    <string name="recommended">Recommended</string>
+    <string name="slow_and_steady">Slow and Steady</string>
+    <string name="you_may_feel_very_tired_and_develop_loose_skin">You may feel very tired and develop loose skin</string>
 </resources>

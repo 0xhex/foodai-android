@@ -4,9 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.codepad.foodai.R
 import com.codepad.foodai.domain.use_cases.user.UpdateUserFieldUseCase
+import com.codepad.foodai.helpers.ResourceHelper
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.user_property.heightweight.MeasurementUnit
+import com.codepad.foodai.ui.user_property.loading.LoadingType
+import com.codepad.foodai.ui.user_property.rating.Gender
+import com.codepad.foodai.ui.user_property.rating.Review
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -17,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserPropertySharedViewModel @Inject constructor(
     private val updateUserFieldUseCase: UpdateUserFieldUseCase,
+    private val resourceHelper: ResourceHelper,
 ) : ViewModel() {
 
     private val _selectedGender = MutableLiveData<String?>()
@@ -70,6 +76,24 @@ class UserPropertySharedViewModel @Inject constructor(
     private val _desiredWeight = MutableLiveData<Int>()
     val desiredWeight: LiveData<Int> get() = _desiredWeight
 
+    private val _weightSpeed = MutableLiveData<Double>()
+    val weightSpeed: LiveData<Double> get() = _weightSpeed
+
+    val goalNavigationParams = MutableLiveData<Pair<Boolean, Boolean>>()
+
+    var loadingType: LoadingType = LoadingType.USER_CUSTOMIZATION
+    var settingUpItems: List<String> = emptyList()
+
+    val reviews = listOf(
+        Review("Marley Bryle", 5, resourceHelper.getString(R.string.lost_15_lbs), Gender.MALE),
+        Review(
+            "Jane Doe",
+            5,
+            resourceHelper.getString(R.string.gaining_muscle_breeze),
+            Gender.FEMALE
+        ),
+    )
+
     init {
         _height.value = 160
         _weight.value = 60
@@ -82,6 +106,11 @@ class UserPropertySharedViewModel @Inject constructor(
 
     fun selectAccomplishment(accomplishment: String) {
         _selectedAccomplishment.value = accomplishment
+        _isNextEnabled.value = true
+    }
+
+    fun setWeightSpeed(speed: Double) {
+        _weightSpeed.value = speed
         _isNextEnabled.value = true
     }
 
@@ -108,6 +137,9 @@ class UserPropertySharedViewModel @Inject constructor(
     fun selectGoal(goal: String) {
         _selectedGoal.value = goal
         _isNextEnabled.value = true
+        val requireWeightSelection = goal != "maintain"
+        val isGain = goal == "gain_weight"
+        goalNavigationParams.value = Pair(requireWeightSelection, isGain)
     }
 
     fun selectWorkout(workout: String) {
@@ -161,78 +193,47 @@ class UserPropertySharedViewModel @Inject constructor(
     }
 
     fun onNextClicked(currentStep: Int) {
+        val requireDesiredWeight = goalNavigationParams.value?.first == true
+
         when (currentStep) {
-            1 -> {
-                if (_selectedGender.value == null) {
-                    _showWarning.value = true
-                } else {
-                    updateGender()
-                }
+            1 -> handleStep(_selectedGender.value, ::updateGender)
+            2 -> handleStep(_selectedWorkout.value, ::updateWorkout)
+            3 -> handleStep(_height.value != null && _weight.value != null, ::updateHeightWeight)
+            4 -> handleStep(_dateOfBirth.value, ::updateUserBirthDate)
+            5 -> handleStep(_selectedGoal.value, ::updateUserGoal)
+            6 -> if (requireDesiredWeight) {
+                handleStep(_desiredWeight.value, ::updateDesiredWeight)
+            } else {
+                handleStep(_selectedReachingGoal.value, ::updateUserReachingGoal)
             }
 
-            2 -> {
-                if (_selectedWorkout.value == null) {
-                    _showWarning.value = true
-                } else {
-                    updateWorkout()
-                }
+            7 -> if (requireDesiredWeight) {
+                handleStep(_weightSpeed.value, ::updateWeightSpeed)
+            } else {
+                handleStep(_selectedDiet.value, ::updateUserDiet)
             }
 
-            3 -> {
-                if (_height.value == null || _weight.value == null) {
-                    _showWarning.value = true
-                } else {
-                    updateHeightWeight()
-                }
+            8 -> if (requireDesiredWeight) {
+                handleStep(_selectedReachingGoal.value, ::updateUserReachingGoal)
+            } else {
+                handleStep(_selectedAccomplishment.value, ::updateUserAccomplishment)
             }
 
-            4 -> {
-                if (_dateOfBirth.value == null) {
-                    _showWarning.value = true
-                } else {
-                    updateUserBirthDate()
-                }
+            9 -> if (requireDesiredWeight) {
+                handleStep(_selectedDiet.value, ::updateUserDiet)
             }
 
-            5 -> {
-                if (_selectedGoal.value == null) {
-                    _showWarning.value = true
-                } else {
-                    updateUserGoal()
-                }
+            10 -> if (requireDesiredWeight) {
+                handleStep(_selectedAccomplishment.value, ::updateUserAccomplishment, false)
             }
+        }
+    }
 
-            6 -> {
-                if (_desiredWeight.value == null) {
-                    _showWarning.value = true
-                } else {
-                    updateDesiredWeight()
-                }
-            }
-
-            7 -> { // TODO order will change
-                if (_selectedReachingGoal.value == null) {
-                    _showWarning.value = true
-                } else {
-                    updateUserReachingGoal()
-                }
-            }
-
-            8 -> { // TODO order will change
-                if (_selectedDiet.value == null) {
-                    _showWarning.value = true
-                } else {
-                    updateUserDiet()
-                }
-            }
-
-            9 -> { // TODO order will change
-                if (_selectedAccomplishment.value == null) {
-                    _showWarning.value = true
-                } else {
-                    updateUserAccomplishment()
-                }
-            }
+    private fun <T> handleStep(value: T?, updateFunction: () -> Unit, showWarning: Boolean = true) {
+        if (value == null) {
+            _showWarning.value = showWarning
+        } else {
+            updateFunction()
         }
     }
 
@@ -355,6 +356,18 @@ class UserPropertySharedViewModel @Inject constructor(
 
         viewModelScope.launch {
             updateUserFieldUseCase.updateUserFields(userID, "targetWeight", desiredWeight)
+        }
+    }
+
+    fun updateWeightSpeed() {
+        val userID = UserSession.user?.id ?: return
+
+        viewModelScope.launch {
+            updateUserFieldUseCase.updateUserFields(
+                userID,
+                "targetPerWeek",
+                weightSpeed.value.toString()
+            )
         }
     }
 

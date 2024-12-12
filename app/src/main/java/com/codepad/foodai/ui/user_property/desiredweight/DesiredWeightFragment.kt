@@ -1,7 +1,5 @@
 package com.codepad.foodai.ui.user_property.desiredweight
 
-import android.widget.NumberPicker
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentDesiredWeightBinding
@@ -11,7 +9,7 @@ import com.codepad.foodai.ui.user_property.heightweight.MeasurementUnit
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DesiredWeightFragment : BaseFragment<FragmentDesiredWeightBinding>() {
+class DesiredWeightFragment(val isGain: Boolean) : BaseFragment<FragmentDesiredWeightBinding>() {
 
     private val sharedViewModel: UserPropertySharedViewModel by activityViewModels()
 
@@ -35,8 +33,10 @@ class DesiredWeightFragment : BaseFragment<FragmentDesiredWeightBinding>() {
         val userWeight = sharedViewModel.weight.value ?: 60
         val isMetric = sharedViewModel.measurementUnit.value == MeasurementUnit.METRIC
 
-        binding.weightPicker.minValue = if (isMetric) (userWeight * 0.7).toInt() else (userWeight * 0.5).toInt()
-        binding.weightPicker.maxValue = if (isMetric) (userWeight * 1.5).toInt() else (userWeight * 1.5).toInt()
+        binding.weightPicker.minValue =
+            if (isMetric) (userWeight * 0.7).toInt() else (userWeight * 0.5).toInt()
+        binding.weightPicker.maxValue =
+            if (isMetric) (userWeight * 1.5).toInt() else (userWeight * 1.5).toInt()
         binding.weightPicker.value = userWeight
         binding.weightPicker.setFormatter { value -> if (isMetric) "$value kg" else "$value lb" }
         binding.weightPicker.setOnValueChangedListener { _, _, newVal ->

@@ -1,0 +1,77 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.codepad.foodai.ui.user_property.UserPropertySharedViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#393939">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimationView"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="@dimen/dimen_32dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/user"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvDisplayText"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/tvDisplayText"
+            android:layout_width="0dp"
+            tools:text="Setting up your account"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_32dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/euro_stile_bold"
+            android:textColor="@android:color/white"
+            android:textSize="28sp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@id/tvSettingUpItem"
+            app:layout_constraintTop_toBottomOf="@id/lottieAnimationView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSettingUpItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/euro_stile_regular"
+            android:textColor="@android:color/white"
+            tools:text="Setting up your account"
+            android:layout_marginHorizontal="@dimen/dimen_32dp"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@id/progressBar"
+            app:layout_constraintTop_toBottomOf="@id/tvDisplayText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:indeterminate="true"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSettingUpItem"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
