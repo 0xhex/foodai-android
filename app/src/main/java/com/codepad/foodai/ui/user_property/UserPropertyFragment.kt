@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentUserPropertyBinding
@@ -166,7 +167,28 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             if (task.isSuccessful) {
                 val reviewInfo = task.result
                 playReviewManager.launchReviewFlow(requireActivity(), reviewInfo)
+                    .addOnCompleteListener { reviewTask ->
+                        if (reviewTask.isSuccessful) {
+                            navigateToLoader()
+                        } else {
+                            navigateToLoader()
+                        }
+                    }
+            } else {
+                navigateToLoader()
             }
         }
     }
+
+    private fun navigateToLoader() {
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.userPropertyFragment, true)
+            .build()
+        findNavController().navigate(
+            R.id.action_userPropertyFragment_to_loadingFragment,
+            null,
+            navOptions
+        )
+    }
+
 }

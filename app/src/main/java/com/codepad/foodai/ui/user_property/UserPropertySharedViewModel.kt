@@ -9,6 +9,7 @@ import com.codepad.foodai.domain.use_cases.user.UpdateUserFieldUseCase
 import com.codepad.foodai.helpers.ResourceHelper
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.user_property.heightweight.MeasurementUnit
+import com.codepad.foodai.ui.user_property.loading.LoadingType
 import com.codepad.foodai.ui.user_property.rating.Gender
 import com.codepad.foodai.ui.user_property.rating.Review
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -79,6 +80,9 @@ class UserPropertySharedViewModel @Inject constructor(
     val weightSpeed: LiveData<Double> get() = _weightSpeed
 
     val goalNavigationParams = MutableLiveData<Pair<Boolean, Boolean>>()
+
+    var loadingType: LoadingType = LoadingType.USER_CUSTOMIZATION
+    var settingUpItems: List<String> = emptyList()
 
     val reviews = listOf(
         Review("Marley Bryle", 5, resourceHelper.getString(R.string.lost_15_lbs), Gender.MALE),
