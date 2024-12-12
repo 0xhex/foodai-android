@@ -247,4 +247,7 @@
     <string name="gain_weight_speed">Gain weight speed per week</string>
     <string name="lose_weight_speed">Lose weight speed per week</string>
     <string name="select_a_weight_speed">Please select a weight speed</string>
+    <string name="recommended">Recommended</string>
+    <string name="slow_and_steady">Slow and Steady</string>
+    <string name="you_may_feel_very_tired_and_develop_loose_skin">You may feel very tired and develop loose skin</string>
 </resources>

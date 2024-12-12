@@ -46,6 +46,142 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
+        <TextView
+            android:id="@+id/currentKg"
+            android:layout_marginTop="@dimen/dimen_24dp"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:text="0,8 kg"
+            android:fontFamily="@font/euro_stile_bold"
+            app:layout_constraintStart_toStartOf="@id/tvSubtitle"
+            app:layout_constraintEnd_toEndOf="@id/tvSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimationView1"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            app:lottie_rawRes="@raw/turtle"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:lottie_speed="1"
+            android:layout_marginTop="@dimen/dimen_32dp"
+            app:layout_constraintTop_toBottomOf="@id/currentKg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/lottieAnimationView2" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimationView2"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/cat"
+            app:lottie_speed="1"
+            app:layout_constraintTop_toTopOf="@id/lottieAnimationView1"
+            app:layout_constraintBottom_toBottomOf="@id/lottieAnimationView1"
+            app:layout_constraintStart_toEndOf="@id/lottieAnimationView1"
+            app:layout_constraintEnd_toStartOf="@id/lottieAnimationView3" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimationView3"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            app:lottie_speed="1"
+            app:lottie_rawRes="@raw/rabbit"
+            app:layout_constraintTop_toTopOf="@id/lottieAnimationView1"
+            app:layout_constraintBottom_toBottomOf="@id/lottieAnimationView1"
+            app:layout_constraintStart_toEndOf="@id/lottieAnimationView2"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:max="14"
+            android:progress="8"
+            android:thumbTint="@android:color/white"
+            android:progressTint="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@id/lottieAnimationView1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" />
+
+        <TextView
+            android:id="@+id/tvStartValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            android:text="0.1 kg"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:fontFamily="@font/euro_stile_regular"
+            app:layout_constraintTop_toBottomOf="@id/seekBar"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvCenterValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="0.8 kg"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:fontFamily="@font/euro_stile_regular"
+            app:layout_constraintTop_toBottomOf="@id/seekBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" />
+
+        <TextView
+            android:id="@+id/tvEndValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            android:text="1.5 kg"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:fontFamily="@font/euro_stile_regular"
+            app:layout_constraintTop_toBottomOf="@id/seekBar"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_32dp"
+            android:layout_marginHorizontal="24dp"
+            app:cardCornerRadius="@dimen/dimen_12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias=".0"
+            android:layout_marginBottom="@dimen/dimen_60dp"
+            android:backgroundTint="#343435"
+            app:layout_constraintTop_toBottomOf="@id/tvEndValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/tvDynamicText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="@dimen/dimen_16dp"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:fontFamily="@font/euro_stile_regular"
+                android:text="@string/recommended" />
+
+        </com.google.android.material.card.MaterialCardView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

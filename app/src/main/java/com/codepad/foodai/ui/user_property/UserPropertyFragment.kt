@@ -70,65 +70,20 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             sharedViewModel.invalidateShowWarning()
         } else {
             if (currentStep < totalSteps) {
-                when (currentStep) {
-                    1 -> loadFragment(WorkoutFragment())
-                    2 -> loadFragment(HeightWeightFragment())
-                    3 -> loadFragment(BirthFragment())
-                    4 -> loadFragment(GoalFragment())
-                    5 -> {
-                        if (requireDesiredWeight) {
-                            loadFragment(DesiredWeightFragment(isGain))
-                        } else {
-                            loadFragment(ReachingGoalsFragment())
-                        }
-                    }
-
-                    6 -> {
-                        if (requireDesiredWeight) {
-                            loadFragment(WeightSpeedSelectionFragment(isGain))
-                        } else {
-                            loadFragment(DietFragment())
-                        }
-                    }
-
-                    7 -> {
-                        if (requireDesiredWeight) {
-                            loadFragment(ReachingGoalsFragment())
-                        } else {
-                            loadFragment(AccomplishFragment())
-                        }
-                    }
-
-                    8 -> {
-                        if (requireDesiredWeight) {
-                            loadFragment(DietFragment())
-                        } else {
-                            if (isPassedStore()) {
-                                loadFragment(RatingFragment())
-                            } else {
-                                loadFragment(LoadingFragment())
-                            }
-                        }
-                    }
-
-                    9 -> {
-                        if (requireDesiredWeight) {
-                            loadFragment(AccomplishFragment())
-                        } else {
-                            if (isPassedStore()) {
-                                loadFragment(LoadingFragment())
-                            } else {
-                                // Result view
-                            }
-                        }
-                    }
-
-                    10 -> {
-                        if (isPassedStore()) {
-                            // Result view
-                        }
-                    }
+                val nextFragment = when (currentStep) {
+                    1 -> WorkoutFragment()
+                    2 -> HeightWeightFragment()
+                    3 -> BirthFragment()
+                    4 -> GoalFragment()
+                    5 -> if (requireDesiredWeight) DesiredWeightFragment(isGain) else ReachingGoalsFragment()
+                    6 -> if (requireDesiredWeight) WeightSpeedSelectionFragment(isGain) else DietFragment()
+                    7 -> if (requireDesiredWeight) ReachingGoalsFragment() else AccomplishFragment()
+                    8 -> if (requireDesiredWeight) DietFragment() else if (isPassedStore()) RatingFragment() else LoadingFragment()
+                    9 -> if (requireDesiredWeight) AccomplishFragment() else if (isPassedStore()) LoadingFragment() else null
+                    10 -> if (isPassedStore()) null else null
+                    else -> null
                 }
+                nextFragment?.let { loadFragment(it) }
             }
         }
     }
@@ -180,7 +135,7 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             4 -> sharedViewModel.dateOfBirth.value != null
             5 -> sharedViewModel.selectedGoal.value != null
             6 -> if (requireDesiredWeight) sharedViewModel.desiredWeight.value != null else sharedViewModel.selectedReachingGoal.value != null
-            7 -> if (requireDesiredWeight) sharedViewModel.selectedReachingGoal.value != null else sharedViewModel.selectedDiet.value != null
+            7 -> if (requireDesiredWeight) sharedViewModel.weightSpeed.value != null else sharedViewModel.selectedDiet.value != null
             8 -> if (requireDesiredWeight) sharedViewModel.selectedDiet.value != null else sharedViewModel.selectedAccomplishment.value != null
             9 -> if (requireDesiredWeight) sharedViewModel.selectedAccomplishment.value != null else isPassedStore()
             10 -> if (requireDesiredWeight) isPassedStore() else true
