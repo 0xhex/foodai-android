@@ -71,11 +71,7 @@ class UserPropertySharedViewModel @Inject constructor(
     private val _desiredWeight = MutableLiveData<Int>()
     val desiredWeight: LiveData<Int> get() = _desiredWeight
 
-    val goalNavigationParams = _selectedGoal.map {
-        val requireWeightSelection = it != "maintain"
-        val isGain = it == "gain_weight"
-        Pair(requireWeightSelection, isGain)
-    }
+    val goalNavigationParams = MutableLiveData<Pair<Boolean, Boolean>>()
 
     init {
         _height.value = 160
@@ -115,6 +111,9 @@ class UserPropertySharedViewModel @Inject constructor(
     fun selectGoal(goal: String) {
         _selectedGoal.value = goal
         _isNextEnabled.value = true
+        val requireWeightSelection = goal != "maintain"
+        val isGain = goal == "gain_weight"
+        goalNavigationParams.value = Pair(requireWeightSelection, isGain)
     }
 
     fun selectWorkout(workout: String) {

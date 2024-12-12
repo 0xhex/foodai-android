@@ -136,60 +136,22 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
     private fun isPassedStore() = FirebaseRemoteConfigManager.getBoolean("isPassedStore")
 
     private fun displaySelectionWarning() {
-        if (currentStep == 1) {
-            Toast.makeText(
-                requireContext(),
-                R.string.please_select_a_gender,
-                Toast.LENGTH_SHORT
-            ).show()
-        } else if (currentStep == 2) {
-            Toast.makeText(
-                requireContext(),
-                R.string.please_select_a_workout,
-                Toast.LENGTH_SHORT
-            ).show()
-        } else if (currentStep == 3) {
-            Toast.makeText(
-                requireContext(),
-                R.string.please_select_weight_and_height,
-                Toast.LENGTH_SHORT
-            ).show()
-        } else if (currentStep == 4) {
-            Toast.makeText(
-                requireContext(),
-                R.string.please_select_a_birth_date,
-                Toast.LENGTH_SHORT
-            ).show()
-        } else if (currentStep == 5) {
-            Toast.makeText(
-                requireContext(),
-                R.string.please_select_a_goal,
-                Toast.LENGTH_SHORT
-            ).show()
-        } else if (currentStep == 6) {
-            Toast.makeText(
-                requireContext(),
-                R.string.please_select_a_desired_weight,
-                Toast.LENGTH_SHORT
-            ).show()
-        } else if (currentStep == 7) {
-            Toast.makeText(
-                requireContext(),
-                R.string.please_select_a_reaching_goal,
-                Toast.LENGTH_SHORT
-            ).show()
-        } else if (currentStep == 8) {
-            Toast.makeText(
-                requireContext(),
-                R.string.please_select_a_diet,
-                Toast.LENGTH_SHORT
-            ).show()
-        } else if (currentStep == 9) {
-            Toast.makeText(
-                requireContext(),
-                R.string.please_select_an_accomplishment,
-                Toast.LENGTH_SHORT
-            ).show()
+        val requireDesiredWeight = sharedViewModel.goalNavigationParams.value?.first == true
+        val messageResId = when (currentStep) {
+            1 -> R.string.please_select_a_gender
+            2 -> R.string.please_select_a_workout
+            3 -> R.string.please_select_weight_and_height
+            4 -> R.string.please_select_a_birth_date
+            5 -> R.string.please_select_a_goal
+            6 -> if (requireDesiredWeight) R.string.please_select_a_desired_weight else R.string.please_select_a_reaching_goal
+            7 -> if (requireDesiredWeight) R.string.select_a_weight_speed else R.string.please_select_a_diet
+            8 -> if (requireDesiredWeight) R.string.please_select_a_reaching_goal else R.string.please_select_an_accomplishment
+            9 -> if (requireDesiredWeight) R.string.please_select_a_diet else null
+            10 -> if (requireDesiredWeight) R.string.please_select_an_accomplishment else null
+            else -> null
+        }
+        messageResId?.let {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
     }
 
