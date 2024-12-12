@@ -18,6 +18,7 @@ import com.codepad.foodai.ui.user_property.diet.DietFragment
 import com.codepad.foodai.ui.user_property.gender.GenderFragment
 import com.codepad.foodai.ui.user_property.goal.GoalFragment
 import com.codepad.foodai.ui.user_property.heightweight.HeightWeightFragment
+import com.codepad.foodai.ui.user_property.loading.LoadingFragment
 import com.codepad.foodai.ui.user_property.rating.RatingFragment
 import com.codepad.foodai.ui.user_property.reachinggoals.ReachingGoalsFragment
 import com.codepad.foodai.ui.user_property.weightspeed.WeightSpeedSelectionFragment
@@ -105,7 +106,7 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                             if (isPassedStore()) {
                                 loadFragment(RatingFragment())
                             } else {
-                                // loading fragment
+                                loadFragment(LoadingFragment())
                             }
                         }
                     }
@@ -113,14 +114,18 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                     9 -> {
                         if (requireDesiredWeight) {
                             loadFragment(AccomplishFragment())
+                        } else {
+                            if (isPassedStore()) {
+                                loadFragment(LoadingFragment())
+                            } else {
+                                // Result view
+                            }
                         }
                     }
 
-                    else -> {
+                    10 -> {
                         if (isPassedStore()) {
-                            loadFragment(RatingFragment())
-                        } else {
-                            // loading fragment
+                            // Result view
                         }
                     }
                 }

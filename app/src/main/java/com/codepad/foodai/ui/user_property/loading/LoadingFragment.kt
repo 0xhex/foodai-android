@@ -1,19 +1,19 @@
-package com.codepad.foodai.ui.user_property.rating
+package com.codepad.foodai.ui.user_property.loading
 
 import androidx.fragment.app.activityViewModels
 import com.codepad.foodai.R
-import com.codepad.foodai.databinding.FragmentRatingBinding
+import com.codepad.foodai.databinding.FragmentLoadingBinding
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.UserPropertySharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RatingFragment() :
-    BaseFragment<FragmentRatingBinding>() {
+class LoadingFragment() :
+    BaseFragment<FragmentLoadingBinding>() {
 
     private val sharedViewModel: UserPropertySharedViewModel by activityViewModels()
 
-    override fun getLayoutId() = R.layout.fragment_rating
+    override fun getLayoutId() = R.layout.fragment_loading
 
     override fun onReadyView() {
         binding.viewModel = sharedViewModel
