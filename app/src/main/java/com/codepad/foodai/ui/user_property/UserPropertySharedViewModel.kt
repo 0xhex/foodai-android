@@ -92,10 +92,7 @@ class UserPropertySharedViewModel @Inject constructor(
             resourceHelper.getString(R.string.gaining_muscle_breeze),
             Gender.FEMALE
         ),
-        // Add other reviews here
     )
-
-    var hasRequestedReview = false
 
     init {
         _height.value = 160

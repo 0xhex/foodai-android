@@ -220,7 +220,7 @@
     <string name="we_use_your_step_count_data_from_apple_health">We use your step count data from Apple Health to provide personalized insights</string>
     <string name="step_count_data">We use your step count data from Apple Health to provide personalized insights and help you achieve your fitness goals.</string>
     <string name="notify_when_done">We\nll notify you when done!</string>
-    <string name="setting_up">We're setting everything up for you</string>
+    <string name="setting_up">We\'re setting everything up for you</string>
     <string name="weekly">Weekly</string>
     <string name="weight">Weight</string>
     <string name="weight_progress_displayed">Weight progress will be displayed here!</string>

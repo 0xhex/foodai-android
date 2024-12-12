@@ -89,8 +89,7 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                     else -> null
                 }
                 nextFragment?.let { loadFragment(it) }
-            }
-            if (currentStep > totalSteps && isPassedStore()) {
+            } else if (currentStep > totalSteps && isPassedStore()) {
                 launchPlayReviewPopup()
             }
         }
@@ -168,11 +167,7 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                 val reviewInfo = task.result
                 playReviewManager.launchReviewFlow(requireActivity(), reviewInfo)
                     .addOnCompleteListener { reviewTask ->
-                        if (reviewTask.isSuccessful) {
-                            navigateToLoader()
-                        } else {
-                            navigateToLoader()
-                        }
+                        navigateToLoader()
                     }
             } else {
                 navigateToLoader()
