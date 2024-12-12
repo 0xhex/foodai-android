@@ -4,9 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.codepad.foodai.R
 import com.codepad.foodai.domain.use_cases.user.UpdateUserFieldUseCase
+import com.codepad.foodai.helpers.ResourceHelper
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.user_property.heightweight.MeasurementUnit
+import com.codepad.foodai.ui.user_property.rating.Gender
+import com.codepad.foodai.ui.user_property.rating.Review
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -17,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserPropertySharedViewModel @Inject constructor(
     private val updateUserFieldUseCase: UpdateUserFieldUseCase,
+    private val resourceHelper: ResourceHelper,
 ) : ViewModel() {
 
     private val _selectedGender = MutableLiveData<String?>()
@@ -74,6 +79,19 @@ class UserPropertySharedViewModel @Inject constructor(
     val weightSpeed: LiveData<Double> get() = _weightSpeed
 
     val goalNavigationParams = MutableLiveData<Pair<Boolean, Boolean>>()
+
+    val reviews = listOf(
+        Review("Marley Bryle", 5, resourceHelper.getString(R.string.lost_15_lbs), Gender.MALE),
+        Review(
+            "Jane Doe",
+            5,
+            resourceHelper.getString(R.string.gaining_muscle_breeze),
+            Gender.FEMALE
+        ),
+        // Add other reviews here
+    )
+
+    var hasRequestedReview = false
 
     init {
         _height.value = 160
@@ -205,14 +223,14 @@ class UserPropertySharedViewModel @Inject constructor(
             }
 
             10 -> if (requireDesiredWeight) {
-                handleStep(_selectedAccomplishment.value, ::updateUserAccomplishment)
+                handleStep(_selectedAccomplishment.value, ::updateUserAccomplishment, false)
             }
         }
     }
 
-    private fun <T> handleStep(value: T?, updateFunction: () -> Unit) {
+    private fun <T> handleStep(value: T?, updateFunction: () -> Unit, showWarning: Boolean = true) {
         if (value == null) {
-            _showWarning.value = true
+            _showWarning.value = showWarning
         } else {
             updateFunction()
         }
@@ -344,7 +362,11 @@ class UserPropertySharedViewModel @Inject constructor(
         val userID = UserSession.user?.id ?: return
 
         viewModelScope.launch {
-            updateUserFieldUseCase.updateUserFields(userID, "targetPerWeek", weightSpeed.value.toString())
+            updateUserFieldUseCase.updateUserFields(
+                userID,
+                "targetPerWeek",
+                weightSpeed.value.toString()
+            )
         }
     }
 

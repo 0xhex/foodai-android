@@ -23,6 +23,7 @@ import com.codepad.foodai.ui.user_property.rating.RatingFragment
 import com.codepad.foodai.ui.user_property.reachinggoals.ReachingGoalsFragment
 import com.codepad.foodai.ui.user_property.weightspeed.WeightSpeedSelectionFragment
 import com.codepad.foodai.ui.user_property.workout.WorkoutFragment
+import com.google.android.play.core.review.ReviewManagerFactory
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +33,9 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
     private val sharedViewModel: UserPropertySharedViewModel by activityViewModels()
 
     override fun getLayoutId() = R.layout.fragment_user_property
+    private val playReviewManager by lazy {
+        ReviewManagerFactory.create(requireContext())
+    }
 
     override fun onReadyView() {
         binding.ivBack.setOnClickListener { onBackPressed() }
@@ -69,7 +73,7 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             displaySelectionWarning()
             sharedViewModel.invalidateShowWarning()
         } else {
-            if (currentStep < totalSteps) {
+            if (currentStep <= totalSteps) {
                 val nextFragment = when (currentStep) {
                     1 -> WorkoutFragment()
                     2 -> HeightWeightFragment()
@@ -80,10 +84,13 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                     7 -> if (requireDesiredWeight) ReachingGoalsFragment() else AccomplishFragment()
                     8 -> if (requireDesiredWeight) DietFragment() else if (isPassedStore()) RatingFragment() else LoadingFragment()
                     9 -> if (requireDesiredWeight) AccomplishFragment() else if (isPassedStore()) LoadingFragment() else null
-                    10 -> if (isPassedStore()) null else null
+                    10 -> if (isPassedStore()) RatingFragment() else LoadingFragment()
                     else -> null
                 }
                 nextFragment?.let { loadFragment(it) }
+            }
+            if (currentStep > totalSteps && isPassedStore()) {
+                launchPlayReviewPopup()
             }
         }
     }
@@ -123,7 +130,8 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             replace(R.id.fragmentContainer, fragment)
             addToBackStack(null)
         }
-        updateNextButtonState(false)
+
+        updateNextButtonState(fragment is RatingFragment)
     }
 
     private fun updateNextButtonState(enable: Boolean = true) {
@@ -138,7 +146,7 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             7 -> if (requireDesiredWeight) sharedViewModel.weightSpeed.value != null else sharedViewModel.selectedDiet.value != null
             8 -> if (requireDesiredWeight) sharedViewModel.selectedReachingGoal.value != null else sharedViewModel.selectedAccomplishment.value != null
             9 -> if (requireDesiredWeight) sharedViewModel.selectedDiet.value != null else isPassedStore()
-            10 -> if (requireDesiredWeight)sharedViewModel.selectedAccomplishment.value != null else true
+            10 -> if (requireDesiredWeight) sharedViewModel.selectedAccomplishment.value != null else true
             else -> true
         } && enable
 
@@ -150,5 +158,15 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             if (isEnabled) ContextCompat.getColor(requireContext(), R.color.white)
             else ContextCompat.getColor(requireContext(), R.color.black)
         )
+    }
+
+    private fun launchPlayReviewPopup() {
+        val request = playReviewManager.requestReviewFlow()
+        request.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val reviewInfo = task.result
+                playReviewManager.launchReviewFlow(requireActivity(), reviewInfo)
+            }
+        }
     }
 }

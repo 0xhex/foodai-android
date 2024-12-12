@@ -13,5 +13,7 @@
     <color name="color_splash_bg">#121622</color>
     <color name="blue_button">#007aff</color>
     <color name="gray">#8e8e93</color>
+    <color name="amber">#dba709</color>
+    <color name="gray_200">#343435</color>
 
 </resources>
