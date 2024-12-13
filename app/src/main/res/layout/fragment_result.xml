@@ -46,6 +46,8 @@
             android:layout_width="200dp"
             android:layout_height="180dp"
             android:layout_marginTop="20dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
             app:lottie_rawRes="@raw/plan"
             app:layout_constraintTop_toBottomOf="@id/congratulationsText"
             app:layout_constraintStart_toStartOf="parent"
@@ -92,9 +94,9 @@
 
             <!-- Text Rows -->
             <include layout="@layout/text_row" />
-            <include layout="@layout/text_row" />
-            <include layout="@layout/text_row" />
-            <include layout="@layout/text_row" />
+            <include layout="@layout/text_row_2" />
+            <include layout="@layout/text_row_3" />
+            <include layout="@layout/text_row_4" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

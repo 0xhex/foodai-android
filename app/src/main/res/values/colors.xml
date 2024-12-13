@@ -15,5 +15,8 @@
     <color name="gray">#8e8e93</color>
     <color name="amber">#dba709</color>
     <color name="gray_200">#343435</color>
+    <color name="systemGray3">#c7c7cc</color>
+    <color name="orange">#ff9500</color>
+    <color name="red">#ff3b30</color>
 
 </resources>

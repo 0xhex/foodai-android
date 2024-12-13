@@ -1,0 +1,39 @@
+<!-- res/layout/text_row.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/custom_black"
+    android:layout_marginBottom="10dp"
+    android:cornerRadius="10dp">
+
+    <TextView
+        android:id="@+id/emojiText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🎉"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/euro_stile_regular" />
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/your_custom_plan_is_ready"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/euro_stile_regular"
+        android:layout_marginTop="5dp" />
+
+    <TextView
+        android:id="@+id/descriptionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tracking_your_meals_has_never_been_easier_with_just_a_simple_scan_instantly_get_all_the_nutritional_details_you_need"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/euro_stile_regular"
+        android:layout_marginTop="5dp" />
+</LinearLayout>
