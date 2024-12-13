@@ -53,4 +53,17 @@
         android:label="LoadingFragment"></fragment>
 
 
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.codepad.foodai.ui.user_property.result.ResultFragment">
+
+        <action
+            android:id="@+id/action_resultFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/resultFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+
 </navigation>
