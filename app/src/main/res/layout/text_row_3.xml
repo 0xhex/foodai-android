@@ -1,39 +1,47 @@
 <!-- res/layout/text_row_3.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    app:cardUseCompatPadding="true"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/custom_black"
     android:layout_marginBottom="10dp"
-    android:cornerRadius="10dp">
+    app:cardCornerRadius="10dp">
 
-    <TextView
-        android:id="@+id/emojiText"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="💪"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/euro_stile_regular" />
+        android:background="@color/custom_black"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/daily_recommendations_tailored_for_you"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/euro_stile_regular"
-        android:layout_marginTop="5dp" />
+        <TextView
+            android:id="@+id/emojiText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/euro_stile_regular"
+            android:text="💪"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/descriptionText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/no_more_guessing"
-        android:textSize="16sp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/euro_stile_regular"
-        android:layout_marginTop="5dp" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/euro_stile_regular"
+            android:text="@string/daily_recommendations_tailored_for_you"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/descriptionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/euro_stile_regular"
+            android:text="@string/no_more_guessing"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

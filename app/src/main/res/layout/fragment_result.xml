@@ -4,99 +4,167 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.codepad.foodai.ui.user_property.result.ResultViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/custom_black"
-        tools:context=".ui.result.ResultFragment">
+        android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:progress="100"
-            android:progressTint="@color/gray"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:background="@color/custom_black"
+            tools:context=".ui.result.ResultFragment">
 
-        <TextView
-            android:id="@+id/congratulationsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="Congratulations \nyour custom plan is ready!"
-            android:textColor="@color/white"
-            android:textSize="28sp"
-            android:gravity="center"
-            android:fontFamily="@font/euro_stile_regular"
-            app:layout_constraintTop_toBottomOf="@id/progressBar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:progress="100"
+                android:progressTint="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottieView"
-            android:layout_width="200dp"
-            android:layout_height="180dp"
-            android:layout_marginTop="20dp"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/plan"
-            app:layout_constraintTop_toBottomOf="@id/congratulationsText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <TextView
+                android:id="@+id/congratulationsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/euro_stile_regular"
+                android:gravity="center"
+                android:text="@string/congratulations_custom_plan"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/progressBar" />
 
-        <LinearLayout
-            android:id="@+id/customPlanLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            app:layout_constraintTop_toBottomOf="@id/lottieView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieView"
+                android:layout_width="200dp"
+                android:layout_height="180dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/congratulationsText"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/plan" />
 
-            <include layout="@layout/custom_plan_first_row" />
-            <include layout="@layout/custom_plan_second_row" />
-        </LinearLayout>
+            <TextView
+                android:id="@+id/txt_desc"
+                app:layout_constraintTop_toBottomOf="@id/lottieView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="@dimen/dimen_60dp"
+                android:textAlignment="center"
+                android:layout_width="0dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/euro_stile_regular"
+                android:textSize="16sp"
+                android:text="@string/daily_recommendation_nyou_can_edit_this_anytime"
+                android:layout_height="wrap_content"/>
 
-        <Button
-            android:id="@+id/nextButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginHorizontal="20dp"
-            android:text="NEXT"
-            android:textColor="@color/white"
-            android:background="@color/blue_button"
-            android:fontFamily="@font/euro_stile_bold"
-            android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@id/customPlanLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/customPlanLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_desc">
 
-        <LinearLayout
-            android:id="@+id/textRowsLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            app:layout_constraintTop_toBottomOf="@id/nextButton"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+                <include
+                    android:id="@+id/layout_calories"
+                    layout="@layout/layout_item_nutrition"
+                    android:layout_width="0dp"
+                    app:layout_constraintEnd_toStartOf="@id/layout_carbs"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_8dp"
+                    app:nutrition="@{viewModel.calories}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Text Rows -->
-            <include layout="@layout/text_row" />
-            <include layout="@layout/text_row_2" />
-            <include layout="@layout/text_row_3" />
-            <include layout="@layout/text_row_4" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <include
+                    android:id="@+id/layout_carbs"
+                    layout="@layout/layout_item_nutrition"
+                    android:layout_width="0dp"
+                    app:nutrition="@{viewModel.carbs}"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/layout_calories"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <include
+                    android:id="@+id/layout_protein"
+                    layout="@layout/layout_item_nutrition"
+                    android:layout_width="0dp"
+                    app:layout_constraintEnd_toStartOf="@id/layout_fats"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_8dp"
+                    app:nutrition="@{viewModel.protein}"
+                    android:layout_marginTop="@dimen/dimen_8dp"
+                    app:layout_constraintTop_toBottomOf="@id/layout_calories"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <include
+                    android:id="@+id/layout_fats"
+                    layout="@layout/layout_item_nutrition"
+                    android:layout_width="0dp"
+                    app:nutrition="@{viewModel.fats}"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/layout_protein"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/layout_protein" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/nextButton"
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+                android:layout_marginHorizontal="@dimen/dimen_24dp"
+                android:layout_marginBottom="@dimen/dimen_24dp"
+                android:fontFamily="@font/euro_stile_bold"
+                android:text="@string/next"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:backgroundTint="#037aff"
+                app:cornerRadius="12dp"
+                app:fontFamily="@font/euro_stile_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/customPlanLayout" />
+
+            <LinearLayout
+                android:id="@+id/textRowsLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nextButton">
+
+                <!-- Text Rows -->
+                <include layout="@layout/text_row" />
+
+                <include layout="@layout/text_row_2" />
+
+                <include layout="@layout/text_row_3" />
+
+                <include layout="@layout/text_row_4" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </layout>

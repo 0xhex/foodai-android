@@ -1,10 +1,7 @@
 // ResultFragment.kt
 package com.codepad.foodai.ui.user_property.result
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.graphics.Color
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
@@ -27,6 +24,11 @@ class ResultFragment : BaseFragment<FragmentResultBinding>() {
             viewModel.navigateToNextScreen()
             findNavController().navigate(R.id.action_resultFragment_to_homeFragment)
         }
+
+        binding.layoutCarbs.circularProgressBar.progressBarColor = R.color.orange
+        binding.layoutProtein.circularProgressBar.progressBarColor = R.color.red
+        binding.layoutFats.circularProgressBar.progressBarColor = R.color.blue_button
+        binding.layoutCalories.circularProgressBar.progressBarColor = R.color.black
 
         viewModel.fetchNutrition()
     }

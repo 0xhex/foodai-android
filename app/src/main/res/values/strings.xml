@@ -258,4 +258,10 @@
     <string name="no_more_guessing">No more guessing! We calculate the ideal calorie and nutrient intake to match your personal needs. You can always adjust it to fit your lifestyle.</string>
     <string name="keep_it_simple">Keep It Simple</string>
     <string name="track_adjust_improve">Track. Adjust. Improve. All your stats are beautifully visualized to help you stay motivated every day.</string>
+
+    <string name="calories">Calories</string>
+    <string name="carbs">Carbs</string>
+    <string name="protein">Protein</string>
+    <string name="fats">Fats</string>
+    <string name="daily_recommendation_nyou_can_edit_this_anytime">Daily recommendation\nYou can edit this anytime</string>
 </resources>

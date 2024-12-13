@@ -121,6 +121,7 @@ dependencies {
     // TODO - Reenable with manifest configurations  - implementation(libs.sentry)
     implementation(libs.swipe)
     implementation(libs.dotindicator)
+    implementation(libs.circleprogressbar)
 }
 
 kapt {
