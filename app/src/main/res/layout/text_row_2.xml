@@ -1,0 +1,47 @@
+<!-- res/layout/text_row_2.xml -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    app:cardUseCompatPadding="true"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/custom_black">
+
+        <TextView
+            android:id="@+id/emojiText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🥗"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/euro_stile_regular" />
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/scan_any_food"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/euro_stile_regular"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/descriptionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/curious_about_what_s_in_your_meal_just_scan_it_our_app_provides_real_time_insights_into_calories_carbs_proteins_fats_and_more_so_you_stay_on_track_with_your_goals"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/euro_stile_regular"
+            android:layout_marginTop="5dp" />
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

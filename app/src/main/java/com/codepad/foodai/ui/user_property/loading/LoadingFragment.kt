@@ -6,6 +6,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.airbnb.lottie.LottieAnimationView
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentLoadingBinding
@@ -40,7 +41,7 @@ class LoadingFragment : BaseFragment<FragmentLoadingBinding>() {
                     index++
                     handler.postDelayed(this, 2200)
                 } else {
-                    Toast.makeText(requireContext(), "Done", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_loadingFragment_to_resultFragment)
                 }
             }
         }

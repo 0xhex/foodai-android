@@ -250,4 +250,18 @@
     <string name="recommended">Recommended</string>
     <string name="slow_and_steady">Slow and Steady</string>
     <string name="you_may_feel_very_tired_and_develop_loose_skin">You may feel very tired and develop loose skin</string>
+    <string name="your_custom_plan_is_ready">Your Custom Plan is Ready!</string>
+    <string name="tracking_your_meals_has_never_been_easier_with_just_a_simple_scan_instantly_get_all_the_nutritional_details_you_need">Tracking your meals has never been easier. With just a simple scan, instantly get all the nutritional details you need!</string>
+    <string name="curious_about_what_s_in_your_meal_just_scan_it_our_app_provides_real_time_insights_into_calories_carbs_proteins_fats_and_more_so_you_stay_on_track_with_your_goals">Curious about what\'s in your meal? Just scan it! Our app provides real-time insights into calories, carbs, proteins, fats, and more—so you stay on track with your goals.</string>
+    <string name="scan_any_food">Scan Any Food!</string>
+    <string name="daily_recommendations_tailored_for_you">Daily Recommendations, Tailored for You!</string>
+    <string name="no_more_guessing">No more guessing! We calculate the ideal calorie and nutrient intake to match your personal needs. You can always adjust it to fit your lifestyle.</string>
+    <string name="keep_it_simple">Keep It Simple</string>
+    <string name="track_adjust_improve">Track. Adjust. Improve. All your stats are beautifully visualized to help you stay motivated every day.</string>
+
+    <string name="calories">Calories</string>
+    <string name="carbs">Carbs</string>
+    <string name="protein">Protein</string>
+    <string name="fats">Fats</string>
+    <string name="daily_recommendation_nyou_can_edit_this_anytime">Daily recommendation\nYou can edit this anytime</string>
 </resources>

@@ -24,6 +24,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.ImageViewTarget
 import com.bumptech.glide.request.target.Target
 import com.codepad.foodai.extensions.orFalse
+import com.mikhaellopez.circularprogressbar.CircularProgressBar
 
 const val INVALID_RES_ID = 0
 
@@ -57,6 +58,10 @@ fun setTint(view: ImageView, @ColorRes colorRes: Int?) {
     }
 }
 
+@BindingAdapter("progressBarColor")
+fun setProgressBarColor(view: CircularProgressBar, color: Int) {
+    view.progressBarColor = color
+}
 
 @BindingAdapter(
     "imageUrl",

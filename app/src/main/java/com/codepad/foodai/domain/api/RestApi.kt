@@ -1,6 +1,7 @@
 package com.codepad.foodai.domain.api
 
 import com.codepad.foodai.domain.models.APIResponse
+import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
 import com.codepad.foodai.domain.models.user.RegisterRequest
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequest
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequestArray
@@ -32,4 +33,7 @@ interface RestApi {
         @Path("userID") userID: String,
         @Body request: UpdateUserFieldRequestArray,
     ): APIResponse<UpdateUserFieldResponseData>
+
+    @GET("users/{userID}/nutrition")
+    suspend fun getUserNutrition(@Path("userID") userID: String): APIResponse<NutritionResponseData>
 }

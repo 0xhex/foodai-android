@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MacroCircleView">
+        <attr name="title" format="string" />
+        <attr name="value" format="string" />
+        <attr name="color" format="color" />
+        <attr name="isEditableIcon" format="boolean" />
+        <attr name="isHomeScreen" format="boolean" />
+    </declare-styleable>
+</resources>
