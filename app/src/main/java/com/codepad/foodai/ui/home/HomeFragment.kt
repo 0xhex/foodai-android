@@ -20,7 +20,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
     }
 
     override fun onReadyView() {
-        val navController = childFragmentManager.findFragmentById(R.id.nav_host_fragment)?.findNavController()
+        val navController = childFragmentManager.findFragmentById(R.id.nav_host_fragment_home)?.findNavController()
         val bottomNavigationView: BottomNavigationView = binding.bottomNavigation
 
         navController?.let {

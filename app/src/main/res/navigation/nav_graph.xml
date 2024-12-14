@@ -99,23 +99,4 @@
             app:argType="integer" />
     </fragment>
 
-
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.codepad.foodai.ui.home.home.HomeTabFragment"
-        android:label="@string/home"
-        tools:layout="@layout/fragment_home_tab" />
-
-    <fragment
-        android:id="@+id/navigation_analytics"
-        android:name="com.codepad.foodai.ui.home.analytics.AnalyticsTabFragment"
-        android:label="@string/analytics"
-        tools:layout="@layout/fragment_analytics_tab" />
-
-    <fragment
-        android:id="@+id/navigation_settings"
-        android:name="com.codepad.foodai.ui.home.settings.SettingsTabFragment"
-        android:label="@string/settings"
-        tools:layout="@layout/fragment_settings" />
-
 </navigation>
