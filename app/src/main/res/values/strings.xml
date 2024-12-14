@@ -264,4 +264,5 @@
     <string name="protein">Protein</string>
     <string name="fats">Fats</string>
     <string name="daily_recommendation_nyou_can_edit_this_anytime">Daily recommendation\nYou can edit this anytime</string>
+    <string name="health_connect">Health Connect</string>
 </resources>
