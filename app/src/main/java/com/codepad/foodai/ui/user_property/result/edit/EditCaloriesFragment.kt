@@ -42,6 +42,10 @@ class EditCaloriesFragment : BaseFragment<FragmentEditCaloriesBinding>() {
             }
         )
 
+        binding.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.btnRevert.setOnClickListener {
             findNavController().popBackStack()
         }

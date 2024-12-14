@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.codepad.foodai.domain.models.user.User
 import com.codepad.foodai.domain.use_cases.UseCaseResult
 import com.codepad.foodai.domain.use_cases.user.GetUserDataUseCase
-import com.codepad.foodai.helpers.Constants.PERSISTANCE_ONBOARDING_DISPLAYED
 import com.codepad.foodai.helpers.ModelPreferencesManager
 import com.codepad.foodai.helpers.UserSession
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,15 +22,15 @@ class SplashViewModel @Inject constructor(
     val userDataResponse: LiveData<User?> get() = _userDataResponse
 
     fun checkOnboardingAndFetchUserData() {
-        if (isOnboardingSkipped()) {
+        if (isOnboardingCompleted()) {
             fetchUserData()
         } else {
             _userDataResponse.value = null
         }
     }
 
-    private fun isOnboardingSkipped(): Boolean {
-        return ModelPreferencesManager.get<Boolean>(PERSISTANCE_ONBOARDING_DISPLAYED) ?: false
+    private fun isOnboardingCompleted(): Boolean {
+        return ModelPreferencesManager.get<Boolean>("isUserPropertySet") ?: false
     }
 
     private fun fetchUserData() {
