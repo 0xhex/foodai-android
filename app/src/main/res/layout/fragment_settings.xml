@@ -12,6 +12,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/dimen_8dp"
             android:background="@color/custom_black">
 
             <TextView
@@ -353,8 +354,8 @@
 
                 <ImageView
                     android:id="@+id/img_personal_details_arrow"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginEnd="@dimen/dimen_16dp"
                     android:src="@drawable/ic_arrow_forward"
                     android:tint="@color/white"
@@ -367,7 +368,7 @@
                 android:id="@+id/item_adjust_goals"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -389,8 +390,8 @@
 
                 <ImageView
                     android:id="@+id/img_adjust_goals_arrow"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginEnd="@dimen/dimen_16dp"
                     android:src="@drawable/ic_arrow_forward"
                     android:tint="@color/white"
@@ -417,7 +418,7 @@
                 android:id="@+id/item_terms_and_conditions"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -439,8 +440,8 @@
 
                 <ImageView
                     android:id="@+id/img_terms_and_conditions_arrow"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginEnd="@dimen/dimen_16dp"
                     android:src="@drawable/ic_arrow_forward"
                     android:tint="@color/white"
@@ -454,7 +455,7 @@
                 android:id="@+id/item_privacy_policy"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -476,8 +477,8 @@
 
                 <ImageView
                     android:id="@+id/img_privacy_policy_arrow"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginEnd="@dimen/dimen_16dp"
                     android:src="@drawable/ic_arrow_forward"
                     android:tint="@color/white"
@@ -491,7 +492,7 @@
                 android:id="@+id/item_support_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -513,8 +514,8 @@
 
                 <ImageView
                     android:id="@+id/img_support_email_arrow"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginEnd="@dimen/dimen_16dp"
                     android:src="@drawable/ic_arrow_forward"
                     android:tint="@color/white"
@@ -528,7 +529,7 @@
                 android:id="@+id/item_delete_account"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -550,8 +551,8 @@
 
                 <ImageView
                     android:id="@+id/img_delete_account_arrow"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginEnd="@dimen/dimen_16dp"
                     android:src="@drawable/ic_arrow_forward"
                     android:tint="@color/white"
