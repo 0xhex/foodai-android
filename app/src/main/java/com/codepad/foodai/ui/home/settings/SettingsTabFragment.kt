@@ -77,10 +77,14 @@ class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
     }
 
     private fun calculateAge(dateOfBirth: Date?): Int {
+        if (dateOfBirth == null) return 0
         val calendar = Calendar.getInstance()
-        val currentDate = Date()
-        val ageComponents = calendar.get(Calendar.YEAR) - (dateOfBirth?.year ?: 0)
-        return ageComponents
+        val birthDate = Calendar.getInstance().apply { time = dateOfBirth }
+        var age = calendar.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR)
+        if (calendar.get(Calendar.DAY_OF_YEAR) < birthDate.get(Calendar.DAY_OF_YEAR)) {
+            age--
+        }
+        return age
     }
 
     private fun formatHeight(userData: User): String {
