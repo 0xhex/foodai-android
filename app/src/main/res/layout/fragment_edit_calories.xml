@@ -1,0 +1,139 @@
+<!-- fragment_edit_calories.xml -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.codepad.foodai.ui.user_property.result.ResultViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/custom_black"
+        android:padding="16dp"
+        tools:context=".ui.user_property.edit.EditCaloriesFragment">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_16dp"
+            android:layout_marginTop="@dimen/dimen_24dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#8d8d92" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_16dp"
+            android:fontFamily="@font/euro_stile_bold"
+            android:paddingBottom="10dp"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivBack"
+            tools:text="Calories" />
+
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/circleProgressBar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            app:cpb_background_progressbar_color="@color/systemGray3"
+            app:cpb_background_progressbar_width="5dp"
+            app:cpb_progress="75"
+            app:cpb_progress_direction="to_right"
+            app:cpb_progressbar_width="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <ImageView
+            android:id="@+id/img_parameter"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/circleProgressBar"
+            app:layout_constraintEnd_toEndOf="@id/circleProgressBar"
+            tools:srcCompat="@drawable/protein"
+            android:layout_margin="18dp"
+            app:layout_constraintStart_toStartOf="@id/circleProgressBar"
+            app:layout_constraintTop_toTopOf="@id/circleProgressBar" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_32dp"
+            android:textColorHint="@color/white"
+            app:boxCornerRadiusBottomEnd="@dimen/dimen_12dp"
+            app:boxCornerRadiusBottomStart="@dimen/dimen_12dp"
+            app:boxCornerRadiusTopEnd="@dimen/dimen_12dp"
+            app:boxCornerRadiusTopStart="@dimen/dimen_12dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/circleProgressBar">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:backgroundTint="#262626"
+                android:fontFamily="@font/euro_stile_bold"
+                android:inputType="date"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_32dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRevert"
+                android:layout_width="0dp"
+                android:layout_height="66dp"
+                android:layout_marginEnd="@dimen/dimen_16dp"
+                android:layout_weight="1"
+                android:text="@string/revert"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:backgroundTint="@color/white"
+                app:cornerRadius="12dp"
+                app:fontFamily="@font/euro_stile_bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDone"
+                android:layout_width="0dp"
+                android:layout_height="66dp"
+                android:layout_weight="1"
+                android:text="@string/done"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:backgroundTint="#037aff"
+                app:cornerRadius="12dp"
+                app:fontFamily="@font/euro_stile_bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
