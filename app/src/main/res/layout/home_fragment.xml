@@ -55,8 +55,8 @@
             app:layout_constraintEnd_toEndOf="@id/img_circle"
             android:elevation="14dp"
             app:srcCompat="@drawable/ic_plus"
-            android:layout_width="50dp"
-            android:layout_height="50dp"/>
+            android:layout_width="45dp"
+            android:layout_height="45dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -11,16 +11,18 @@
         android:background="@color/custom_black">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/analytics"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:fontFamily="@font/euro_stile_bold"
+            android:id="@+id/txt_title"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_marginTop="@dimen/dimen_24dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/euro_stile_bold"
+            android:layout_marginStart="@dimen/dimen_16dp"
+            android:textSize="30sp"
+            android:text="@string/overview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
