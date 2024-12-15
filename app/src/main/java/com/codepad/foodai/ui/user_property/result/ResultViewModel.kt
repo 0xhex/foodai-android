@@ -9,6 +9,7 @@ import com.codepad.foodai.domain.api.APIError
 import com.codepad.foodai.domain.use_cases.UseCaseResult
 import com.codepad.foodai.domain.use_cases.nutrition.GetUserNutritionUseCase
 import com.codepad.foodai.domain.use_cases.user.GetUserDataUseCase
+import com.codepad.foodai.domain.use_cases.user.UpdateUserFieldUseCase
 import com.codepad.foodai.helpers.ModelPreferencesManager
 import com.codepad.foodai.helpers.ResourceHelper
 import com.codepad.foodai.helpers.UserSession
@@ -20,7 +21,8 @@ import javax.inject.Inject
 class ResultViewModel @Inject constructor(
     private val nutritionsUseCase: GetUserNutritionUseCase,
     private val getUserDataUseCase: GetUserDataUseCase,
-    private val resourceHelper: ResourceHelper
+    private val resourceHelper: ResourceHelper,
+    private val updateUserFieldUseCase: UpdateUserFieldUseCase
 ) : ViewModel() {
 
     private val _calories =
@@ -45,6 +47,9 @@ class ResultViewModel @Inject constructor(
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> get() = _errorMessage
 
+    private val _updatedUser = MutableLiveData<Boolean>()
+    val updatedUser: LiveData<Boolean> get() = _updatedUser
+
     fun fetchNutrition() {
         val userID = UserSession.user?.id ?: return
         _isLoading.value = true
@@ -53,12 +58,28 @@ class ResultViewModel @Inject constructor(
             when (val result = nutritionsUseCase.getUserNutrition(userID)) {
                 is UseCaseResult.Success -> {
                     _calories.value =
-                        Nutrition("Calories", result.data.totalCalories.toString(), resourceHelper.getColor(R.color.black))
+                        Nutrition(
+                            "Calories",
+                            result.data.totalCalories.toString(),
+                            resourceHelper.getColor(R.color.black)
+                        )
                     _carbs.value =
-                        Nutrition("Carbs", result.data.carbohydrates.toString(), resourceHelper.getColor(R.color.orange))
+                        Nutrition(
+                            "Carbs",
+                            result.data.carbohydrates.toString(),
+                            resourceHelper.getColor(R.color.orange)
+                        )
                     _protein.value =
-                        Nutrition("Protein", result.data.protein.toString(), resourceHelper.getColor(R.color.red))
-                    _fats.value = Nutrition("Fats", result.data.fat.toString(), resourceHelper.getColor(R.color.blue_button))
+                        Nutrition(
+                            "Protein",
+                            result.data.protein.toString(),
+                            resourceHelper.getColor(R.color.red)
+                        )
+                    _fats.value = Nutrition(
+                        "Fats",
+                        result.data.fat.toString(),
+                        resourceHelper.getColor(R.color.blue_button)
+                    )
                     fetchUserData()
                     _isLoading.value = false
                 }
@@ -96,6 +117,20 @@ class ResultViewModel @Inject constructor(
 
     fun navigateToNextScreen() {
         ModelPreferencesManager.put(true, "isUserPropertySet")
+    }
+
+    fun updateUserFields(userID: String, fieldName: String, fieldValue: String) = viewModelScope.launch {
+        _isLoading.value = true
+        when (val result = updateUserFieldUseCase.updateUserFields(userID, fieldName, fieldValue)) {
+            is UseCaseResult.Success -> {
+                _updatedUser.value = true
+                _isLoading.value = false
+            }
+            is UseCaseResult.Error -> {
+                _isLoading.value = false
+                result.exception?.let { handleRegistrationError(it) }
+            }
+        }
     }
 
 }

@@ -122,6 +122,11 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
     }
 
     private fun loadFragment(fragment: Fragment, initialLoad: Boolean = false) {
+        if (fragment is LoadingFragment) {
+            navigateToLoader()
+            return
+        }
+
         if (!initialLoad) {
             currentStep = currentStep.inc()
             updateProgress()

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
 
@@ -40,6 +41,10 @@
         <action
             android:id="@+id/action_userPropertyFragment_to_loadingFragment"
             app:destination="@id/loadingFragment" />
+
+        <action
+            android:id="@+id/action_userPropertyFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
     </fragment>
 
     <fragment
@@ -58,7 +63,6 @@
 
     </fragment>
 
-
     <fragment
         android:id="@+id/resultFragment"
         android:name="com.codepad.foodai.ui.user_property.result.ResultFragment">
@@ -69,7 +73,30 @@
             app:popUpTo="@id/resultFragment"
             app:popUpToInclusive="true" />
 
+        <action
+            android:id="@+id/action_resultFragment_to_editCaloriesFragment"
+            app:destination="@id/editCaloriesFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/editCaloriesFragment"
+        android:name="com.codepad.foodai.ui.user_property.result.edit.EditCaloriesFragment"
+        android:label="EditCaloriesFragment">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="textAreaTitle"
+            app:argType="string" />
+        <argument
+            android:name="nutritionType"
+            app:argType="string" />
+        <argument
+            android:name="value"
+            app:argType="string" />
+        <argument
+            android:name="color"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

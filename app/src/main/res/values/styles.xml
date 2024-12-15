@@ -69,4 +69,9 @@
         <item name="colorSurface">@color/white</item>
     </style>
 
+    <style name="BottomNavigationViewTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/euro_stile_regular</item>
+    </style>
+
 </resources>
