@@ -20,6 +20,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
+// TODO: localizations
 @AndroidEntryPoint
 class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
     private val viewModel: HomeViewModel by viewModels()
@@ -58,7 +59,6 @@ class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
             showDeleteAccountDialog()
         }
 
-        // Check subscription status and show premium banner if needed
         // TODO: if (!RevenueCatManager.isUserSubscribed) {
         //     binding.cardPremium.visibility = View.VISIBLE
         //     binding.cardPremium.setOnClickListener {
