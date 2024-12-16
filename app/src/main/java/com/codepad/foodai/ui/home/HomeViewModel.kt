@@ -28,22 +28,22 @@ class HomeViewModel @Inject constructor(
     val userDataResponse: LiveData<User?> get() = _userDataResponse
 
     private val _calories = MutableLiveData<Nutrition>().apply {
-        value = Nutrition("Calories", "0", R.drawable.kcal)
+        value = Nutrition("Calorie Goal", "0", R.drawable.kcal)
     }
     val calories: LiveData<Nutrition> get() = _calories
 
     private val _carbs = MutableLiveData<Nutrition>().apply {
-        value = Nutrition("Carbs", "0", R.drawable.carbs)
+        value = Nutrition("Carb Goal", "0", R.drawable.carbs)
     }
     val carbs: LiveData<Nutrition> get() = _carbs
 
     private val _protein = MutableLiveData<Nutrition>().apply {
-        value = Nutrition("Protein", "0", R.drawable.protein)
+        value = Nutrition("Protein Goal", "0", R.drawable.protein)
     }
     val protein: LiveData<Nutrition> get() = _protein
 
     private val _fats = MutableLiveData<Nutrition>().apply {
-        value = Nutrition("Fats", "0", R.drawable.fats)
+        value = Nutrition("Fat Goal", "0", R.drawable.fats)
     }
     val fats: LiveData<Nutrition> get() = _fats
 
@@ -71,24 +71,24 @@ class HomeViewModel @Inject constructor(
                 is UseCaseResult.Success -> {
                     _calories.value =
                         Nutrition(
-                            "Calories",
+                            "Calorie Goal",
                             result.data.totalCalories.toString(),
                             R.drawable.kcal
                         )
                     _carbs.value =
                         Nutrition(
-                            "Carbs",
+                            "Carb Goal",
                             result.data.carbohydrates.toString(),
                             R.drawable.carbs
                         )
                     _protein.value =
                         Nutrition(
-                            "Protein",
+                            "Protein Goal",
                             result.data.protein.toString(),
                             R.drawable.protein
                         )
                     _fats.value = Nutrition(
-                        "Fats",
+                        "Fat Goal",
                         result.data.fat.toString(),
                         R.drawable.fats
                     )
