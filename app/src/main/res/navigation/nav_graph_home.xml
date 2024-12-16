@@ -28,12 +28,21 @@
             app:popUpTo="@id/navigation_settings"
             app:destination="@id/personalFragment" />
 
-    </fragment>
+        <action
+            android:id="@+id/action_navigation_settings_to_adjustGoalsFragment"
+            app:popUpTo="@id/navigation_settings"
+            app:destination="@id/adjustGoalsFragment" />
 
+    </fragment>
 
     <fragment
         android:id="@+id/personalFragment"
         android:name="com.codepad.foodai.ui.home.settings.personal.PersonalFragment"
         android:label="PersonalFragment"/>
+
+    <fragment
+        android:id="@+id/adjustGoalsFragment"
+        android:name="com.codepad.foodai.ui.home.settings.goals.AdjustGoalsFragment"
+        android:label="AdjustGoalsFragment"/>
 
 </navigation>

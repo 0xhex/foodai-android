@@ -41,7 +41,7 @@ class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
         }
 
         binding.itemAdjustGoals.setOnClickListener {
-
+            findNavController().navigate(SettingsTabFragmentDirections.actionNavigationSettingsToAdjustGoalsFragment())
         }
 
         binding.itemTermsAndConditions.setOnClickListener {
