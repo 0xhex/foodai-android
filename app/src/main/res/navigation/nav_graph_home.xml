@@ -21,7 +21,18 @@
         android:id="@+id/navigation_settings"
         android:name="com.codepad.foodai.ui.home.settings.SettingsTabFragment"
         android:label="@string/settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
 
+        <action
+            android:id="@+id/action_navigation_settings_to_personalFragment"
+            app:destination="@id/personalFragment" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/personalFragment"
+        android:name="com.codepad.foodai.ui.home.settings.personal.PersonalFragment"
+        android:label="PersonalFragment"/>
 
 </navigation>

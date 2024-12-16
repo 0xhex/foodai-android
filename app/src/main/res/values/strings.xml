@@ -266,4 +266,6 @@
     <string name="daily_recommendation_nyou_can_edit_this_anytime">Daily recommendation\nYou can edit this anytime</string>
     <string name="health_connect">Health Connect</string>
     <string name="upgrade_to_premium_and_enjoy_all_features_without_limitations">Upgrade to Premium and enjoy all features without limitations.</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="gender">Gender</string>
 </resources>

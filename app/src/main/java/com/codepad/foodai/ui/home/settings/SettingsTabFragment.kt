@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.BuildConfig
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentSettingsBinding
@@ -36,7 +37,7 @@ class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
 
     private fun setupUI() {
         binding.itemPersonalDetails.setOnClickListener {
-
+            findNavController().navigate(SettingsTabFragmentDirections.actionNavigationSettingsToPersonalFragment())
         }
 
         binding.itemAdjustGoals.setOnClickListener {
