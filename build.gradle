@@ -15,6 +15,9 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url 'https://repo1.maven.org/'
+        }
     }
     dependencies {
         classpath libs.gradle
@@ -31,6 +34,9 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url 'https://repo1.maven.org/'
+        }
         maven { url 'https://jitpack.io' }
     }
 }

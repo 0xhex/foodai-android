@@ -1,10 +1,15 @@
 package com.codepad.foodai.ui.home.settings
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.health.connect.client.HealthConnectClient
 import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.BuildConfig
 import com.codepad.foodai.R
@@ -13,8 +18,13 @@ import com.codepad.foodai.domain.models.user.User
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.HomeViewModel
+import com.codepad.foodai.ui.home.settings.health.HealthConnectManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -25,6 +35,7 @@ import java.util.TimeZone
 @AndroidEntryPoint
 class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
     private val viewModel: HomeViewModel by viewModels()
+    private lateinit var healthConnectManager: HealthConnectManager
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_settings
@@ -33,6 +44,20 @@ class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun onReadyView() {
         setupUI()
         viewModel.fetchUserData()
+        if (isHealthConnectSupported() || isHealthConnectSDKAvailable()) {
+            initHealthConnect()
+            healthConnectManager.initContent(this)
+            healthConnectManager.onGoogleFitBodyDataRead = {
+                val visualizedData = it.first.zip(it.first)
+                requireActivity().runOnUiThread {
+                    Toast.makeText(
+                        requireContext(),
+                        "Data read successfully: $visualizedData",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 
     private fun setupUI() {
@@ -52,12 +77,33 @@ class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
             openURL("https://www.food-ai-scanner.com/privacy.html")
         }
 
+        binding.itemWebSite.setOnClickListener {
+            openURL("https://www.food-ai-scanner.com")
+        }
+
         binding.itemSupportEmail.setOnClickListener {
             sendSupportEmail()
         }
 
         binding.itemDeleteAccount.setOnClickListener {
             showDeleteAccountDialog()
+        }
+
+        binding.itemGoogleFit.setOnClickListener {
+            if (isHealthConnectSupported() || isHealthConnectSDKAvailable()) {
+                healthConnectManager.readData()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.install_health_connect_toast),
+                    Toast.LENGTH_LONG
+                ).show()
+                val playStoreIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.healthdata&hl=en")
+                )
+                startActivity(playStoreIntent)
+            }
         }
 
         // TODO: if (!RevenueCatManager.isUserSubscribed) {
@@ -70,10 +116,27 @@ class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
 
         viewModel.userDataResponse.observe(viewLifecycleOwner) { userData ->
             if (userData != null) {
-                binding.txtAgeValue.text = calculateAge(parseDate(userData.dateOfBirth.orEmpty())).toString()
+                binding.txtAgeValue.text =
+                    calculateAge(parseDate(userData.dateOfBirth.orEmpty())).toString()
                 binding.txtHeightValue.text = formatHeight(userData)
                 binding.txtCurrentWeightValue.text = formatWeight(userData)
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isHealthConnectSupported() || isHealthConnectSDKAvailable()) {
+            healthConnectManager.hasUnlockedIntegration {
+                if (it) {
+                    healthConnectManager.readData()
+                    binding.txtStatu.text = "Connected"
+                    binding.txtStatu.setTextColor(Color.GREEN)
+                }
+                // TODO
+            }
+        } else {
+            // TODO
         }
     }
 
@@ -161,4 +224,34 @@ class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
         dateFormat.timeZone = TimeZone.getTimeZone("UTC")
         return dateFormat.parse(dateString)
     }
+
+    private fun initHealthConnect() {
+        val entryPoint = EntryPointAccessors.fromApplication(
+            requireContext(), HealthConnectManagerEntryPoint::class.java
+        )
+        healthConnectManager = entryPoint.getHealthConnectManager()
+    }
+
+    private fun isHealthConnectSDKAvailable(): Boolean {
+        val availabilityStatus =
+            HealthConnectClient.getSdkStatus(requireContext(), "com.google.android.apps.healthdata")
+        return availabilityStatus == HealthConnectClient.SDK_AVAILABLE
+    }
+
+    private fun isHealthConnectSupported(): Boolean {
+        return Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU
+
+    }
+
+    companion object {
+        const val DATA_UNLOCK_DIALOG_RESULT = "DataUnlockDialogResult"
+        const val CONNECTION_APPROVAL_RESULT = "ConnectionApprovalResult"
+        const val RESULT_CONFIRMED = "ResultConfirmed"
+    }
+}
+
+@EntryPoint
+@InstallIn(SingletonComponent::class)
+interface HealthConnectManagerEntryPoint {
+    fun getHealthConnectManager(): HealthConnectManager
 }

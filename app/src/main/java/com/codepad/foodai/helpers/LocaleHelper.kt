@@ -22,4 +22,8 @@ object LocaleHelper {
         val config: Configuration = context.resources.configuration
         return config.locales.get(0).language
     }
+
+    fun provideFormattingLocale(): Locale {
+        return Locale.getDefault()
+    }
 }

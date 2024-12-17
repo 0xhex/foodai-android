@@ -97,3 +97,5 @@ firebase-config-ktx = { group = "com.google.firebase", name = "firebase-config-k
 swipe = { group = "com.github.chthai64", name = "SwipeRevealLayout", version = "1.4.0" }
 dotindicator = { group = "com.tbuonomo", name = "dotsindicator", version = "4.3" }
 circleprogressbar = { group = "com.mikhaellopez", name = "circularprogressbar", version = "3.1.0" }
+health = { group = "androidx.health.connect", name = "connect-client", version = "1.1.0-alpha10" }
+
