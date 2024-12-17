@@ -1,6 +1,9 @@
 package com.codepad.foodai.di
 
 import android.content.Context
+import androidx.health.connect.client.HealthConnectClient
+import com.codepad.foodai.ui.home.settings.health.HealthConnectReader
+import com.codepad.foodai.ui.home.settings.health.HealthConnectManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.Module
 import dagger.Provides
@@ -17,6 +20,26 @@ object AppModule {
     @Singleton
     fun provideFirebaseAnalytics(@ApplicationContext context: Context): FirebaseAnalytics {
         return FirebaseAnalytics.getInstance(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideHealthConnectClient(@ApplicationContext context: Context): HealthConnectClient {
+        return HealthConnectClient.getOrCreate(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideHealthConnectReader(healthConnectClient: HealthConnectClient): HealthConnectReader {
+        return HealthConnectReader(healthConnectClient)
+    }
+
+    @Singleton
+    @Provides
+    fun provideHealthConnectManager(
+        healthConnectClient: HealthConnectClient, healthConnectReader: HealthConnectReader,
+    ): HealthConnectManager {
+        return HealthConnectManager(healthConnectClient, healthConnectReader)
     }
 
     // TODO
