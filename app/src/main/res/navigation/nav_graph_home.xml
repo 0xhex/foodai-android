@@ -43,6 +43,10 @@
         <action
             android:id="@+id/action_personalFragment_to_heightWeightFragment"
             app:destination="@id/heightWeightFragment" />
+
+        <action
+            android:id="@+id/action_personalFragment_to_birthFragment"
+            app:destination="@id/birthFragment" />
     </fragment>
 
     <fragment
@@ -58,5 +62,15 @@
             android:name="type"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/birthFragment"
+        android:name="com.codepad.foodai.ui.user_property.birth.BirthFragment"
+        android:label="BirthFragment">
+        <argument
+            android:name="isEdit"
+            app:argType="boolean" />
+    </fragment>
+
 
 </navigation>

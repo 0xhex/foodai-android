@@ -1,7 +1,5 @@
 package com.codepad.foodai.ui.home.settings.personal
 
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
@@ -41,7 +39,11 @@ class PersonalFragment : BaseFragment<FragmentPersonalBinding>() {
         }
 
         binding.itemDateOfBirth.setOnClickListener {
-            // Navigate to EditDateOfBirthActivity
+            findNavController().navigate(
+                PersonalFragmentDirections.actionPersonalFragmentToBirthFragment(
+                    true
+                )
+            )
         }
 
         binding.itemGender.setOnClickListener {
@@ -90,5 +92,6 @@ class PersonalFragment : BaseFragment<FragmentPersonalBinding>() {
     }
 
     private val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-    private val isoDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    private val isoDateFormat =
+        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
 }

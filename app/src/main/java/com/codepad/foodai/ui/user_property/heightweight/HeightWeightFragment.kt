@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.NumberPicker
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.codepad.foodai.R
@@ -12,6 +13,8 @@ import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.UserPropertySharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HeightWeightFragment : BaseFragment<FragmentHeightWeightBinding>() {
@@ -84,6 +87,10 @@ class HeightWeightFragment : BaseFragment<FragmentHeightWeightBinding>() {
 
         binding.nextButton.setOnClickListener {
             sharedViewModel.updateHeightWeight()
+            lifecycleScope.launch {
+                delay(1000)
+                findNavController().popBackStack()
+            }
         }
 
         binding.btnBack.setOnClickListener {
