@@ -3,6 +3,9 @@ package com.codepad.foodai.domain.models.user
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Parcelize
 data class User(
@@ -34,4 +37,26 @@ data class User(
         }
         return (currentWeight - startingWeight) / totalChange
     }
+
+    fun getParsedDate(): String {
+        val isoDateFormat =
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+        return try {
+            val parsedDate = dateOfBirth?.let { isoDateFormat.parse(it) }
+            parsedDate?.let { dateFormatter.format(it) } ?: "Invalid Date"
+        } catch (e: Exception) {
+            "Invalid Date"
+        }
+    }
+
+    val dateAsObject: Date?
+        get() = try {
+            val isoDateFormat =
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+            dateOfBirth?.let { isoDateFormat.parse(it) }
+        } catch (e: Exception) {
+            null
+        }
 }

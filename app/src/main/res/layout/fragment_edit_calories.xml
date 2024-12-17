@@ -88,7 +88,7 @@
                 android:background="@null"
                 android:backgroundTint="#262626"
                 android:fontFamily="@font/euro_stile_bold"
-                android:inputType="date"
+                android:inputType="text"
                 android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -4,17 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.annotation.LayoutRes
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import com.codepad.foodai.R
+import com.codepad.foodai.ui.home.analytics.AnalyticsTabFragment
+import com.codepad.foodai.ui.home.home.HomeTabFragment
+import com.codepad.foodai.ui.home.settings.SettingsTabFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 abstract class BaseFragment<TBinding : ViewDataBinding> : Fragment() {
 
     open lateinit var binding: TBinding
+    open val hideBottomNavBar = false
 
     @LayoutRes
     protected abstract fun getLayoutId(): Int
@@ -33,6 +42,9 @@ abstract class BaseFragment<TBinding : ViewDataBinding> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onReadyView()
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().popBackStack()
+        }
     }
 
     open fun navigate(activity: FragmentActivity, view: Int, action: Int) {
@@ -61,5 +73,35 @@ abstract class BaseFragment<TBinding : ViewDataBinding> : Fragment() {
         view?.let { _view ->
             Navigation.findNavController(_view).navigate(action, args)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        showHideBottomNavigationView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showHideBottomNavigationView()
+        setIconsVisibility(this::class == AnalyticsTabFragment::class || this::class == HomeTabFragment::class || this::class == SettingsTabFragment::class)
+    }
+
+    fun showHideBottomNavigationView(enable: Boolean? = null) {
+        val bottomNavView =
+            (activity as? BaseActivity<*>)?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
+                ?: return
+        val shouldEnable = enable ?: !hideBottomNavBar
+        if (shouldEnable == bottomNavView.isVisible) return
+        if (shouldEnable) {
+            bottomNavView.visibility = View.VISIBLE
+        } else {
+            bottomNavView.visibility = View.GONE
+        }
+    }
+
+    fun setIconsVisibility(visible: Boolean) {
+        val visibility = if (visible) View.VISIBLE else View.GONE
+        activity?.findViewById<View>(R.id.img_circle)?.visibility = visibility
+        activity?.findViewById<View>(R.id.img_plus)?.visibility = visibility
     }
 }

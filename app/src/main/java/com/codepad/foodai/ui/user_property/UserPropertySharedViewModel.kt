@@ -237,7 +237,7 @@ class UserPropertySharedViewModel @Inject constructor(
         }
     }
 
-    private fun updateGender() {
+    fun updateGender() {
         val gender = _selectedGender.value ?: return
         val userID = UserSession.user?.id ?: return
 
@@ -273,7 +273,7 @@ class UserPropertySharedViewModel @Inject constructor(
         _dateOfBirth.value = null
     }
 
-    private fun updateHeightWeight() {
+    fun updateHeightWeight() {
         val height = if (_measurementUnit.value == MeasurementUnit.METRIC) {
             _height.value ?: return
         } else {
