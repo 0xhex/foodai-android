@@ -8,6 +8,7 @@ import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.records.StepsRecord
 import androidx.lifecycle.lifecycleScope
 import com.codepad.foodai.ui.home.HomeFragment
+import com.codepad.foodai.ui.home.settings.SettingsTabFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -29,7 +30,7 @@ class HealthConnectManager @Inject constructor(
 
     private var requestPermissions: ActivityResultLauncher<Set<String>>? = null
 
-    fun initContent(fragment: HomeFragment) {
+    fun initContent(fragment: SettingsTabFragment) {
         this.fragment = fragment
         requestPermissions =
             fragment.registerForActivityResult(requestPermissionActivityContract) { granted ->
