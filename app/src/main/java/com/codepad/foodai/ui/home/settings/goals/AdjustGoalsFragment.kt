@@ -1,12 +1,15 @@
 package com.codepad.foodai.ui.home.settings.goals
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentGoalsBinding
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AdjustGoalsFragment : BaseFragment<FragmentGoalsBinding>() {
@@ -26,6 +29,10 @@ class AdjustGoalsFragment : BaseFragment<FragmentGoalsBinding>() {
 
         binding.btnDone.setOnClickListener {
             saveGoals()
+            lifecycleScope.launch {
+                delay(1000)
+                findNavController().popBackStack()
+            }
         }
 
         viewModel.calories.observe(viewLifecycleOwner) {

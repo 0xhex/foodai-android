@@ -15,6 +15,9 @@ import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
+import com.codepad.foodai.ui.home.analytics.AnalyticsTabFragment
+import com.codepad.foodai.ui.home.home.HomeTabFragment
+import com.codepad.foodai.ui.home.settings.SettingsTabFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 abstract class BaseFragment<TBinding : ViewDataBinding> : Fragment() {
@@ -80,6 +83,7 @@ abstract class BaseFragment<TBinding : ViewDataBinding> : Fragment() {
     override fun onResume() {
         super.onResume()
         showHideBottomNavigationView()
+        setIconsVisibility(this::class == AnalyticsTabFragment::class || this::class == HomeTabFragment::class || this::class == SettingsTabFragment::class)
     }
 
     fun showHideBottomNavigationView(enable: Boolean? = null) {
@@ -93,5 +97,11 @@ abstract class BaseFragment<TBinding : ViewDataBinding> : Fragment() {
         } else {
             bottomNavView.visibility = View.GONE
         }
+    }
+
+    fun setIconsVisibility(visible: Boolean) {
+        val visibility = if (visible) View.VISIBLE else View.GONE
+        activity?.findViewById<View>(R.id.img_circle)?.visibility = visibility
+        activity?.findViewById<View>(R.id.img_plus)?.visibility = visibility
     }
 }
