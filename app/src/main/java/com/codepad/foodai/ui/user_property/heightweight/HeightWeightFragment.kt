@@ -1,10 +1,14 @@
 package com.codepad.foodai.ui.user_property.heightweight
 
+import android.view.View
 import android.widget.NumberPicker
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentHeightWeightBinding
+import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.UserPropertySharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,6 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class HeightWeightFragment : BaseFragment<FragmentHeightWeightBinding>() {
 
     private val sharedViewModel: UserPropertySharedViewModel by activityViewModels()
+    private val args: HeightWeightFragmentArgs by navArgs()
+    override val hideBottomNavBar: Boolean = true
 
     override fun getLayoutId() = R.layout.fragment_height_weight
 
@@ -34,12 +40,62 @@ class HeightWeightFragment : BaseFragment<FragmentHeightWeightBinding>() {
         sharedViewModel.measurementUnit.observe(viewLifecycleOwner) {
             updatePickers()
         }
+
+        if (!arguments?.getString("type").isNullOrEmpty()) {
+            setPreDefinedValues()
+        }
+    }
+
+    private fun setPreDefinedValues() {
+        val isMetric = UserSession.user?.isMetric ?: true
+        binding.nextButton.visibility = View.VISIBLE
+        binding.toggleMeasurementUnit.isChecked = isMetric
+        binding.clTopHeader.visibility = View.VISIBLE
+        binding.tvTitle.visibility = View.GONE
+        binding.tvSubtitle.visibility = View.GONE
+        when (args.type) {
+            "weight" -> {
+                if (isMetric) {
+                    UserSession.user?.weight?.let {
+                        binding.weightPicker.value = it.toInt()
+                    }
+                } else {
+                    UserSession.user?.weight?.let {
+                        binding.weightPicker.value = (it * 2.205).toInt()
+                    }
+                }
+            }
+
+            "height" -> {
+                if (isMetric) {
+                    UserSession.user?.height?.let {
+                        binding.heightPicker2.value = it.toInt()
+                    }
+                } else {
+                    UserSession.user?.height?.let {
+                        val feet = (it / 30.48).toInt()
+                        val inches = ((it % 30.48) / 2.54).toInt()
+                        binding.heightPicker1.value = feet
+                        binding.heightPicker2.value = inches
+                    }
+                }
+            }
+        }
+
+        binding.nextButton.setOnClickListener {
+            sharedViewModel.updateHeightWeight()
+        }
+
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     override fun onResume() {
         super.onResume()
         if (sharedViewModel.isHeightWeightSet.value == true) {
-            binding.toggleMeasurementUnit.isChecked = sharedViewModel.measurementUnit.value == MeasurementUnit.METRIC
+            binding.toggleMeasurementUnit.isChecked =
+                sharedViewModel.measurementUnit.value == MeasurementUnit.METRIC
             when (sharedViewModel.measurementUnit.value) {
                 MeasurementUnit.METRIC -> {
                     val height = sharedViewModel.height.value ?: 160
@@ -126,7 +182,7 @@ class HeightWeightFragment : BaseFragment<FragmentHeightWeightBinding>() {
                 if (sharedViewModel.measurementUnit.value == MeasurementUnit.METRIC) {
                     (sharedViewModel.weight.value ?: 60).toFloat()
                 } else {
-                   ( (sharedViewModel.weightLB.value ?: 132) / 2.205).toFloat()
+                    ((sharedViewModel.weightLB.value ?: 132) / 2.205).toFloat()
                 }
 
             if (isChecked) {

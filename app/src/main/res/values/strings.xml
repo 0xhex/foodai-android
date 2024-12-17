@@ -268,4 +268,5 @@
     <string name="upgrade_to_premium_and_enjoy_all_features_without_limitations">Upgrade to Premium and enjoy all features without limitations.</string>
     <string name="date_of_birth">Date of birth</string>
     <string name="gender">Gender</string>
+    <string name="set_height_weight"><![CDATA[Set Height & Weight]]></string>
 </resources>

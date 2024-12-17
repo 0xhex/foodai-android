@@ -273,7 +273,7 @@ class UserPropertySharedViewModel @Inject constructor(
         _dateOfBirth.value = null
     }
 
-    private fun updateHeightWeight() {
+    fun updateHeightWeight() {
         val height = if (_measurementUnit.value == MeasurementUnit.METRIC) {
             _height.value ?: return
         } else {

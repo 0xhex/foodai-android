@@ -11,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AdjustGoalsFragment : BaseFragment<FragmentGoalsBinding>() {
     private val viewModel: HomeViewModel by viewModels()
+    override val hideBottomNavBar: Boolean = true
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_goals
