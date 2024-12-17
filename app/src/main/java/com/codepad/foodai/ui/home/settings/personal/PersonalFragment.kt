@@ -47,7 +47,11 @@ class PersonalFragment : BaseFragment<FragmentPersonalBinding>() {
         }
 
         binding.itemGender.setOnClickListener {
-            // Navigate to EditGenderActivity
+            findNavController().navigate(
+                PersonalFragmentDirections.actionPersonalFragmentToGenderFragment(
+                    true
+                )
+            )
         }
 
         viewModel.userDataResponse.observe(viewLifecycleOwner) { userData ->

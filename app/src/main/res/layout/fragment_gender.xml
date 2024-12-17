@@ -13,7 +13,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#1e1e1e"
-        android:padding="16dp">
+        android:paddingHorizontal="@dimen/dimen_16dp"
+        android:paddingTop="@dimen/dimen_24dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_top_header"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_arrow_back_circle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_gender"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:fontFamily="@font/euro_stile_bold"
+                app:layout_constraintTop_toTopOf="@id/btn_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/btn_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <TextView
             android:id="@+id/tvTitle"
@@ -54,7 +89,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnMale"
@@ -86,5 +121,21 @@
                 app:cornerRadius="12dp"
                 app:fontFamily="@font/euro_stile_bold" />
         </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/next_button"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:layout_marginBottom="@dimen/dimen_24dp"
+            android:text="@string/save_changes"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:backgroundTint="#037aff"
+            app:cornerRadius="12dp"
+            app:fontFamily="@font/euro_stile_bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

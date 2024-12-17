@@ -237,7 +237,7 @@ class UserPropertySharedViewModel @Inject constructor(
         }
     }
 
-    private fun updateGender() {
+    fun updateGender() {
         val gender = _selectedGender.value ?: return
         val userID = UserSession.user?.id ?: return
 
