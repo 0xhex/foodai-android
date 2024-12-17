@@ -52,6 +52,10 @@ class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
             openURL("https://www.food-ai-scanner.com/privacy.html")
         }
 
+        binding.itemWebSite.setOnClickListener {
+            openURL("https://www.food-ai-scanner.com")
+        }
+
         binding.itemSupportEmail.setOnClickListener {
             sendSupportEmail()
         }

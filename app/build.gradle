@@ -122,6 +122,7 @@ dependencies {
     implementation(libs.swipe)
     implementation(libs.dotindicator)
     implementation(libs.circleprogressbar)
+    implementation(libs.health)
 }
 
 kapt {
