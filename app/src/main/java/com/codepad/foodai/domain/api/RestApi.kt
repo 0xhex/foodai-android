@@ -1,6 +1,7 @@
 package com.codepad.foodai.domain.api
 
 import com.codepad.foodai.domain.models.APIResponse
+import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
 import com.codepad.foodai.domain.models.user.RegisterRequest
@@ -43,9 +44,13 @@ interface RestApi {
     suspend fun getUserNutrition(@Path("userID") userID: String): APIResponse<NutritionResponseData>
 
     @Multipart
-    @POST("upload")
+    @POST("users/upload")
     suspend fun uploadImage(
         @Part("userID") userID: RequestBody,
         @Part file: MultipartBody.Part,
     ): APIResponse<ImageUploadResponse>
+
+    @GET("users/{imageID}/getImageData")
+    suspend fun fetchImage(@Path("imageID") imageID: String): APIResponse<ImageData>
+
 }
