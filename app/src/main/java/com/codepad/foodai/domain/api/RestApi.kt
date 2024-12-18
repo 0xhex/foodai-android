@@ -1,16 +1,21 @@
 package com.codepad.foodai.domain.api
 
 import com.codepad.foodai.domain.models.APIResponse
+import com.codepad.foodai.domain.models.image.ImageUploadResponse
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
 import com.codepad.foodai.domain.models.user.RegisterRequest
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequest
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequestArray
 import com.codepad.foodai.domain.models.user.UpdateUserFieldResponseData
 import com.codepad.foodai.domain.models.user.User
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface RestApi {
@@ -36,4 +41,11 @@ interface RestApi {
 
     @GET("users/{userID}/nutrition")
     suspend fun getUserNutrition(@Path("userID") userID: String): APIResponse<NutritionResponseData>
+
+    @Multipart
+    @POST("upload")
+    suspend fun uploadImage(
+        @Part("userID") userID: RequestBody,
+        @Part file: MultipartBody.Part,
+    ): APIResponse<ImageUploadResponse>
 }
