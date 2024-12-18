@@ -6,6 +6,7 @@ import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
 import com.codepad.foodai.domain.models.user.RegisterRequest
+import com.codepad.foodai.domain.models.user.StreakResponseData
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequest
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequestArray
 import com.codepad.foodai.domain.models.user.UpdateUserFieldResponseData
@@ -202,6 +203,33 @@ class UserRepository @Inject constructor(
     suspend fun fetchImage(imageID: String): RepositoryResult<ImageData> {
         return try {
             val response = restApi.fetchImage(imageID)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        response.message ?: "Unknown error", response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
+
+    suspend fun getUserStreak(userID: String): RepositoryResult<StreakResponseData> {
+        return try {
+            val response = restApi.getUserStreak(userID)
             if (response.success && response.data != null) {
                 RepositoryResult.Success(
                     message = response.message ?: "Success",

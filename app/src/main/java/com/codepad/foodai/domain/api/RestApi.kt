@@ -5,6 +5,7 @@ import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
 import com.codepad.foodai.domain.models.user.RegisterRequest
+import com.codepad.foodai.domain.models.user.StreakResponseData
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequest
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequestArray
 import com.codepad.foodai.domain.models.user.UpdateUserFieldResponseData
@@ -52,5 +53,9 @@ interface RestApi {
 
     @GET("users/{imageID}/getImageData")
     suspend fun fetchImage(@Path("imageID") imageID: String): APIResponse<ImageData>
+
+    @GET("users/{userID}/streak")
+    suspend fun getUserStreak(@Path("userID") userID: String): APIResponse<StreakResponseData>
+
 
 }
