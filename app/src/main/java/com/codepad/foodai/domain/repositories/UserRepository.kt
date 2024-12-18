@@ -11,6 +11,7 @@ import com.codepad.foodai.domain.models.user.UpdateUserFieldRequest
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequestArray
 import com.codepad.foodai.domain.models.user.UpdateUserFieldResponseData
 import com.codepad.foodai.domain.models.user.User
+import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -230,6 +231,33 @@ class UserRepository @Inject constructor(
     suspend fun getUserStreak(userID: String): RepositoryResult<StreakResponseData> {
         return try {
             val response = restApi.getUserStreak(userID)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        response.message ?: "Unknown error", response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
+
+    suspend fun getUserDailySummary(userID: String, date: String): RepositoryResult<DailySummaryResponseData> {
+        return try {
+            val response = restApi.getUserDailySummary(userID, date)
             if (response.success && response.data != null) {
                 RepositoryResult.Success(
                     message = response.message ?: "Success",
