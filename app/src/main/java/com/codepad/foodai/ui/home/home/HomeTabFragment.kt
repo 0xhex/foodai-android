@@ -3,12 +3,17 @@ package com.codepad.foodai.ui.home.home
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.viewpager2.widget.ViewPager2
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentHomeTabBinding
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.HomeViewModel
 import com.codepad.foodai.ui.home.home.calendar.CalendarAdapter
 import com.codepad.foodai.ui.home.home.calendar.CalendarUtils
+import com.codepad.foodai.ui.home.home.pager.FoodRecipesFragment
+import com.codepad.foodai.ui.home.home.pager.GoalViewFragment
+import com.codepad.foodai.ui.home.home.pager.GoogleHealthFragment
+import com.codepad.foodai.ui.home.home.pager.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
 
@@ -23,19 +28,22 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
     override fun onReadyView() {
         setupCalendarView()
+        setupViewPager()
     }
 
     private fun setupCalendarView() {
         val calendarView = binding.rvCalendar
-        calendarView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        calendarView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         val weeks = CalendarUtils.generateMonthDays()
         selectedCalendarPosition = CalendarUtils.findCurrentDayPosition(weeks)
-        calendarAdapter = CalendarAdapter(weeks, selectedCalendarPosition) { mainPosition, subPosition, item ->
-            selectedCalendarPosition = Pair(mainPosition, subPosition)
-            selectedCalendarItem = item
-            calendarAdapter.updateSelectedPosition(selectedCalendarPosition)
-        }
+        calendarAdapter =
+            CalendarAdapter(weeks, selectedCalendarPosition) { mainPosition, subPosition, item ->
+                selectedCalendarPosition = Pair(mainPosition, subPosition)
+                selectedCalendarItem = item
+                calendarAdapter.updateSelectedPosition(selectedCalendarPosition)
+            }
         calendarView.adapter = calendarAdapter
 
         PagerSnapHelper().attachToRecyclerView(calendarView)
@@ -43,5 +51,16 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
         selectedCalendarPosition?.let {
             calendarView.scrollToPosition(it.first)
         }
+    }
+
+    private fun setupViewPager() {
+        val viewPager: ViewPager2 = binding.viewPager
+
+        val fragments = listOf(
+            GoalViewFragment(), GoogleHealthFragment(), FoodRecipesFragment()
+        )
+
+        viewPager.adapter = ViewPagerAdapter(requireActivity(), fragments)
+        binding.dotsIndicator.attachTo(viewPager)
     }
 }
