@@ -10,9 +10,9 @@ import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.HomeViewModel
 import com.codepad.foodai.ui.home.home.calendar.CalendarAdapter
 import com.codepad.foodai.ui.home.home.calendar.CalendarUtils
-import com.codepad.foodai.ui.home.home.pager.FoodRecipesFragment
-import com.codepad.foodai.ui.home.home.pager.GoalViewFragment
-import com.codepad.foodai.ui.home.home.pager.GoogleHealthFragment
+import com.codepad.foodai.ui.home.home.pager.recipe.FoodRecipesFragment
+import com.codepad.foodai.ui.home.home.pager.goals.GoalViewFragment
+import com.codepad.foodai.ui.home.home.pager.health.GoogleHealthFragment
 import com.codepad.foodai.ui.home.home.pager.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
