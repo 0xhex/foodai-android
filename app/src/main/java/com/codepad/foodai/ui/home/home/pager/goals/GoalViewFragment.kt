@@ -1,9 +1,12 @@
 package com.codepad.foodai.ui.home.home.pager.goals
 
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentGoalViewBinding
 import com.codepad.foodai.ui.core.BaseFragment
+import com.codepad.foodai.ui.home.HomeFragmentDirections
+import com.codepad.foodai.ui.home.home.HomeTabFragmentDirections
 import com.codepad.foodai.ui.home.home.pager.HomePagerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -13,6 +16,22 @@ class GoalViewFragment : BaseFragment<FragmentGoalViewBinding>() {
     override fun getLayoutId(): Int = R.layout.fragment_goal_view
 
     override fun onReadyView() {
+        binding.cardCalorieGoal.setOnClickListener {
+            navigateToGoal()
+        }
+
+        binding.cardProtein.setOnClickListener {
+            navigateToGoal()
+        }
+
+        binding.cardCarbs.setOnClickListener {
+            navigateToGoal()
+        }
+
+        binding.cardFats.setOnClickListener {
+            navigateToGoal()
+        }
+
         viewModel.dailySummary.observe(viewLifecycleOwner) {
             binding.apply {
                 txtCount.text = it.remainingNutrition?.calories?.toString()
@@ -28,5 +47,9 @@ class GoalViewFragment : BaseFragment<FragmentGoalViewBinding>() {
                     getString(R.string.macros_g, it.remainingNutrition?.fat.toString())
             }
         }
+    }
+
+    private fun navigateToGoal() {
+        findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToAdjustGoalsFragment())
     }
 }

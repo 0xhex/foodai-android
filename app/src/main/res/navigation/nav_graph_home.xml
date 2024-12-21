@@ -2,14 +2,15 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/navigation_home"
-    android:id="@+id/nav_graph_home">
+    android:id="@+id/nav_graph_home"
+    app:startDestination="@id/navigation_home">
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.codepad.foodai.ui.home.home.HomeTabFragment"
         android:label="@string/home"
-        tools:layout="@layout/fragment_home_tab" />
+        tools:layout="@layout/fragment_home_tab" >
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_analytics"
@@ -25,13 +26,13 @@
 
         <action
             android:id="@+id/action_navigation_settings_to_personalFragment"
-            app:popUpTo="@id/navigation_settings"
-            app:destination="@id/personalFragment" />
+            app:destination="@id/personalFragment"
+            app:popUpTo="@id/navigation_settings" />
 
         <action
             android:id="@+id/action_navigation_settings_to_adjustGoalsFragment"
-            app:popUpTo="@id/navigation_settings"
-            app:destination="@id/adjustGoalsFragment" />
+            app:destination="@id/adjustGoalsFragment"
+            app:popUpTo="@id/navigation_settings" />
 
     </fragment>
 
@@ -56,7 +57,7 @@
     <fragment
         android:id="@+id/adjustGoalsFragment"
         android:name="com.codepad.foodai.ui.home.settings.goals.AdjustGoalsFragment"
-        android:label="AdjustGoalsFragment"/>
+        android:label="AdjustGoalsFragment" />
 
     <fragment
         android:id="@+id/heightWeightFragment"
@@ -83,6 +84,13 @@
         <argument
             android:name="isEdit"
             app:argType="boolean" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/goalViewFragment"
+        android:name="com.codepad.foodai.ui.home.home.pager.goals.GoalViewFragment"
+        android:label="GoalViewFragment"
+        tools:layout="@layout/fragment_goal_view">
     </fragment>
 
 

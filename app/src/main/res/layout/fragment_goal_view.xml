@@ -110,6 +110,7 @@
             app:layout_constraintTop_toBottomOf="@id/card_calorie_goal">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_protein"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -175,6 +176,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_carbs"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_8dp"
@@ -241,6 +243,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_fats"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
