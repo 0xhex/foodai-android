@@ -1,12 +1,16 @@
 package com.codepad.foodai.ui.home.home.calendar
 
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.codepad.foodai.R
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class WeekAdapter(private val items: List<Triple<Date, Int, String>>, private val mainPosition: Int, private val isLastWeek: Boolean, private val onSubItemSelected: (Int, Int) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -15,6 +19,9 @@ class WeekAdapter(private val items: List<Triple<Date, Int, String>>, private va
         private const val TYPE_REGULAR = 0
         private const val TYPE_FUTURE = 1
     }
+
+    private var selectedPosition: Int = -1
+    private val today: String = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
 
     override fun getItemViewType(position: Int): Int {
         return if (position == items.size - 1 && items.size == 7 && isLastWeek) TYPE_FUTURE else TYPE_REGULAR
@@ -32,7 +39,7 @@ class WeekAdapter(private val items: List<Triple<Date, Int, String>>, private va
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is RegularDayViewHolder) {
-            holder.bind(items[position], mainPosition, position, onSubItemSelected)
+            holder.bind(items[position], mainPosition, position, onSubItemSelected, selectedPosition, today)
         } else if (holder is FutureDayViewHolder) {
             holder.bind(items[position])
         }
@@ -40,20 +47,31 @@ class WeekAdapter(private val items: List<Triple<Date, Int, String>>, private va
 
     override fun getItemCount(): Int = items.size
 
-    class RegularDayViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class RegularDayViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val dayLetter: TextView = itemView.findViewById(R.id.day_letter)
         private val txtDay: TextView = itemView.findViewById(R.id.txt_day)
 
-        fun bind(item: Triple<Date, Int, String>, mainPosition: Int, subPosition: Int, onSubItemSelected: (Int, Int) -> Unit) {
+        fun bind(item: Triple<Date, Int, String>, mainPosition: Int, subPosition: Int, onSubItemSelected: (Int, Int) -> Unit, selectedPosition: Int, today: String) {
             dayLetter.text = item.third
             txtDay.text = item.second.toString()
+
+            val itemDate = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(item.first)
+            if (itemDate == today) {
+                dayLetter.background = ContextCompat.getDrawable(itemView.context, R.drawable.circle_background_today)
+            } else {
+                dayLetter.background = ContextCompat.getDrawable(itemView.context, R.drawable.circle_background)
+            }
+
             itemView.setOnClickListener {
                 onSubItemSelected(mainPosition, subPosition)
+                notifyItemChanged(this@WeekAdapter.selectedPosition)
+                this@WeekAdapter.selectedPosition = subPosition
+                notifyItemChanged(subPosition)
             }
         }
     }
 
-    class FutureDayViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class FutureDayViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val dayLetter: TextView = itemView.findViewById(R.id.day_letter)
         private val txtDay: TextView = itemView.findViewById(R.id.txt_day)
 
