@@ -17,6 +17,9 @@ import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.ui.home.analytics.AnalyticsTabFragment
 import com.codepad.foodai.ui.home.home.HomeTabFragment
+import com.codepad.foodai.ui.home.home.pager.goals.GoalViewFragment
+import com.codepad.foodai.ui.home.home.pager.health.GoogleHealthFragment
+import com.codepad.foodai.ui.home.home.pager.recipe.FoodRecipesFragment
 import com.codepad.foodai.ui.home.settings.SettingsTabFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -83,7 +86,7 @@ abstract class BaseFragment<TBinding : ViewDataBinding> : Fragment() {
     override fun onResume() {
         super.onResume()
         showHideBottomNavigationView()
-        setIconsVisibility(this::class == AnalyticsTabFragment::class || this::class == HomeTabFragment::class || this::class == SettingsTabFragment::class)
+        setIconsVisibility(this::class == AnalyticsTabFragment::class || this::class == HomeTabFragment::class || this::class == SettingsTabFragment::class || this::class == GoalViewFragment::class || this::class == GoogleHealthFragment::class || FoodRecipesFragment::class == this::class)
     }
 
     fun showHideBottomNavigationView(enable: Boolean? = null) {

@@ -16,4 +16,9 @@ class GoogleHealthFragment : BaseFragment<FragmentGoogleHealthBinding>() {
     override fun onReadyView() {
         // Initialize your view here
     }
+
+    override fun onResume() {
+        super.onResume()
+        binding.root.requestLayout()
+    }
 }
