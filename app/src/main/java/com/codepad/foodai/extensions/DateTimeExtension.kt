@@ -6,6 +6,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 /*
@@ -341,4 +342,9 @@ fun provideMonthsWithFirstLetter(): List<String> {
         dateFormat.format(calendar.time).substring(0, 1)
     }
     return monthNames
+}
+
+fun getFormattedDate(date: Date?): String {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    return dateFormat.format(date ?: Date())
 }

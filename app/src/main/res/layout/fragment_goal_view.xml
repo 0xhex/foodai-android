@@ -60,6 +60,8 @@
                     android:fontFamily="@font/euro_stile_bold"
                     android:textColor="@color/white"
                     android:textSize="28sp"
+                    app:layout_constraintEnd_toStartOf="@id/cl_icon"
+                    app:layout_constraintHorizontal_bias=".0"
                     app:layout_constraintBottom_toTopOf="@id/txt_count_desc"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/cl_icon"

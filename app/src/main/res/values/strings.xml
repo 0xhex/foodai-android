@@ -271,4 +271,5 @@
     <string name="set_height_weight"><![CDATA[Set Height & Weight]]></string>
     <string name="install_health_connect_toast">Please install health connect</string>
     <string name="colories_burned_count">[Calories burned: %s kcal]</string>
+    <string name="macros_g">%1$s g</string>
 </resources>
