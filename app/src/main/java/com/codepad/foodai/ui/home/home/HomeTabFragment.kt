@@ -29,8 +29,8 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
         calendarView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-        generateMonthDays()
-        mainAdapter = CalendarAdapter(generateMonthDays()) { mainPosition, subPosition ->
+        val weeks = generateMonthDays()
+        mainAdapter = CalendarAdapter(weeks) { mainPosition, subPosition ->
             selectedPosition = Pair(mainPosition, subPosition)
             mainAdapter.notifyDataSetChanged()
         }
@@ -39,6 +39,24 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(calendarView)
 
+        // Scroll to the current day
+        val currentDayPosition = findCurrentDayPosition(weeks)
+        if (currentDayPosition != -1) {
+            calendarView.scrollToPosition(currentDayPosition)
+        }
+    }
+
+    private fun findCurrentDayPosition(weeks: List<List<Triple<Date, Int, String>>>): Int {
+        val today = Calendar.getInstance().time
+        for ((weekIndex, week) in weeks.withIndex()) {
+            for (day in week) {
+                if (SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(day.first) ==
+                    SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(today)) {
+                    return weekIndex
+                }
+            }
+        }
+        return -1
     }
 
     fun generateMonthDays(): List<List<Triple<Date, Int, String>>> {
