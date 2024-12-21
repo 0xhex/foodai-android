@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="26sp"
+        android:textSize="22sp"
         tools:text="T" />
 
     <TextView
@@ -32,7 +32,7 @@
         android:textColor="#7d7d7d"
         android:fontFamily="@font/euro_stile_regular"
         android:layout_marginTop="@dimen/dimen_16dp"
-        android:textSize="26sp"
+        android:textSize="22sp"
         tools:text="7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

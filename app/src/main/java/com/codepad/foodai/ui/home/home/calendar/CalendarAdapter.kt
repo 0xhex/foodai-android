@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.codepad.foodai.R
 import java.util.Date
 
-class CalendarAdapter(private val items: List<List<Triple<Date, Int, String>>>, private var selectedPosition: Pair<Int, Int>?, private val onSubItemSelected: (Int, Int, Triple<Date, Int, String>) -> Unit) :
-    RecyclerView.Adapter<CalendarAdapter.MainViewHolder>() {
+class CalendarAdapter(
+    private val items: List<List<Triple<Date, Int, String>>>,
+    private var selectedPosition: Pair<Int, Int>?,
+    private val onSubItemSelected: (Int, Int, Triple<Date, Int, String>) -> Unit,
+) : RecyclerView.Adapter<CalendarAdapter.MainViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_calendar, parent, false)
@@ -31,7 +34,13 @@ class CalendarAdapter(private val items: List<List<Triple<Date, Int, String>>>, 
     class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val subRecyclerView: RecyclerView = itemView.findViewById(R.id.subRecyclerView)
 
-        fun bind(subItems: List<Triple<Date, Int, String>>, mainPosition: Int, isLastWeek: Boolean, selectedPosition: Pair<Int, Int>?, onSubItemSelected: (Int, Int, Triple<Date, Int, String>) -> Unit) {
+        fun bind(
+            subItems: List<Triple<Date, Int, String>>,
+            mainPosition: Int,
+            isLastWeek: Boolean,
+            selectedPosition: Pair<Int, Int>?,
+            onSubItemSelected: (Int, Int, Triple<Date, Int, String>) -> Unit,
+        ) {
             subRecyclerView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
             subRecyclerView.adapter = WeekAdapter(subItems, mainPosition, isLastWeek, selectedPosition, onSubItemSelected)
         }
