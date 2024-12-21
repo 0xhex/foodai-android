@@ -49,13 +49,14 @@ class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
             healthConnectManager.initContent(this)
             healthConnectManager.onGoogleFitBodyDataRead = {
                 val visualizedData = it.first.zip(it.first)
-                requireActivity().runOnUiThread {
-                    Toast.makeText(
-                        requireContext(),
-                        "Data read successfully: $visualizedData",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                // TODO use data
+                //requireActivity().runOnUiThread {
+                //    Toast.makeText(
+                //        requireContext(),
+                //        "Data read successfully: $visualizedData",
+                //        Toast.LENGTH_SHORT
+                //    ).show()
+                //}
             }
         }
     }

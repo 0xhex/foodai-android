@@ -50,7 +50,11 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.codepad.foodai.ui.home.HomeFragment"
-        android:label="HomeFragment"></fragment>
+        android:label="HomeFragment">
+        <action
+            android:id="@+id/action_navigation_home_to_adjustGoalsFragment"
+            app:destination="@id/adjustGoalsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/loadingFragment"
@@ -98,5 +102,11 @@
             android:name="color"
             app:argType="integer" />
     </fragment>
+
+    <fragment
+        android:id="@+id/adjustGoalsFragment"
+        android:name="com.codepad.foodai.ui.home.settings.goals.AdjustGoalsFragment"
+        android:label="AdjustGoalsFragment" />
+
 
 </navigation>
