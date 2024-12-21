@@ -19,6 +19,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var mainAdapter: CalendarAdapter
     private var selectedPosition: Pair<Int, Int>? = null
+    private var selectedItem: Triple<Date, Int, String>? = null
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_home_tab
@@ -30,9 +31,11 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         val weeks = generateMonthDays()
-        mainAdapter = CalendarAdapter(weeks) { mainPosition, subPosition ->
+        selectedPosition = findCurrentDayPosition(weeks)
+        mainAdapter = CalendarAdapter(weeks, selectedPosition) { mainPosition, subPosition, item ->
             selectedPosition = Pair(mainPosition, subPosition)
-            mainAdapter.notifyDataSetChanged()
+            selectedItem = item
+            mainAdapter.updateSelectedPosition(selectedPosition)
         }
         calendarView.adapter = mainAdapter
 
@@ -40,23 +43,22 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
         snapHelper.attachToRecyclerView(calendarView)
 
         // Scroll to the current day
-        val currentDayPosition = findCurrentDayPosition(weeks)
-        if (currentDayPosition != -1) {
-            calendarView.scrollToPosition(currentDayPosition)
+        if (selectedPosition != null) {
+            calendarView.scrollToPosition(selectedPosition!!.first)
         }
     }
 
-    private fun findCurrentDayPosition(weeks: List<List<Triple<Date, Int, String>>>): Int {
+    private fun findCurrentDayPosition(weeks: List<List<Triple<Date, Int, String>>>): Pair<Int, Int>? {
         val today = Calendar.getInstance().time
         for ((weekIndex, week) in weeks.withIndex()) {
-            for (day in week) {
+            for ((dayIndex, day) in week.withIndex()) {
                 if (SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(day.first) ==
                     SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(today)) {
-                    return weekIndex
+                    return Pair(weekIndex, dayIndex)
                 }
             }
         }
-        return -1
+        return null
     }
 
     fun generateMonthDays(): List<List<Triple<Date, Int, String>>> {

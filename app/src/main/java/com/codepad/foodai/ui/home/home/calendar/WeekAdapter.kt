@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class WeekAdapter(private val items: List<Triple<Date, Int, String>>, private val mainPosition: Int, private val isLastWeek: Boolean, private val onSubItemSelected: (Int, Int) -> Unit) :
+class WeekAdapter(private val items: List<Triple<Date, Int, String>>, private val mainPosition: Int, private val isLastWeek: Boolean, private val selectedPosition: Pair<Int, Int>?, private val onSubItemSelected: (Int, Int, Triple<Date, Int, String>) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -20,7 +20,6 @@ class WeekAdapter(private val items: List<Triple<Date, Int, String>>, private va
         private const val TYPE_FUTURE = 1
     }
 
-    private var selectedPosition: Int = -1
     private val today: String = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
 
     override fun getItemViewType(position: Int): Int {
@@ -51,7 +50,7 @@ class WeekAdapter(private val items: List<Triple<Date, Int, String>>, private va
         private val dayLetter: TextView = itemView.findViewById(R.id.day_letter)
         private val txtDay: TextView = itemView.findViewById(R.id.txt_day)
 
-        fun bind(item: Triple<Date, Int, String>, mainPosition: Int, subPosition: Int, onSubItemSelected: (Int, Int) -> Unit, selectedPosition: Int, today: String) {
+        fun bind(item: Triple<Date, Int, String>, mainPosition: Int, subPosition: Int, onSubItemSelected: (Int, Int, Triple<Date, Int, String>) -> Unit, selectedPosition: Pair<Int, Int>?, today: String) {
             dayLetter.text = item.third
             txtDay.text = item.second.toString()
 
@@ -62,11 +61,16 @@ class WeekAdapter(private val items: List<Triple<Date, Int, String>>, private va
                 dayLetter.background = ContextCompat.getDrawable(itemView.context, R.drawable.circle_background)
             }
 
+            if (selectedPosition != null && mainPosition == selectedPosition.first && subPosition == selectedPosition.second) {
+                dayLetter.setTypeface(null, Typeface.BOLD)
+                txtDay.setTypeface(null, Typeface.BOLD)
+            } else {
+                dayLetter.setTypeface(null, Typeface.NORMAL)
+                txtDay.setTypeface(null, Typeface.NORMAL)
+            }
+
             itemView.setOnClickListener {
-                onSubItemSelected(mainPosition, subPosition)
-                notifyItemChanged(this@WeekAdapter.selectedPosition)
-                this@WeekAdapter.selectedPosition = subPosition
-                notifyItemChanged(subPosition)
+                onSubItemSelected(mainPosition, subPosition, item)
             }
         }
     }
