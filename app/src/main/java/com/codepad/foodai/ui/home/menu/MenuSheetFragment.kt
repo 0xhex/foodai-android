@@ -13,7 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentMenuBottomSheetBinding
 import com.codepad.foodai.helpers.UserSession
@@ -46,20 +48,15 @@ class MenuSheetFragment : BaseBottomSheetFragment<FragmentMenuBottomSheetBinding
 
     private fun handleImageResult(imageBitmap: Bitmap) {
         val imageFile = convertBitmapToFile(imageBitmap)
-        val userID = UserSession.user?.id.orEmpty()
-        val fileName = "uploaded_image.jpg"
-        val mimeType = "image/jpeg"
-        viewModel.uploadImage(userID, imageFile, fileName, mimeType)
+        setFragmentResult("uploadResult", bundleOf("imageFile" to imageFile))
+        dismiss()
     }
 
     private fun handleImageResult(uri: Uri) {
         val imageFile = convertUriToFile(uri)
-        val userID = UserSession.user?.id.orEmpty()
-        val fileName = "uploaded_image.jpg"
-        val mimeType = "image/jpeg"
-        viewModel.uploadImage(userID, imageFile, fileName, mimeType)
+        setFragmentResult("uploadResult", bundleOf("imageFile" to imageFile))
+        dismiss()
     }
-
     private val requestCameraPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -73,45 +70,6 @@ class MenuSheetFragment : BaseBottomSheetFragment<FragmentMenuBottomSheetBinding
                 openGallery()
             }
         }
-
-    override fun onInitView() {
-        super.onInitView()
-        viewModel.homeEvent.observe(viewLifecycleOwner) { event ->
-            when (event) {
-                is HomeViewModel.HomeEvent.OnMenuOptionSelected -> {
-                    // Handle menu option selected
-                }
-
-                is HomeViewModel.HomeEvent.OnImageUploadStarted -> {
-                    showLoadingView(LoadingType.UPLOAD_FILE)
-                }
-
-                is HomeViewModel.HomeEvent.OnImageUploadSuccess -> {
-                    hideLoadingView()
-                }
-
-                is HomeViewModel.HomeEvent.OnImageUploadError -> {
-                    hideLoadingView()
-                }
-            }
-        }
-    }
-
-    private fun showLoadingView(loadingType: LoadingType) {
-        val loadingView = LoadingView(requireContext()).apply {
-            id = View.generateViewId()
-            setLoadingType(loadingType)
-        }
-        (view as? ViewGroup)?.addView(loadingView)
-    }
-
-    private fun hideLoadingView() {
-        (view as? ViewGroup)?.let { rootView ->
-            rootView.findViewById<LoadingView>(R.id.loading_view)?.let { loadingView ->
-                rootView.removeView(loadingView)
-            }
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -39,6 +39,12 @@ class LoadingView @JvmOverloads constructor(
         startLoading()
     }
 
+    fun stopLoading() {
+        handler.removeCallbacksAndMessages(null)
+        binding.lottieAnimationView.cancelAnimation()
+        visibility = View.GONE
+    }
+
     private val animationName: Int
         get() = when (loadingType) {
             LoadingType.UPLOAD_FILE -> R.raw.upload_file
@@ -56,6 +62,7 @@ class LoadingView @JvmOverloads constructor(
         }
         binding.textView.text = displayText
         binding.lottieAnimationView.setAnimation(animationName)
+        binding.lottieAnimationView.playAnimation()
     }
 
     private val displayText: String
