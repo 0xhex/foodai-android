@@ -74,4 +74,9 @@
         <item name="android:fontFamily">@font/euro_stile_regular</item>
     </style>
 
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_dialog_background</item>
+    </style>
+
 </resources>

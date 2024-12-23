@@ -9,14 +9,15 @@
         android:id="@+id/navigation_home"
         android:name="com.codepad.foodai.ui.home.home.HomeTabFragment"
         android:label="@string/home"
-        tools:layout="@layout/fragment_home_tab" >
+        tools:layout="@layout/fragment_home_tab">
     </fragment>
 
     <fragment
         android:id="@+id/navigation_analytics"
         android:name="com.codepad.foodai.ui.home.analytics.AnalyticsTabFragment"
         android:label="@string/analytics"
-        tools:layout="@layout/fragment_analytics_tab" />
+        tools:layout="@layout/fragment_analytics_tab">
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_settings"
@@ -33,7 +34,6 @@
             android:id="@+id/action_navigation_settings_to_adjustGoalsFragment"
             app:destination="@id/adjustGoalsFragment"
             app:popUpTo="@id/navigation_settings" />
-
     </fragment>
 
     <fragment
@@ -90,8 +90,6 @@
         android:id="@+id/goalViewFragment"
         android:name="com.codepad.foodai.ui.home.home.pager.goals.GoalViewFragment"
         android:label="GoalViewFragment"
-        tools:layout="@layout/fragment_goal_view">
-    </fragment>
-
+        tools:layout="@layout/fragment_goal_view"></fragment>
 
 </navigation>

@@ -274,4 +274,5 @@
     <string name="macros_g">%1$s g</string>
     <string name="connect_with_google_health">Connect with Google Health</string>
     <string name="we_use_your_step_count_data_from_google_health">We use your step count data from Google Health to provide personalized insights</string>
+    <string name="scan_food">Scan Food</string>
 </resources>
