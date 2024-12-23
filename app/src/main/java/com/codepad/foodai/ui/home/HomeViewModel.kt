@@ -22,8 +22,11 @@ class HomeViewModel @Inject constructor(
     private val getUserDataUseCase: GetUserDataUseCase,
     private val nutritionsUseCase: GetUserNutritionUseCase,
     private val updateUserFieldUseCase: UpdateUserFieldUseCase,
-    private val resourceHelper: ResourceHelper
-    ) : ViewModel() {
+    private val resourceHelper: ResourceHelper,
+) : ViewModel() {
+    private val _homeEvent = MutableLiveData<HomeEvent>()
+    val homeEvent: LiveData<HomeEvent> get() = _homeEvent
+
     private val _userDataResponse = MutableLiveData<User?>()
     val userDataResponse: LiveData<User?> get() = _userDataResponse
 
@@ -111,4 +114,16 @@ class HomeViewModel @Inject constructor(
             updateUserFieldUseCase.updateUserFields(userID, "dailyFat", fats.toString())
         }
     }
+
+    fun setOptionSelected(option: MenuOption) {
+        _homeEvent.value = HomeEvent.OnMenuOptionSelected(option)
+    }
+
+    sealed class HomeEvent {
+        data class OnMenuOptionSelected(val option: MenuOption) : HomeEvent()
+    }
+}
+
+enum class MenuOption {
+    SCAN_FOOD, LOG_FOOD
 }

@@ -9,6 +9,8 @@ import com.codepad.foodai.databinding.FragmentHomeTabBinding
 import com.codepad.foodai.extensions.getFormattedDate
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseFragment
+import com.codepad.foodai.ui.home.HomeViewModel
+import com.codepad.foodai.ui.home.MenuOption
 import com.codepad.foodai.ui.home.home.calendar.CalendarAdapter
 import com.codepad.foodai.ui.home.home.calendar.CalendarUtils
 import com.codepad.foodai.ui.home.home.pager.HomePagerViewModel
@@ -22,6 +24,8 @@ import java.util.Date
 @AndroidEntryPoint
 class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
     private val viewModel: HomePagerViewModel by activityViewModels()
+    private val sharedViewModel: HomeViewModel by activityViewModels()
+
     private lateinit var calendarAdapter: CalendarAdapter
     private var selectedCalendarPosition: Pair<Int, Int>? = null
     private var selectedCalendarItem: Triple<Date, Int, String>? = null
@@ -31,6 +35,22 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
     override fun onReadyView() {
         setupCalendarView()
         setupViewPager()
+
+        sharedViewModel.homeEvent.observe(viewLifecycleOwner) { event ->
+            when (event) {
+                is HomeViewModel.HomeEvent.OnMenuOptionSelected -> {
+                    when (event.option) {
+                        MenuOption.SCAN_FOOD -> {
+
+                        }
+
+                        MenuOption.LOG_FOOD -> {
+
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun setupCalendarView() {
@@ -40,7 +60,8 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
         val weeks = CalendarUtils.generateMonthDays()
         selectedCalendarPosition = CalendarUtils.findCurrentDayPosition(weeks)
-        selectedCalendarItem = weeks[selectedCalendarPosition!!.first][selectedCalendarPosition!!.second]
+        selectedCalendarItem =
+            weeks[selectedCalendarPosition!!.first][selectedCalendarPosition!!.second]
         calendarAdapter =
             CalendarAdapter(weeks, selectedCalendarPosition) { mainPosition, subPosition, item ->
                 selectedCalendarPosition = Pair(mainPosition, subPosition)
