@@ -1,5 +1,7 @@
 package com.codepad.foodai.ui.home
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -115,11 +117,13 @@ class HomeViewModel @Inject constructor(
     fun uploadImage(userID: String, imageFile: File, fileName: String, mimeType: String) {
         viewModelScope.launch {
             _homeEvent.value = HomeEvent.OnImageUploadStarted
-            when (val result = uploadImageUseCase.uploadImage(userID, imageFile, fileName, mimeType)) {
+            when (val result =
+                uploadImageUseCase.uploadImage(userID, imageFile, fileName, mimeType)) {
                 is UseCaseResult.Success -> {
                     _homeEvent.value = HomeEvent.OnImageUploadSuccess(result.data)
-                    fetchImage(result.data.imageID)
+                    fetchImage(result.data.imageID, imageFile)
                 }
+
                 is UseCaseResult.Error -> {
                     _homeEvent.value = HomeEvent.OnImageUploadError(result.message)
                 }
@@ -128,9 +132,10 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    fun fetchImage(imageID: String) {
+    fun fetchImage(imageID: String, imageFile: File) {
         viewModelScope.launch {
-            _homeEvent.value = HomeEvent.OnImageFetchStarted
+            _homeEvent.value =
+                HomeEvent.OnImageFetchStarted(BitmapFactory.decodeFile(imageFile.absolutePath))
             when (val result = fetchImageUseCase.fetchImage(imageID)) {
                 is UseCaseResult.Success -> {
                     if (result.data.status == "completed") {
@@ -139,9 +144,10 @@ class HomeViewModel @Inject constructor(
                         _homeEvent.value = HomeEvent.OnImageFetchError("Image processing failed.")
                     } else {
                         delay(5000)
-                        fetchImage(imageID)
+                        fetchImage(imageID, imageFile)
                     }
                 }
+
                 is UseCaseResult.Error -> {
                     _homeEvent.value = HomeEvent.OnImageFetchError(result.message)
                 }
@@ -158,7 +164,7 @@ class HomeViewModel @Inject constructor(
         data object OnImageUploadStarted : HomeEvent()
         data class OnImageUploadSuccess(val response: ImageUploadResponse) : HomeEvent()
         data class OnImageUploadError(val errorMessage: String) : HomeEvent()
-        data object OnImageFetchStarted : HomeEvent()
+        data class OnImageFetchStarted(val bitmap: Bitmap) : HomeEvent()
         data class OnImageFetchSuccess(val response: ImageData) : HomeEvent()
         data class OnImageFetchError(val errorMessage: String) : HomeEvent()
     }

@@ -1,5 +1,8 @@
 package com.codepad.foodai.ui.home.home
 
+import android.os.Handler
+import android.os.Looper
+import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -29,6 +32,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
     private lateinit var calendarAdapter: CalendarAdapter
     private var selectedCalendarPosition: Pair<Int, Int>? = null
     private var selectedCalendarItem: Triple<Date, Int, String>? = null
+    private lateinit var imageAdapter: ImageAdapter
 
     override fun getLayoutId(): Int = R.layout.fragment_home_tab
 
@@ -53,6 +57,37 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                 is HomeViewModel.HomeEvent.OnImageUploadError -> {}
                 HomeViewModel.HomeEvent.OnImageUploadStarted -> {}
                 is HomeViewModel.HomeEvent.OnImageUploadSuccess -> {}
+                is HomeViewModel.HomeEvent.OnImageFetchError -> {}
+                is HomeViewModel.HomeEvent.OnImageFetchStarted -> {
+                    setupRecyclerView()
+                    val loadingItem = ImageItem.Loading(
+                        image = event.bitmap,
+                        statusMessages = listOf(
+                            "Detecting ingredients...",
+                            "Calculating nutritional values...",
+                            "Finalizing your meal summary..."
+                        )
+                    )
+                    imageAdapter.addLoadingItem(loadingItem)
+                    updateEmptyViewVisibility()
+                    startLoadingStatusUpdates()
+                }
+
+                is HomeViewModel.HomeEvent.OnImageFetchSuccess -> {
+                    val items = listOf(
+                        ImageItem.Standard(
+                            image = event.response.url,
+                            title = event.response.description.orEmpty(),
+                            calories = event.response.calories.toString(),
+                            macros = event.response.protein.toString(),
+                            hour = event.response.createdAt.toString()
+                        )
+                    )
+                    imageAdapter.setItems(items)
+                    imageAdapter.removeLoadingItem()
+                    updateEmptyViewVisibility()
+                    // findNavController().navigate(R.id.action_homeFragment_to_streakViewFragment)
+                }
             }
         }
     }
@@ -97,9 +132,37 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
     private fun fetchDataForSelectedDate(date: Date?) {
         date?.let {
             viewModel.fetchDailySummary(
-                UserSession.user?.id.orEmpty(),
-                getFormattedDate(it)
+                UserSession.user?.id.orEmpty(), getFormattedDate(it)
             )
         }
     }
+
+    private fun setupRecyclerView() {
+        binding.rvFood.layoutManager = LinearLayoutManager(requireContext())
+        imageAdapter = ImageAdapter(emptyList())
+        binding.rvFood.adapter = imageAdapter
+    }
+
+    private fun updateEmptyViewVisibility() {
+        if (imageAdapter.itemCount > 0) {
+            binding.clEmptyView.visibility = View.GONE
+        } else {
+            binding.clEmptyView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun startLoadingStatusUpdates() {
+        val handler = Handler(Looper.getMainLooper())
+        val runnable = object : Runnable {
+            override fun run() {
+                val loadingPosition = imageAdapter.foodItems.indexOfFirst { it is ImageItem.Loading }
+                if (loadingPosition != -1) {
+                    imageAdapter.updateLoadingStatus(loadingPosition)
+                    handler.postDelayed(this, 2000)
+                }
+            }
+        }
+        handler.post(runnable)
+    }
+
 }

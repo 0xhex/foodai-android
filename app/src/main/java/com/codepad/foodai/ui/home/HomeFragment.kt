@@ -73,9 +73,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
 
                 }
 
-                is HomeViewModel.HomeEvent.OnImageFetchSuccess -> {
-                    handleFetchedImage(event.response)
-                }
+                is HomeViewModel.HomeEvent.OnImageFetchSuccess -> {}
 
                 is HomeViewModel.HomeEvent.OnImageFetchError -> {
                     showErrorBanner(event.errorMessage)
@@ -84,10 +82,6 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
         }
     }
 
-
-    private fun handleFetchedImage(imageData: ImageData) {
-
-    }
 
     private fun showLoadingView(loadingType: LoadingType) {
         binding.loadingView.apply {
