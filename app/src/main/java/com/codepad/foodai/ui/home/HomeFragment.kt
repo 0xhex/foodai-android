@@ -1,13 +1,13 @@
 package com.codepad.foodai.ui.home
 
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.HomeFragmentBinding
+import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.loading.LoadingType
@@ -65,8 +65,22 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
                 is HomeViewModel.HomeEvent.OnImageUploadError -> {
                     hideLoadingView()
                 }
+
+                is HomeViewModel.HomeEvent.OnImageFetchStarted -> {
+
+                }
+                is HomeViewModel.HomeEvent.OnImageFetchSuccess -> {
+                    handleFetchedImage(event.response)
+                }
+                is HomeViewModel.HomeEvent.OnImageFetchError -> {
+                }
             }
         }
+    }
+
+
+    private fun handleFetchedImage(imageData: ImageData) {
+
     }
 
     private fun showLoadingView(loadingType: LoadingType) {
