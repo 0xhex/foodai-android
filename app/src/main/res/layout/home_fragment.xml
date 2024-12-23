@@ -9,6 +9,14 @@
         android:layout_height="match_parent"
         android:background="@color/custom_black">
 
+        <com.codepad.foodai.ui.home.home.loading.LoadingView
+            android:id="@+id/loading_view"
+            android:elevation="16dp"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:alpha=".95"
+            android:layout_height="match_parent"/>
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment_home"
             android:name="androidx.navigation.fragment.NavHostFragment"

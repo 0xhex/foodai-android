@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?><!-- res/layout/fragment_menu_bottom_sheet.xml -->
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.95">
+
+        <ImageView
+            android:id="@+id/img_rounded_bg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/bottom_sheet_bg_rounded"
+            app:tint="#010101" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_scan_food"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="@dimen/dimen_24dp"
+            android:padding="10dp"
+            android:text="@string/scan_food"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:layout_marginHorizontal="@dimen/dimen_24dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:backgroundTint="#1d1d1e"
+            app:cornerRadius="12dp"
+            app:fontFamily="@font/euro_stile_bold"
+            app:icon="@drawable/ic_scan"
+            app:iconTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_arrow_first"
+            app:layout_constraintTop_toTopOf="@id/btn_scan_food"
+            app:layout_constraintBottom_toBottomOf="@id/btn_scan_food"
+            app:layout_constraintEnd_toEndOf="@id/btn_scan_food"
+            android:elevation="2dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            app:srcCompat="@drawable/ic_arrow_forward"
+            android:layout_width="16dp"
+            android:layout_height="16dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_log_exercise"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:padding="10dp"
+            android:text="@string/log_exercise"
+            android:textAlignment="viewStart"
+            android:layout_marginHorizontal="@dimen/dimen_24dp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:backgroundTint="#1d1d1e"
+            app:cornerRadius="12dp"
+            app:fontFamily="@font/euro_stile_bold"
+            app:icon="@drawable/ic_deadlift"
+            app:iconTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_scan_food" />
+
+        <ImageView
+            android:id="@+id/img_arrow_second"
+            app:layout_constraintTop_toTopOf="@id/btn_log_exercise"
+            app:layout_constraintBottom_toBottomOf="@id/btn_log_exercise"
+            app:layout_constraintEnd_toEndOf="@id/btn_log_exercise"
+            android:elevation="2dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            app:srcCompat="@drawable/ic_arrow_forward"
+            android:layout_width="16dp"
+            android:layout_height="16dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="@dimen/dimen_24dp"
+            android:padding="10dp"
+            android:text="@string/Cancel"
+            android:layout_marginHorizontal="@dimen/dimen_24dp"
+            android:textAllCaps="false"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            app:cornerRadius="12dp"
+            app:fontFamily="@font/euro_stile_bold"
+            app:backgroundTint="#1d1d1e"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_log_exercise" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

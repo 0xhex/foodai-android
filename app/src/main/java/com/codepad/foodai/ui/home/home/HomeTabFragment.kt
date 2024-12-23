@@ -1,5 +1,8 @@
 package com.codepad.foodai.ui.home.home
 
+import android.os.Handler
+import android.os.Looper
+import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -9,6 +12,8 @@ import com.codepad.foodai.databinding.FragmentHomeTabBinding
 import com.codepad.foodai.extensions.getFormattedDate
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseFragment
+import com.codepad.foodai.ui.home.HomeViewModel
+import com.codepad.foodai.ui.home.MenuOption
 import com.codepad.foodai.ui.home.home.calendar.CalendarAdapter
 import com.codepad.foodai.ui.home.home.calendar.CalendarUtils
 import com.codepad.foodai.ui.home.home.pager.HomePagerViewModel
@@ -22,15 +27,69 @@ import java.util.Date
 @AndroidEntryPoint
 class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
     private val viewModel: HomePagerViewModel by activityViewModels()
+    private val sharedViewModel: HomeViewModel by activityViewModels()
+
     private lateinit var calendarAdapter: CalendarAdapter
     private var selectedCalendarPosition: Pair<Int, Int>? = null
     private var selectedCalendarItem: Triple<Date, Int, String>? = null
+    private lateinit var imageAdapter: ImageAdapter
 
     override fun getLayoutId(): Int = R.layout.fragment_home_tab
 
     override fun onReadyView() {
         setupCalendarView()
         setupViewPager()
+
+        sharedViewModel.homeEvent.observe(viewLifecycleOwner) { event ->
+            when (event) {
+                is HomeViewModel.HomeEvent.OnMenuOptionSelected -> {
+                    when (event.option) {
+                        MenuOption.SCAN_FOOD -> {
+
+                        }
+
+                        MenuOption.LOG_FOOD -> {
+
+                        }
+                    }
+                }
+
+                is HomeViewModel.HomeEvent.OnImageUploadError -> {}
+                HomeViewModel.HomeEvent.OnImageUploadStarted -> {}
+                is HomeViewModel.HomeEvent.OnImageUploadSuccess -> {}
+                is HomeViewModel.HomeEvent.OnImageFetchError -> {}
+                is HomeViewModel.HomeEvent.OnImageFetchStarted -> {
+                    setupRecyclerView()
+                    val loadingItem = ImageItem.Loading(
+                        image = event.bitmap,
+                        statusMessages = listOf(
+                            "Detecting ingredients...",
+                            "Calculating nutritional values...",
+                            "Finalizing your meal summary..."
+                        )
+                    )
+                    imageAdapter.addLoadingItem(loadingItem)
+                    updateEmptyViewVisibility()
+                    startLoadingStatusUpdates()
+                }
+
+                is HomeViewModel.HomeEvent.OnImageFetchSuccess -> {
+                    val items = listOf(
+                        ImageItem.Standard(
+                            image = event.response.url,
+                            title = event.response.description.orEmpty(),
+                            calories = event.response.calories.toString(),
+                            macros = event.response.protein.toString(),
+                            hour = event.response.createdAt.toString()
+                        )
+                    )
+                    imageAdapter.setItems(items)
+                    imageAdapter.removeLoadingItem()
+                    updateEmptyViewVisibility()
+                    // findNavController().navigate(R.id.action_homeFragment_to_streakViewFragment)
+                }
+            }
+        }
     }
 
     private fun setupCalendarView() {
@@ -40,12 +99,14 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
         val weeks = CalendarUtils.generateMonthDays()
         selectedCalendarPosition = CalendarUtils.findCurrentDayPosition(weeks)
-        selectedCalendarItem = weeks[selectedCalendarPosition!!.first][selectedCalendarPosition!!.second]
+        selectedCalendarItem =
+            weeks[selectedCalendarPosition!!.first][selectedCalendarPosition!!.second]
         calendarAdapter =
             CalendarAdapter(weeks, selectedCalendarPosition) { mainPosition, subPosition, item ->
                 selectedCalendarPosition = Pair(mainPosition, subPosition)
                 selectedCalendarItem = item
                 calendarAdapter.updateSelectedPosition(selectedCalendarPosition)
+                fetchDataForSelectedDate(item.first)
             }
         calendarView.adapter = calendarAdapter
 
@@ -53,10 +114,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
         selectedCalendarPosition?.let {
             calendarView.scrollToPosition(it.first)
-            viewModel.fetchDailySummary(
-                UserSession.user?.id.orEmpty(),
-                getFormattedDate(selectedCalendarItem?.first)
-            )
+            fetchDataForSelectedDate(selectedCalendarItem?.first)
         }
     }
 
@@ -70,4 +128,41 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
         viewPager.adapter = ViewPagerAdapter(requireActivity(), fragments)
         binding.dotsIndicator.attachTo(viewPager)
     }
+
+    private fun fetchDataForSelectedDate(date: Date?) {
+        date?.let {
+            viewModel.fetchDailySummary(
+                UserSession.user?.id.orEmpty(), getFormattedDate(it)
+            )
+        }
+    }
+
+    private fun setupRecyclerView() {
+        binding.rvFood.layoutManager = LinearLayoutManager(requireContext())
+        imageAdapter = ImageAdapter(emptyList())
+        binding.rvFood.adapter = imageAdapter
+    }
+
+    private fun updateEmptyViewVisibility() {
+        if (imageAdapter.itemCount > 0) {
+            binding.clEmptyView.visibility = View.GONE
+        } else {
+            binding.clEmptyView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun startLoadingStatusUpdates() {
+        val handler = Handler(Looper.getMainLooper())
+        val runnable = object : Runnable {
+            override fun run() {
+                val loadingPosition = imageAdapter.foodItems.indexOfFirst { it is ImageItem.Loading }
+                if (loadingPosition != -1) {
+                    imageAdapter.updateLoadingStatus(loadingPosition)
+                    handler.postDelayed(this, 2000)
+                }
+            }
+        }
+        handler.post(runnable)
+    }
+
 }
