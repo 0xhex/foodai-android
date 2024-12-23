@@ -46,6 +46,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                 selectedCalendarPosition = Pair(mainPosition, subPosition)
                 selectedCalendarItem = item
                 calendarAdapter.updateSelectedPosition(selectedCalendarPosition)
+                fetchDataForSelectedDate(item.first)
             }
         calendarView.adapter = calendarAdapter
 
@@ -53,10 +54,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
         selectedCalendarPosition?.let {
             calendarView.scrollToPosition(it.first)
-            viewModel.fetchDailySummary(
-                UserSession.user?.id.orEmpty(),
-                getFormattedDate(selectedCalendarItem?.first)
-            )
+            fetchDataForSelectedDate(selectedCalendarItem?.first)
         }
     }
 
@@ -69,5 +67,14 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
         viewPager.adapter = ViewPagerAdapter(requireActivity(), fragments)
         binding.dotsIndicator.attachTo(viewPager)
+    }
+
+    private fun fetchDataForSelectedDate(date: Date?) {
+        date?.let {
+            viewModel.fetchDailySummary(
+                UserSession.user?.id.orEmpty(),
+                getFormattedDate(it)
+            )
+        }
     }
 }

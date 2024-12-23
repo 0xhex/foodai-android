@@ -6,7 +6,6 @@ import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentGoalViewBinding
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.HomeFragmentDirections
-import com.codepad.foodai.ui.home.home.HomeTabFragmentDirections
 import com.codepad.foodai.ui.home.home.pager.HomePagerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
