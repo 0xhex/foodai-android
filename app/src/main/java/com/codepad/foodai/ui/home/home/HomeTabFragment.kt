@@ -49,6 +49,10 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                         }
                     }
                 }
+
+                is HomeViewModel.HomeEvent.OnImageUploadError -> {}
+                HomeViewModel.HomeEvent.OnImageUploadStarted -> {}
+                is HomeViewModel.HomeEvent.OnImageUploadSuccess -> {}
             }
         }
     }

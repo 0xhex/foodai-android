@@ -5,20 +5,26 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentMenuBottomSheetBinding
+import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseBottomSheetFragment
 import com.codepad.foodai.ui.home.HomeViewModel
 import com.codepad.foodai.ui.home.MenuOption
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.codepad.foodai.ui.home.home.loading.LoadingView
+import com.codepad.foodai.ui.user_property.loading.LoadingType
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+import java.io.FileOutputStream
 
 @AndroidEntryPoint
 class MenuSheetFragment : BaseBottomSheetFragment<FragmentMenuBottomSheetBinding>() {
@@ -29,16 +35,30 @@ class MenuSheetFragment : BaseBottomSheetFragment<FragmentMenuBottomSheetBinding
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val imageBitmap = result.data?.extras?.get("data") as? Bitmap
-                imageBitmap?.let {
-
-                }
+                imageBitmap?.let { handleImageResult(it) }
             }
         }
 
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-
+            uri?.let { handleImageResult(it) }
         }
+
+    private fun handleImageResult(imageBitmap: Bitmap) {
+        val imageFile = convertBitmapToFile(imageBitmap)
+        val userID = UserSession.user?.id.orEmpty()
+        val fileName = "uploaded_image.jpg"
+        val mimeType = "image/jpeg"
+        viewModel.uploadImage(userID, imageFile, fileName, mimeType)
+    }
+
+    private fun handleImageResult(uri: Uri) {
+        val imageFile = convertUriToFile(uri)
+        val userID = UserSession.user?.id.orEmpty()
+        val fileName = "uploaded_image.jpg"
+        val mimeType = "image/jpeg"
+        viewModel.uploadImage(userID, imageFile, fileName, mimeType)
+    }
 
     private val requestCameraPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -53,6 +73,45 @@ class MenuSheetFragment : BaseBottomSheetFragment<FragmentMenuBottomSheetBinding
                 openGallery()
             }
         }
+
+    override fun onInitView() {
+        super.onInitView()
+        viewModel.homeEvent.observe(viewLifecycleOwner) { event ->
+            when (event) {
+                is HomeViewModel.HomeEvent.OnMenuOptionSelected -> {
+                    // Handle menu option selected
+                }
+
+                is HomeViewModel.HomeEvent.OnImageUploadStarted -> {
+                    showLoadingView(LoadingType.UPLOAD_FILE)
+                }
+
+                is HomeViewModel.HomeEvent.OnImageUploadSuccess -> {
+                    hideLoadingView()
+                }
+
+                is HomeViewModel.HomeEvent.OnImageUploadError -> {
+                    hideLoadingView()
+                }
+            }
+        }
+    }
+
+    private fun showLoadingView(loadingType: LoadingType) {
+        val loadingView = LoadingView(requireContext()).apply {
+            id = View.generateViewId()
+            setLoadingType(loadingType)
+        }
+        (view as? ViewGroup)?.addView(loadingView)
+    }
+
+    private fun hideLoadingView() {
+        (view as? ViewGroup)?.let { rootView ->
+            rootView.findViewById<LoadingView>(R.id.loading_view)?.let { loadingView ->
+                rootView.removeView(loadingView)
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -139,5 +198,26 @@ class MenuSheetFragment : BaseBottomSheetFragment<FragmentMenuBottomSheetBinding
 
     private fun openGallery() {
         galleryLauncher.launch("image/*")
+    }
+
+    private fun convertBitmapToFile(bitmap: Bitmap): File {
+        val filesDir = requireContext().filesDir
+        val imageFile = File(filesDir, "uploaded_image.jpg")
+        val os = FileOutputStream(imageFile)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os)
+        os.flush()
+        os.close()
+        return imageFile
+    }
+
+    private fun convertUriToFile(uri: Uri): File {
+        val inputStream = requireContext().contentResolver.openInputStream(uri)
+        val filesDir = requireContext().filesDir
+        val imageFile = File(filesDir, "uploaded_image.jpg")
+        val outputStream = FileOutputStream(imageFile)
+        inputStream?.copyTo(outputStream)
+        inputStream?.close()
+        outputStream.close()
+        return imageFile
     }
 }
