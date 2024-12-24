@@ -32,7 +32,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dimen_24dp"
-                    android:background="@drawable/drawable_circle_stroke_bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -52,6 +51,29 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                    android:id="@+id/cl_progress_one"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:cpb_background_progressbar_color="@color/white"
+                    app:cpb_background_progressbar_width="10dp"
+                    app:cpb_progress_direction="to_right"
+                    app:layout_constraintStart_toStartOf="@id/cl_icon"
+                    app:layout_constraintEnd_toEndOf="@id/cl_icon"
+                    app:cpb_progress="100"
+                    app:cpb_progressbar_color="@color/color_graph_initial"
+                    app:layout_constraintBottom_toBottomOf="@id/cl_icon"
+                    app:layout_constraintTop_toTopOf="@id/cl_icon"
+                    app:cpb_progressbar_width="10dp"
+                    app:cpb_round_border="false" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_texts"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
                 <TextView
                     android:id="@+id/txt_count"
                     android:layout_width="wrap_content"
@@ -60,10 +82,10 @@
                     android:fontFamily="@font/euro_stile_bold"
                     android:textColor="@color/white"
                     android:textSize="28sp"
-                    app:layout_constraintEnd_toStartOf="@id/cl_icon"
+                    app:layout_constraintEnd_toEndOf="@id/guide_texts"
                     app:layout_constraintHorizontal_bias=".0"
                     app:layout_constraintBottom_toTopOf="@id/txt_count_desc"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/guide_texts"
                     app:layout_constraintTop_toTopOf="@id/cl_icon"
                     tools:text="2641" />
 
@@ -153,7 +175,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:background="@drawable/drawable_circle_stroke_bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txt_protein_desc">
 
@@ -170,6 +191,22 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                        android:id="@+id/cl_progress_two"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:cpb_background_progressbar_color="@color/white"
+                        app:cpb_background_progressbar_width="10dp"
+                        app:cpb_progress_direction="to_right"
+                        app:layout_constraintStart_toStartOf="@id/cl_icon_1"
+                        app:layout_constraintEnd_toEndOf="@id/cl_icon_1"
+                        app:cpb_progress="100"
+                        app:cpb_progressbar_color="#d1d1d6"
+                        app:layout_constraintBottom_toBottomOf="@id/cl_icon_1"
+                        app:layout_constraintTop_toTopOf="@id/cl_icon_1"
+                        app:cpb_progressbar_width="10dp"
+                        app:cpb_round_border="false" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -220,7 +257,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:background="@drawable/drawable_circle_stroke_bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txt_carbs_desc">
 
@@ -237,6 +273,22 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                        android:id="@+id/cl_progress_three"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:cpb_background_progressbar_color="@color/white"
+                        app:cpb_background_progressbar_width="10dp"
+                        app:cpb_progress_direction="to_right"
+                        app:layout_constraintStart_toStartOf="@id/cl_icon_2"
+                        app:layout_constraintEnd_toEndOf="@id/cl_icon_2"
+                        app:cpb_progress="100"
+                        app:cpb_progressbar_color="#d1d1d6"
+                        app:layout_constraintBottom_toBottomOf="@id/cl_icon_2"
+                        app:layout_constraintTop_toTopOf="@id/cl_icon_2"
+                        app:cpb_progressbar_width="10dp"
+                        app:cpb_round_border="false" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -286,7 +338,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:background="@drawable/drawable_circle_stroke_bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txt_fats_desc">
 
@@ -303,6 +354,22 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                        android:id="@+id/cl_progress_four"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:cpb_background_progressbar_color="@color/white"
+                        app:cpb_background_progressbar_width="10dp"
+                        app:cpb_progress_direction="to_right"
+                        app:layout_constraintStart_toStartOf="@id/cl_icon_3"
+                        app:layout_constraintEnd_toEndOf="@id/cl_icon_3"
+                        app:cpb_progress="100"
+                        app:cpb_progressbar_color="#d1d1d6"
+                        app:layout_constraintBottom_toBottomOf="@id/cl_icon_3"
+                        app:layout_constraintTop_toTopOf="@id/cl_icon_3"
+                        app:cpb_progressbar_width="10dp"
+                        app:cpb_round_border="false" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

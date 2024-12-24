@@ -69,25 +69,29 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                             "Finalizing your meal summary..."
                         )
                     )
-                    imageAdapter.addLoadingItem(loadingItem)
-                    updateEmptyViewVisibility()
-                    startLoadingStatusUpdates()
+                    val existingItems = imageAdapter.foodItems
+                    if (existingItems.none { it is ImageItem.Loading }) {
+                        imageAdapter.setItems(listOf(loadingItem) + existingItems)
+                        updateEmptyViewVisibility()
+                        startLoadingStatusUpdates()
+                    }
                 }
 
                 is HomeViewModel.HomeEvent.OnImageFetchSuccess -> {
+                    val existingItems = imageAdapter.foodItems
                     val items = listOf(
                         ImageItem.Standard(
                             image = event.response.url,
-                            title = event.response.ingredients?.joinToString { it.name.orEmpty() }.orEmpty(),
+                            title = event.response.ingredients?.joinToString { it.name.orEmpty() }
+                                .orEmpty(),
                             calories = event.response.calories.toString(),
                             protein = event.response.protein.toString(),
                             carb = event.response.carbs.toString(),
                             fats = event.response.fats.toString(),
-                            hour = event.response.createdAt.toString()
+                            hour = event.response.createdAt?.toHourString().toString()
                         )
                     )
-                    imageAdapter.setItems(items)
-                    imageAdapter.removeLoadingItem()
+                    imageAdapter.setItems((items + existingItems).filter { it !is ImageItem.Loading })
                     updateEmptyViewVisibility()
                     // findNavController().navigate(R.id.action_homeFragment_to_streakViewFragment)
                 }
@@ -96,7 +100,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
         viewModel.dailySummary.observe(viewLifecycleOwner) { dailySummary ->
             val meals = dailySummary.meals.orEmpty()
-            val items = meals.sortedBy { it.createdAt }.map {
+            val items = meals.sortedByDescending { it.createdAt }.map {
                 ImageItem.Standard(
                     image = it.url,
                     title = it.ingredients?.joinToString { it.name.orEmpty() }.orEmpty(),
@@ -109,6 +113,11 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
             }
             imageAdapter.setItems(items)
             updateEmptyViewVisibility()
+            sharedViewModel.fetchNutrition()
+        }
+
+        sharedViewModel.nutritions.observe(viewLifecycleOwner) { nutritionResponseData ->
+            viewModel.updateAchievedPercents(nutritionResponseData)
         }
     }
 
