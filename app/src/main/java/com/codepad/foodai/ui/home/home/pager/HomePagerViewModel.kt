@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
 import com.codepad.foodai.domain.models.user.GetUserDailySummaryUseCase
 import com.codepad.foodai.domain.use_cases.UseCaseResult
@@ -32,6 +33,9 @@ class HomePagerViewModel @Inject constructor(
 
     private val _fatsAchievedPercent = MutableLiveData(0)
     val fatsAchievedPercent: LiveData<Int> get() = _fatsAchievedPercent
+
+    private val _foodDetail = MutableLiveData<ImageData>()
+    val foodDetail: LiveData<ImageData> get() = _foodDetail
 
     fun updateAchievedPercents(nutritionResponseData: NutritionResponseData) {
         resetAchievedPercents()
@@ -76,5 +80,9 @@ class HomePagerViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun setFoodDetail(foodDetail: ImageData) {
+        _foodDetail.value = foodDetail
     }
 }
