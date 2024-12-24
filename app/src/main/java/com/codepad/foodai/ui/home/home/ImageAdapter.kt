@@ -78,16 +78,20 @@ class ImageAdapter(var foodItems: List<ImageItem>) :
 
     class StandardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imageView: ImageView = itemView.findViewById(R.id.imageView)
-        private val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
-        private val caloriesTextView: TextView = itemView.findViewById(R.id.caloriesTextView)
-        private val macrosTextView: TextView = itemView.findViewById(R.id.macrosTextView)
-        private val hourTextView: TextView = itemView.findViewById(R.id.hourTextView)
+        private val titleTextView: TextView = itemView.findViewById(R.id.txt_title)
+        private val caloriesTextView: TextView = itemView.findViewById(R.id.txt_calories)
+        private val protein: TextView = itemView.findViewById(R.id.txt_protein)
+        private val fats: TextView = itemView.findViewById(R.id.txt_fat)
+        private val carb: TextView = itemView.findViewById(R.id.txt_carb)
+        private val hourTextView: TextView = itemView.findViewById(R.id.txt_hour)
 
         fun bind(item: ImageItem.Standard) {
             // Bind data to views
             titleTextView.text = item.title
             caloriesTextView.text = item.calories
-            macrosTextView.text = item.macros
+            protein.text = item.protein
+            fats.text = item.fats
+            carb.text = item.carb
             hourTextView.text = item.hour
 
             Glide.with(imageView)
@@ -121,13 +125,15 @@ sealed class ImageItem {
         val image: String,
         val title: String,
         val calories: String,
-        val macros: String,
+        val protein : String,
+        val fats: String,
+        val carb: String,
         val hour: String,
     ) : ImageItem()
 
     data class Loading(
         val image: Bitmap,
         val statusMessages: List<String>,
-        var currentStatusIndex: Int = 0
+        var currentStatusIndex: Int = 0,
     ) : ImageItem()
 }
