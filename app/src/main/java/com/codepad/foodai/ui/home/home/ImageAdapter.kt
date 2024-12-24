@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.codepad.foodai.R
 
-class ImageAdapter(var foodItems: List<ImageItem>) :
+class ImageAdapter(var foodItems: List<ImageItem>, private val onItemClick: (String) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -30,7 +30,7 @@ class ImageAdapter(var foodItems: List<ImageItem>) :
             VIEW_TYPE_STANDARD -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_standard, parent, false)
-                StandardViewHolder(view)
+                StandardViewHolder(view, onItemClick)
             }
 
             VIEW_TYPE_LOADING -> {
@@ -62,7 +62,6 @@ class ImageAdapter(var foodItems: List<ImageItem>) :
         notifyDataSetChanged()
     }
 
-
     fun addLoadingItem(loadingItem: ImageItem.Loading) {
         foodItems = foodItems + loadingItem
         notifyItemInserted(foodItems.size - 1)
@@ -76,7 +75,8 @@ class ImageAdapter(var foodItems: List<ImageItem>) :
         }
     }
 
-    class StandardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class StandardViewHolder(itemView: View, private val onItemClick: (String) -> Unit) :
+        RecyclerView.ViewHolder(itemView) {
         private val imageView: ImageView = itemView.findViewById(R.id.imageView)
         private val titleTextView: TextView = itemView.findViewById(R.id.txt_title)
         private val caloriesTextView: TextView = itemView.findViewById(R.id.txt_calories)
@@ -98,6 +98,10 @@ class ImageAdapter(var foodItems: List<ImageItem>) :
                 .load(item.image)
                 .centerCrop()
                 .into(imageView)
+
+            itemView.setOnClickListener {
+                onItemClick(item.image)
+            }
         }
     }
 
@@ -125,7 +129,7 @@ sealed class ImageItem {
         val image: String,
         val title: String,
         val calories: String,
-        val protein : String,
+        val protein: String,
         val fats: String,
         val carb: String,
         val hour: String,

@@ -14,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
     private val sharedViewModel: HomePagerViewModel by activityViewModels()
+    override val hideBottomNavBar: Boolean = true
 
     override fun getLayoutId(): Int = R.layout.fragment_food_detail
 

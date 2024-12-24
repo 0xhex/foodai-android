@@ -4,6 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewpager2.widget.ViewPager2
@@ -168,7 +169,13 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
     private fun setupRecyclerView() {
         binding.rvFood.layoutManager = LinearLayoutManager(requireContext())
-        imageAdapter = ImageAdapter(emptyList())
+        imageAdapter = ImageAdapter(emptyList()) { url ->
+            val foodDetail = viewModel.dailySummary.value?.meals?.firstOrNull { it.url == url }
+            if (foodDetail != null) {
+                viewModel.setFoodDetail(foodDetail)
+            }
+            findNavController().navigate(R.id.action_home_tab_to_food_detail)
+        }
         binding.rvFood.adapter = imageAdapter
     }
 

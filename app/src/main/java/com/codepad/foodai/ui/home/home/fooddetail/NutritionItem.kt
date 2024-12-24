@@ -26,7 +26,7 @@ class NutritionAdapter(private val items: List<NutritionItem>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: NutritionItem) {
             binding.txtNutritionName.text = item.name
-            binding.txtNutritionValue.text = item.value
+            binding.txtNutritionValue.text = item.value + " kcal"
         }
     }
 }
