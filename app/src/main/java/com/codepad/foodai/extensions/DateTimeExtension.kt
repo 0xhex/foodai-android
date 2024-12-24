@@ -348,3 +348,9 @@ fun getFormattedDate(date: Date?): String {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
     return dateFormat.format(date ?: Date())
 }
+
+
+fun Date.toHourString(): String {
+    val formatter = SimpleDateFormat("HH:mm", Locale.getDefault())
+    return formatter.format(this)
+}

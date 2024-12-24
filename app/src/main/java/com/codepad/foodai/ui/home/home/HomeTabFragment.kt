@@ -4,12 +4,14 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewpager2.widget.ViewPager2
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentHomeTabBinding
 import com.codepad.foodai.extensions.getFormattedDate
+import com.codepad.foodai.extensions.toHourString
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.HomeViewModel
@@ -39,6 +41,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
     override fun onReadyView() {
         setupCalendarView()
         setupViewPager()
+        setupRecyclerView()
 
         sharedViewModel.homeEvent.observe(viewLifecycleOwner) { event ->
             when (event) {
@@ -59,7 +62,6 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                 is HomeViewModel.HomeEvent.OnImageUploadSuccess -> {}
                 is HomeViewModel.HomeEvent.OnImageFetchError -> {}
                 is HomeViewModel.HomeEvent.OnImageFetchStarted -> {
-                    setupRecyclerView()
                     val loadingItem = ImageItem.Loading(
                         image = event.bitmap,
                         statusMessages = listOf(
@@ -68,27 +70,55 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                             "Finalizing your meal summary..."
                         )
                     )
-                    imageAdapter.addLoadingItem(loadingItem)
-                    updateEmptyViewVisibility()
-                    startLoadingStatusUpdates()
+                    val existingItems = imageAdapter.foodItems
+                    if (existingItems.none { it is ImageItem.Loading }) {
+                        imageAdapter.setItems(listOf(loadingItem) + existingItems)
+                        updateEmptyViewVisibility()
+                        startLoadingStatusUpdates()
+                    }
                 }
 
                 is HomeViewModel.HomeEvent.OnImageFetchSuccess -> {
+                    val existingItems = imageAdapter.foodItems
                     val items = listOf(
                         ImageItem.Standard(
                             image = event.response.url,
-                            title = event.response.description.orEmpty(),
+                            title = event.response.ingredients?.joinToString { it.name.orEmpty() }
+                                .orEmpty(),
                             calories = event.response.calories.toString(),
-                            macros = event.response.protein.toString(),
-                            hour = event.response.createdAt.toString()
+                            protein = event.response.protein.toString(),
+                            carb = event.response.carbs.toString(),
+                            fats = event.response.fats.toString(),
+                            hour = event.response.createdAt?.toHourString().toString()
                         )
                     )
-                    imageAdapter.setItems(items)
-                    imageAdapter.removeLoadingItem()
+                    imageAdapter.setItems((items + existingItems).filter { it !is ImageItem.Loading })
                     updateEmptyViewVisibility()
                     // findNavController().navigate(R.id.action_homeFragment_to_streakViewFragment)
                 }
             }
+        }
+
+        viewModel.dailySummary.observe(viewLifecycleOwner) { dailySummary ->
+            val meals = dailySummary.meals.orEmpty()
+            val items = meals.sortedByDescending { it.createdAt }.map {
+                ImageItem.Standard(
+                    image = it.url,
+                    title = it.ingredients?.joinToString { it.name.orEmpty() }.orEmpty(),
+                    calories = it.calories.toString(),
+                    protein = it.protein.toString(),
+                    carb = it.carbs.toString(),
+                    fats = it.fats.toString(),
+                    hour = it.createdAt?.toHourString().orEmpty()
+                )
+            }
+            imageAdapter.setItems(items)
+            updateEmptyViewVisibility()
+            sharedViewModel.fetchNutrition()
+        }
+
+        sharedViewModel.nutritions.observe(viewLifecycleOwner) { nutritionResponseData ->
+            viewModel.updateAchievedPercents(nutritionResponseData)
         }
     }
 
@@ -139,7 +169,13 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
     private fun setupRecyclerView() {
         binding.rvFood.layoutManager = LinearLayoutManager(requireContext())
-        imageAdapter = ImageAdapter(emptyList())
+        imageAdapter = ImageAdapter(emptyList()) { url ->
+            val foodDetail = viewModel.dailySummary.value?.meals?.firstOrNull { it.url == url }
+            if (foodDetail != null) {
+                viewModel.setFoodDetail(foodDetail)
+            }
+            findNavController().navigate(R.id.action_home_tab_to_food_detail)
+        }
         binding.rvFood.adapter = imageAdapter
     }
 
@@ -155,7 +191,8 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
         val handler = Handler(Looper.getMainLooper())
         val runnable = object : Runnable {
             override fun run() {
-                val loadingPosition = imageAdapter.foodItems.indexOfFirst { it is ImageItem.Loading }
+                val loadingPosition =
+                    imageAdapter.foodItems.indexOfFirst { it is ImageItem.Loading }
                 if (loadingPosition != -1) {
                     imageAdapter.updateLoadingStatus(loadingPosition)
                     handler.postDelayed(this, 2000)

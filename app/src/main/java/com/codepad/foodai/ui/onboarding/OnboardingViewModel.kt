@@ -24,7 +24,7 @@ class OnboardingViewModel @Inject constructor(
 
     fun registerUser() {
         val request = RegisterRequest(
-            deviceID = MediaDrmIdProvider.getDeviceUniqueId(),
+            deviceID =  "0a59e224f66293ad350612a244507ab420ee61ba580b27e2352c609208496200" ,// MediaDrmIdProvider.getDeviceUniqueId(),
             deviceLang = Locale.getDefault().language,
             userPlatform = "Android"
         )

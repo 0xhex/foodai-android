@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.codepad.foodai.R
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
+import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
 import com.codepad.foodai.domain.models.user.User
 import com.codepad.foodai.domain.use_cases.UseCaseResult
 import com.codepad.foodai.domain.use_cases.image.FetchImageUseCase
@@ -34,11 +35,15 @@ class HomeViewModel @Inject constructor(
     private val uploadImageUseCase: UploadImageUseCase,
     private val fetchImageUseCase: FetchImageUseCase,
 ) : ViewModel() {
+
     private val _homeEvent = MutableLiveData<HomeEvent>()
     val homeEvent: LiveData<HomeEvent> get() = _homeEvent
 
     private val _userDataResponse = MutableLiveData<User?>()
     val userDataResponse: LiveData<User?> get() = _userDataResponse
+
+    private val _nutritions = MutableLiveData<NutritionResponseData>()
+    val nutritions: LiveData<NutritionResponseData> get() = _nutritions
 
     private val _calories = MutableLiveData<Nutrition>().apply {
         value = Nutrition("Calorie Goal", "0", R.drawable.kcal)
@@ -82,6 +87,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = nutritionsUseCase.getUserNutrition(userID)) {
                 is UseCaseResult.Success -> {
+                    _nutritions.value = result.data
                     _calories.value = Nutrition(
                         "Calorie Goal", result.data.totalCalories.toString(), R.drawable.kcal
                     )

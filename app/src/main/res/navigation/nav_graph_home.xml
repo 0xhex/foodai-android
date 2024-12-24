@@ -10,6 +10,11 @@
         android:name="com.codepad.foodai.ui.home.home.HomeTabFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_home_tab">
+
+        <action
+            android:id="@+id/action_home_tab_to_food_detail"
+            app:destination="@id/foodDetailFragment"
+            app:popUpTo="@id/foodDetailFragment" />
     </fragment>
 
     <fragment
@@ -91,5 +96,9 @@
         android:name="com.codepad.foodai.ui.home.home.pager.goals.GoalViewFragment"
         android:label="GoalViewFragment"
         tools:layout="@layout/fragment_goal_view"></fragment>
+
+    <fragment
+        android:id="@+id/foodDetailFragment"
+        android:name="com.codepad.foodai.ui.home.home.fooddetail.FoodDetailFragment"></fragment>
 
 </navigation>
