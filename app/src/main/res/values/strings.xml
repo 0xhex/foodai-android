@@ -298,6 +298,6 @@
     <string name="fix_result_cancel">Cancel</string>
     <string name="fix_result_success">Result updated successfully</string>
     <string name="fix_result_error">Failed to update result</string>
-    <string name="delete_success">Food sucessfully deleted</string>
-    <string name="editing_food_title">Processing your food edits...</string>
+    <string name="delete_success">Food successfully deleted</string>
+    <string name="editing_food_title">Processing your food edits…</string>
 </resources>

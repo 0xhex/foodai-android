@@ -5,17 +5,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/custom_black"
-        android:padding="20dp">
+        android:padding="@dimen/dimen_16dp">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btn_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_arrow_back_circle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/darker_gray" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/title_container"
