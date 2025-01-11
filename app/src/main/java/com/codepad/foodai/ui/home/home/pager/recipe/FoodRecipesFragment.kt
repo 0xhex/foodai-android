@@ -51,9 +51,12 @@ class FoodRecipesFragment : BaseFragment<FragmentFoodRecipesBinding>() {
     }
 
     private fun observeRecipeStates() {
-        viewModel.recipe.observe(viewLifecycleOwner) { recipe ->
-            recipe?.let {
-                adapter.updateRecipe(it.mealType, it)
+        viewModel.recipes.observe(viewLifecycleOwner) { recipes ->
+            recipes.forEach { (mealType, recipe) ->
+                adapter.updateRecipe(mealType, recipe)
+                if (recipe.status == "completed") {
+                    adapter.updateLoadingState(mealType, false)
+                }
             }
         }
 

@@ -83,14 +83,11 @@ class HomeViewModel @Inject constructor(
     private val _dailyStreak = MutableLiveData<StreakResponseData?>()
     val dailyStreak: LiveData<StreakResponseData?> get() = _dailyStreak
 
-    private val _recipe = MutableLiveData<Recipe?>()
-    val recipe: LiveData<Recipe?> = _recipe
+    private val _recipes = MutableLiveData<Map<String, Recipe>>(emptyMap())
+    val recipes: LiveData<Map<String, Recipe>> = _recipes
 
     private val _isRecipeLoading = MutableLiveData<Boolean>()
     val isRecipeLoading: LiveData<Boolean> = _isRecipeLoading
-
-    private val _isRecipeReady = MutableLiveData<Boolean>()
-    val isRecipeReady: LiveData<Boolean> = _isRecipeReady
 
     private val _recipeError = MutableLiveData<String?>()
     val recipeError: LiveData<String?> = _recipeError
@@ -231,7 +228,6 @@ class HomeViewModel @Inject constructor(
     fun generateRecipe(mealType: String) {
         viewModelScope.launch {
             _isRecipeLoading.value = true
-            _isRecipeReady.value = false
             _isPremiumRequired.value = false
             _recipeError.value = null
 
@@ -239,11 +235,11 @@ class HomeViewModel @Inject constructor(
 
             when (val result = generateRecipeUseCase.generateRecipe(userId, mealType.lowercase())) {
                 is UseCaseResult.Success -> {
-                    startPollingRecipeStatus(result.data.recipeID)
+                    startPollingRecipeStatus(result.data.recipeID, mealType)
                 }
                 is UseCaseResult.Error -> {
                     _isRecipeLoading.value = false
-                    if (result.code.toString() == ErrorCode.PREMIUM_REQUIRED.toString()) { // TODO CHECK
+                    if (result.code.toString() == ErrorCode.PREMIUM_REQUIRED.toString()) {
                         _isPremiumRequired.value = true
                     } else {
                         _recipeError.value = result.message
@@ -253,7 +249,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun startPollingRecipeStatus(recipeId: String) {
+    private fun startPollingRecipeStatus(recipeId: String, mealType: String) {
         recipePollingJob?.cancel()
         recipePollingJob = viewModelScope.launch {
             while (isActive) {
@@ -261,9 +257,9 @@ class HomeViewModel @Inject constructor(
                     is UseCaseResult.Success -> {
                         when (result.data.status) {
                             "completed" -> {
-                                _recipe.value = result.data
-                                _isRecipeReady.value = true
+                                updateRecipe(result.data)
                                 saveRecipeToPrefs(result.data)
+                                _isRecipeLoading.value = false
                                 break
                             }
                             "failed" -> {
@@ -282,6 +278,12 @@ class HomeViewModel @Inject constructor(
                 delay(3000) // Poll every 3 seconds
             }
         }
+    }
+
+    private fun updateRecipe(recipe: Recipe) {
+        val currentRecipes = _recipes.value?.toMutableMap() ?: mutableMapOf()
+        currentRecipes[recipe.mealType] = recipe
+        _recipes.value = currentRecipes
     }
 
     private fun saveRecipeToPrefs(recipe: Recipe) {
@@ -304,8 +306,7 @@ class HomeViewModel @Inject constructor(
                 if (savedRecipe != null) {
                     val recipe = Gson().fromJson(savedRecipe, Recipe::class.java)
                     if (recipe.status == "completed") {
-                        _recipe.value = recipe
-                        _isRecipeReady.value = true
+                        updateRecipe(recipe)
                     }
                 }
             } catch (e: Exception) {
