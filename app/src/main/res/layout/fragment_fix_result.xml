@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/custom_black"
+        android:padding="@dimen/dimen_16dp">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_arrow_back_circle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/title_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_back">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_sparkles"
+                app:tint="@android:color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/euro_stile_regular"
+                android:text="@string/fix_result_title"
+                android:textColor="@android:color/white"
+                android:textSize="28sp" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edit_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_edit_text"
+            android:fontFamily="@font/euro_stile_regular"
+            android:hint="@string/fix_result_hint"
+            android:padding="16dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/title_container" />
+
+        <TextView
+            android:id="@+id/txt_example"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/custom_dark_gray"
+            android:fontFamily="@font/euro_stile_regular"
+            android:padding="16dp"
+            android:text="@string/fix_result_example"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/edit_description" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_update"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/euro_stile_bold"
+            android:padding="16dp"
+            android:text="@string/fix_result_update"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="12dp"
+            android:textSize="16sp"
+            app:backgroundTint="#037aff"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/loading_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000"
+            android:visibility="gone">
+
+            <com.codepad.foodai.ui.home.home.loading.LoadingView
+                android:id="@+id/loading_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewpager2.widget.ViewPager2
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentHomeTabBinding
-import com.codepad.foodai.domain.models.user.StreakResponseData
 import com.codepad.foodai.extensions.getFormattedDate
 import com.codepad.foodai.extensions.toHourString
 import com.codepad.foodai.helpers.UserSession

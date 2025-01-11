@@ -286,8 +286,18 @@
     <string name="view_recipe">View Recipe</string>
     <string name="recipe_ready_text">Your %s Recipe is Ready!</string>
     <string name="your_personalized_recipe">Your Personalized Recipe</string>
-    <string name="why_this_recipe">Why This Recipe</string>
+    <string name="why_this_recipe">Why This Recipe?</string>
     <string name="instructions">Instructions</string>
     <string name="cooking_tips">Cooking Tips</string>
     <string name="nutritional_information">Nutritional Information</string>
+    <string name="fix_result_title">Fix Result</string>
+    <string name="fix_result_hint">Describe what needs to be fixed</string>
+    <string name="fix_result_example">Example: The frappuccino is missing the caramel drizzle and whipped topping.</string>
+    <string name="fix_result_update">Update</string>
+    <string name="fix_result_submit">Submit</string>
+    <string name="fix_result_cancel">Cancel</string>
+    <string name="fix_result_success">Result updated successfully</string>
+    <string name="fix_result_error">Failed to update result</string>
+    <string name="delete_success">Food successfully deleted</string>
+    <string name="editing_food_title">Processing your food edits…</string>
 </resources>

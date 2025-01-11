@@ -1,11 +1,13 @@
 package com.codepad.foodai.domain.models.image
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import java.util.Date
 
 @Parcelize
 data class ImageData(
+    @SerializedName("_id")
     val id: String,
     val user: String,
     val url: String,

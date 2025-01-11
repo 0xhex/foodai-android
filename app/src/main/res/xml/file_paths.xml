@@ -9,4 +9,7 @@
     <external-path
         name="external"
         path="." />
+    <cache-path
+        name="shared_images"
+        path="images/"/>
 </paths>

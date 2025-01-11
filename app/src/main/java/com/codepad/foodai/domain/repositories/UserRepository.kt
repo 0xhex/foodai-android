@@ -2,6 +2,7 @@ package com.codepad.foodai.domain.repositories
 
 import com.codepad.foodai.domain.api.APIError
 import com.codepad.foodai.domain.api.RestApi
+import com.codepad.foodai.domain.models.image.FixImageResultsRequest
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
@@ -258,7 +259,10 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun getUserDailySummary(userID: String, date: String): RepositoryResult<DailySummaryResponseData> {
+    suspend fun getUserDailySummary(
+        userID: String,
+        date: String,
+    ): RepositoryResult<DailySummaryResponseData> {
         return try {
             val response = restApi.getUserDailySummary(userID, date)
             if (response.success && response.data != null) {
@@ -285,7 +289,10 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun generateRecipe(userID: String, mealType: String): RepositoryResult<GenerateRecipeResponseData> {
+    suspend fun generateRecipe(
+        userID: String,
+        mealType: String,
+    ): RepositoryResult<GenerateRecipeResponseData> {
         return try {
             val request = GenerateRecipeRequest(userID = userID, mealType = mealType)
             val response = restApi.generateRecipe(request)
@@ -340,4 +347,60 @@ class UserRepository @Inject constructor(
         }
     }
 
+    suspend fun deleteImage(imageId: String): RepositoryResult<Unit> {
+        return try {
+            val response = restApi.deleteImage(imageId)
+            if (response.success) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = Unit
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        response.message ?: "Unknown error", response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
+
+    suspend fun fixResult(
+        imageId: String,
+        imageResultsRequest: FixImageResultsRequest,
+    ): RepositoryResult<ImageData?> {
+        return try {
+            val response = restApi.fixImageResults(imageId, imageResultsRequest)
+            if (response.success) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        response.message ?: "Unknown error", response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
 }
