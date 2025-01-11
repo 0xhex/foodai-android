@@ -1,6 +1,7 @@
 package com.codepad.foodai.domain.api
 
 import com.codepad.foodai.domain.models.APIResponse
+import com.codepad.foodai.domain.models.image.FixImageResultsRequest
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
@@ -81,5 +82,11 @@ interface RestApi {
 
     @DELETE("users/{imageId}/deleteImage")
     suspend fun deleteImage(@Path("imageId") imageId: String): APIResponse<Unit>
+
+    @POST("users/images/{imageId}/fix")
+    suspend fun fixImageResults(
+        @Path("imageId") imageId: String,
+        @Body request: FixImageResultsRequest,
+    ): APIResponse<ImageData?>
 
 }

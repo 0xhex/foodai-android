@@ -33,8 +33,7 @@
         android:id="@+id/navigation_analytics"
         android:name="com.codepad.foodai.ui.home.analytics.AnalyticsTabFragment"
         android:label="@string/analytics"
-        tools:layout="@layout/fragment_analytics_tab">
-    </fragment>
+        tools:layout="@layout/fragment_analytics_tab"></fragment>
 
     <fragment
         android:id="@+id/navigation_settings"
@@ -111,7 +110,11 @@
 
     <fragment
         android:id="@+id/foodDetailFragment"
-        android:name="com.codepad.foodai.ui.home.home.fooddetail.FoodDetailFragment"></fragment>
+        android:name="com.codepad.foodai.ui.home.home.fooddetail.FoodDetailFragment">
+        <action
+            android:id="@+id/action_navigation_food_detail_to_fixResultFragment"
+            app:destination="@id/fixResultFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/dailyStreakFragment"
@@ -121,5 +124,11 @@
             android:name="streakData"
             app:argType="com.codepad.foodai.domain.models.user.StreakResponseData" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fixResultFragment"
+        android:name="com.codepad.foodai.ui.home.home.fooddetail.FixResultFragment"
+        android:label="FixResultFragment"
+        tools:layout="@layout/fragment_fix_result" />
 
 </navigation>

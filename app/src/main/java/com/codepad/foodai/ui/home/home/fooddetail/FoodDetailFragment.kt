@@ -14,7 +14,9 @@ import com.codepad.foodai.databinding.FragmentFoodDetailBinding
 import com.codepad.foodai.extensions.toHourString
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.home.pager.HomePagerViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
@@ -66,17 +68,29 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
             binding.progressOverlay.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
-        sharedViewModel.deleteResult.observe(viewLifecycleOwner) { success ->
-            if (success != null) {  // Only handle non-null values
-                if (success) {
-                    Snackbar.make(binding.root, "Food deleted successfully", Snackbar.LENGTH_SHORT)
+        sharedViewModel.deleteResult.observe(viewLifecycleOwner) { result ->
+            result?.let {
+                if (it) {
+                    Snackbar.make(binding.root, R.string.delete_success, Snackbar.LENGTH_SHORT)
                         .show()
                     findNavController().popBackStack()
                 } else {
-                    Snackbar.make(binding.root, "Failed to delete food", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "", Snackbar.LENGTH_SHORT).show()
                 }
-                // Clear the value after handling it
                 sharedViewModel.clearDeleteResult()
+            }
+        }
+
+        sharedViewModel.fixResult.observe(viewLifecycleOwner) { result ->
+            result?.let {
+                if (it) {
+                    Snackbar.make(binding.root, R.string.fix_result_success, Snackbar.LENGTH_SHORT)
+                        .show()
+                } else {
+                    Snackbar.make(binding.root, R.string.fix_result_error, Snackbar.LENGTH_SHORT)
+                        .show()
+                }
+                sharedViewModel.clearFixResult()
             }
         }
     }
@@ -95,11 +109,7 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
         }
 
         binding.btnFix.setOnClickListener {
-            // Navigate to FixResultFragment
-        }
-
-        binding.btnSave.setOnClickListener {
-            // Implement save functionality
+            findNavController().navigate(R.id.fixResultFragment)
         }
     }
 
@@ -151,5 +161,26 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
         } catch (e: Exception) {
             Snackbar.make(binding.root, "Failed to share screenshot", Snackbar.LENGTH_SHORT).show()
         }
+    }
+
+    private fun showFixResultDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_fix_result, null)
+        val promptInput = dialogView.findViewById<TextInputEditText>(R.id.prompt_input)
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setView(dialogView)
+            .setPositiveButton(R.string.fix_result_submit) { dialog, _ ->
+                val prompt = promptInput.text?.toString()
+                if (!prompt.isNullOrBlank()) {
+                    sharedViewModel.foodDetail.value?.id?.let { imageId ->
+                        sharedViewModel.fixImageResults(imageId, prompt)
+                    }
+                }
+                dialog.dismiss()
+            }
+            .setNegativeButton(R.string.fix_result_cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }
