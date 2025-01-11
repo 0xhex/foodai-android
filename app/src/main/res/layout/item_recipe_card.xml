@@ -12,7 +12,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         app:cardBackgroundColor="#222222"
@@ -29,7 +29,7 @@
                 android:id="@+id/initial_state_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="txt_meal_type,meal_animation,btn_create_recipe" />
+                app:constraint_referenced_ids="txt_meal_type,meal_animation" />
 
             <TextView
                 android:id="@+id/txt_meal_type"
@@ -49,32 +49,14 @@
                 android:id="@+id/meal_animation"
                 android:layout_width="120dp"
                 android:layout_height="80dp"
+                android:layout_marginHorizontal="@dimen/dimen_52dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginHorizontal="@dimen/dimen_52dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txt_meal_type"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/meal" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_create_recipe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="@font/euro_stile_bold"
-                android:text="@string/create_recipe"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textAllCaps="false"
-                app:backgroundTint="#35c759"
-                android:layout_marginHorizontal="@dimen/dimen_24dp"
-                app:cornerRadius="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/meal_animation" />
 
             <!-- Loading State -->
             <com.airbnb.lottie.LottieAnimationView
@@ -115,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:constraint_referenced_ids="recipe_ready_animation,recipe_ready_icon,recipe_ready_text,btn_view_recipe" />
+                app:constraint_referenced_ids="recipe_ready_animation,recipe_ready_icon,recipe_ready_text" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/recipe_ready_animation"
@@ -130,45 +112,33 @@
 
             <ImageView
                 android:id="@+id/recipe_ready_icon"
-                android:layout_width="21dp"
-                android:layout_height="21dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="@dimen/dimen_24dp"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/ic_check_circle"
                 app:layout_constraintEnd_toStartOf="@id/recipe_ready_text"
                 app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recipe_ready_animation"
                 app:tint="#35c759" />
 
             <TextView
                 android:id="@+id/recipe_ready_text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_marginEnd="@dimen/dimen_24dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:fontFamily="@font/euro_stile_regular"
                 android:text="@{@string/recipe_ready(mealType)}"
                 android:textColor="#35c759"
                 android:textSize="15sp"
+                android:textAlignment="viewStart"
                 app:layout_constraintBottom_toBottomOf="@id/recipe_ready_icon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/recipe_ready_icon"
                 app:layout_constraintTop_toTopOf="@id/recipe_ready_icon" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_view_recipe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#35c759"
-                android:fontFamily="@font/euro_stile_bold"
-                android:text="@string/view_recipe"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textAllCaps="false"
-                app:cornerRadius="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
 
             <!-- Premium Required State -->
             <androidx.constraintlayout.widget.Group
@@ -176,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:constraint_referenced_ids="premium_title,premium_description,btn_upgrade" />
+                app:constraint_referenced_ids="premium_title,premium_description" />
 
             <TextView
                 android:id="@+id/premium_title"
@@ -206,21 +176,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/premium_title" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_upgrade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/blue_button"
-                android:fontFamily="@font/euro_stile_bold"
-                android:text="@string/upgrade_now"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                app:cornerRadius="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
             <!-- Error State -->
             <TextView
                 android:id="@+id/error_message"
@@ -235,6 +190,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Error message" />
+
+            <!-- Common Button for all states -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_create_recipe"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="@dimen/dimen_24dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/euro_stile_bold"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

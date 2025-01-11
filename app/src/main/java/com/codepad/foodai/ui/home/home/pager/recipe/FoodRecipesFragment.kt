@@ -4,6 +4,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentFoodRecipesBinding
+import com.codepad.foodai.domain.models.recipe.MealType
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -12,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class FoodRecipesFragment : BaseFragment<FragmentFoodRecipesBinding>() {
     private val viewModel: HomeViewModel by activityViewModels()
     private lateinit var adapter: RecipeCardAdapter
-    private val mealTypes = listOf("Breakfast", "Lunch", "Dinner")
+    private val mealTypes = MealType.entries
 
     override fun getLayoutId(): Int = R.layout.fragment_food_recipes
 
@@ -22,7 +23,7 @@ class FoodRecipesFragment : BaseFragment<FragmentFoodRecipesBinding>() {
         
         // Check for saved recipes when the fragment is created
         mealTypes.forEach { mealType ->
-            viewModel.checkSavedRecipe(mealType)
+            viewModel.checkSavedRecipe(mealType.codeName)
         }
     }
 
@@ -30,7 +31,7 @@ class FoodRecipesFragment : BaseFragment<FragmentFoodRecipesBinding>() {
         adapter = RecipeCardAdapter(
             mealTypes = mealTypes,
             onCreateRecipeClick = { mealType ->
-                viewModel.generateRecipe(mealType)
+                viewModel.generateRecipe(mealType.codeName)
             },
             onViewRecipeClick = { recipe ->
                 // TODO: Navigate to recipe detail view
@@ -52,19 +53,19 @@ class FoodRecipesFragment : BaseFragment<FragmentFoodRecipesBinding>() {
 
         viewModel.isRecipeLoading.observe(viewLifecycleOwner) { isLoading ->
             mealTypes.forEach { mealType ->
-                adapter.updateLoadingState(mealType, isLoading)
+                adapter.updateLoadingState(mealType.codeName, isLoading)
             }
         }
 
         viewModel.recipeError.observe(viewLifecycleOwner) { error ->
             mealTypes.forEach { mealType ->
-                adapter.updateErrorState(mealType, error)
+                adapter.updateErrorState(mealType.codeName, error)
             }
         }
 
         viewModel.isPremiumRequired.observe(viewLifecycleOwner) { isPremiumRequired ->
             mealTypes.forEach { mealType ->
-                adapter.updatePremiumRequired(mealType, isPremiumRequired)
+                adapter.updatePremiumRequired(mealType.codeName, isPremiumRequired)
             }
         }
     }

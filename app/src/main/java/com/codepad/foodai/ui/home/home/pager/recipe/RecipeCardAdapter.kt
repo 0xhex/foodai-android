@@ -1,18 +1,21 @@
 package com.codepad.foodai.ui.home.home.pager.recipe
 
+import android.content.res.ColorStateList
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.ItemRecipeCardBinding
+import com.codepad.foodai.domain.models.recipe.MealType
 import com.codepad.foodai.domain.models.recipe.Recipe
 
 class RecipeCardAdapter(
-    private val mealTypes: List<String>,
-    private val onCreateRecipeClick: (String) -> Unit,
+    private val mealTypes: List<MealType>,
+    private val onCreateRecipeClick: (MealType) -> Unit,
     private val onViewRecipeClick: (Recipe) -> Unit,
 ) : RecyclerView.Adapter<RecipeCardAdapter.RecipeCardViewHolder>() {
 
@@ -53,19 +56,19 @@ class RecipeCardAdapter(
     override fun onBindViewHolder(holder: RecipeCardViewHolder, position: Int) {
         val mealType = mealTypes[position]
         holder.bind(mealType)
-        
+
         // Start or stop loading messages based on the loading state
-        if (loadingStates[mealType] == true && !handlers.containsKey(mealType)) {
-            startLoadingMessages(mealType, position)
-        } else if (loadingStates[mealType] != true && handlers.containsKey(mealType)) {
-            stopLoadingMessages(mealType)
+        if (loadingStates[mealType.codeName] == true && !handlers.containsKey(mealType.codeName)) {
+            startLoadingMessages(mealType.codeName, position)
+        } else if (loadingStates[mealType.codeName] != true && handlers.containsKey(mealType.codeName)) {
+            stopLoadingMessages(mealType.codeName)
         }
     }
 
     override fun getItemCount(): Int = mealTypes.size
 
     fun updateRecipe(mealType: String, recipe: Recipe?) {
-        val position = mealTypes.indexOf(mealType)
+        val position = mealTypes.indexOfFirst { it.codeName == mealType.lowercase() }
         if (position != -1) {
             recipes = recipes.toMutableMap().apply { put(mealType, recipe) }
             stopLoadingMessages(mealType)
@@ -74,18 +77,21 @@ class RecipeCardAdapter(
     }
 
     fun updateLoadingState(mealType: String, isLoading: Boolean) {
-        loadingStates = loadingStates.toMutableMap().apply { 
+        loadingStates = loadingStates.toMutableMap().apply {
             // Clear all other loading states first
             clear()
             // Set only the clicked item to loading state
-            put(mealType, isLoading) 
+            put(mealType, isLoading)
         }
         loadingMessageIndices[mealType] = 0
-        notifyItemChanged(mealTypes.indexOf(mealType))
+        val position = mealTypes.indexOfFirst { it.codeName == mealType.lowercase() }
+        if (position != -1) {
+            notifyItemChanged(position)
+        }
     }
 
     fun updateErrorState(mealType: String, error: String?) {
-        val position = mealTypes.indexOf(mealType)
+        val position = mealTypes.indexOfFirst { it.codeName == mealType.lowercase() }
         if (position != -1) {
             errorStates = errorStates.toMutableMap().apply { put(mealType, error) }
             stopLoadingMessages(mealType)
@@ -94,9 +100,10 @@ class RecipeCardAdapter(
     }
 
     fun updatePremiumRequired(mealType: String, required: Boolean) {
-        val position = mealTypes.indexOf(mealType)
+        val position = mealTypes.indexOfFirst { it.codeName == mealType.lowercase() }
         if (position != -1) {
-            premiumRequiredStates = premiumRequiredStates.toMutableMap().apply { put(mealType, required) }
+            premiumRequiredStates =
+                premiumRequiredStates.toMutableMap().apply { put(mealType, required) }
             stopLoadingMessages(mealType)
             notifyItemChanged(position)
         }
@@ -110,7 +117,7 @@ class RecipeCardAdapter(
                 handlers.remove(key)
             }
         }
-        
+
         loadingMessageIndices[mealType] = 0
         val handler = Handler(Looper.getMainLooper())
         handlers[mealType] = handler
@@ -153,15 +160,15 @@ class RecipeCardAdapter(
             }
         }
 
-        fun bind(mealType: String) {
-            binding.mealType = mealType
-            itemView.tag = mealType
+        fun bind(mealType: MealType) {
+            binding.mealType = mealType.displayName
+            itemView.tag = mealType.codeName
 
-            val recipe = recipes[mealType]
-            val isLoading = loadingStates[mealType] ?: false
-            val error = errorStates[mealType]
-            val isPremiumRequired = premiumRequiredStates[mealType] ?: false
-            val loadingMessageIndex = loadingMessageIndices[mealType] ?: 0
+            val recipe = recipes[mealType.codeName]
+            val isLoading = loadingStates[mealType.codeName] ?: false
+            val error = errorStates[mealType.codeName]
+            val isPremiumRequired = premiumRequiredStates[mealType.codeName] ?: false
+            val loadingMessageIndex = loadingMessageIndices[mealType.codeName] ?: 0
 
             binding.apply {
                 // Reset all states first
@@ -174,8 +181,6 @@ class RecipeCardAdapter(
                 premiumRequiredGroup.visibility = View.GONE
                 errorMessage.visibility = View.GONE
                 btnCreateRecipe.visibility = View.GONE
-                btnViewRecipe.visibility = View.GONE
-                btnUpgrade.visibility = View.GONE
 
                 when {
                     // Loading state
@@ -186,7 +191,10 @@ class RecipeCardAdapter(
                             setAnimation(R.raw.loading)
                             playAnimation()
                         }
-                        updateLoadingMessage(mealType, loadingMessageIndex)
+                        updateLoadingMessage(mealType.codeName, loadingMessageIndex)
+                        
+                        // Hide button during loading
+                        btnCreateRecipe.visibility = View.GONE
                     }
                     // Recipe ready state
                     recipe?.status == "completed" -> {
@@ -196,18 +204,55 @@ class RecipeCardAdapter(
                             setAnimation(R.raw.premium)
                             playAnimation()
                         }
-                        btnViewRecipe.visibility = View.VISIBLE
+
+                        recipeReadyIcon.apply {
+                            visibility = View.VISIBLE
+                            setImageResource(R.drawable.ic_check_circle)
+                            imageTintList = ColorStateList.valueOf(
+                                ContextCompat.getColor(context, R.color.custom_green)
+                            )
+                        }
+
+                        recipeReadyText.apply {
+                            visibility = View.VISIBLE
+                            text = root.context.getString(
+                                R.string.recipe_ready,
+                                mealType.displayName
+                            )
+                            setTextColor(ContextCompat.getColor(context, R.color.custom_green))
+                        }
+
+                        btnCreateRecipe.apply {
+                            visibility = View.VISIBLE
+                            text = root.context.getString(R.string.view_recipe)
+                            backgroundTintList = ColorStateList.valueOf(
+                                ContextCompat.getColor(context, R.color.custom_green)
+                            )
+                        }
                     }
                     // Premium required state
                     isPremiumRequired -> {
                         premiumRequiredGroup.visibility = View.VISIBLE
-                        btnUpgrade.visibility = View.VISIBLE
+                        btnCreateRecipe.apply {
+                            visibility = View.VISIBLE
+                            text = root.context.getString(R.string.upgrade_now)
+                            backgroundTintList = ColorStateList.valueOf(
+                                ContextCompat.getColor(context, R.color.blue_button)
+                            )
+                        }
                     }
                     // Error state
                     error != null -> {
                         errorMessage.apply {
                             visibility = View.VISIBLE
                             text = error
+                        }
+                        btnCreateRecipe.apply {
+                            visibility = View.VISIBLE
+                            text = root.context.getString(R.string.create_recipe)
+                            backgroundTintList = ColorStateList.valueOf(
+                                ContextCompat.getColor(context, R.color.custom_green)
+                            )
                         }
                     }
                     // Initial state (default)
@@ -218,14 +263,24 @@ class RecipeCardAdapter(
                             setAnimation(R.raw.meal)
                             playAnimation()
                         }
-                        btnCreateRecipe.visibility = View.VISIBLE
+                        btnCreateRecipe.apply {
+                            visibility = View.VISIBLE
+                            text = root.context.getString(R.string.create_recipe)
+                            backgroundTintList = ColorStateList.valueOf(
+                                ContextCompat.getColor(context, R.color.custom_green)
+                            )
+                        }
                     }
                 }
 
-                // Set click listeners
-                btnCreateRecipe.setOnClickListener { onCreateRecipeClick(mealType) }
-                btnViewRecipe.setOnClickListener { recipe?.let { onViewRecipeClick(it) } }
-                btnUpgrade.setOnClickListener { /* TODO: Implement premium upgrade */ }
+                // Set click listeners based on state
+                btnCreateRecipe.setOnClickListener {
+                    when {
+                        recipe?.status == "completed" -> recipe?.let { onViewRecipeClick(it) }
+                        isPremiumRequired -> { /* TODO: Implement premium upgrade */ }
+                        else -> onCreateRecipeClick(mealType)
+                    }
+                }
             }
 
             binding.executePendingBindings()
