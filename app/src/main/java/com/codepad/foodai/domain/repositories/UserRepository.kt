@@ -340,4 +340,30 @@ class UserRepository @Inject constructor(
         }
     }
 
+    suspend fun deleteImage(imageId: String): RepositoryResult<Unit> {
+        return try {
+            val response = restApi.deleteImage(imageId)
+            if (response.success) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = Unit
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        response.message ?: "Unknown error", response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
 }

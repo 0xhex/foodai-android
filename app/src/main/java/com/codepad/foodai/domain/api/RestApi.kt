@@ -17,6 +17,7 @@ import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
@@ -65,17 +66,20 @@ interface RestApi {
     @GET("users/{userID}/daily-summary")
     suspend fun getUserDailySummary(
         @Path("userID") userID: String,
-        @Query("date") date: String
+        @Query("date") date: String,
     ): APIResponse<DailySummaryResponseData>
 
     @POST("recipes/generate")
     suspend fun generateRecipe(
-        @Body request: GenerateRecipeRequest
+        @Body request: GenerateRecipeRequest,
     ): APIResponse<GenerateRecipeResponseData>
 
     @GET("recipes/{recipeID}")
     suspend fun getRecipeStatus(
-        @Path("recipeID") recipeID: String
+        @Path("recipeID") recipeID: String,
     ): APIResponse<Recipe>
+
+    @DELETE("users/{imageId}/deleteImage")
+    suspend fun deleteImage(@Path("imageId") imageId: String): APIResponse<Unit>
 
 }

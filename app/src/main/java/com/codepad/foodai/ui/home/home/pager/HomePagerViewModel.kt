@@ -7,10 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
 import com.codepad.foodai.domain.models.user.GetUserDailySummaryUseCase
-import com.codepad.foodai.domain.models.user.StreakResponseData
 import com.codepad.foodai.domain.use_cases.UseCaseResult
+import com.codepad.foodai.domain.use_cases.image.DeleteImageUseCase
 import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
-import com.codepad.foodai.domain.use_cases.user.NutritionData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomePagerViewModel @Inject constructor(
     private val getUserDailySummaryUseCase: GetUserDailySummaryUseCase,
+    private val deleteImageUseCase: DeleteImageUseCase,
 ) : ViewModel() {
 
     private val _dailySummary = MutableLiveData<DailySummaryResponseData>()
@@ -37,6 +37,12 @@ class HomePagerViewModel @Inject constructor(
 
     private val _foodDetail = MutableLiveData<ImageData>()
     val foodDetail: LiveData<ImageData> get() = _foodDetail
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    private val _deleteResult = MutableLiveData<Boolean?>()
+    val deleteResult: LiveData<Boolean?> get() = _deleteResult
 
     fun updateAchievedPercents(nutritionResponseData: NutritionResponseData) {
         val totalCalories = nutritionResponseData.totalCalories
@@ -84,5 +90,26 @@ class HomePagerViewModel @Inject constructor(
 
     fun setFoodDetail(foodDetail: ImageData) {
         _foodDetail.value = foodDetail
+    }
+
+    fun deleteImage(imageId: String) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            when (deleteImageUseCase.deleteImage(imageId)) {
+                is UseCaseResult.Success -> {
+                    _deleteResult.value = true
+                    _isLoading.value = false
+                }
+
+                is UseCaseResult.Error -> {
+                    _deleteResult.value = false
+                    _isLoading.value = false
+                }
+            }
+        }
+    }
+
+    fun clearDeleteResult() {
+        _deleteResult.value = null
     }
 }
