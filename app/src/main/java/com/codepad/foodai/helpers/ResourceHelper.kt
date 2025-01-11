@@ -1,6 +1,7 @@
 package com.codepad.foodai.helpers
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import androidx.annotation.ColorInt
@@ -16,7 +17,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ResourceHelper @Inject constructor(@ApplicationContext context: Context) {
+class ResourceHelper @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val sharedPreferences: SharedPreferences
+) {
 
     private val contextRef = WeakReference(context)
 
@@ -58,6 +62,8 @@ class ResourceHelper @Inject constructor(@ApplicationContext context: Context) {
         }
         return ContextCompat.getContextForLanguage(context)
     }
+
+    fun getSharedPreferences(): SharedPreferences = sharedPreferences
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

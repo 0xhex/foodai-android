@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="mealType"
             type="String" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
@@ -18,53 +19,223 @@
         app:cardCornerRadius="15dp"
         app:cardElevation="6dp">
 
-       <androidx.constraintlayout.widget.ConstraintLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/recipe_card_gradient">
 
-           <com.airbnb.lottie.LottieAnimationView
-               android:id="@+id/lottie"
-               app:layout_constraintTop_toTopOf="parent"
-               app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintEnd_toEndOf="parent"
-               android:layout_marginHorizontal="@dimen/dimen_52dp"
-               android:layout_width="120dp"
-               app:lottie_autoPlay="true"
-               app:lottie_loop="true"
-               app:lottie_rawRes="@raw/meal"
-               android:layout_height="120dp"/>
+            <!-- Initial State -->
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/initial_state_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="txt_meal_type,meal_animation,btn_create_recipe" />
 
-           <TextView
-               android:id="@+id/txt_type"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               app:layout_constraintTop_toBottomOf="@id/lottie"
-               app:layout_constraintStart_toStartOf="@id/lottie"
-               android:fontFamily="@font/euro_stile_bold"
-               tools:text="Breakfast"
-               android:text="@{mealType}"
-               android:textColor="@color/white"
-               android:textSize="18sp" />
+            <TextView
+                android:id="@+id/txt_meal_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/euro_stile_bold"
+                android:text="@{mealType}"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Breakfast" />
 
-           <com.google.android.material.button.MaterialButton
-               android:id="@+id/nextButton"
-               android:layout_width="0dp"
-               android:layout_height="66dp"
-               android:layout_marginHorizontal="@dimen/dimen_24dp"
-               android:fontFamily="@font/euro_stile_bold"
-               android:text="@string/create_recipe"
-               android:textColor="@color/white"
-               android:textSize="16sp"
-               app:backgroundTint="#35c759"
-               android:textAllCaps="false"
-               app:cornerRadius="12dp"
-               android:layout_marginTop="@dimen/dimen_32dp"
-               app:fontFamily="@font/euro_stile_bold"
-               app:layout_constraintEnd_toEndOf="parent"
-               app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintTop_toBottomOf="@id/txt_type" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/meal_animation"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="@dimen/dimen_52dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_meal_type"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/meal" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_create_recipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/euro_stile_bold"
+                android:text="@string/create_recipe"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                app:backgroundTint="#35c759"
+                android:layout_marginHorizontal="@dimen/dimen_24dp"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/meal_animation" />
 
-       </androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- Loading State -->
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loading_animation"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="32dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/loading_message"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true" />
+
+            <TextView
+                android:id="@+id/loading_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:fontFamily="@font/euro_stile_regular"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loading_animation"
+                tools:text="Loading..." />
+
+            <!-- Recipe Ready State -->
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/recipe_ready_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="recipe_ready_animation,recipe_ready_icon,recipe_ready_text,btn_view_recipe" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/recipe_ready_animation"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/premium" />
+
+            <ImageView
+                android:id="@+id/recipe_ready_icon"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_check_circle"
+                app:layout_constraintEnd_toStartOf="@id/recipe_ready_text"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recipe_ready_animation"
+                app:tint="#35c759" />
+
+            <TextView
+                android:id="@+id/recipe_ready_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/euro_stile_regular"
+                android:text="@{@string/recipe_ready(mealType)}"
+                android:textColor="#35c759"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/recipe_ready_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/recipe_ready_icon"
+                app:layout_constraintTop_toTopOf="@id/recipe_ready_icon" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_view_recipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#35c759"
+                android:fontFamily="@font/euro_stile_bold"
+                android:text="@string/view_recipe"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <!-- Premium Required State -->
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/premium_required_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="premium_title,premium_description,btn_upgrade" />
+
+            <TextView
+                android:id="@+id/premium_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/euro_stile_bold"
+                android:text="@string/upgrade_to_premium"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/premium_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/euro_stile_regular"
+                android:gravity="center"
+                android:text="@string/premium_recipe_description"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/premium_title" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_upgrade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/blue_button"
+                android:fontFamily="@font/euro_stile_bold"
+                android:text="@string/upgrade_now"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <!-- Error State -->
+            <TextView
+                android:id="@+id/error_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/euro_stile_regular"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Error message" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

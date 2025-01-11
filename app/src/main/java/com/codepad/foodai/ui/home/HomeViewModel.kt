@@ -7,25 +7,35 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codepad.foodai.R
+import com.codepad.foodai.domain.models.ErrorCode
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
+import com.codepad.foodai.domain.models.recipe.Recipe
 import com.codepad.foodai.domain.models.user.StreakResponseData
 import com.codepad.foodai.domain.models.user.User
 import com.codepad.foodai.domain.use_cases.UseCaseResult
 import com.codepad.foodai.domain.use_cases.image.FetchImageUseCase
 import com.codepad.foodai.domain.use_cases.image.UploadImageUseCase
 import com.codepad.foodai.domain.use_cases.nutrition.GetUserNutritionUseCase
+import com.codepad.foodai.domain.use_cases.recipe.GenerateRecipeUseCase
+import com.codepad.foodai.domain.use_cases.recipe.GetRecipeStatusUseCase
 import com.codepad.foodai.domain.use_cases.user.GetUserDataUseCase
 import com.codepad.foodai.domain.use_cases.user.GetUserStreakUseCase
 import com.codepad.foodai.domain.use_cases.user.UpdateUserFieldUseCase
 import com.codepad.foodai.helpers.ResourceHelper
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.user_property.result.Nutrition
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,6 +47,8 @@ class HomeViewModel @Inject constructor(
     private val uploadImageUseCase: UploadImageUseCase,
     private val fetchImageUseCase: FetchImageUseCase,
     private val dailyStreakUseCase: GetUserStreakUseCase,
+    private val generateRecipeUseCase: GenerateRecipeUseCase,
+    private val getRecipeStatusUseCase: GetRecipeStatusUseCase,
 ) : ViewModel() {
 
     private val _homeEvent = MutableLiveData<HomeEvent>()
@@ -70,6 +82,23 @@ class HomeViewModel @Inject constructor(
 
     private val _dailyStreak = MutableLiveData<StreakResponseData?>()
     val dailyStreak: LiveData<StreakResponseData?> get() = _dailyStreak
+
+    private val _recipe = MutableLiveData<Recipe?>()
+    val recipe: LiveData<Recipe?> = _recipe
+
+    private val _isRecipeLoading = MutableLiveData<Boolean>()
+    val isRecipeLoading: LiveData<Boolean> = _isRecipeLoading
+
+    private val _isRecipeReady = MutableLiveData<Boolean>()
+    val isRecipeReady: LiveData<Boolean> = _isRecipeReady
+
+    private val _recipeError = MutableLiveData<String?>()
+    val recipeError: LiveData<String?> = _recipeError
+
+    private val _isPremiumRequired = MutableLiveData<Boolean>()
+    val isPremiumRequired: LiveData<Boolean> = _isPremiumRequired
+
+    private var recipePollingJob: Job? = null
 
     private var shouldShowStreakView = false
 
@@ -197,6 +226,104 @@ class HomeViewModel @Inject constructor(
 
     fun setOptionSelected(option: MenuOption) {
         _homeEvent.value = HomeEvent.OnMenuOptionSelected(option)
+    }
+
+    fun generateRecipe(mealType: String) {
+        viewModelScope.launch {
+            _isRecipeLoading.value = true
+            _isRecipeReady.value = false
+            _isPremiumRequired.value = false
+            _recipeError.value = null
+
+            val userId = UserSession.user?.id ?: return@launch
+
+            when (val result = generateRecipeUseCase.generateRecipe(userId, mealType.lowercase())) {
+                is UseCaseResult.Success -> {
+                    startPollingRecipeStatus(result.data.recipeID)
+                }
+                is UseCaseResult.Error -> {
+                    _isRecipeLoading.value = false
+                    if (result.code.toString() == ErrorCode.PREMIUM_REQUIRED.toString()) { // TODO CHECK
+                        _isPremiumRequired.value = true
+                    } else {
+                        _recipeError.value = result.message
+                    }
+                }
+            }
+        }
+    }
+
+    private fun startPollingRecipeStatus(recipeId: String) {
+        recipePollingJob?.cancel()
+        recipePollingJob = viewModelScope.launch {
+            while (isActive) {
+                when (val result = getRecipeStatusUseCase.getRecipeStatus(recipeId)) {
+                    is UseCaseResult.Success -> {
+                        when (result.data.status) {
+                            "completed" -> {
+                                _recipe.value = result.data
+                                _isRecipeReady.value = true
+                                _isRecipeLoading.value = false
+                                saveRecipeToPrefs(result.data)
+                                break
+                            }
+                            "failed" -> {
+                                _isRecipeLoading.value = false
+                                _recipeError.value = result.data.errorMessage ?: "Recipe generation failed"
+                                break
+                            }
+                        }
+                    }
+                    is UseCaseResult.Error -> {
+                        _isRecipeLoading.value = false
+                        _recipeError.value = result.message
+                        break
+                    }
+                }
+                delay(3000) // Poll every 3 seconds
+            }
+        }
+    }
+
+    private fun saveRecipeToPrefs(recipe: Recipe) {
+        viewModelScope.launch {
+            try {
+                val key = generateRecipeKey(recipe.mealType)
+                val json = Gson().toJson(recipe)
+                resourceHelper.getSharedPreferences().edit().putString(key, json).apply()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun checkSavedRecipe(mealType: String) {
+        viewModelScope.launch {
+            try {
+                val key = generateRecipeKey(mealType)
+                val savedRecipe = resourceHelper.getSharedPreferences().getString(key, null)
+                if (savedRecipe != null) {
+                    val recipe = Gson().fromJson(savedRecipe, Recipe::class.java)
+                    if (recipe.status == "completed") {
+                        _recipe.value = recipe
+                        _isRecipeReady.value = true
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun generateRecipeKey(mealType: String): String {
+        val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val dateString = dateFormatter.format(Date())
+        return "Recipe_${dateString}_$mealType"
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        recipePollingJob?.cancel()
     }
 
     sealed class HomeEvent {
