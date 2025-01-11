@@ -263,7 +263,6 @@ class HomeViewModel @Inject constructor(
                             "completed" -> {
                                 _recipe.value = result.data
                                 _isRecipeReady.value = true
-                                _isRecipeLoading.value = false
                                 saveRecipeToPrefs(result.data)
                                 break
                             }

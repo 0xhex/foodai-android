@@ -14,6 +14,7 @@ class FoodRecipesFragment : BaseFragment<FragmentFoodRecipesBinding>() {
     private val viewModel: HomeViewModel by activityViewModels()
     private lateinit var adapter: RecipeCardAdapter
     private val mealTypes = MealType.entries
+    private var currentLoadingMealType: String? = null
 
     override fun getLayoutId(): Int = R.layout.fragment_food_recipes
 
@@ -31,6 +32,7 @@ class FoodRecipesFragment : BaseFragment<FragmentFoodRecipesBinding>() {
         adapter = RecipeCardAdapter(
             mealTypes = mealTypes,
             onCreateRecipeClick = { mealType ->
+                currentLoadingMealType = mealType.codeName
                 viewModel.generateRecipe(mealType.codeName)
             },
             onViewRecipeClick = { recipe ->
@@ -52,20 +54,25 @@ class FoodRecipesFragment : BaseFragment<FragmentFoodRecipesBinding>() {
         }
 
         viewModel.isRecipeLoading.observe(viewLifecycleOwner) { isLoading ->
-            mealTypes.forEach { mealType ->
-                adapter.updateLoadingState(mealType.codeName, isLoading)
+            currentLoadingMealType?.let { mealType ->
+                adapter.updateLoadingState(mealType, isLoading)
+                if (!isLoading) {
+                    currentLoadingMealType = null
+                }
             }
         }
 
         viewModel.recipeError.observe(viewLifecycleOwner) { error ->
-            mealTypes.forEach { mealType ->
-                adapter.updateErrorState(mealType.codeName, error)
+            currentLoadingMealType?.let { mealType ->
+                adapter.updateErrorState(mealType, error)
+                currentLoadingMealType = null
             }
         }
 
         viewModel.isPremiumRequired.observe(viewLifecycleOwner) { isPremiumRequired ->
-            mealTypes.forEach { mealType ->
-                adapter.updatePremiumRequired(mealType.codeName, isPremiumRequired)
+            currentLoadingMealType?.let { mealType ->
+                adapter.updatePremiumRequired(mealType, isPremiumRequired)
+                currentLoadingMealType = null
             }
         }
     }
