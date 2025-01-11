@@ -285,4 +285,9 @@
     <string name="create_recipe">Create Recipe</string>
     <string name="view_recipe">View Recipe</string>
     <string name="recipe_ready_text">Your %s Recipe is Ready!</string>
+    <string name="your_personalized_recipe">Your Personalized Recipe</string>
+    <string name="why_this_recipe">Why This Recipe</string>
+    <string name="instructions">Instructions</string>
+    <string name="cooking_tips">Cooking Tips</string>
+    <string name="nutritional_information">Nutritional Information</string>
 </resources>

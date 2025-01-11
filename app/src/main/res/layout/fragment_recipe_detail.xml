@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="recipe"
+            type="com.codepad.foodai.domain.models.recipe.Recipe" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/recipe_detail_gradient">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_24dp">
+
+            <!-- Back Button -->
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_back" />
+
+            <!-- Header Section -->
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/header_animation"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/meal" />
+
+            <TextView
+                android:id="@+id/header_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                android:fontFamily="@font/euro_stile_bold"
+                android:text="@string/your_personalized_recipe"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header_animation" />
+
+            <!-- Recipe Title -->
+            <TextView
+                android:id="@+id/recipe_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_24dp"
+                android:fontFamily="@font/euro_stile_bold"
+                android:text="@{recipe.title}"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintTop_toBottomOf="@id/header_title"
+                tools:text="Recipe Title" />
+
+            <!-- Why This Recipe Section -->
+            <include
+                android:id="@+id/why_this_recipe_section"
+                layout="@layout/layout_recipe_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_24dp"
+                app:layout_constraintTop_toBottomOf="@id/recipe_title"
+                app:title="@{@string/why_this_recipe}" />
+
+            <!-- Description -->
+            <TextView
+                android:id="@+id/recipe_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_24dp"
+                android:fontFamily="@font/euro_stile_regular"
+                android:text="@{recipe.description}"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/why_this_recipe_section"
+                tools:text="Recipe description" />
+
+            <!-- Ingredients Section -->
+            <include
+                android:id="@+id/ingredients_section"
+                layout="@layout/layout_recipe_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_24dp"
+                app:layout_constraintTop_toBottomOf="@id/recipe_description"
+                app:title="@{@string/ingredients}" />
+
+            <!-- Instructions Section -->
+            <include
+                android:id="@+id/instructions_section"
+                layout="@layout/layout_recipe_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_24dp"
+                app:layout_constraintTop_toBottomOf="@id/ingredients_section"
+                app:title="@{@string/instructions}" />
+
+            <!-- Cooking Tips Section -->
+            <include
+                android:id="@+id/cooking_tips_section"
+                layout="@layout/layout_recipe_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_24dp"
+                app:layout_constraintTop_toBottomOf="@id/instructions_section"
+                app:title="@{@string/cooking_tips}" />
+
+            <!-- Nutritional Information Section -->
+            <include
+                android:id="@+id/nutritional_info_section"
+                layout="@layout/layout_recipe_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_24dp"
+                app:layout_constraintTop_toBottomOf="@id/cooking_tips_section"
+                app:title="@{@string/nutritional_information}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout> 

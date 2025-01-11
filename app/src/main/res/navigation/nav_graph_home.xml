@@ -25,6 +25,8 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="false" />
+
+
     </fragment>
 
     <fragment

@@ -1,8 +1,11 @@
 package com.codepad.foodai.domain.models.recipe
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import java.util.Date
 
+@Parcelize
 data class Recipe(
     @SerializedName("_id")
     val id: String,
@@ -18,14 +21,16 @@ data class Recipe(
     val cookingTips: List<String>?,
     val personalizedExplanation: String?,
     val createdAt: Date?,
-    val updatedAt: Date?
-)
+    val updatedAt: Date?,
+) : Parcelable
 
+@Parcelize
 data class GenerateRecipeResponseData(
-    val recipeID: String
-)
+    val recipeID: String,
+) : Parcelable
 
+@Parcelize
 data class GenerateRecipeRequest(
     val userID: String,
-    val mealType: String
-) 
+    val mealType: String,
+) : Parcelable
