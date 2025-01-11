@@ -55,7 +55,7 @@
     <string name="daily_score">Daily Score</string>
     <string name="date">Date</string>
     <string name="day">Day</string>
-    <string name="day_streak">Day Streak: %lld</string>
+    <string name="day_streak">Day Streak: %d</string>
     <string name="dedicated_athlete">Dedicated athlete</string>
     <string name="delete_account">Delete Account</string>
     <string name="delete_exercise">Delete Exercise</string>

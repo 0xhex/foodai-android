@@ -57,6 +57,9 @@
         <action
             android:id="@+id/action_homeFragment_to_menuDialog"
             app:destination="@id/menuDialog" />
+        <action
+            android:id="@+id/action_homeFragment_to_dailyStreakFragment"
+            app:destination="@id/dailyStreakFragment" />
     </fragment>
 
     <fragment
@@ -114,4 +117,14 @@
     <dialog
         android:id="@+id/menuDialog"
         android:name="com.codepad.foodai.ui.home.menu.MenuSheetFragment"></dialog>
+
+    <fragment
+        android:id="@+id/dailyStreakFragment"
+        android:name="com.codepad.foodai.ui.streak.DailyStreakFragment"
+        android:label="DailyStreakFragment">
+        <argument
+            android:name="streakData"
+            app:argType="com.codepad.foodai.domain.models.user.StreakResponseData" />
+    </fragment>
+
 </navigation>

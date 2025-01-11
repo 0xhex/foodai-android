@@ -54,7 +54,7 @@
     <string name="daily_score">Score quotidien</string>
     <string name="date" translatable="false">Date</string>
     <string name="day" translatable="false">Jour</string>
-    <string name="day_streak" translatable="false">Série de jours : %lld</string>
+    <string name="day_streak" translatable="false">Série de jours : %d</string>
     <string name="dedicated_athlete" translatable="false">Athlète dévoué</string>
     <string name="delete_account" translatable="false">Supprimer le compte</string>
     <string name="delete_exercise" translatable="false">Supprimer l\nexercice</string>

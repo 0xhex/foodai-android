@@ -123,6 +123,7 @@ dependencies {
     implementation(libs.dotindicator)
     implementation(libs.circleprogressbar)
     implementation(libs.health)
+    implementation(libs.kwinStone)
 }
 
 kapt {

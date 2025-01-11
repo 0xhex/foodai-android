@@ -10,12 +10,14 @@ import com.codepad.foodai.R
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
+import com.codepad.foodai.domain.models.user.StreakResponseData
 import com.codepad.foodai.domain.models.user.User
 import com.codepad.foodai.domain.use_cases.UseCaseResult
 import com.codepad.foodai.domain.use_cases.image.FetchImageUseCase
 import com.codepad.foodai.domain.use_cases.image.UploadImageUseCase
 import com.codepad.foodai.domain.use_cases.nutrition.GetUserNutritionUseCase
 import com.codepad.foodai.domain.use_cases.user.GetUserDataUseCase
+import com.codepad.foodai.domain.use_cases.user.GetUserStreakUseCase
 import com.codepad.foodai.domain.use_cases.user.UpdateUserFieldUseCase
 import com.codepad.foodai.helpers.ResourceHelper
 import com.codepad.foodai.helpers.UserSession
@@ -34,6 +36,7 @@ class HomeViewModel @Inject constructor(
     private val resourceHelper: ResourceHelper,
     private val uploadImageUseCase: UploadImageUseCase,
     private val fetchImageUseCase: FetchImageUseCase,
+    private val dailyStreakUseCase: GetUserStreakUseCase,
 ) : ViewModel() {
 
     private val _homeEvent = MutableLiveData<HomeEvent>()
@@ -65,12 +68,18 @@ class HomeViewModel @Inject constructor(
     }
     val fats: LiveData<Nutrition> get() = _fats
 
+    private val _dailyStreak = MutableLiveData<StreakResponseData?>()
+    val dailyStreak: LiveData<StreakResponseData?> get() = _dailyStreak
+
+    private var shouldShowStreakView = false
+
     fun fetchUserData() {
         viewModelScope.launch {
             when (val result = getUserDataUseCase.getUserData(UserSession.user?.id.orEmpty())) {
                 is UseCaseResult.Success -> {
                     _userDataResponse.value = result.data
                     UserSession.updateSession(result.data)
+                    fetchDailyStreak()
                 }
 
                 is UseCaseResult.Error -> {
@@ -78,6 +87,30 @@ class HomeViewModel @Inject constructor(
                     UserSession.clearSession()
                 }
             }
+        }
+    }
+
+    private fun fetchDailyStreak() {
+        viewModelScope.launch {
+            val userId = UserSession.user?.id ?: return@launch
+            when (val result = dailyStreakUseCase.getUserStreak(userId)) {
+                is UseCaseResult.Success -> {
+                    _dailyStreak.value = result.data
+                }
+
+                is UseCaseResult.Error -> {
+                    _dailyStreak.value = null
+                }
+            }
+        }
+    }
+
+    fun shouldShowStreakView(): Boolean {
+        return if (shouldShowStreakView) {
+            shouldShowStreakView = false
+            true
+        } else {
+            false
         }
     }
 
@@ -145,6 +178,7 @@ class HomeViewModel @Inject constructor(
             when (val result = fetchImageUseCase.fetchImage(imageID)) {
                 is UseCaseResult.Success -> {
                     if (result.data.status == "completed") {
+                        shouldShowStreakView = true
                         _homeEvent.value = HomeEvent.OnImageFetchSuccess(result.data)
                     } else if (result.data.status == "failed") {
                         _homeEvent.value = HomeEvent.OnImageFetchError("Image processing failed.")

@@ -15,6 +15,16 @@
             android:id="@+id/action_home_tab_to_food_detail"
             app:destination="@id/foodDetailFragment"
             app:popUpTo="@id/foodDetailFragment" />
+
+        <action
+            android:id="@+id/action_home_tab_to_dailyStreakFragment"
+            app:destination="@id/dailyStreakFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="false" />
     </fragment>
 
     <fragment
@@ -100,5 +110,14 @@
     <fragment
         android:id="@+id/foodDetailFragment"
         android:name="com.codepad.foodai.ui.home.home.fooddetail.FoodDetailFragment"></fragment>
+
+    <fragment
+        android:id="@+id/dailyStreakFragment"
+        android:name="com.codepad.foodai.ui.streak.DailyStreakFragment"
+        android:label="DailyStreakFragment">
+        <argument
+            android:name="streakData"
+            app:argType="com.codepad.foodai.domain.models.user.StreakResponseData" />
+    </fragment>
 
 </navigation>

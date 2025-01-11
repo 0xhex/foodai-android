@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewpager2.widget.ViewPager2
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentHomeTabBinding
+import com.codepad.foodai.domain.models.user.StreakResponseData
 import com.codepad.foodai.extensions.getFormattedDate
 import com.codepad.foodai.extensions.toHourString
 import com.codepad.foodai.helpers.UserSession
@@ -42,6 +43,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
         setupCalendarView()
         setupViewPager()
         setupRecyclerView()
+        setupStreakView()
 
         sharedViewModel.homeEvent.observe(viewLifecycleOwner) { event ->
             when (event) {
@@ -94,7 +96,14 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                     )
                     imageAdapter.setItems((items + existingItems).filter { it !is ImageItem.Loading })
                     updateEmptyViewVisibility()
-                    // findNavController().navigate(R.id.action_homeFragment_to_streakViewFragment)
+
+                    if (sharedViewModel.shouldShowStreakView()) {
+                        sharedViewModel.dailyStreak.value?.let { streak ->
+                            findNavController().navigate(
+                                HomeTabFragmentDirections.actionHomeTabToDailyStreakFragment(streak)
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -119,6 +128,10 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
         sharedViewModel.nutritions.observe(viewLifecycleOwner) { nutritionResponseData ->
             viewModel.updateAchievedPercents(nutritionResponseData)
+        }
+
+        sharedViewModel.dailyStreak.observe(viewLifecycleOwner) { streak ->
+            binding.txtStreak.text = streak?.currentStreak?.toString() ?: "0"
         }
     }
 
@@ -200,6 +213,16 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
             }
         }
         handler.post(runnable)
+    }
+
+    private fun setupStreakView() {
+        binding.cardStreak.setOnClickListener {
+            sharedViewModel.dailyStreak.value?.let { streak ->
+                findNavController().navigate(
+                    HomeTabFragmentDirections.actionHomeTabToDailyStreakFragment(streak)
+                )
+            }
+        }
     }
 
 }
