@@ -44,7 +44,6 @@
     <string name="connect_with_apple_health">Connect with Apple Health</string>
     <string name="connected">Connected</string>
     <string name="continuee">Continue</string>
-    <string name="create_recipe">Create Recipe</string>
     <string name="created_by_ai">Created by AI</string>
     <string name="current_weight">Current Weight</string>
     <string name="custom_duration">Custom duration</string>
@@ -55,7 +54,7 @@
     <string name="daily_score">Daily Score</string>
     <string name="date">Date</string>
     <string name="day">Day</string>
-    <string name="day_streak">Day Streak: %lld</string>
+    <string name="day_streak">Day Streak: %d</string>
     <string name="dedicated_athlete">Dedicated athlete</string>
     <string name="delete_account">Delete Account</string>
     <string name="delete_exercise">Delete Exercise</string>
@@ -216,7 +215,6 @@
     <string name="uploading">Uploading…</string>
     <string name="vegan">Vegan</string>
     <string name="vegetarian">Vegetarian</string>
-    <string name="view_recipe">View Recipe</string>
     <string name="we_use_your_step_count_data_from_apple_health">We use your step count data from Apple Health to provide personalized insights</string>
     <string name="step_count_data">We use your step count data from Apple Health to provide personalized insights and help you achieve your fitness goals.</string>
     <string name="notify_when_done">We\'ll notify you when done!</string>
@@ -275,4 +273,21 @@
     <string name="connect_with_google_health">Connect with Google Health</string>
     <string name="we_use_your_step_count_data_from_google_health">We use your step count data from Google Health to provide personalized insights</string>
     <string name="scan_food">Scan Food</string>
+    <string name="upgrade_to_premium">Upgrade to Premium</string>
+    <string name="upgrade_now">Upgrade Now</string>
+    <string name="premium_recipe_description">Become a premium member to generate personalized recipes.</string>
+    <string name="recipe_ready">Your %s Recipe is Ready!</string>
+    <string name="loading_user_info">Loading user information...</string>
+    <string name="analyzing_preferences">Analyzing dietary preferences...</string>
+    <string name="finding_perfect_meal">Finding the perfect %s for you...</string>
+    <string name="selecting_ingredients">Selecting fresh ingredients...</string>
+    <string name="finalizing_recipe">Finalizing your personalized recipe...</string>
+    <string name="create_recipe">Create Recipe</string>
+    <string name="view_recipe">View Recipe</string>
+    <string name="recipe_ready_text">Your %s Recipe is Ready!</string>
+    <string name="your_personalized_recipe">Your Personalized Recipe</string>
+    <string name="why_this_recipe">Why This Recipe</string>
+    <string name="instructions">Instructions</string>
+    <string name="cooking_tips">Cooking Tips</string>
+    <string name="nutritional_information">Nutritional Information</string>
 </resources>

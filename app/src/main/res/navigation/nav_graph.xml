@@ -57,6 +57,12 @@
         <action
             android:id="@+id/action_homeFragment_to_menuDialog"
             app:destination="@id/menuDialog" />
+        <action
+            android:id="@+id/action_homeFragment_to_dailyStreakFragment"
+            app:destination="@id/dailyStreakFragment" />
+        <action
+            android:id="@+id/action_home_tab_to_recipe_detail"
+            app:destination="@id/recipeDetailFragment" />
     </fragment>
 
     <fragment
@@ -114,4 +120,25 @@
     <dialog
         android:id="@+id/menuDialog"
         android:name="com.codepad.foodai.ui.home.menu.MenuSheetFragment"></dialog>
+
+    <fragment
+        android:id="@+id/dailyStreakFragment"
+        android:name="com.codepad.foodai.ui.streak.DailyStreakFragment"
+        android:label="DailyStreakFragment">
+        <argument
+            android:name="streakData"
+            app:argType="com.codepad.foodai.domain.models.user.StreakResponseData" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="com.codepad.foodai.ui.home.home.pager.recipe.RecipeDetailFragment"
+        android:label="RecipeDetailFragment"
+        tools:layout="@layout/fragment_recipe_detail">
+        <argument
+            android:name="recipe"
+            app:argType="com.codepad.foodai.domain.models.recipe.Recipe" />
+    </fragment>
+
 </navigation>

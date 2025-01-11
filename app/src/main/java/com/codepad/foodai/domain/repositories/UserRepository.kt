@@ -5,6 +5,9 @@ import com.codepad.foodai.domain.api.RestApi
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
+import com.codepad.foodai.domain.models.recipe.GenerateRecipeRequest
+import com.codepad.foodai.domain.models.recipe.GenerateRecipeResponseData
+import com.codepad.foodai.domain.models.recipe.Recipe
 import com.codepad.foodai.domain.models.user.RegisterRequest
 import com.codepad.foodai.domain.models.user.StreakResponseData
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequest
@@ -258,6 +261,61 @@ class UserRepository @Inject constructor(
     suspend fun getUserDailySummary(userID: String, date: String): RepositoryResult<DailySummaryResponseData> {
         return try {
             val response = restApi.getUserDailySummary(userID, date)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        response.message ?: "Unknown error", response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
+
+    suspend fun generateRecipe(userID: String, mealType: String): RepositoryResult<GenerateRecipeResponseData> {
+        return try {
+            val request = GenerateRecipeRequest(userID = userID, mealType = mealType)
+            val response = restApi.generateRecipe(request)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        response.message ?: "Unknown error", response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
+
+    suspend fun getRecipeStatus(recipeID: String): RepositoryResult<Recipe> {
+        return try {
+            val response = restApi.getRecipeStatus(recipeID)
             if (response.success && response.data != null) {
                 RepositoryResult.Success(
                     message = response.message ?: "Success",

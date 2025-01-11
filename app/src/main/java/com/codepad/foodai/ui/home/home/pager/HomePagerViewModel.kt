@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
 import com.codepad.foodai.domain.models.user.GetUserDailySummaryUseCase
+import com.codepad.foodai.domain.models.user.StreakResponseData
 import com.codepad.foodai.domain.use_cases.UseCaseResult
 import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
 import com.codepad.foodai.domain.use_cases.user.NutritionData
@@ -38,11 +39,10 @@ class HomePagerViewModel @Inject constructor(
     val foodDetail: LiveData<ImageData> get() = _foodDetail
 
     fun updateAchievedPercents(nutritionResponseData: NutritionResponseData) {
-        resetAchievedPercents()
-        val totalCalories = nutritionResponseData.totalCalories.toFloat()
-        val totalProtein = nutritionResponseData.protein.toFloat()
-        val totalCarbs = nutritionResponseData.carbohydrates.toFloat()
-        val totalFats = nutritionResponseData.fat.toFloat()
+        val totalCalories = nutritionResponseData.totalCalories
+        val totalProtein = nutritionResponseData.protein
+        val totalCarbs = nutritionResponseData.carbohydrates
+        val totalFats = nutritionResponseData.fat
 
         val remainingNutritionData = _dailySummary.value?.remainingNutrition
         val remainingCalories = remainingNutritionData?.calories ?: 0

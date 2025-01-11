@@ -88,7 +88,7 @@ class ImageAdapter(var foodItems: List<ImageItem>, private val onItemClick: (Str
         fun bind(item: ImageItem.Standard) {
             // Bind data to views
             titleTextView.text = item.title
-            caloriesTextView.text = item.calories
+            caloriesTextView.text = item.calories + " kcal"
             protein.text = item.protein
             fats.text = item.fats
             carb.text = item.carb

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:fontFamily="@font/euro_stile_regular"
+    android:paddingVertical="4dp"
+    android:textColor="@color/white"
+    android:textSize="14sp"
+    tools:text="Recipe section text item" /> 

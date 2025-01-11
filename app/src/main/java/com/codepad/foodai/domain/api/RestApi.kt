@@ -4,6 +4,9 @@ import com.codepad.foodai.domain.models.APIResponse
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
+import com.codepad.foodai.domain.models.recipe.GenerateRecipeRequest
+import com.codepad.foodai.domain.models.recipe.GenerateRecipeResponseData
+import com.codepad.foodai.domain.models.recipe.Recipe
 import com.codepad.foodai.domain.models.user.RegisterRequest
 import com.codepad.foodai.domain.models.user.StreakResponseData
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequest
@@ -64,5 +67,15 @@ interface RestApi {
         @Path("userID") userID: String,
         @Query("date") date: String
     ): APIResponse<DailySummaryResponseData>
+
+    @POST("recipes/generate")
+    suspend fun generateRecipe(
+        @Body request: GenerateRecipeRequest
+    ): APIResponse<GenerateRecipeResponseData>
+
+    @GET("recipes/{recipeID}")
+    suspend fun getRecipeStatus(
+        @Path("recipeID") recipeID: String
+    ): APIResponse<Recipe>
 
 }

@@ -1,6 +1,7 @@
 package com.codepad.foodai.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.health.connect.client.HealthConnectClient
 import com.codepad.foodai.ui.home.settings.health.HealthConnectReader
 import com.codepad.foodai.ui.home.settings.health.HealthConnectManager
@@ -40,6 +41,12 @@ object AppModule {
         healthConnectClient: HealthConnectClient, healthConnectReader: HealthConnectReader,
     ): HealthConnectManager {
         return HealthConnectManager(healthConnectClient, healthConnectReader)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+        return context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
     }
 
     // TODO
