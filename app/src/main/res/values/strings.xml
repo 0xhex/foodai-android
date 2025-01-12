@@ -300,4 +300,11 @@
     <string name="fix_result_error">Failed to update result</string>
     <string name="delete_success">Food successfully deleted</string>
     <string name="editing_food_title">Processing your food edits…</string>
+
+    <!-- Exercise Selection -->
+    <string name="run_description">Running, jogging, sprinting, etc.</string>
+    <string name="weight_lifting">Weight Lifting</string>
+    <string name="weight_lifting_description">Strength training, bodyweight exercises, etc.</string>
+    <string name="describe">Describe</string>
+    <string name="describe_description">Describe your exercise in detail</string>
 </resources>

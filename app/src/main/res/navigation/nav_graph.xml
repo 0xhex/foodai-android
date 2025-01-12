@@ -119,7 +119,11 @@
 
     <dialog
         android:id="@+id/menuDialog"
-        android:name="com.codepad.foodai.ui.home.menu.MenuSheetFragment"></dialog>
+        android:name="com.codepad.foodai.ui.home.menu.MenuSheetFragment">
+        <action
+            android:id="@+id/action_menuDialog_to_exerciseSelectionFragment"
+            app:destination="@id/exerciseSelectionFragment" />
+    </dialog>
 
     <fragment
         android:id="@+id/dailyStreakFragment"
@@ -141,5 +145,20 @@
             app:argType="com.codepad.foodai.domain.models.recipe.Recipe" />
     </fragment>
 
+    <fragment
+        android:id="@+id/exerciseSelectionFragment"
+        android:name="com.codepad.foodai.ui.home.exercise.ExerciseSelectionFragment"
+        android:label="ExerciseSelectionFragment"
+        tools:layout="@layout/fragment_exercise_selection">
+      <!--  <action
+            android:id="@+id/action_exerciseSelectionFragment_to_runningFragment"
+            app:destination="@id/runningFragment" />
+        <action
+            android:id="@+id/action_exerciseSelectionFragment_to_weightLiftingFragment"
+            app:destination="@id/weightLiftingFragment" />
+        <action
+            android:id="@+id/action_exerciseSelectionFragment_to_describeExerciseFragment"
+            app:destination="@id/describeExerciseFragment" />-->
+    </fragment>
 
 </navigation>
