@@ -1,6 +1,11 @@
 package com.codepad.foodai.domain.api
 
 import com.codepad.foodai.domain.models.APIResponse
+import com.codepad.foodai.domain.models.exercise.ExerciseData
+import com.codepad.foodai.domain.models.exercise.LogExerciseCustomRequest
+import com.codepad.foodai.domain.models.exercise.SubmitExerciseDescriptionRequest
+import com.codepad.foodai.domain.models.exercise.UpdateCustomExerciseRequest
+import com.codepad.foodai.domain.models.exercise.UpdateExerciseDescriptionRequest
 import com.codepad.foodai.domain.models.image.FixImageResultsRequest
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
@@ -23,6 +28,7 @@ import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -88,5 +94,30 @@ interface RestApi {
         @Path("imageId") imageId: String,
         @Body request: FixImageResultsRequest,
     ): APIResponse<ImageData?>
+
+    @POST("users/exercises/custom")
+    suspend fun logExerciseCustom(
+        @Body request: LogExerciseCustomRequest
+    ): APIResponse<ExerciseData>
+
+    @POST("users/exercises")
+    suspend fun submitExerciseDescription(
+        @Body request: SubmitExerciseDescriptionRequest
+    ): APIResponse<ExerciseData>
+
+    @DELETE("users/exercises/{exerciseId}")
+    suspend fun deleteExercise(
+        @Path("exerciseId") exerciseId: String
+    ): APIResponse<Unit>
+
+    @PUT("users/exercises/description")
+    suspend fun updateExerciseDescription(
+        @Body request: UpdateExerciseDescriptionRequest
+    ): APIResponse<ExerciseData>
+
+    @PUT("users/exercises/custom")
+    suspend fun updateCustomExercise(
+        @Body request: UpdateCustomExerciseRequest
+    ): APIResponse<ExerciseData>
 
 }

@@ -2,6 +2,11 @@ package com.codepad.foodai.domain.repositories
 
 import com.codepad.foodai.domain.api.APIError
 import com.codepad.foodai.domain.api.RestApi
+import com.codepad.foodai.domain.models.exercise.ExerciseData
+import com.codepad.foodai.domain.models.exercise.LogExerciseCustomRequest
+import com.codepad.foodai.domain.models.exercise.SubmitExerciseDescriptionRequest
+import com.codepad.foodai.domain.models.exercise.UpdateCustomExerciseRequest
+import com.codepad.foodai.domain.models.exercise.UpdateExerciseDescriptionRequest
 import com.codepad.foodai.domain.models.image.FixImageResultsRequest
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
@@ -381,6 +386,163 @@ class UserRepository @Inject constructor(
         return try {
             val response = restApi.fixImageResults(imageId, imageResultsRequest)
             if (response.success) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        response.message ?: "Unknown error", response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
+
+    suspend fun logExerciseCustom(
+        userID: String,
+        type: String,
+        intensity: String,
+        duration: Int,
+        localDate: String,
+    ): RepositoryResult<ExerciseData> {
+        return try {
+            val request = LogExerciseCustomRequest(userID, type, intensity, duration, localDate)
+            val response = restApi.logExerciseCustom(request)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        response.message ?: "Unknown error", response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
+
+    suspend fun submitExerciseDescription(
+        userID: String,
+        exerciseDescription: String,
+        localDate: String,
+    ): RepositoryResult<ExerciseData> {
+        return try {
+            val request = SubmitExerciseDescriptionRequest(userID, exerciseDescription, localDate)
+            val response = restApi.submitExerciseDescription(request)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        response.message ?: "Unknown error", response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
+
+    suspend fun deleteExercise(exerciseId: String): RepositoryResult<Unit> {
+        return try {
+            val response = restApi.deleteExercise(exerciseId)
+            if (response.success) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = Unit
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        response.message ?: "Unknown error", response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
+
+    suspend fun updateExerciseDescription(
+        exerciseID: String,
+        exerciseDescription: String,
+    ): RepositoryResult<ExerciseData> {
+        return try {
+            val request = UpdateExerciseDescriptionRequest(exerciseID, exerciseDescription)
+            val response = restApi.updateExerciseDescription(request)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        response.message ?: "Unknown error", response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
+
+    suspend fun updateCustomExercise(
+        exerciseID: String,
+        type: String,
+        intensity: String,
+        duration: Int,
+    ): RepositoryResult<ExerciseData> {
+        return try {
+            val request = UpdateCustomExerciseRequest(exerciseID, type, intensity, duration)
+            val response = restApi.updateCustomExercise(request)
+            if (response.success && response.data != null) {
                 RepositoryResult.Success(
                     message = response.message ?: "Success",
                     code = response.errorCode ?: 0,
