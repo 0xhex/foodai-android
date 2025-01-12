@@ -26,5 +26,4 @@ class WeightLiftingFragment : BaseExerciseFragment() {
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_base_exercise
-    override fun onReadyView() {}
 }

@@ -12,6 +12,7 @@ class RunningFragment : BaseExerciseFragment() {
     override fun getHeaderIcon(): Int = R.raw.running
 
     override fun getHeaderTitle(): String = getString(R.string.run)
+    
     override fun getIntensityHighText(): String {
         return getString(R.string.running_high_intensity)
     }
@@ -25,6 +26,4 @@ class RunningFragment : BaseExerciseFragment() {
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_base_exercise
-
-    override fun onReadyView() {}
 } 

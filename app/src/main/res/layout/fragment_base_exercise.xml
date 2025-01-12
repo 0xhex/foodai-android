@@ -77,6 +77,7 @@
             android:id="@+id/card_intensity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/dimen_24dp"
             app:cardBackgroundColor="#292929"
             android:layout_marginHorizontal="@dimen/dimen_16dp"
             app:layout_constraintEnd_toEndOf="@id/intensity_section"
@@ -85,80 +86,75 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <SeekBar
-                    android:id="@+id/slider_intensity"
-                    android:layout_width="4dp"
-                    android:layout_height="200dp"
-                    android:layout_marginStart="32dp"
-                    android:max="2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:progress="1"
-                    android:rotation="270"
-                    app:layout_constraintStart_toStartOf="@id/guide_limit"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guide_limit"
-                    app:layout_constraintGuide_percent=".6"
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:padding="16dp">
 
                 <TextView
                     android:id="@+id/txt_intensity_high"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_24dp"
-                    android:layout_marginTop="@dimen/dimen_16dp"
-                    android:layout_marginBottom="@dimen/dimen_16dp"
+                    android:layout_marginBottom="24dp"
                     android:fontFamily="@font/euro_stile_regular"
-                    android:textColor="@color/white"
+                    android:textColor="@color/gray"
                     android:textSize="16sp"
+                    android:lineSpacingExtra="4dp"
                     app:layout_constraintBottom_toTopOf="@id/txt_intensity_medium"
+                    app:layout_constraintEnd_toStartOf="@id/slider_intensity"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/guide_limit"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="packed"
-                    tools:text="\uD83E\uDD75 High\nSprinting - 14 mph\n(4 minute miles)" />
+                    android:text="🥵 High\nSprinting - 14 mph\n(4 minute miles)" />
 
                 <TextView
                     android:id="@+id/txt_intensity_medium"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_24dp"
-                    android:layout_marginBottom="@dimen/dimen_16dp"
+                    android:layout_marginBottom="24dp"
                     android:fontFamily="@font/euro_stile_regular"
-                    android:textColor="@color/white"
+                    android:textColor="@color/gray"
                     android:textSize="16sp"
+                    android:lineSpacingExtra="4dp"
                     app:layout_constraintBottom_toTopOf="@id/txt_intensity_low"
-                    app:layout_constraintEnd_toStartOf="@id/guide_limit"
+                    app:layout_constraintEnd_toStartOf="@id/slider_intensity"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txt_intensity_high"
-                    tools:text="\uD83D\uDE30 Medium\nJogging - 6 mph\n(10 minute miles)" />
+                    android:text="😰 Medium\nJogging - 6 mph\n(10 minute miles)" />
 
                 <TextView
                     android:id="@+id/txt_intensity_low"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_24dp"
-                    android:layout_marginBottom="@dimen/dimen_16dp"
                     android:fontFamily="@font/euro_stile_regular"
-                    android:textColor="@color/white"
+                    android:textColor="@color/gray"
                     android:textSize="16sp"
+                    android:lineSpacingExtra="4dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/guide_limit"
+                    app:layout_constraintEnd_toStartOf="@id/slider_intensity"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txt_intensity_medium"
-                    tools:text="\uD83D\uDE05 Low\nChill walk - 3 mph\n(20 minute miles)" />
+                    android:text="😅 Low\nChill walk - 3 mph\n(20 minute miles)" />
+
+                <com.codepad.foodai.ui.home.exercise.base.VerticalSeekBar
+                    android:id="@+id/slider_intensity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:layout_marginEnd="24dp"
+                    android:max="2"
+                    android:progress="1"
+                    android:minHeight="4dp"
+                    android:maxHeight="4dp"
+                    android:splitTrack="false"
+                    android:progressDrawable="@drawable/seekbar_progress"
+                    android:thumb="@drawable/seekbar_thumb"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
-        <!-- Intensity Slider -->
-
 
         <!-- Duration Section -->
         <TextView

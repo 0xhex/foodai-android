@@ -1,6 +1,5 @@
 package com.codepad.foodai.ui.home.exercise
 
-import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentExerciseSelectionBinding
