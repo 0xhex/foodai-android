@@ -10,20 +10,17 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentMenuBottomSheetBinding
-import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseBottomSheetFragment
 import com.codepad.foodai.ui.home.HomeViewModel
-import com.codepad.foodai.ui.home.MenuOption
-import com.codepad.foodai.ui.home.home.loading.LoadingView
-import com.codepad.foodai.ui.user_property.loading.LoadingType
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
@@ -86,7 +83,8 @@ class MenuSheetFragment : BaseBottomSheetFragment<FragmentMenuBottomSheetBinding
             }
 
             btnLogExercise.setOnClickListener {
-                viewModel.setOptionSelected(MenuOption.LOG_FOOD)
+                findNavController().navigate(R.id.action_menuDialog_to_exerciseSelectionFragment)
+                dismiss()
             }
 
             btnCancel.setOnClickListener {

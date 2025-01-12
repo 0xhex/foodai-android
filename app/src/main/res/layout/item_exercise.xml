@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="#2a2a2a"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lottie_container"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_animation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_animation_run"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:lottie_autoPlay="true"
+                app:lottie_colorFilter="@color/white"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/running" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_16dp"
+            android:layout_marginEnd="@dimen/dimen_4dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/euro_stile_regular"
+            android:maxLines="1"
+            android:textColor="#f5f5f5"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/ic_flame"
+            app:layout_constraintEnd_toStartOf="@id/txt_hour"
+            app:layout_constraintStart_toEndOf="@id/lottie_container"
+            app:layout_constraintTop_toTopOf="@id/lottie_container"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Running" />
+
+        <TextView
+            android:id="@+id/txt_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:fontFamily="@font/euro_stile_regular"
+            android:textColor="#f5f5f5"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txt_title"
+            tools:text="22:22" />
+
+        <ImageView
+            android:id="@+id/ic_flame"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            app:layout_constraintBottom_toTopOf="@id/lottie_speed_meter"
+            app:layout_constraintStart_toStartOf="@id/txt_title"
+            app:layout_constraintTop_toBottomOf="@id/txt_title"
+            app:srcCompat="@drawable/ic_flame"
+            app:tint="#ff9502" />
+
+        <TextView
+            android:id="@+id/txt_calories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            android:fontFamily="@font/euro_stile_bold"
+            android:textColor="#f5f5f5"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/ic_flame"
+            app:layout_constraintStart_toEndOf="@id/ic_flame"
+            app:layout_constraintTop_toTopOf="@id/ic_flame"
+            tools:text="170 calories" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_speed_meter"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/txt_title"
+            app:layout_constraintTop_toBottomOf="@id/ic_flame"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/speed_meter" />
+
+        <TextView
+            android:id="@+id/txt_intensity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            android:fontFamily="@font/euro_stile_regular"
+            android:textColor="#f5f5f5"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/lottie_speed_meter"
+            app:layout_constraintStart_toEndOf="@id/lottie_speed_meter"
+            app:layout_constraintTop_toTopOf="@id/lottie_speed_meter"
+            tools:text="Intensity: High" />
+
+        <TextView
+            android:id="@+id/txt_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_12dp"
+            android:fontFamily="@font/euro_stile_regular"
+            android:textColor="#f5f5f5"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/txt_intensity"
+            app:layout_constraintStart_toEndOf="@id/txt_intensity"
+            app:layout_constraintTop_toTopOf="@id/txt_intensity"
+            tools:text="⏱ 30 Mins" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView> 

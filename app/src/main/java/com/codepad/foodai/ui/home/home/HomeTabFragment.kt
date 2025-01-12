@@ -1,5 +1,6 @@
 package com.codepad.foodai.ui.home.home
 
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
@@ -71,16 +72,14 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                             "Finalizing your meal summary..."
                         )
                     )
-                    val existingItems = imageAdapter.foodItems
-                    if (existingItems.none { it is ImageItem.Loading }) {
-                        imageAdapter.setItems(listOf(loadingItem) + existingItems)
-                        updateEmptyViewVisibility()
-                        startLoadingStatusUpdates()
-                    }
+                    val existingItems = imageAdapter.foodItems.filterNot { it is ImageItem.Loading }
+                    imageAdapter.setItems(listOf(loadingItem) + existingItems)
+                    updateEmptyViewVisibility()
+                    startLoadingStatusUpdates()
                 }
 
                 is HomeViewModel.HomeEvent.OnImageFetchSuccess -> {
-                    val existingItems = imageAdapter.foodItems
+                    val existingItems = imageAdapter.foodItems.filterNot { it is ImageItem.Loading }
                     val items = listOf(
                         ImageItem.Standard(
                             image = event.response.url,
@@ -93,7 +92,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                             hour = event.response.createdAt?.toHourString().toString()
                         )
                     )
-                    imageAdapter.setItems((items + existingItems).filter { it !is ImageItem.Loading })
+                    imageAdapter.setItems(items + existingItems)
                     updateEmptyViewVisibility()
 
                     if (sharedViewModel.shouldShowStreakView()) {
@@ -109,18 +108,50 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
         viewModel.dailySummary.observe(viewLifecycleOwner) { dailySummary ->
             val meals = dailySummary.meals.orEmpty()
-            val items = meals.sortedByDescending { it.createdAt }.map {
-                ImageItem.Standard(
-                    image = it.url,
-                    title = it.ingredients?.joinToString { it.name.orEmpty() }.orEmpty(),
-                    calories = it.calories.toString(),
-                    protein = it.protein.toString(),
-                    carb = it.carbs.toString(),
-                    fats = it.fats.toString(),
-                    hour = it.createdAt?.toHourString().orEmpty()
-                )
+            val exercises = dailySummary.exercises.orEmpty()
+            
+            // Get any existing loading items
+            val loadingItems = imageAdapter.foodItems.filterIsInstance<ImageItem.Loading>()
+            
+            // Create a list of all items with their timestamps
+            val allItems = mutableListOf<Triple<Date?, ImageItem, Boolean>>()
+            
+            // Add meals with their timestamps
+            meals.forEach { meal ->
+                allItems.add(Triple(
+                    meal.createdAt,
+                    ImageItem.Standard(
+                        image = meal.url,
+                        title = meal.ingredients?.joinToString { it.name.orEmpty() }.orEmpty(),
+                        calories = meal.calories.toString(),
+                        protein = meal.protein.toString(),
+                        carb = meal.carbs.toString(),
+                        fats = meal.fats.toString(),
+                        hour = meal.createdAt?.toHourString().orEmpty()
+                    ),
+                    false // isLoading flag
+                ))
             }
-            imageAdapter.setItems(items)
+            
+            // Add exercises with their timestamps
+            exercises.forEach { exercise ->
+                allItems.add(Triple(
+                    exercise.createdAt,
+                    ImageItem.Exercise(
+                        exerciseData = exercise
+                    ),
+                    false // isLoading flag
+                ))
+            }
+            
+            // Sort all items by timestamp (newest first)
+            allItems.sortWith(compareByDescending<Triple<Date?, ImageItem, Boolean>> { it.first }
+                .thenBy { it.third }) // Loading items go first if timestamps are equal
+            
+            // Combine loading items with sorted content items
+            val finalItems = loadingItems + allItems.map { it.second }
+            
+            imageAdapter.setItems(finalItems)
             updateEmptyViewVisibility()
             sharedViewModel.fetchNutrition()
         }
@@ -181,13 +212,45 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
     private fun setupRecyclerView() {
         binding.rvFood.layoutManager = LinearLayoutManager(requireContext())
-        imageAdapter = ImageAdapter(emptyList()) { url ->
-            val foodDetail = viewModel.dailySummary.value?.meals?.firstOrNull { it.url == url }
-            if (foodDetail != null) {
-                viewModel.setFoodDetail(foodDetail)
+        imageAdapter = ImageAdapter(
+            foodItems = emptyList(),
+            onItemClick = { item ->
+                when (item) {
+                    is ImageItem.Standard -> {
+                        val foodDetail = viewModel.dailySummary.value?.meals?.firstOrNull { it.url == item.image }
+                        if (foodDetail != null) {
+                            viewModel.setFoodDetail(foodDetail)
+                            findNavController().navigate(R.id.action_home_tab_to_food_detail)
+                        }
+                    }
+                    is ImageItem.Exercise -> {
+                        when (item.exerciseData.exerciseType) {
+                            "run", "weightlifting" -> {
+                                val bundle = Bundle().apply {
+                                    putParcelable("exerciseData", item.exerciseData)
+                                }
+                                findNavController().navigate(
+                                    R.id.action_home_tab_to_exercise_detail,
+                                    bundle
+                                )
+                            }
+                            else -> {
+                                val bundle = Bundle().apply {
+                                    putParcelable("exerciseData", item.exerciseData)
+                                }
+                                findNavController().navigate(
+                                    R.id.action_home_tab_to_describe_exercise_detail,
+                                    bundle
+                                )
+                            }
+                        }
+                    }
+                    else -> {
+                        // Handle loading items if needed
+                    }
+                }
             }
-            findNavController().navigate(R.id.action_home_tab_to_food_detail)
-        }
+        )
         binding.rvFood.adapter = imageAdapter
     }
 

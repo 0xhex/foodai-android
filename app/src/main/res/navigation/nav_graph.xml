@@ -119,7 +119,11 @@
 
     <dialog
         android:id="@+id/menuDialog"
-        android:name="com.codepad.foodai.ui.home.menu.MenuSheetFragment"></dialog>
+        android:name="com.codepad.foodai.ui.home.menu.MenuSheetFragment">
+        <action
+            android:id="@+id/action_menuDialog_to_exerciseSelectionFragment"
+            app:destination="@id/exerciseSelectionFragment" />
+    </dialog>
 
     <fragment
         android:id="@+id/dailyStreakFragment"
@@ -141,5 +145,37 @@
             app:argType="com.codepad.foodai.domain.models.recipe.Recipe" />
     </fragment>
 
+    <fragment
+        android:id="@+id/exerciseSelectionFragment"
+        android:name="com.codepad.foodai.ui.home.exercise.ExerciseSelectionFragment"
+        android:label="ExerciseSelectionFragment"
+        tools:layout="@layout/fragment_exercise_selection">
+        <action
+            android:id="@+id/action_exerciseSelectionFragment_to_runningFragment"
+            app:destination="@id/runningFragment" />
+        <action
+            android:id="@+id/action_exerciseSelectionFragment_to_weightLiftingFragment"
+            app:destination="@id/weightLiftingFragment" />
+        <action
+            android:id="@+id/action_exerciseSelectionFragment_to_describeFragment"
+            app:destination="@id/descriptionFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/runningFragment"
+        android:name="com.codepad.foodai.ui.home.exercise.running.RunningFragment"
+        android:label="RunningFragment"
+        tools:layout="@layout/fragment_base_exercise" />
+
+    <fragment
+        android:id="@+id/weightLiftingFragment"
+        android:name="com.codepad.foodai.ui.home.exercise.weightlifting.WeightLiftingFragment"
+        android:label="WeightLiftingFragment"
+        tools:layout="@layout/fragment_base_exercise" />
+
+    <fragment
+        android:id="@+id/descriptionFragment"
+        android:name="com.codepad.foodai.ui.home.exercise.describe.DescribeExerciseFragment"
+        tools:layout="@layout/fragment_describe_exercise" />
 
 </navigation>

@@ -300,4 +300,21 @@
     <string name="fix_result_error">Failed to update result</string>
     <string name="delete_success">Food successfully deleted</string>
     <string name="editing_food_title">Processing your food edits…</string>
+
+    <!-- Exercise Selection -->
+    <string name="run_description">Running, jogging, sprinting, etc.</string>
+    <string name="weight_lifting">Weight Lifting</string>
+    <string name="weight_lifting_description">Strength training, bodyweight exercises, etc.</string>
+    <string name="describe">Describe</string>
+    <string name="describe_description">Describe your exercise in detail</string>
+
+    <!-- Running -->
+    <string name="running_high_intensity">🥵 High\nSprinting - 14 mph\n(4 minute miles)</string>
+    <string name="running_medium_intensity">😰 Medium\nJogging - 6 mph\n(10 minute miles)</string>
+    <string name="running_low_intensity">😅 Low\nChill walk - 3 mph\n(20 minute miles)</string>
+
+    <!-- Weight Lifting -->
+    <string name="weight_lifting_high_intensity">🥵 High\nHeavy weights, low reps\n(1-5 reps)</string>
+    <string name="weight_lifting_medium_intensity">😰 Medium\nModerate weights, medium reps\n(8-12 reps)</string>
+    <string name="weight_lifting_low_intensity">😅 Low\nLight weights, high reps\n(15+ reps)</string>
 </resources>
