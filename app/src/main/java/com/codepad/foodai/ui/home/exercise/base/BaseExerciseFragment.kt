@@ -111,11 +111,28 @@ abstract class BaseExerciseFragment : BaseFragment<FragmentBaseExerciseBinding>(
             }
         }
 
-        viewModel.exerciseLogged.observe(viewLifecycleOwner) { success ->
-            if (success == true) {
-                findNavController().popBackStack()
+        viewModel.exerciseLogged.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { success ->
+                if (success) {
+                    findNavController().popBackStack()
+                }
             }
         }
+
+        viewModel.error.observe(viewLifecycleOwner) { event ->
+            event?.getContentIfNotHandled()?.let { errorMessage ->
+                // Show error message to user (you can use a Snackbar or Toast)
+                showError(errorMessage)
+            }
+        }
+    }
+
+    private fun showError(message: String) {
+        com.google.android.material.snackbar.Snackbar.make(
+            binding.root,
+            message,
+            com.google.android.material.snackbar.Snackbar.LENGTH_LONG
+        ).show()
     }
 
 } 
