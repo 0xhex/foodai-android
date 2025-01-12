@@ -150,15 +150,24 @@
         android:name="com.codepad.foodai.ui.home.exercise.ExerciseSelectionFragment"
         android:label="ExerciseSelectionFragment"
         tools:layout="@layout/fragment_exercise_selection">
-      <!--  <action
+        <action
             android:id="@+id/action_exerciseSelectionFragment_to_runningFragment"
             app:destination="@id/runningFragment" />
         <action
             android:id="@+id/action_exerciseSelectionFragment_to_weightLiftingFragment"
             app:destination="@id/weightLiftingFragment" />
-        <action
-            android:id="@+id/action_exerciseSelectionFragment_to_describeExerciseFragment"
-            app:destination="@id/describeExerciseFragment" />-->
     </fragment>
+
+    <fragment
+        android:id="@+id/runningFragment"
+        android:name="com.codepad.foodai.ui.home.exercise.running.RunningFragment"
+        android:label="RunningFragment"
+        tools:layout="@layout/fragment_base_exercise" />
+
+    <fragment
+        android:id="@+id/weightLiftingFragment"
+        android:name="com.codepad.foodai.ui.home.exercise.weightlifting.WeightLiftingFragment"
+        android:label="WeightLiftingFragment"
+        tools:layout="@layout/fragment_base_exercise" />
 
 </navigation>

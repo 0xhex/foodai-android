@@ -55,11 +55,11 @@ class ExerciseSelectionFragment : BaseFragment<FragmentExerciseSelectionBinding>
         }
 
         binding.btnRunning.root.setOnClickListener {
-           //findNavController().navigate(R.id.action_exerciseSelectionFragment_to_runningFragment)
+            findNavController().navigate(R.id.action_exerciseSelectionFragment_to_runningFragment)
         }
 
         binding.btnWeightLifting.root.setOnClickListener {
-            //findNavController().navigate(R.id.action_exerciseSelectionFragment_to_weightLiftingFragment)
+            findNavController().navigate(R.id.action_exerciseSelectionFragment_to_weightLiftingFragment)
         }
 
         binding.btnDescribe.root.setOnClickListener {
