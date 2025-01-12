@@ -62,7 +62,7 @@ class ExerciseSelectionFragment : BaseFragment<FragmentExerciseSelectionBinding>
         }
 
         binding.btnDescribe.root.setOnClickListener {
-            //findNavController().navigate(R.id.action_exerciseSelectionFragment_to_describeExerciseFragment)
+            findNavController().navigate(R.id.action_exerciseSelectionFragment_to_describeFragment)
         }
     }
 } 

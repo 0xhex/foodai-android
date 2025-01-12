@@ -156,6 +156,9 @@
         <action
             android:id="@+id/action_exerciseSelectionFragment_to_weightLiftingFragment"
             app:destination="@id/weightLiftingFragment" />
+        <action
+            android:id="@+id/action_exerciseSelectionFragment_to_describeFragment"
+            app:destination="@id/descriptionFragment" />
     </fragment>
 
     <fragment
@@ -169,5 +172,10 @@
         android:name="com.codepad.foodai.ui.home.exercise.weightlifting.WeightLiftingFragment"
         android:label="WeightLiftingFragment"
         tools:layout="@layout/fragment_base_exercise" />
+
+    <fragment
+        android:id="@+id/descriptionFragment"
+        android:name="com.codepad.foodai.ui.home.exercise.describe.DescribeExerciseFragment"
+        tools:layout="@layout/fragment_describe_exercise" />
 
 </navigation>
