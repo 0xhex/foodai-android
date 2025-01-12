@@ -1,5 +1,6 @@
 package com.codepad.foodai.ui.home.home
 
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
@@ -137,12 +138,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                 allItems.add(Triple(
                     exercise.createdAt,
                     ImageItem.Exercise(
-                        id = exercise.id.orEmpty(),
-                        type = exercise.exerciseType.orEmpty(),
-                        caloriesBurned = exercise.caloriesBurned ?: 0,
-                        intensity = exercise.intensity.orEmpty(),
-                        duration = exercise.duration ?: 0,
-                        hour = exercise.createdAt?.toHourString().orEmpty()
+                        exerciseData = exercise
                     ),
                     false // isLoading flag
                 ))
@@ -216,26 +212,45 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
     private fun setupRecyclerView() {
         binding.rvFood.layoutManager = LinearLayoutManager(requireContext())
-        imageAdapter = ImageAdapter(emptyList()) { url ->
-            val foodDetail = viewModel.dailySummary.value?.meals?.firstOrNull { it.url == url }
-            val exerciseDetail = viewModel.dailySummary.value?.exercises?.firstOrNull { it.id == url }
-            
-            if (foodDetail != null) {
-                viewModel.setFoodDetail(foodDetail)
-                findNavController().navigate(R.id.action_home_tab_to_food_detail)
-            } else if (exerciseDetail != null) {
-                when (exerciseDetail.exerciseType) {
-                    "run", "weightlifting" -> {
-                        // Navigate to exercise detail
-                        // findNavController().navigate(R.id.action_home_tab_to_exercise_detail)
+        imageAdapter = ImageAdapter(
+            foodItems = emptyList(),
+            onItemClick = { item ->
+                when (item) {
+                    is ImageItem.Standard -> {
+                        val foodDetail = viewModel.dailySummary.value?.meals?.firstOrNull { it.url == item.image }
+                        if (foodDetail != null) {
+                            viewModel.setFoodDetail(foodDetail)
+                            findNavController().navigate(R.id.action_home_tab_to_food_detail)
+                        }
+                    }
+                    is ImageItem.Exercise -> {
+                        when (item.exerciseData.exerciseType) {
+                            "run", "weightlifting" -> {
+                                val bundle = Bundle().apply {
+                                    putParcelable("exerciseData", item.exerciseData)
+                                }
+                                findNavController().navigate(
+                                    R.id.action_home_tab_to_exercise_detail,
+                                    bundle
+                                )
+                            }
+                            else -> {
+                                val bundle = Bundle().apply {
+                                    putParcelable("exerciseData", item.exerciseData)
+                                }
+                                findNavController().navigate(
+                                    R.id.action_home_tab_to_describe_exercise_detail,
+                                    bundle
+                                )
+                            }
+                        }
                     }
                     else -> {
-                        // Navigate to describe exercise detail
-                        // findNavController().navigate(R.id.action_home_tab_to_describe_exercise_detail)
+                        // Handle loading items if needed
                     }
                 }
             }
-        }
+        )
         binding.rvFood.adapter = imageAdapter
     }
 

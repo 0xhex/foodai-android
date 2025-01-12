@@ -2,6 +2,7 @@ package com.codepad.foodai.domain.use_cases.user
 
 import android.os.Parcelable
 import com.codepad.foodai.domain.models.image.ImageData
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import java.util.Date
 
@@ -15,6 +16,7 @@ data class DailySummaryResponseData(
 
 @Parcelize
 data class ExerciseData(
+    @SerializedName("_id")
     val id: String?,
     val caloriesBurned: Int?,
     val exerciseType: String?,

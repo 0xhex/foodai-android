@@ -1,23 +1,22 @@
 package com.codepad.foodai.ui.home.home
 
 import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.codepad.foodai.R
-import com.airbnb.lottie.LottieAnimationView
-import com.airbnb.lottie.LottieProperty
+import com.codepad.foodai.domain.use_cases.user.ExerciseData
+import com.codepad.foodai.extensions.toHourString
 
-class ImageAdapter(var foodItems: List<ImageItem>, private val onItemClick: (String) -> Unit) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ImageAdapter(
+    var foodItems: List<ImageItem>,
+    private val onItemClick: (item: ImageItem) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val VIEW_TYPE_STANDARD = 1
@@ -38,7 +37,7 @@ class ImageAdapter(var foodItems: List<ImageItem>, private val onItemClick: (Str
             VIEW_TYPE_STANDARD -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_standard, parent, false)
-                StandardViewHolder(view, onItemClick)
+                StandardViewHolder(view) { item -> onItemClick(item) }
             }
 
             VIEW_TYPE_LOADING -> {
@@ -50,7 +49,7 @@ class ImageAdapter(var foodItems: List<ImageItem>, private val onItemClick: (Str
             VIEW_TYPE_EXERCISE -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_exercise, parent, false)
-                ExerciseViewHolder(view, onItemClick)
+                ExerciseViewHolder(view) { item -> onItemClick(ImageItem.Exercise(item)) }
             }
 
             else -> throw IllegalArgumentException("Invalid view type")
@@ -90,7 +89,7 @@ class ImageAdapter(var foodItems: List<ImageItem>, private val onItemClick: (Str
         }
     }
 
-    class StandardViewHolder(itemView: View, private val onItemClick: (String) -> Unit) :
+    class StandardViewHolder(itemView: View, private val onItemClick: (ImageItem.Standard) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
         private val imageView: ImageView = itemView.findViewById(R.id.imageView)
         private val titleTextView: TextView = itemView.findViewById(R.id.txt_title)
@@ -115,7 +114,7 @@ class ImageAdapter(var foodItems: List<ImageItem>, private val onItemClick: (Str
                 .into(imageView)
 
             itemView.setOnClickListener {
-                onItemClick(item.image)
+                onItemClick(item)
             }
         }
     }
@@ -138,7 +137,7 @@ class ImageAdapter(var foodItems: List<ImageItem>, private val onItemClick: (Str
         }
     }
 
-    class ExerciseViewHolder(itemView: View, private val onItemClick: (String) -> Unit) :
+    class ExerciseViewHolder(itemView: View, private val onItemClick: (ExerciseData) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
         private val lottieView: LottieAnimationView = itemView.findViewById(R.id.lottie_animation)
         private val lottieRunView: LottieAnimationView = itemView.findViewById(R.id.lottie_animation_run)
@@ -149,14 +148,15 @@ class ImageAdapter(var foodItems: List<ImageItem>, private val onItemClick: (Str
         private val hourTextView: TextView = itemView.findViewById(R.id.txt_hour)
 
         fun bind(item: ImageItem.Exercise) {
-            titleTextView.text = item.type.capitalize()
-            caloriesTextView.text = "${item.caloriesBurned} calories"
-            intensityTextView.text = "Intensity: ${item.intensity.capitalize()}"
-            durationTextView.text = "⏱ ${item.duration} Mins"
-            hourTextView.text = item.hour
+            val exercise = item.exerciseData
+            titleTextView.text = exercise.exerciseType?.capitalize()
+            caloriesTextView.text = "${exercise.caloriesBurned} calories"
+            intensityTextView.text = "Intensity: ${exercise.intensity?.capitalize()}"
+            durationTextView.text = "⏱ ${exercise.duration} Mins"
+            hourTextView.text = exercise.createdAt?.toHourString()
 
             // Handle animation visibility based on type
-            if (item.type == "run") {
+            if (exercise.exerciseType == "run") {
                 lottieView.visibility = View.GONE
                 lottieRunView.visibility = View.VISIBLE
             } else {
@@ -164,7 +164,7 @@ class ImageAdapter(var foodItems: List<ImageItem>, private val onItemClick: (Str
                 lottieRunView.visibility = View.GONE
                 
                 // Set animation for other types
-                val animationRes = when (item.type) {
+                val animationRes = when (exercise.exerciseType) {
                     "weightlifting" -> R.raw.dumbel
                     else -> R.raw.exercise
                 }
@@ -173,7 +173,7 @@ class ImageAdapter(var foodItems: List<ImageItem>, private val onItemClick: (Str
             }
 
             itemView.setOnClickListener {
-                onItemClick(item.id)
+                onItemClick(exercise)
             }
         }
     }
@@ -197,11 +197,6 @@ sealed class ImageItem {
     ) : ImageItem()
 
     data class Exercise(
-        val id: String,
-        val type: String,
-        val caloriesBurned: Int,
-        val intensity: String,
-        val duration: Int,
-        val hour: String,
+        val exerciseData: ExerciseData
     ) : ImageItem()
 }

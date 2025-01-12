@@ -26,7 +26,12 @@
             app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="false" />
 
-
+        <action
+            android:id="@+id/action_home_tab_to_exercise_detail"
+            app:destination="@id/exerciseDetailFragment" />
+        <action
+            android:id="@+id/action_home_tab_to_describe_exercise_detail"
+            app:destination="@id/describeExerciseDetailFragment" />
     </fragment>
 
     <fragment
@@ -131,4 +136,15 @@
         android:label="FixResultFragment"
         tools:layout="@layout/fragment_fix_result" />
 
+    <fragment
+        android:id="@+id/exerciseDetailFragment"
+        android:name="com.codepad.foodai.ui.home.exercise.detail.ExerciseDetailFragment"
+        android:label="ExerciseDetailFragment"
+        tools:layout="@layout/fragment_exercise_detail" />
+
+    <fragment
+        android:id="@+id/describeExerciseDetailFragment"
+        android:name="com.codepad.foodai.ui.home.exercise.detail.DescribeExerciseDetailFragment"
+        android:label="DescribeExerciseDetailFragment"
+        tools:layout="@layout/fragment_describe_exercise" />
 </navigation>
