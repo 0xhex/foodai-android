@@ -20,6 +20,7 @@ import com.codepad.foodai.domain.models.user.UpdateUserFieldRequestArray
 import com.codepad.foodai.domain.models.user.UpdateUserFieldResponseData
 import com.codepad.foodai.domain.models.user.User
 import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
+import com.codepad.foodai.domain.models.user.WeightLogData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -119,5 +120,10 @@ interface RestApi {
     suspend fun updateCustomExercise(
         @Body request: UpdateCustomExerciseRequest
     ): APIResponse<ExerciseData>
+
+    @GET("users/{userID}/weight-logs")
+    suspend fun getUserWeightLogs(
+        @Path("userID") userID: String
+    ): APIResponse<List<WeightLogData>>
 
 }
