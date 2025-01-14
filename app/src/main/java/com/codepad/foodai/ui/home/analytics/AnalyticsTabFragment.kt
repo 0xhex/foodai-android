@@ -16,6 +16,5 @@ class AnalyticsTabFragment : BaseFragment<FragmentAnalyticsTabBinding>() {
     }
 
     override fun onReadyView() {
-        // Additional setup if needed
     }
 }
