@@ -93,7 +93,6 @@
     <string name="get_in_depth_info">Get in-depth information on the nutritional content of your meals.</string>
     <string name="get_started">GET STARTED</string>
     <string name="give_us_rating">Give us rating</string>
-    <string name="goal_progress">Goal Progress</string>
     <string name="health_access_denied">Health Access Denied</string>
     <string name="health_integration">Health Integration</string>
     <string name="health_score">Health Score</string>
@@ -136,7 +135,6 @@
     <string name="ok">OK</string>
     <string name="on_analytics_section">On Analytics section you can track your progress weight logs graphs</string>
     <string name="open_settings">Open Settings</string>
-    <string name="overview">Overview</string>
     <string name="overweight">Overweight</string>
     <string name="personal_details">Personal details</string>
     <string name="personal_details_title">Personal Details</string>
@@ -320,11 +318,9 @@
 
     <!-- Analytics -->
     <string name="update_weight">Update Weight</string>
-    <string name="edit_weight_goal">Edit Weight Goal</string>
     <string name="goal_weight">Goal Weight %s</string>
-    <string name="current_weight">Current Weight %s</string>
+    <string name="current_weight_param">Current Weight %s</string>
     <string name="update_weight_reminder">Remember to update this at least once a week so we can adjust your plan to hit your goal</string>
-    <string name="update_your_weight">Update your weight</string>
     <string name="your_bmi">Your BMI</string>
     <string name="your_weight_is">Your weight is</string>
     <string name="bmi_underweight">Underweight</string>

@@ -41,7 +41,7 @@ class AnalyticsTabFragment : BaseFragment<FragmentAnalyticsTabBinding>() {
         viewModel.userData.observe(viewLifecycleOwner) { userData ->
             binding.apply {
                 tvGoalWeight.text = getString(R.string.goal_weight, "${userData.targetWeight} kg")
-                tvCurrentWeight.text = getString(R.string.current_weight, "${userData.weight} kg")
+                tvCurrentWeight.text = getString(R.string.current_weight_param, "${userData.weight} kg")
             }
         }
     }

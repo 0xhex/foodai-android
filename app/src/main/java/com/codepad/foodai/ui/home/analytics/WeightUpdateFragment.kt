@@ -17,6 +17,7 @@ class WeightUpdateFragment : BaseFragment<FragmentWeightUpdateBinding>() {
     private val viewModel: AnalyticsViewModel by viewModels()
     private var isMetric = true
     override fun getLayoutId(): Int = R.layout.fragment_weight_update
+    override val hideBottomNavBar: Boolean = true
 
     override fun onReadyView() {
         setupViews()
