@@ -317,4 +317,23 @@
     <string name="weight_lifting_high_intensity">🥵 High\nHeavy weights, low reps\n(1-5 reps)</string>
     <string name="weight_lifting_medium_intensity">😰 Medium\nModerate weights, medium reps\n(8-12 reps)</string>
     <string name="weight_lifting_low_intensity">😅 Low\nLight weights, high reps\n(15+ reps)</string>
+
+    <!-- Analytics -->
+    <string name="update_weight">Update Weight</string>
+    <string name="edit_weight_goal">Edit Weight Goal</string>
+    <string name="goal_weight">Goal Weight %s</string>
+    <string name="current_weight">Current Weight %s</string>
+    <string name="update_weight_reminder">Remember to update this at least once a week so we can adjust your plan to hit your goal</string>
+    <string name="update_your_weight">Update your weight</string>
+    <string name="your_bmi">Your BMI</string>
+    <string name="your_weight_is">Your weight is</string>
+    <string name="bmi_underweight">Underweight</string>
+    <string name="bmi_healthy">Healthy</string>
+    <string name="bmi_overweight">Overweight</string>
+    <string name="bmi_obese">Obese</string>
+    <string name="overview">Overview</string>
+    <string name="goal_progress">Goal Progress</string>
+    <string name="completed_percent">Completed %d%%</string>
+    <string name="drag_chart_hint">Drag over the chart to see weight details</string>
+    <string name="weight_on_date">Weight: %d %s on %s</string>
 </resources>

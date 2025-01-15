@@ -38,7 +38,36 @@
         android:id="@+id/navigation_analytics"
         android:name="com.codepad.foodai.ui.home.analytics.AnalyticsTabFragment"
         android:label="@string/analytics"
-        tools:layout="@layout/fragment_analytics_tab"></fragment>
+        tools:layout="@layout/fragment_analytics_tab">
+        
+        <action
+            android:id="@+id/action_analytics_to_weight_update"
+            app:destination="@id/weightUpdateFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/action_analytics_to_goal_weight_update"
+            app:destination="@id/goalWeightUpdateFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/weightUpdateFragment"
+        android:name="com.codepad.foodai.ui.home.analytics.WeightUpdateFragment"
+        android:label="WeightUpdateFragment"
+        tools:layout="@layout/fragment_weight_update" />
+
+    <fragment
+        android:id="@+id/goalWeightUpdateFragment"
+        android:name="com.codepad.foodai.ui.home.analytics.GoalWeightUpdateFragment"
+        android:label="GoalWeightUpdateFragment"
+        tools:layout="@layout/fragment_weight_update" />
 
     <fragment
         android:id="@+id/navigation_settings"
