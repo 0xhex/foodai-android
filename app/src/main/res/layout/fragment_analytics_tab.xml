@@ -42,7 +42,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/tv_goal_weight"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_goal_weight"
-                    app:tint="@color/orange" />
+                    />
 
                 <TextView
                     android:id="@+id/tv_goal_weight"
@@ -95,7 +95,7 @@
                         android:id="@+id/iv_weight"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_weight"
+                        android:src="@drawable/ic_deadlift"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/white" />
@@ -132,8 +132,10 @@
                         android:layout_height="70dp"
                         android:layout_marginTop="16dp"
                         android:text="@string/update_your_weight"
+                        android:textSize="16sp"
                         app:backgroundTint="@color/black"
                         app:cornerRadius="16dp"
+                        app:fontFamily="@font/euro_stile_regular"
                         android:textColor="@color/white"
                         android:textAllCaps="false"
                         app:layout_constraintEnd_toEndOf="parent"
