@@ -161,6 +161,7 @@
             <!-- BMI Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
+                android:id="@+id/card_bmi"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_bmi_title"
@@ -314,6 +315,130 @@
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Time Range Tabs -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/time_range_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@color/custom_black"
+                app:tabTextColor="@color/white"
+                app:tabSelectedTextColor="@color/white"
+                app:tabIndicatorColor="@color/white"
+                app:tabMode="fixed"
+                app:layout_constraintTop_toBottomOf="@id/card_bmi"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Goal Progress Header -->
+            <LinearLayout
+                android:id="@+id/goal_progress_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/time_range_tabs">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/goal_progress"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:fontFamily="@font/euro_stile_bold" />
+
+                <TextView
+                    android:id="@+id/tv_completed_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/orange"
+                    android:textSize="18sp"
+                    app:fontFamily="@font/euro_stile_regular"
+                    tools:text="Completed %0" />
+
+            </LinearLayout>
+
+            <!-- Chart Container -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/chart_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#323233"
+                app:cardCornerRadius="12dp"
+                app:layout_constraintTop_toBottomOf="@id/goal_progress_header">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/weight_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_margin="8dp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tv_weight_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:fontFamily="@font/euro_stile_regular"
+                app:layout_constraintTop_toBottomOf="@id/chart_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Weight: 60 kg on Jan 25" />
+
+            <!-- Citations Section -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/citations_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="#262626"
+                app:cardCornerRadius="12dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_weight_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Citations"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/euro_stile_bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="BMI categories and calculations are based on guidelines from the World Health Organization."
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/euro_stile_regular" />
+
+                    <TextView
+                        android:id="@+id/tv_learn_more"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Learn more about BMI from WHO"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/euro_stile_regular" />
+
+                </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 

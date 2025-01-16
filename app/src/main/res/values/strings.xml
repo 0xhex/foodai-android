@@ -332,4 +332,6 @@
     <string name="completed_percent">Completed %d%%</string>
     <string name="drag_chart_hint">Drag over the chart to see weight details</string>
     <string name="weight_on_date">Weight: %d %s on %s</string>
+    <string name="weight_date_format">Weight: %1$d kg on %2$s</string>
+    <string name="completed_percentage">Completed %s</string>
 </resources>
