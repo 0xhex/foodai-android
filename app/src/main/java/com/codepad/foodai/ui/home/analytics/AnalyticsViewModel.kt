@@ -116,7 +116,7 @@ class AnalyticsViewModel @Inject constructor(
                 is UseCaseResult.Success -> {
                     _weightLogs.value = result.data
                     filterWeightLogs()
-                    calculateCompletedRatio()
+                    updateCompletedRatio()
                 }
                 is UseCaseResult.Error -> {
                     // Handle error
@@ -128,6 +128,7 @@ class AnalyticsViewModel @Inject constructor(
     fun setTimeRange(timeRange: TimeRange) {
         _selectedTimeRange.value = timeRange
         filterWeightLogs()
+        updateCompletedRatio()
     }
 
     private fun filterWeightLogs() {
@@ -176,27 +177,39 @@ class AnalyticsViewModel @Inject constructor(
         }.sortedBy { it.date }
     }
 
-    private fun calculateCompletedRatio() {
-        val logs = _weightLogs.value ?: return
-        if (logs.isEmpty()) {
-            _completedRatio.value = 0
-            return
-        }
-
-        val startWeight = logs.minByOrNull { it.date ?: Date(0) }?.weight ?: return
-        val currentWeight = logs.maxByOrNull { it.date ?: Date(0) }?.weight ?: return
-        val targetWeight = userData.value?.targetWeight?.toDouble() ?: return
-
-        val totalChange = abs(targetWeight - startWeight)
-        val currentChange = abs(currentWeight - startWeight)
-        
-        val ratio = if (totalChange > 0) {
-            (currentChange / totalChange) * 100
+    private fun calculateCompletedRatio(startingWeight: Double, currentWeight: Double, targetWeight: Double): Int {
+        // Calculate progress ratio using inverse lerp
+        val progressRatio = if (startingWeight != targetWeight) {
+            (currentWeight - startingWeight) / (targetWeight - startingWeight)
         } else {
             0.0
         }
 
-        _completedRatio.value = min(100, max(0, ratio.toInt()))
+        // Clamp the ratio between 0 and 1, then convert to percentage
+        val clampedRatio = progressRatio.coerceIn(0.0, 1.0)
+        return (clampedRatio * 100).toInt()
+    }
+
+    private fun updateCompletedRatio() {
+        val weightLogs = _filteredWeightLogs.value
+        val userData = _userData.value
+
+        if (weightLogs.isNullOrEmpty() || userData == null) {
+            _completedRatio.value = 0
+            return
+        }
+
+        val startingWeightRaw = weightLogs.lastOrNull()?.weight ?: return
+        val currentWeightRaw = weightLogs.firstOrNull()?.weight ?: return
+        val targetWeightRaw = userData.targetWeight?.toDouble() ?: return
+        val isMetric = userData.isMetric ?: true
+
+        // Adjust weights for unit system
+        val startingWeight = if (isMetric) startingWeightRaw else startingWeightRaw / 2.20462
+        val currentWeight = if (isMetric) currentWeightRaw else currentWeightRaw / 2.20462
+        val targetWeight = if (isMetric) targetWeightRaw else targetWeightRaw / 2.20462
+
+        _completedRatio.value = calculateCompletedRatio(startingWeight, currentWeight, targetWeight)
     }
 
     fun calculateBMI(): Double {
