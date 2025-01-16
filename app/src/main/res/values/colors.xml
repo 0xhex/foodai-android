@@ -20,5 +20,7 @@
     <color name="orange">#ff9500</color>
     <color name="red">#ff3b30</color>
     <color name="color_graph_initial">#d1d1d6</color>
+    <color name="green">#27c174</color>
+    <color name="blue">#007dd5</color>
 
 </resources>

@@ -103,4 +103,19 @@
         <item name="chipStrokeColor">#4D4D4D</item>
         <item name="android:textAlignment">center</item>
     </style>
+
+    <style name="SwitchTheme">
+        <item name="colorControlActivated">@color/gray</item>
+        <item name="colorSwitchThumbNormal">@color/white</item>
+        <item name="android:colorForeground">@color/gray</item>
+    </style>
+
+    <style name="NumberPickerTheme">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/euro_stile_regular</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:colorControlNormal">@color/gray</item>
+    </style>
+
 </resources>

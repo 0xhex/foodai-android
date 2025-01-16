@@ -93,7 +93,6 @@
     <string name="get_in_depth_info">Get in-depth information on the nutritional content of your meals.</string>
     <string name="get_started">GET STARTED</string>
     <string name="give_us_rating">Give us rating</string>
-    <string name="goal_progress">Goal Progress</string>
     <string name="health_access_denied">Health Access Denied</string>
     <string name="health_integration">Health Integration</string>
     <string name="health_score">Health Score</string>
@@ -136,7 +135,6 @@
     <string name="ok">OK</string>
     <string name="on_analytics_section">On Analytics section you can track your progress weight logs graphs</string>
     <string name="open_settings">Open Settings</string>
-    <string name="overview">Overview</string>
     <string name="overweight">Overweight</string>
     <string name="personal_details">Personal details</string>
     <string name="personal_details_title">Personal Details</string>
@@ -317,4 +315,23 @@
     <string name="weight_lifting_high_intensity">🥵 High\nHeavy weights, low reps\n(1-5 reps)</string>
     <string name="weight_lifting_medium_intensity">😰 Medium\nModerate weights, medium reps\n(8-12 reps)</string>
     <string name="weight_lifting_low_intensity">😅 Low\nLight weights, high reps\n(15+ reps)</string>
+
+    <!-- Analytics -->
+    <string name="update_weight">Update Weight</string>
+    <string name="goal_weight">Goal Weight %s</string>
+    <string name="current_weight_param">Current Weight %s</string>
+    <string name="update_weight_reminder">Remember to update this at least once a week so we can adjust your plan to hit your goal</string>
+    <string name="your_bmi">Your BMI</string>
+    <string name="your_weight_is">Your weight is</string>
+    <string name="bmi_underweight">Underweight</string>
+    <string name="bmi_healthy">Healthy</string>
+    <string name="bmi_overweight">Overweight</string>
+    <string name="bmi_obese">Obese</string>
+    <string name="overview">Overview</string>
+    <string name="goal_progress">Goal Progress</string>
+    <string name="completed_percent">Completed %d%%</string>
+    <string name="drag_chart_hint">Drag over the chart to see weight details</string>
+    <string name="weight_on_date">Weight: %d %s on %s</string>
+    <string name="weight_date_format">Weight: %1$d kg on %2$s</string>
+    <string name="completed_percentage">Completed %s</string>
 </resources>

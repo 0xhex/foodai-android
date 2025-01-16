@@ -124,8 +124,14 @@ dependencies {
     implementation(libs.circleprogressbar)
     implementation(libs.health)
     implementation(libs.kwinStone)
+
+    implementation libs.mpandroidchart
 }
 
 kapt {
     correctErrorTypes = true
+}
+
+repositories {
+    maven { url 'https://jitpack.io' }
 }
