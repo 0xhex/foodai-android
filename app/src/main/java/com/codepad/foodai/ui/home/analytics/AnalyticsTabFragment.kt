@@ -22,12 +22,16 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.android.material.tabs.TabLayout
 import java.text.SimpleDateFormat
 import java.util.*
+import android.view.View
+import android.view.ViewStub
 
 @AndroidEntryPoint
 class AnalyticsTabFragment : BaseFragment<FragmentAnalyticsTabBinding>() {
 
     private val viewModel: AnalyticsViewModel by viewModels()
     override fun getLayoutId(): Int = R.layout.fragment_analytics_tab
+
+    private var inflatedEmptyView: View? = null
 
     override fun onReadyView() {
         setupViews()
@@ -60,8 +64,14 @@ class AnalyticsTabFragment : BaseFragment<FragmentAnalyticsTabBinding>() {
     private fun setupObservers() {
         viewModel.userData.observe(viewLifecycleOwner) { userData ->
             binding.apply {
-                tvGoalWeight.text = getString(R.string.goal_weight, "${userData.targetWeight} ${if (userData.isMetric == true) "kg" else "lb"}")
-                tvCurrentWeight.text = getString(R.string.current_weight_param, "${userData.weight?.toInt()} ${if (userData.isMetric == true) "kg" else "lb"}")
+                tvGoalWeight.text = getString(
+                    R.string.goal_weight,
+                    "${userData.targetWeight} ${if (userData.isMetric == true) "kg" else "lb"}"
+                )
+                tvCurrentWeight.text = getString(
+                    R.string.current_weight_param,
+                    "${userData.weight?.toInt()} ${if (userData.isMetric == true) "kg" else "lb"}"
+                )
 
                 val bmi = viewModel.calculateBMI()
                 tvBmiValue.text = String.format("%.1f", bmi)
@@ -126,29 +136,31 @@ class AnalyticsTabFragment : BaseFragment<FragmentAnalyticsTabBinding>() {
             setPinchZoom(false)
             isDoubleTapToZoomEnabled = false
             setBackgroundColor(Color.parseColor("#323233"))
-            
+
             xAxis.apply {
                 textColor = Color.parseColor("#b8b8b9")
                 position = XAxis.XAxisPosition.BOTTOM
                 setDrawGridLines(false)
                 setDrawAxisLine(false)
                 textSize = 12f
-                yOffset = 15f
-                labelCount = 6
+                yOffset = 20f
+                labelCount = 4
+                spaceMin = 0.2f
+                spaceMax = 0.2f
                 valueFormatter = object : ValueFormatter() {
                     private val dateFormat = when (viewModel.selectedTimeRange.value) {
                         TimeRange.LAST_30_DAYS -> SimpleDateFormat("MMM d", Locale.getDefault())
                         else -> SimpleDateFormat("MMM yy", Locale.getDefault())
                     }
-                    
+
                     override fun getFormattedValue(value: Float): String {
                         return dateFormat.format(Date(value.toLong()))
                     }
                 }
             }
-            
+
             axisLeft.isEnabled = false
-            
+
             axisRight.apply {
                 textColor = Color.parseColor("#b8b8b9")
                 setDrawGridLines(false)
@@ -163,29 +175,38 @@ class AnalyticsTabFragment : BaseFragment<FragmentAnalyticsTabBinding>() {
                 setLabelCount(5, true)
                 granularity = 10f
                 setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-                spaceTop = 0f
-                spaceBottom = 0f
             }
-            
+
             setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
                 override fun onValueSelected(e: Entry?, h: Highlight?) {
                     e?.let { entry ->
                         val date = Date(entry.x.toLong())
                         val weight = entry.y.toInt()
                         val dateFormat = SimpleDateFormat("MMM d", Locale.getDefault())
-                        binding.tvWeightDate.text = getString(R.string.weight_date_format, weight, dateFormat.format(date))
+                        binding.tvWeightDate.text =
+                            getString(R.string.weight_date_format, weight, dateFormat.format(date))
                     }
                 }
-                
+
                 override fun onNothingSelected() {
                     binding.tvWeightDate.text = getString(R.string.drag_chart_hint)
                 }
             })
 
-            setViewPortOffsets(30f, 0f, 80f, 30f)
+            // Set minimum offsets for the chart
+            setMinOffset(0f)
+
+            // Significantly increase viewport offsets (left, top, right, bottom)
+            setViewPortOffsets(80f, 30f, 80f, 90f)
+
+            // Add extra padding
+            extraLeftOffset = 20f
+            extraRightOffset = 20f
+            extraTopOffset = 20f
+            extraBottomOffset = 25f
+
             isHighlightPerDragEnabled = false
             isHighlightPerTapEnabled = true
-            extraRightOffset = 20f
         }
     }
 
@@ -195,14 +216,14 @@ class AnalyticsTabFragment : BaseFragment<FragmentAnalyticsTabBinding>() {
             TimeRange.entries.forEach { timeRange ->
                 addTab(newTab().setText(timeRange.title))
             }
-            
+
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     tab?.let {
                         viewModel.setTimeRange(TimeRange.entries[it.position])
                     }
                 }
-                
+
                 override fun onTabUnselected(tab: TabLayout.Tab?) {}
                 override fun onTabReselected(tab: TabLayout.Tab?) {}
             })
@@ -210,6 +231,7 @@ class AnalyticsTabFragment : BaseFragment<FragmentAnalyticsTabBinding>() {
     }
 
     private fun updateChart(weightLogs: List<WeightLogData>) {
+        setupWeightProgressView(weightLogs.isEmpty())
         if (weightLogs.isEmpty()) {
             binding.weightChart.clear()
             binding.tvWeightDate.text = getString(R.string.drag_chart_hint)
@@ -234,14 +256,20 @@ class AnalyticsTabFragment : BaseFragment<FragmentAnalyticsTabBinding>() {
         val weights = entries.map { it.y }
         val minWeight = (weights.minOrNull() ?: 0f).toInt()
         val maxWeight = (weights.maxOrNull() ?: 0f).toInt()
-        
-        // Calculate proper range with 10-unit intervals
-        val rangeMin = (minWeight / 10) * 10 // Round down to nearest 10
-        val rangeMax = ((maxWeight + 9) / 10) * 10 // Round up to nearest 10
-        
-        // Ensure minimum range of 40 units for proper display
-        val finalMin = if (rangeMax - rangeMin < 40) rangeMax - 40 else rangeMin
-        val finalMax = if (rangeMax - rangeMin < 40) rangeMax else rangeMax
+
+        // Determine the interval based on the range
+        val range = maxWeight - minWeight
+        val interval = if (maxWeight >= 100) 100 else 10
+
+        // Calculate proper range with appropriate intervals
+        val rangeMin = (minWeight / interval) * interval // Round down to nearest interval
+        val rangeMax =
+            ((maxWeight + interval - 1) / interval) * interval // Round up to nearest interval
+
+        // Ensure minimum range for proper display
+        val minRange = if (interval == 100) 400 else 40
+        val finalMin = if (rangeMax - rangeMin < minRange) rangeMax - minRange else rangeMin
+        val finalMax = if (rangeMax - rangeMin < minRange) rangeMax else rangeMax
 
         val dataSet = LineDataSet(entries, "Weight").apply {
             color = Color.WHITE
@@ -253,7 +281,7 @@ class AnalyticsTabFragment : BaseFragment<FragmentAnalyticsTabBinding>() {
             circleHoleColor = Color.parseColor("#323233") // Same as chart background
             lineWidth = 1.5f
             mode = LineDataSet.Mode.CUBIC_BEZIER
-            
+
             setDrawFilled(false)
             setDrawValues(false)
             setDrawHorizontalHighlightIndicator(false)
@@ -263,24 +291,40 @@ class AnalyticsTabFragment : BaseFragment<FragmentAnalyticsTabBinding>() {
 
         binding.weightChart.apply {
             data = LineData(dataSet)
-            
-            // Update Y-axis configuration
+
             axisRight.apply {
                 axisMinimum = finalMin.toFloat()
                 axisMaximum = finalMax.toFloat()
-                setLabelCount((finalMax - finalMin) / 10 + 1, true) // Force labels at 10-unit intervals
+                granularity = interval.toFloat()
+                setLabelCount((finalMax - finalMin) / interval + 1, true)
+                spaceTop = 20f
+                spaceBottom = 20f
             }
-            
-            // Set viewport to show full height
-            setVisibleYRange(finalMin.toFloat(), finalMax.toFloat(), YAxis.AxisDependency.RIGHT)
-            
+
+            // Set viewport to show full height with padding
+            setVisibleYRange(
+                finalMin.toFloat() - interval,
+                finalMax.toFloat() + interval,
+                YAxis.AxisDependency.RIGHT
+            )
+
             // Ensure the chart fills the available height
             setScaleMinima(1f, 1f)
-            
+
             animateX(500)
-            setViewPortOffsets(30f, 30f, 80f, 30f)
+
+            // Set minimum offsets for the chart
+            setMinOffset(0f)
+
+            // Significantly increase viewport offsets (left, top, right, bottom)
+            setViewPortOffsets(80f, 30f, 80f, 90f)
+
+            // Add extra padding
+            extraLeftOffset = 20f
             extraRightOffset = 20f
-            
+            extraTopOffset = 20f
+            extraBottomOffset = 25f
+
             // Force refresh
             invalidate()
         }
@@ -292,10 +336,19 @@ class AnalyticsTabFragment : BaseFragment<FragmentAnalyticsTabBinding>() {
                 val hue = (ratio / 50f) * 60f
                 Color.HSVToColor(floatArrayOf(hue, 1f, 1f))
             }
+
             else -> {
                 val hue = 60f + ((ratio - 50f) / 50f) * 60f
                 Color.HSVToColor(floatArrayOf(hue, 1f, 1f))
             }
+        }
+    }
+
+    private fun setupWeightProgressView(isEmpty: Boolean) {
+        if (isEmpty) {
+            binding.emptyWeightProgress.root.visibility = View.VISIBLE
+        } else {
+            binding.emptyWeightProgress.root.visibility = View.GONE
         }
     }
 }

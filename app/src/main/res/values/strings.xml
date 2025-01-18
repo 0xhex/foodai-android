@@ -334,4 +334,5 @@
     <string name="weight_on_date">Weight: %d %s on %s</string>
     <string name="weight_date_format">Weight: %1$d kg on %2$s</string>
     <string name="completed_percentage">Completed %s</string>
+    <string name="learn_more_about_bmi_from_who">Learn more about BMI from WHO</string>
 </resources>
