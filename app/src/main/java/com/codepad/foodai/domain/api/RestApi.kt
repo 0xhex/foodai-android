@@ -21,6 +21,9 @@ import com.codepad.foodai.domain.models.user.UpdateUserFieldResponseData
 import com.codepad.foodai.domain.models.user.User
 import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
 import com.codepad.foodai.domain.models.user.WeightLogData
+import com.codepad.foodai.domain.models.recommendation.RequestRecommendationResponse
+import com.codepad.foodai.domain.models.recommendation.Recommendation
+import com.codepad.foodai.domain.models.recommendation.RequestRecommendationRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -125,5 +128,15 @@ interface RestApi {
     suspend fun getUserWeightLogs(
         @Path("userID") userID: String
     ): APIResponse<List<WeightLogData>>
+
+    @POST("recommendations/generate")
+    suspend fun requestRecommendations(
+        @Body request: RequestRecommendationRequest
+    ): APIResponse<RequestRecommendationResponse>
+
+    @GET("recommendations/{recommendationID}")
+    suspend fun getRecommendation(
+        @Path("recommendationID") recommendationID: String
+    ): APIResponse<Recommendation>
 
 }
