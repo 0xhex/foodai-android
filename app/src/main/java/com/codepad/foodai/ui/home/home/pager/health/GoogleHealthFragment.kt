@@ -1,22 +1,34 @@
 package com.codepad.foodai.ui.home.home.pager.health
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.health.connect.client.HealthConnectClient
+import androidx.lifecycle.lifecycleScope
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentGoogleHealthBinding
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.home.pager.HomePagerViewModel
 import com.codepad.foodai.ui.home.settings.health.HealthConnectManager
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 @AndroidEntryPoint
 class GoogleHealthFragment : BaseFragment<FragmentGoogleHealthBinding>() {
@@ -30,6 +42,7 @@ class GoogleHealthFragment : BaseFragment<FragmentGoogleHealthBinding>() {
             initHealthConnect()
             healthConnectManager.initContent(this)
             setupHealthConnectUI()
+            setupStepChart()
         } else {
             setupNotSupportedUI()
         }
@@ -51,6 +64,22 @@ class GoogleHealthFragment : BaseFragment<FragmentGoogleHealthBinding>() {
             }
         }
 
+        // Add step count observer
+        healthConnectManager.onGoogleFitBodyDataRead = { stepData ->
+            val (currentDaySteps, previousDaySteps) = stepData
+            viewLifecycleOwner.lifecycleScope.launch {
+                binding.notConnectedView.visibility = View.GONE
+                binding.connectedView.visibility = View.VISIBLE
+                
+                // Always update the chart, even with empty data
+                updateStepData(
+                    currentDaySteps.ifEmpty { listOf(0) },
+                    previousDaySteps.ifEmpty { List(6) { 0 } }
+                )
+            }
+        }
+
+        // Keep existing observers
         sharedViewModel.dailySummary.observe(viewLifecycleOwner) { dailySummary ->
             binding.apply {
                 progressBar.progress = (dailySummary.healthScore?.times(10))?.toInt() ?: 0
@@ -142,6 +171,101 @@ class GoogleHealthFragment : BaseFragment<FragmentGoogleHealthBinding>() {
         }
     }
 
+    private fun setupStepChart() {
+        binding.stepChart.apply {
+            description.isEnabled = false
+            legend.isEnabled = false
+            setTouchEnabled(false)
+            setDrawGridBackground(false)
+            setDrawBorders(false)
+            setScaleEnabled(false)
+            setPinchZoom(false)
+            setDrawValueAboveBar(false)
+            minimumHeight = 100 // Even smaller height
+            
+            // Triple the previous margin values
+            setViewPortOffsets(144f, 24f, 48f, 96f)
+
+            xAxis.apply {
+                position = XAxis.XAxisPosition.BOTTOM
+                setDrawGridLines(true)
+                gridColor = Color.parseColor("#20FFFFFF")
+                textColor = Color.parseColor("#FFFFFF")
+                textSize = 10f
+                valueFormatter = DayAxisValueFormatter()
+                granularity = 1f
+                setDrawAxisLine(true)
+                axisLineColor = Color.parseColor("#20FFFFFF")
+                yOffset = 24f // Triple the offset
+                labelCount = 7
+                spaceMin = 0.2f
+                spaceMax = 0.2f
+            }
+
+            axisLeft.apply {
+                setDrawGridLines(true)
+                gridColor = Color.parseColor("#20FFFFFF")
+                setDrawAxisLine(true)
+                axisLineColor = Color.parseColor("#20FFFFFF")
+                textColor = Color.parseColor("#FFFFFF")
+                textSize = 10f
+                axisMinimum = 0f
+                axisMaximum = 4000f
+                labelCount = 5
+                setDrawLabels(true)
+                spaceTop = 24f // Triple the space
+                valueFormatter = object : IndexAxisValueFormatter() {
+                    override fun getFormattedValue(value: Float): String {
+                        return value.toInt().toString()
+                    }
+                }
+            }
+
+            axisRight.isEnabled = false
+            
+            // Triple the extra offsets
+            setExtraOffsets(12f, 12f, 12f, 12f)
+        }
+    }
+
+    private fun updateStepData(currentDaySteps: List<Int>, previousDaySteps: List<Int>) {
+        // Update step count with only today's steps
+        binding.txtStepCount.text = currentDaySteps.lastOrNull()?.toString() ?: "0"
+
+        // Update chart
+        val entries = mutableListOf<BarEntry>()
+        val allSteps = previousDaySteps + currentDaySteps
+
+        // Ensure we have exactly 7 days of data
+        val paddedSteps = when {
+            allSteps.size > 7 -> allSteps.takeLast(7)
+            allSteps.size < 7 -> List(7 - allSteps.size) { 0 } + allSteps
+            else -> allSteps
+        }
+
+        // Create entries with actual values
+        paddedSteps.forEachIndexed { index, steps ->
+            entries.add(BarEntry(index.toFloat(), steps.toFloat()))
+        }
+
+        val dataSet = BarDataSet(entries, "Steps").apply {
+            color = Color.parseColor("#037aff")
+            setDrawValues(false)
+            setDrawIcons(false)
+            highLightColor = Color.TRANSPARENT
+        }
+
+        val barData = BarData(dataSet).apply {
+            barWidth = 0.5f
+        }
+
+        binding.stepChart.apply {
+            data = barData
+            animateY(500)
+            invalidate()
+        }
+    }
+
     private fun setupHealthConnectUI() {
         healthConnectManager.hasUnlockedIntegration { isConnected ->
             if (isConnected) {
@@ -197,6 +321,14 @@ class GoogleHealthFragment : BaseFragment<FragmentGoogleHealthBinding>() {
 
     private fun isHealthConnectSupported(): Boolean {
         return Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU
+    }
+
+    inner class DayAxisValueFormatter : IndexAxisValueFormatter() {
+        private val dayLetters = arrayOf("M", "T", "W", "T", "F", "S", "S")
+        
+        override fun getFormattedValue(value: Float): String {
+            return dayLetters[value.toInt()]
+        }
     }
 }
 
