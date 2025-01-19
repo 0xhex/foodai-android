@@ -4,12 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.codepad.foodai.domain.api.APIError
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
+import com.codepad.foodai.domain.models.recommendation.Recommendation
 import com.codepad.foodai.domain.models.user.GetUserDailySummaryUseCase
 import com.codepad.foodai.domain.use_cases.UseCaseResult
 import com.codepad.foodai.domain.use_cases.image.DeleteImageUseCase
 import com.codepad.foodai.domain.use_cases.image.FixImageResultsUseCase
+import com.codepad.foodai.domain.use_cases.recommendation.GetRecommendationUseCase
+import com.codepad.foodai.domain.use_cases.recommendation.RequestRecommendationsUseCase
 import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,6 +24,8 @@ class HomePagerViewModel @Inject constructor(
     private val getUserDailySummaryUseCase: GetUserDailySummaryUseCase,
     private val deleteImageUseCase: DeleteImageUseCase,
     private val fixImageResultsUseCase: FixImageResultsUseCase,
+    private val requestRecommendationsUseCase: RequestRecommendationsUseCase,
+    private val getRecommendationUseCase: GetRecommendationUseCase
 ) : ViewModel() {
 
     private val _dailySummary = MutableLiveData<DailySummaryResponseData>()
@@ -48,6 +54,15 @@ class HomePagerViewModel @Inject constructor(
 
     private val _fixResult = MutableLiveData<Boolean?>()
     val fixResult: LiveData<Boolean?> = _fixResult
+
+    private val _recommendationId = MutableLiveData<String>()
+    val recommendationId: LiveData<String> = _recommendationId
+
+    private val _recommendation = MutableLiveData<Recommendation>()
+    val recommendation: LiveData<Recommendation> = _recommendation
+
+    private val _recommendationError = MutableLiveData<APIError?>()
+    val recommendationError: MutableLiveData<APIError?> = _recommendationError
 
     fun updateAchievedPercents(nutritionResponseData: NutritionResponseData) {
         val totalCalories = nutritionResponseData.totalCalories
@@ -137,5 +152,51 @@ class HomePagerViewModel @Inject constructor(
 
     fun clearFixResult() {
         _fixResult.value = null
+    }
+
+    fun requestRecommendations() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            foodDetail.value?.id?.let { imageId ->
+                when (val result = requestRecommendationsUseCase.requestRecommendations(imageId)) {
+                    is UseCaseResult.Success -> {
+                        _recommendationId.value = result.data.recommendationId
+                    }
+                    is UseCaseResult.Error -> {
+                        _recommendationError.value = result.exception
+                    }
+                }
+            }
+            _isLoading.value = false
+        }
+    }
+
+    fun getRecommendation() {
+        viewModelScope.launch {
+            recommendationId.value?.let { id ->
+                when (val result = getRecommendationUseCase.getRecommendation(id)) {
+                    is UseCaseResult.Success -> {
+                        _recommendation.value = result.data
+                    }
+                    is UseCaseResult.Error -> {
+                        _recommendationError.value = result.exception
+                    }
+                }
+            }
+        }
+    }
+
+    fun clearRecommendationError() {
+        _recommendationError.value = null
+    }
+
+    fun setRecommendationId(recommendationId: String) {
+        _recommendationId.value = recommendationId
+    }
+
+    fun clearRecommendation() {
+        _recommendationId.value = null
+        _recommendation.value = null
+        _recommendationError.value = null
     }
 }
