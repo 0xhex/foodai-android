@@ -339,4 +339,8 @@
     <string name="ready_to_see_how_you_can_improve_your_meal_choices_ntap_below_to_get_personalized_insights">Ready to see how you can improve your meal choices?\nTap below to get personalized insights.</string>
     <string name="get_recommendations">Get Recommendations</string>
     <string name="health_score_with_param">Health Score: %s</string>
+    <string name="calories_burned_format">+ %d kcal</string>
+    <string name="running">Running</string>
+    <string name="weightlifting">Weightlifting</string>
+    <string name="exercise">Exercise</string>
 </resources>
