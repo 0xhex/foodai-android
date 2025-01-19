@@ -70,4 +70,9 @@ class GoalViewFragment : BaseFragment<FragmentGoalViewBinding>() {
     private fun navigateToGoal() {
         findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToAdjustGoalsFragment())
     }
+
+    override fun onResume() {
+        super.onResume()
+        binding.root.requestLayout()
+    }
 }
