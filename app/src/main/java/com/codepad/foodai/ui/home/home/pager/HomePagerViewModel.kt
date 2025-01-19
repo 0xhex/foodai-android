@@ -65,10 +65,10 @@ class HomePagerViewModel @Inject constructor(
     val recommendationError: MutableLiveData<APIError?> = _recommendationError
 
     fun updateAchievedPercents(nutritionResponseData: NutritionResponseData) {
-        val totalCalories = nutritionResponseData.totalCalories
-        val totalProtein = nutritionResponseData.protein
-        val totalCarbs = nutritionResponseData.carbohydrates
-        val totalFats = nutritionResponseData.fat
+        val totalCalories = nutritionResponseData.totalCalories.toFloat()
+        val totalProtein = nutritionResponseData.protein.toFloat()
+        val totalCarbs = nutritionResponseData.carbohydrates.toFloat()
+        val totalFats = nutritionResponseData.fat.toFloat()
 
         val remainingNutritionData = _dailySummary.value?.remainingNutrition
         val remainingCalories = remainingNutritionData?.calories ?: 0
