@@ -140,7 +140,7 @@
                     android:id="@+id/img_steps"
                     android:layout_marginTop="@dimen/dimen_24dp"
                     app:srcCompat="@drawable/ic_run"
-                    app:layout_constraintTop_toBottomOf="@id/img_flame"
+                    app:layout_constraintTop_toBottomOf="@id/txt_burned_calories_desc"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="@dimen/dimen_16dp"
                     android:layout_width="20dp"
