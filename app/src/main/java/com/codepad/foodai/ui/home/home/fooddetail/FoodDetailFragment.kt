@@ -245,7 +245,7 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
         recommendationPollingHandler = Handler(Looper.getMainLooper())
         recommendationPollingRunnable = object : Runnable {
             override fun run() {
-                sharedViewModel.getRecommendation()
+                sharedViewModel.getRecommendationdata()
                 recommendationPollingHandler?.postDelayed(this, 3000)
             }
         }

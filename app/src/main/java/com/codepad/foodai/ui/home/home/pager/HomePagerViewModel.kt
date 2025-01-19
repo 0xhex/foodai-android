@@ -25,7 +25,7 @@ class HomePagerViewModel @Inject constructor(
     private val deleteImageUseCase: DeleteImageUseCase,
     private val fixImageResultsUseCase: FixImageResultsUseCase,
     private val requestRecommendationsUseCase: RequestRecommendationsUseCase,
-    private val getRecommendationUseCase: GetRecommendationUseCase
+    private val getRecommendationUseCase: GetRecommendationUseCase,
 ) : ViewModel() {
 
     private val _dailySummary = MutableLiveData<DailySummaryResponseData>()
@@ -55,11 +55,11 @@ class HomePagerViewModel @Inject constructor(
     private val _fixResult = MutableLiveData<Boolean?>()
     val fixResult: LiveData<Boolean?> = _fixResult
 
-    private val _recommendationId = MutableLiveData<String>()
-    val recommendationId: LiveData<String> = _recommendationId
+    private val _recommendationId = MutableLiveData<String?>()
+    val recommendationId: MutableLiveData<String?> = _recommendationId
 
-    private val _recommendation = MutableLiveData<Recommendation>()
-    val recommendation: LiveData<Recommendation> = _recommendation
+    private val _recommendation = MutableLiveData<Recommendation?>()
+    val recommendation: MutableLiveData<Recommendation?> = _recommendation
 
     private val _recommendationError = MutableLiveData<APIError?>()
     val recommendationError: MutableLiveData<APIError?> = _recommendationError
@@ -108,7 +108,15 @@ class HomePagerViewModel @Inject constructor(
         }
     }
 
+    fun clearRecommendationData() {
+        _recommendationId.value = null
+        _recommendation.value = null
+        _recommendationError.value = null
+    }
+
     fun setFoodDetail(foodDetail: ImageData) {
+        // Clear previous recommendation data when food detail changes
+        clearRecommendationData()
         _foodDetail.value = foodDetail
     }
 
@@ -162,6 +170,7 @@ class HomePagerViewModel @Inject constructor(
                     is UseCaseResult.Success -> {
                         _recommendationId.value = result.data.recommendationId
                     }
+
                     is UseCaseResult.Error -> {
                         _recommendationError.value = result.exception
                     }
@@ -171,32 +180,19 @@ class HomePagerViewModel @Inject constructor(
         }
     }
 
-    fun getRecommendation() {
+    fun getRecommendationdata() {
         viewModelScope.launch {
             recommendationId.value?.let { id ->
                 when (val result = getRecommendationUseCase.getRecommendation(id)) {
                     is UseCaseResult.Success -> {
                         _recommendation.value = result.data
                     }
+
                     is UseCaseResult.Error -> {
                         _recommendationError.value = result.exception
                     }
                 }
             }
         }
-    }
-
-    fun clearRecommendationError() {
-        _recommendationError.value = null
-    }
-
-    fun setRecommendationId(recommendationId: String) {
-        _recommendationId.value = recommendationId
-    }
-
-    fun clearRecommendation() {
-        _recommendationId.value = null
-        _recommendation.value = null
-        _recommendationError.value = null
     }
 }
