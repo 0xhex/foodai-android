@@ -23,6 +23,7 @@ data class ImageData(
     val createdAt: Date?,
     val updatedAt: Date?,
     val localCreatedAt: Date?,
+    val recommendationId: String?,
 ) : Parcelable
 
 @Parcelize

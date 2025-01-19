@@ -3,6 +3,8 @@ package com.codepad.foodai.ui.home.home.fooddetail
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
@@ -24,6 +26,8 @@ import java.io.FileOutputStream
 @AndroidEntryPoint
 class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
     private val sharedViewModel: HomePagerViewModel by activityViewModels()
+    private var recommendationPollingHandler: Handler? = null
+    private var recommendationPollingRunnable: Runnable? = null
     override val hideBottomNavBar: Boolean = true
 
     override fun getLayoutId(): Int = R.layout.fragment_food_detail
@@ -31,6 +35,18 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
     override fun onReadyView() {
         setupObservers()
         setupClickListeners()
+        setupRecommendationCard()
+    }
+
+    private fun setupRecommendationCard() {
+        binding.recommendationCard.apply {
+            onGetRecommendationsClick = {
+                sharedViewModel.requestRecommendations()
+            }
+            onTryAgainClick = {
+                sharedViewModel.requestRecommendations()
+            }
+        }
     }
 
     private fun setupObservers() {
@@ -60,6 +76,13 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
                 binding.apply {
                     progressBar.progress = (foodDetail.healthScore?.times(10))?.toInt() ?: 0
                     txtProgress.text = "${foodDetail.healthScore}/10"
+                }
+
+                binding.recommendationCard.setHealthScore(foodDetail.healthScore?.toDouble() ?: 0.0)
+                
+                // Only auto-request recommendation if this food already has one
+                if (foodDetail.recommendationId != null) {
+                    sharedViewModel.requestRecommendations()
                 }
             }
         }
@@ -91,6 +114,40 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
                         .show()
                 }
                 sharedViewModel.clearFixResult()
+            }
+        }
+
+        sharedViewModel.recommendationId.observe(viewLifecycleOwner) { recommendationId ->
+            recommendationId?.let {
+                startPollingRecommendation()
+            }
+        }
+
+        sharedViewModel.recommendation.observe(viewLifecycleOwner) { recommendation ->
+            recommendation?.let {
+                when (it.status) {
+                    "completed" -> {
+                        binding.recommendationCard.showRecommendations(it)
+                        stopPollingRecommendation()
+                    }
+
+                    "failed" -> {
+                        binding.recommendationCard.showError("Recommendations generation failed.")
+                        stopPollingRecommendation()
+                    }
+                }
+            }
+        }
+
+        sharedViewModel.recommendationError.observe(viewLifecycleOwner) { error ->
+            error?.let {
+                if (it.errorCode.toString() == "PREMIUM_REQUIRED") {
+                    // Show premium required dialog
+                    showPremiumRequiredDialog()
+                } else {
+                    binding.recommendationCard.showError(it.message ?: "Unknown error occurred")
+                }
+                stopPollingRecommendation()
             }
         }
     }
@@ -182,5 +239,44 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun startPollingRecommendation() {
+        recommendationPollingHandler = Handler(Looper.getMainLooper())
+        recommendationPollingRunnable = object : Runnable {
+            override fun run() {
+                sharedViewModel.getRecommendationdata()
+                recommendationPollingHandler?.postDelayed(this, 3000)
+            }
+        }
+        recommendationPollingRunnable?.let {
+            recommendationPollingHandler?.post(it)
+        }
+    }
+
+    private fun stopPollingRecommendation() {
+        recommendationPollingRunnable?.let {
+            recommendationPollingHandler?.removeCallbacks(it)
+        }
+        recommendationPollingHandler = null
+        recommendationPollingRunnable = null
+    }
+
+    private fun showPremiumRequiredDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Premium Required")
+            .setMessage("You've Reached Today's Limit! Unlock unlimited access and exclusive features by upgrading to Premium.")
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton("Upgrade") { _, _ ->
+                // TODO: Implement premium upgrade flow
+            }
+            .show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        stopPollingRecommendation()
     }
 }

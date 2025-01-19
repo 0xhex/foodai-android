@@ -22,6 +22,9 @@ import com.codepad.foodai.domain.models.user.UpdateUserFieldResponseData
 import com.codepad.foodai.domain.models.user.User
 import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
 import com.codepad.foodai.domain.models.user.WeightLogData
+import com.codepad.foodai.domain.models.recommendation.RequestRecommendationRequest
+import com.codepad.foodai.domain.models.recommendation.RequestRecommendationResponse
+import com.codepad.foodai.domain.models.recommendation.Recommendation
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -570,6 +573,61 @@ class UserRepository @Inject constructor(
     suspend fun getUserWeightLogs(userID: String): RepositoryResult<List<WeightLogData>> {
         return try {
             val response = restApi.getUserWeightLogs(userID)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        response.message ?: "Unknown error", response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
+
+    suspend fun requestRecommendations(imageID: String): RepositoryResult<RequestRecommendationResponse> {
+        return try {
+            val request = RequestRecommendationRequest(imageID = imageID)
+            val response = restApi.requestRecommendations(request)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        response.message ?: "Unknown error", response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
+
+    suspend fun getRecommendation(recommendationID: String): RepositoryResult<Recommendation> {
+        return try {
+            val response = restApi.getRecommendation(recommendationID)
             if (response.success && response.data != null) {
                 RepositoryResult.Success(
                     message = response.message ?: "Success",

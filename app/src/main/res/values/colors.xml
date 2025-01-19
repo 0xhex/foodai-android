@@ -22,5 +22,6 @@
     <color name="color_graph_initial">#d1d1d6</color>
     <color name="green">#27c174</color>
     <color name="blue">#007dd5</color>
+    <color name="yellow">#ffcc00</color>
 
 </resources>

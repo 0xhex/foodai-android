@@ -51,55 +51,28 @@ class GoalViewFragment : BaseFragment<FragmentGoalViewBinding>() {
         }
 
         viewModel.calorieAchievedPercent.observe(viewLifecycleOwner) {
-            if (it > 0) {
-                binding.clProgressOne.progress = it.toFloat()
-                binding.clProgressOne.progressBarColor =
-                    ContextCompat.getColor(requireContext(), R.color.white)
-            } else {
-                binding.clProgressOne.progress = 100f
-                binding.clProgressOne.progressBarColor =
-                    ContextCompat.getColor(requireContext(), R.color.color_graph_initial)
-            }
+            binding.clProgressOne.progress = it.toFloat()
         }
 
         viewModel.proteinAchievedPercent.observe(viewLifecycleOwner) {
-            if (it > 0) {
-                binding.clProgressTwo.progress = it.toFloat()
-                binding.clProgressTwo.progressBarColor =
-                    ContextCompat.getColor(requireContext(), R.color.red)
-            } else {
-                binding.clProgressTwo.progress = 100f
-                binding.clProgressTwo.progressBarColor =
-                    ContextCompat.getColor(requireContext(), R.color.color_graph_initial)
-            }
+            binding.clProgressTwo.progress = it.toFloat()
         }
 
         viewModel.carbsAchievedPercent.observe(viewLifecycleOwner) {
-            if (it > 0) {
-                binding.clProgressThree.progress = it.toFloat()
-                binding.clProgressThree.progressBarColor =
-                    ContextCompat.getColor(requireContext(), R.color.orange)
-            } else {
-                binding.clProgressThree.progress = 100f
-                binding.clProgressThree.progressBarColor =
-                    ContextCompat.getColor(requireContext(), R.color.color_graph_initial)
-            }
+            binding.clProgressThree.progress = it.toFloat()
         }
 
         viewModel.fatsAchievedPercent.observe(viewLifecycleOwner) {
-            if (it > 0) {
-                binding.clProgressFour.progress = it.toFloat()
-                binding.clProgressFour.progressBarColor =
-                    ContextCompat.getColor(requireContext(), R.color.blue_button)
-            } else {
-                binding.clProgressFour.progress = 100f
-                binding.clProgressFour.progressBarColor =
-                    ContextCompat.getColor(requireContext(), R.color.color_graph_initial)
-            }
+            binding.clProgressFour.progress = it.toFloat()
         }
     }
 
     private fun navigateToGoal() {
         findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToAdjustGoalsFragment())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.root.requestLayout()
     }
 }

@@ -30,7 +30,7 @@ class HealthConnectManager @Inject constructor(
 
     private var requestPermissions: ActivityResultLauncher<Set<String>>? = null
 
-    fun initContent(fragment: SettingsTabFragment) {
+    fun initContent(fragment: Fragment) {
         this.fragment = fragment
         requestPermissions =
             fragment.registerForActivityResult(requestPermissionActivityContract) { granted ->

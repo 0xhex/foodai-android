@@ -82,5 +82,11 @@ class FoodRecipesFragment : BaseFragment<FragmentFoodRecipesBinding>() {
                 currentLoadingMealType = null
             }
         }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.root.requestLayout()
     }
 }
