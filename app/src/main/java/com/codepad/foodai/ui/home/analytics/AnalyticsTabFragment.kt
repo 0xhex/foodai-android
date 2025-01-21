@@ -214,7 +214,7 @@ class AnalyticsTabFragment : BaseFragment<FragmentAnalyticsTabBinding>() {
         with(binding.timeRangeTabs) {
             removeAllTabs()
             TimeRange.entries.forEach { timeRange ->
-                addTab(newTab().setText(timeRange.title))
+                addTab(newTab().setText(getString(timeRange.stringResId)))
             }
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

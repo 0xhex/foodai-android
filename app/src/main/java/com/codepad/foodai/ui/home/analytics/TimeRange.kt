@@ -1,7 +1,9 @@
 package com.codepad.foodai.ui.home.analytics
 
-enum class TimeRange(val title: String) {
-    LAST_30_DAYS("Last 30 Days"),
-    LAST_6_MONTHS("Last 6 Months"),
-    LAST_1_YEAR("Last 1 Year")
+import com.codepad.foodai.R
+
+enum class TimeRange(val stringResId: Int) {
+    LAST_30_DAYS(R.string.time_range_last_30_days),
+    LAST_6_MONTHS(R.string.time_range_last_6_months),
+    LAST_1_YEAR(R.string.time_range_last_1_year)
 } 

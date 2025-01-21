@@ -353,4 +353,9 @@
     <string name="carb_goal">Kohlenhydratziel</string>
     <string name="protein_goal">Proteinziel</string>
     <string name="fat_goal">Fettziel</string>
+
+    <!-- Time Range -->
+    <string name="time_range_last_30_days">Letzte 30 Tage</string>
+    <string name="time_range_last_6_months">Letzte 6 Monate</string>
+    <string name="time_range_last_1_year">Letztes Jahr</string>
 </resources>

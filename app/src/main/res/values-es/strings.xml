@@ -353,4 +353,9 @@
     <string name="carb_goal">Objetivo de carbohidratos</string>
     <string name="protein_goal">Objetivo de proteínas</string>
     <string name="fat_goal">Objetivo de grasas</string>
+
+    <!-- Time Range -->
+    <string name="time_range_last_30_days">Últimos 30 días</string>
+    <string name="time_range_last_6_months">Últimos 6 meses</string>
+    <string name="time_range_last_1_year">Último año</string>
 </resources>
