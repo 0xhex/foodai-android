@@ -238,23 +238,22 @@ class HomeViewModel @Inject constructor(
     fun generateRecipe(mealType: String) {
         viewModelScope.launch {
             _isRecipeLoading.value = true
-            _isPremiumRequired.value = false
-            _recipeError.value = null
 
             val userId = UserSession.user?.id ?: return@launch
 
             when (val result = generateRecipeUseCase.generateRecipe(userId, mealType.lowercase())) {
                 is UseCaseResult.Success -> {
+                    _recipeError.value = null
                     startPollingRecipeStatus(result.data.recipeID, mealType)
                 }
 
                 is UseCaseResult.Error -> {
-                    _isRecipeLoading.value = false
                     if (result.exception?.errorCode == ErrorCode.PREMIUM_REQUIRED.toString()) {
                         _isPremiumRequired.value = true
                     } else {
                         _recipeError.value = result.message
                     }
+                    _isRecipeLoading.value = false
                 }
             }
         }
