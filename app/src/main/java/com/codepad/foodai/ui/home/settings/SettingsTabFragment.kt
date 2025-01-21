@@ -4,10 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
-import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.health.connect.client.HealthConnectClient
 import androidx.navigation.fragment.findNavController
@@ -15,6 +13,8 @@ import com.codepad.foodai.BuildConfig
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentSettingsBinding
 import com.codepad.foodai.domain.models.user.User
+import com.codepad.foodai.helpers.FirebaseManager
+import com.codepad.foodai.helpers.RevenueCatManager
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.HomeViewModel
@@ -30,12 +30,18 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import javax.inject.Inject
 
-// TODO: localizations
 @AndroidEntryPoint
 class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var healthConnectManager: HealthConnectManager
+
+    @Inject
+    lateinit var revenueCatManager: RevenueCatManager
+
+    @Inject
+    lateinit var firebaseManager: FirebaseManager
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_settings
@@ -107,13 +113,13 @@ class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
             }
         }
 
-        // TODO: if (!RevenueCatManager.isUserSubscribed) {
-        //     binding.cardPremium.visibility = View.VISIBLE
-        //     binding.cardPremium.setOnClickListener {
-        //         RevenueCatManager.triggerPaywall()
-        //         FirebaseManager.logEvent("paywall_open_settings", null)
-        //     }
-        // }
+        if (!revenueCatManager.isSubscribed.value) {
+            binding.cardPremium.visibility = View.VISIBLE
+            binding.cardPremium.setOnClickListener {
+                revenueCatManager.triggerPaywall()
+                firebaseManager.logEvent("paywall_open_settings", null)
+            }
+        }
 
         viewModel.userDataResponse.observe(viewLifecycleOwner) { userData ->
             if (userData != null) {

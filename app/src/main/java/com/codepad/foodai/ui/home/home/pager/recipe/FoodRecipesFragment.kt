@@ -6,11 +6,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentFoodRecipesBinding
 import com.codepad.foodai.domain.models.recipe.MealType
+import com.codepad.foodai.extensions.addIcon
+import com.codepad.foodai.extensions.applyPaywallStyle
+import com.codepad.foodai.helpers.RevenueCatManager
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.HomeFragmentDirections
 import com.codepad.foodai.ui.home.HomeViewModel
 import com.codepad.foodai.ui.home.home.HomeTabFragmentDirections
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.multibindings.IntKey
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FoodRecipesFragment : BaseFragment<FragmentFoodRecipesBinding>() {
@@ -18,6 +24,9 @@ class FoodRecipesFragment : BaseFragment<FragmentFoodRecipesBinding>() {
     private lateinit var adapter: RecipeCardAdapter
     private val mealTypes = MealType.entries
     private var currentLoadingMealType: String? = null
+
+    @Inject
+    lateinit var revenueCatManager: RevenueCatManager
 
     override fun getLayoutId(): Int = R.layout.fragment_food_recipes
 
@@ -81,9 +90,26 @@ class FoodRecipesFragment : BaseFragment<FragmentFoodRecipesBinding>() {
                 adapter.updatePremiumRequired(mealType, isPremiumRequired)
                 currentLoadingMealType = null
             }
+            showPaywallSnack(getString(R.string.upgrade_to_premium_and_enjoy_all_features_without_limitations))
+            revenueCatManager.triggerPaywall()
         }
 
     }
+
+    private fun showPaywallSnack(message: String) {
+        val snack: Snackbar = Snackbar.make(
+            binding.root, message, 3000
+        )
+        val iconPadding = resources.getDimensionPixelOffset(R.dimen.dimen_4dp)
+        snack.addIcon(
+            R.drawable.ic_sad,
+            iconPadding,
+            applyTint = true
+        )
+        snack.applyPaywallStyle()
+        snack.show()
+    }
+
 
     override fun onResume() {
         super.onResume()

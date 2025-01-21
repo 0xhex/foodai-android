@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
 
     <application
         android:name=".FoodAIApplication"
@@ -74,6 +75,28 @@
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
             android:value="${crashlyticsEnabled}" />
+
+        <meta-data
+            android:name="io.sentry.dsn"
+            android:value="https://4fd52e4a967d78633fc86552f8233fd8@o1116500.ingest.us.sentry.io/4508681370075136" />
+        <meta-data
+            android:name="io.sentry.traces.user-interaction.enable"
+            android:value="true" />
+        <meta-data
+            android:name="io.sentry.attach-screenshot"
+            android:value="true" />
+        <meta-data
+            android:name="io.sentry.attach-view-hierarchy"
+            android:value="true" />
+        <meta-data
+            android:name="io.sentry.traces.sample-rate"
+            android:value="1" />
+        <meta-data
+            android:name="io.sentry.traces.profiling.sample-rate"
+            android:value="1" />
+        <meta-data
+            android:name="io.sentry.traces.profiling.enable-app-start"
+            android:value="true" />
     </application>
 
     <queries>

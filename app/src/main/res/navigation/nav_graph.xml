@@ -63,7 +63,15 @@
         <action
             android:id="@+id/action_home_tab_to_recipe_detail"
             app:destination="@id/recipeDetailFragment" />
+        <action
+            android:id="@+id/action_home_to_paywall"
+            app:destination="@id/paywallFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/paywallFragment"
+        android:name="com.codepad.foodai.ui.paywall.PaywallFragment"
+        android:label="Paywall"/>
 
     <fragment
         android:id="@+id/loadingFragment"

@@ -6,7 +6,10 @@ import com.codepad.foodai.domain.models.user.User
 import com.google.gson.Gson
 
 object UserSession {
+    var currentUser: User? = null
     var isPremiumUser: Boolean = false
+    var userID: String? = null
+    var authToken: String? = null
     private const val PREFS_NAME = "user_session_prefs"
     private const val KEY_USER = "key_user"
     private lateinit var sharedPreferences: SharedPreferences
@@ -36,5 +39,16 @@ object UserSession {
 
     private fun loadUser() {
         user = gson.fromJson(sharedPreferences.getString(KEY_USER, null), User::class.java)
+    }
+
+    fun clear() {
+        currentUser = null
+        isPremiumUser = false
+        userID = null
+        authToken = null
+    }
+    
+    fun isLoggedIn(): Boolean {
+        return userID != null && authToken != null
     }
 }

@@ -152,6 +152,7 @@
                 android:layout_margin="@dimen/dimen_8dp"
                 android:layout_marginTop="@dimen/dimen_24dp"
                 app:cardCornerRadius="20dp"
+                android:visibility="gone"
                 app:cardElevation="4dp"
                 app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"

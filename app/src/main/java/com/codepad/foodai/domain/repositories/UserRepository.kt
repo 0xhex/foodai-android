@@ -2,6 +2,7 @@ package com.codepad.foodai.domain.repositories
 
 import com.codepad.foodai.domain.api.APIError
 import com.codepad.foodai.domain.api.RestApi
+import com.codepad.foodai.domain.models.APIResponse
 import com.codepad.foodai.domain.models.exercise.ExerciseData
 import com.codepad.foodai.domain.models.exercise.LogExerciseCustomRequest
 import com.codepad.foodai.domain.models.exercise.SubmitExerciseDescriptionRequest
@@ -34,6 +35,43 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(
     private val restApi: RestApi,
 ) {
+    private data class ErrorResponse(
+        val success: Boolean,
+        val errorCode: String?,
+        val message: String?,
+        val data: Any?
+    )
+
+    private fun <T> handleException(e: Exception): RepositoryResult<T> {
+        return when {
+            e is retrofit2.HttpException -> {
+                try {
+                    val errorBody = e.response()?.errorBody()?.string()
+                    val errorResponse = com.google.gson.Gson().fromJson(errorBody, ErrorResponse::class.java)
+                    RepositoryResult.Error(
+                        message = errorResponse.message ?: "Server error",
+                        code = e.code(),
+                        exception = APIError.ServerError(
+                            errorMessage = errorResponse.message ?: "Server error",
+                            code = errorResponse.errorCode
+                        )
+                    )
+                } catch (e2: Exception) {
+                    RepositoryResult.Error(
+                        message = e.message ?: "Network error",
+                        code = -1,
+                        exception = APIError.NetworkError(e)
+                    )
+                }
+            }
+            else -> RepositoryResult.Error(
+                message = e.message ?: "Network error",
+                code = -1,
+                exception = APIError.NetworkError(e)
+            )
+        }
+    }
+
     suspend fun getUserData(userId: String): RepositoryResult<User> {
         return try {
             val response = restApi.getUserData(userId)
@@ -48,16 +86,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<User>(e)
         }
     }
 
@@ -75,19 +110,15 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<User>(e)
         }
     }
-
 
     suspend fun updateUserFields(
         userID: String,
@@ -106,16 +137,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<UpdateUserFieldResponseData>(e)
         }
     }
 
@@ -136,16 +164,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<UpdateUserFieldResponseData>(e)
         }
     }
 
@@ -163,16 +188,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<NutritionResponseData>(e)
         }
     }
 
@@ -200,19 +222,15 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<ImageUploadResponse>(e)
         }
     }
-
 
     suspend fun fetchImage(imageID: String): RepositoryResult<ImageData> {
         return try {
@@ -228,16 +246,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<ImageData>(e)
         }
     }
 
@@ -255,16 +270,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<StreakResponseData>(e)
         }
     }
 
@@ -285,16 +297,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<DailySummaryResponseData>(e)
         }
     }
 
@@ -316,16 +325,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<GenerateRecipeResponseData>(e)
         }
     }
 
@@ -343,16 +349,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<Recipe>(e)
         }
     }
 
@@ -370,16 +373,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<Unit>(e)
         }
     }
 
@@ -400,16 +400,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<ImageData?>(e)
         }
     }
 
@@ -434,16 +431,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<ExerciseData>(e)
         }
     }
 
@@ -466,16 +460,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<ExerciseData>(e)
         }
     }
 
@@ -493,16 +484,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<Unit>(e)
         }
     }
 
@@ -524,16 +512,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<ExerciseData>(e)
         }
     }
 
@@ -557,16 +542,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<ExerciseData>(e)
         }
     }
 
@@ -584,16 +566,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<List<WeightLogData>>(e)
         }
     }
 
@@ -612,16 +591,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<RequestRecommendationResponse>(e)
         }
     }
 
@@ -639,16 +615,13 @@ class UserRepository @Inject constructor(
                     message = response.message ?: "Unknown error",
                     code = response.errorCode ?: -1,
                     exception = APIError.ServerError(
-                        response.message ?: "Unknown error", response.errorCode?.toString()
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
                     )
                 )
             }
         } catch (e: Exception) {
-            RepositoryResult.Error(
-                message = e.message ?: "Network error",
-                code = -1,
-                exception = APIError.NetworkError(e)
-            )
+            handleException<Recommendation>(e)
         }
     }
 }

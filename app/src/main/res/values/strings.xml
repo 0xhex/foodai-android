@@ -343,4 +343,25 @@
     <string name="running">Running</string>
     <string name="weightlifting">Weightlifting</string>
     <string name="exercise">Exercise</string>
+    <string name="experience_the_full_power_of_food_ai">Experience the full power of Food-AI</string>
+    <string name="limited_time_offer_try_3_day_free_trial">Sınırlı Süre Teklifi: 3 Günlük Ücretsiz Deneme!</string>
+    <string name="paywall_desc_google">Your subscription will continue until you cancel and renew. Subscription payments will be charged to your Google Play account at confirmation of your purchase and upon commencement of each renewal term. \n\n*Please note: any unused portion of a free trial period (if offered) will be forfeited when you purchase a premium subscription during the free trial period.\n\n*You can cancel a free trial or subscription anytime by cancelling your subscription through your Google Play account settings. This must be done 24 hours before the end of a free trial or subscription period to avoid being charged. The cancellation will take effect the day after the last day of the current subscription period, and you will be downgraded to the free service.</string>
+    <string name="try_3_days_free">Try 3 Days FREE</string>
+    <string name="start_now_by_unlimited_access">Start now by unlimited access</string>
+    <string name="start_now">Start Now</string>
+    <string name="special">Special</string>
+    <string name="restore_purchases_failed">Restore purchase failed</string>
+    <string name="purchase_timeout">Purchase timeout</string>
+    <string name="select_subscription_option">Select subscription option</string>
+    <string name="min_param">%s %s min</string>
+    <string name="premium_required">Premium Required</string>
+    <string name="you_ve_reached_today_s_limit_unlock_unlimited_access_and_exclusive_features_by_upgrading_to_premium">You\'ve Reached Today\'s Limit! Unlock unlimited access and exclusive features by upgrading to Premium.</string>
+    <string name="detecting_ingredients">Detecting ingredients...</string>
+    <string name="calculating_nutritional_values">Calculating nutritional values...</string>
+    <string name="finalizing_your_meal_summary">Finalizing your meal summary...</string>
+    <string name="calorie_goal">Calorie Goal</string>
+    <string name="carb_goal">Carb Goal</string>
+    <string name="protein_goal">Protein Goal</string>
+    <string name="fat_goal">Fat Goal</string>
+
 </resources>
