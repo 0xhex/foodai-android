@@ -52,17 +52,21 @@ class LoadingFragment : BaseFragment<FragmentLoadingBinding>() {
         when (sharedViewModel.loadingType) {
             LoadingType.UPLOAD_FILE -> {
                 sharedViewModel.settingUpItems =
-                    listOf("Uploading...", "Processing...", "Finalizing...")
+                    listOf(
+                        getString(R.string.uploading),
+                        getString(R.string.processing),
+                        getString(R.string.finalizing)
+                    )
                 binding.lottieAnimationView.setAnimation(R.raw.upload_file)
                 binding.tvDisplayText.text = getString(R.string.uploading_image)
             }
 
             LoadingType.USER_CUSTOMIZATION -> {
                 sharedViewModel.settingUpItems = listOf(
-                    "Estimating your metabolic age...",
-                    "Processing diet type",
-                    "Applying BMR formula...",
-                    "Finalizing results..."
+                    getString(R.string.estimating_your_metabolic_age),
+                    getString(R.string.processing_diet_type),
+                    getString(R.string.applying_bmr_formula),
+                    getString(R.string.finalizing_results)
                 )
                 binding.lottieAnimationView.setAnimation(R.raw.user)
                 binding.tvDisplayText.text = getString(R.string.setting_up)
@@ -70,17 +74,18 @@ class LoadingFragment : BaseFragment<FragmentLoadingBinding>() {
 
             LoadingType.EDITING_FOOD -> {
                 sharedViewModel.settingUpItems = listOf(
-                    "Analyzing food...",
-                    "Calculating nutrients...",
-                    "Updating database...",
-                    "Finalizing..."
+                    getString(R.string.analyzing_food),
+                    getString(R.string.calculating_nutritional_values),
+                    getString(R.string.updating_database),
+                    getString(R.string.finalizing)
                 )
                 binding.lottieAnimationView.setAnimation(R.raw.food_calorie)
                 binding.tvDisplayText.text = getString(R.string.processing_your_food_edits)
             }
 
             LoadingType.LOADING_DEFAULT -> {
-                sharedViewModel.settingUpItems = listOf("3%", "35%", "50%", "65%", "Finalizing...")
+                sharedViewModel.settingUpItems =
+                    listOf("3%", "35%", "50%", "65%", getString(R.string.finalizing))
                 binding.lottieAnimationView.setAnimation(R.raw.loading)
                 binding.tvDisplayText.text = getString(R.string.loading)
             }

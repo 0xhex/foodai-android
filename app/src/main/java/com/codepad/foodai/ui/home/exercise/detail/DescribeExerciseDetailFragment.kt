@@ -36,7 +36,13 @@ class DescribeExerciseDetailFragment : BaseFragment<FragmentDescribeExerciseDeta
 
     private fun setupViews() {
         exerciseData?.let { exercise ->
-            binding.edtDescription.setText("${exercise.exerciseType} ${exercise.duration} min")
+            binding.edtDescription.setText(
+                getString(
+                    R.string.min_param,
+                    exercise.exerciseType,
+                    exercise.duration.toString()
+                )
+            )
         }
     }
 
@@ -92,11 +98,11 @@ class DescribeExerciseDetailFragment : BaseFragment<FragmentDescribeExerciseDeta
 
     private fun showDeleteConfirmationDialog() {
         AlertDialog.Builder(requireContext())
-            .setTitle("Delete Exercise")
+            .setTitle(getString(R.string.delete_exercise))
             .setPositiveButton("Ok") { _, _ ->
                 deleteExercise()
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(getString(R.string.Cancel), null)
             .show()
     }
 

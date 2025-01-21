@@ -1,5 +1,7 @@
 package com.codepad.foodai.ui.streak
 
+import android.icu.text.DateFormatSymbols
+import android.icu.util.ULocale
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,10 +14,12 @@ class DailyStreakViewModel @Inject constructor() : ViewModel() {
     private val _currentStreak = MutableLiveData<Int>()
     val currentStreak: LiveData<Int> = _currentStreak
 
+    private val locale: ULocale = ULocale.getDefault()
+    private val dayFormatter = DateFormatSymbols.getInstance(locale)
     private val _selectedDays = MutableLiveData<List<Boolean>>()
     val selectedDays: LiveData<List<Boolean>> = _selectedDays
 
-    private val daySymbols = listOf("S", "M", "T", "W", "T", "F", "S")
+    private val daySymbols = dayFormatter.weekdays.map { it.substring(0,1).uppercase() }
 
     fun setStreakData(streakData: StreakResponseData) {
         _currentStreak.value = streakData.currentStreak

@@ -79,7 +79,7 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
                 }
 
                 binding.recommendationCard.setHealthScore(foodDetail.healthScore?.toDouble() ?: 0.0)
-                
+
                 // Only auto-request recommendation if this food already has one
                 if (foodDetail.recommendationId != null) {
                     sharedViewModel.requestRecommendations()
@@ -264,12 +264,12 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
 
     private fun showPremiumRequiredDialog() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Premium Required")
-            .setMessage("You've Reached Today's Limit! Unlock unlimited access and exclusive features by upgrading to Premium.")
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setTitle(getString(R.string.premium_required))
+            .setMessage(getString(R.string.you_ve_reached_today_s_limit_unlock_unlimited_access_and_exclusive_features_by_upgrading_to_premium))
+            .setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
-            .setPositiveButton("Upgrade") { _, _ ->
+            .setPositiveButton(getString(R.string.upgrade)) { _, _ ->
                 // TODO: Implement premium upgrade flow
             }
             .show()

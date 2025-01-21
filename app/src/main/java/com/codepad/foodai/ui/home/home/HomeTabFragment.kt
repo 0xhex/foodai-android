@@ -67,9 +67,9 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                     val loadingItem = ImageItem.Loading(
                         image = event.bitmap,
                         statusMessages = listOf(
-                            "Detecting ingredients...",
-                            "Calculating nutritional values...",
-                            "Finalizing your meal summary..."
+                            getString(R.string.detecting_ingredients),
+                            getString(R.string.calculating_nutritional_values),
+                            getString(R.string.finalizing_your_meal_summary)
                         )
                     )
                     val existingItems = imageAdapter.foodItems.filterNot { it is ImageItem.Loading }

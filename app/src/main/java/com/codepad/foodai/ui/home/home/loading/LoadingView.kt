@@ -16,10 +16,11 @@ import com.codepad.foodai.ui.user_property.loading.LoadingType
 class LoadingView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    defStyleAttr: Int = 0,
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private val binding: ViewLoadingBinding = ViewLoadingBinding.inflate(LayoutInflater.from(context), this, true)
+    private val binding: ViewLoadingBinding =
+        ViewLoadingBinding.inflate(LayoutInflater.from(context), this, true)
     private var index: Int = 0
     private var settingUpItems: List<String> = emptyList()
     private var handler: Handler = Handler(Looper.getMainLooper())
@@ -55,10 +56,33 @@ class LoadingView @JvmOverloads constructor(
 
     private fun setupLoadingItems() {
         settingUpItems = when (loadingType) {
-            LoadingType.UPLOAD_FILE -> listOf("Uploading...", "Processing...", "Finalizing...")
-            LoadingType.USER_CUSTOMIZATION -> listOf("Estimating your metabolic age...", "Processing diet type", "Applying BMR formula...", "Finalizing results...")
-            LoadingType.EDITING_FOOD -> listOf("Analyzing food...", "Calculating nutrients...", "Updating database...", "Finalizing...")
-            LoadingType.LOADING_DEFAULT -> listOf("3%", "35%", "50%", "65%", "Finalizing...")
+            LoadingType.UPLOAD_FILE -> listOf(
+                context.getString(R.string.uploading),
+                context.getString(R.string.processing),
+                context.getString(R.string.finalizing)
+            )
+
+            LoadingType.USER_CUSTOMIZATION -> listOf(
+                context.getString(R.string.estimating_your_metabolic_age),
+                context.getString(R.string.processing_diet_type),
+                context.getString(R.string.applying_bmr_formula),
+                context.getString(R.string.finalizing_results)
+            )
+
+            LoadingType.EDITING_FOOD -> listOf(
+                context.getString(R.string.analyzing_food),
+                context.getString(R.string.calculating_nutritional_values),
+                context.getString(R.string.updating_database),
+                context.getString(R.string.finalizing)
+            )
+
+            LoadingType.LOADING_DEFAULT -> listOf(
+                "3%",
+                "35%",
+                "50%",
+                "65%",
+                context.getString(R.string.finalizing)
+            )
         }
         binding.textView.text = displayText
         binding.lottieAnimationView.setAnimation(animationName)
@@ -67,10 +91,10 @@ class LoadingView @JvmOverloads constructor(
 
     private val displayText: String
         get() = when (loadingType) {
-            LoadingType.UPLOAD_FILE -> "Uploading Image..."
-            LoadingType.USER_CUSTOMIZATION -> "We're setting everything up for you"
-            LoadingType.EDITING_FOOD -> "Processing your food edits..."
-            LoadingType.LOADING_DEFAULT -> "Loading..."
+            LoadingType.UPLOAD_FILE -> context.getString(R.string.uploading_image)
+            LoadingType.USER_CUSTOMIZATION -> context.getString(R.string.setting_up)
+            LoadingType.EDITING_FOOD -> context.getString(R.string.processing_your_food_edits)
+            LoadingType.LOADING_DEFAULT ->context.getString(R.string.loading)
         }
 
     private fun startLoading() {
@@ -78,7 +102,8 @@ class LoadingView @JvmOverloads constructor(
             override fun run() {
                 if (index < settingUpItems.size) {
                     binding.textViewDetail.text = settingUpItems[index]
-                    binding.progressBar.progress = ((index + 1) / settingUpItems.size.toFloat() * 100).toInt()
+                    binding.progressBar.progress =
+                        ((index + 1) / settingUpItems.size.toFloat() * 100).toInt()
                     index++
                     handler.postDelayed(this, 1200)
                 } else {
