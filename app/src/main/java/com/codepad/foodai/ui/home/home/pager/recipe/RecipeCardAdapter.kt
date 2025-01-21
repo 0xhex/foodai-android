@@ -12,6 +12,8 @@ import com.codepad.foodai.R
 import com.codepad.foodai.databinding.ItemRecipeCardBinding
 import com.codepad.foodai.domain.models.recipe.MealType
 import com.codepad.foodai.domain.models.recipe.Recipe
+import com.codepad.foodai.helpers.RevenueCatManager
+import javax.inject.Inject
 import kotlin.math.max
 
 class RecipeCardAdapter(
@@ -19,6 +21,9 @@ class RecipeCardAdapter(
     private val onCreateRecipeClick: (MealType) -> Unit,
     private val onViewRecipeClick: (Recipe) -> Unit,
 ) : RecyclerView.Adapter<RecipeCardAdapter.RecipeCardViewHolder>() {
+
+    @Inject
+    lateinit var revenueCatManager: RevenueCatManager
 
     private var recipes: Map<String, Recipe?> = emptyMap()
     private var loadingStates: MutableMap<String, Boolean> = mutableMapOf()
@@ -140,7 +145,7 @@ class RecipeCardAdapter(
         val position = mealTypes.indexOfFirst { it.codeName == mealType.lowercase() }
         if (position != -1) {
             errorStates = errorStates.toMutableMap().apply { put(mealType, error) }
-            
+
             // Check if we need to respect minimum loading time
             val startTime = loadingStartTimes[mealType]
             if (startTime != null) {
@@ -166,7 +171,7 @@ class RecipeCardAdapter(
         if (position != -1) {
             premiumRequiredStates =
                 premiumRequiredStates.toMutableMap().apply { put(mealType, required) }
-            
+
             // Check if we need to respect minimum loading time
             val startTime = loadingStartTimes[mealType]
             if (startTime != null) {
@@ -282,18 +287,22 @@ class RecipeCardAdapter(
                     isLoading -> {
                         loadingMessage.apply {
                             visibility = View.VISIBLE
-                            text = if (loadingMessages[loadingMessageIndex] == R.string.finding_perfect_meal) {
-                                context.getString(loadingMessages[loadingMessageIndex], mealType.codeName)
-                            } else {
-                                context.getString(loadingMessages[loadingMessageIndex])
-                            }
+                            text =
+                                if (loadingMessages[loadingMessageIndex] == R.string.finding_perfect_meal) {
+                                    context.getString(
+                                        loadingMessages[loadingMessageIndex],
+                                        mealType.codeName
+                                    )
+                                } else {
+                                    context.getString(loadingMessages[loadingMessageIndex])
+                                }
                         }
                         loadingAnimation.apply {
                             visibility = View.VISIBLE
                             setAnimation(R.raw.loading)
                             playAnimation()
                         }
-                        
+
                         // Hide button during loading
                         btnCreateRecipe.visibility = View.GONE
                     }
@@ -378,7 +387,10 @@ class RecipeCardAdapter(
                 btnCreateRecipe.setOnClickListener {
                     when {
                         recipe?.status == "completed" -> recipe?.let { onViewRecipeClick(it) }
-                        isPremiumRequired -> { /* TODO: Implement premium upgrade */ }
+                        isPremiumRequired -> {
+                            revenueCatManager.triggerPaywall()
+                        }
+
                         else -> onCreateRecipeClick(mealType)
                     }
                 }

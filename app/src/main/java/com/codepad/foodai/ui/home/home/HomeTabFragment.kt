@@ -11,6 +11,10 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewpager2.widget.ViewPager2
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentHomeTabBinding
+import com.codepad.foodai.domain.models.ErrorCode
+import com.codepad.foodai.extensions.addIcon
+import com.codepad.foodai.extensions.applyPaywallStyle
+import com.codepad.foodai.extensions.applyStyle
 import com.codepad.foodai.extensions.getFormattedDate
 import com.codepad.foodai.extensions.toHourString
 import com.codepad.foodai.helpers.UserSession
@@ -24,6 +28,7 @@ import com.codepad.foodai.ui.home.home.pager.ViewPagerAdapter
 import com.codepad.foodai.ui.home.home.pager.goals.GoalViewFragment
 import com.codepad.foodai.ui.home.home.pager.health.GoogleHealthFragment
 import com.codepad.foodai.ui.home.home.pager.recipe.FoodRecipesFragment
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
 
@@ -59,7 +64,15 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                     }
                 }
 
-                is HomeViewModel.HomeEvent.OnImageUploadError -> {}
+                is HomeViewModel.HomeEvent.OnImageUploadError -> {
+                    val message = event.errorMessage
+                   // if (event.errorCode == ErrorCode.DAILY_LIMIT_REACHED.code) {
+                   //     showPaywallSnack(message)
+                   // } else {
+                   //     showSnack(message)
+                   // }
+                }
+
                 HomeViewModel.HomeEvent.OnImageUploadStarted -> {}
                 is HomeViewModel.HomeEvent.OnImageUploadSuccess -> {}
                 is HomeViewModel.HomeEvent.OnImageFetchError -> {}
@@ -109,48 +122,52 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
         viewModel.dailySummary.observe(viewLifecycleOwner) { dailySummary ->
             val meals = dailySummary.meals.orEmpty()
             val exercises = dailySummary.exercises.orEmpty()
-            
+
             // Get any existing loading items
             val loadingItems = imageAdapter.foodItems.filterIsInstance<ImageItem.Loading>()
-            
+
             // Create a list of all items with their timestamps
             val allItems = mutableListOf<Triple<Date?, ImageItem, Boolean>>()
-            
+
             // Add meals with their timestamps
             meals.forEach { meal ->
-                allItems.add(Triple(
-                    meal.createdAt,
-                    ImageItem.Standard(
-                        image = meal.url,
-                        title = meal.ingredients?.joinToString { it.name.orEmpty() }.orEmpty(),
-                        calories = meal.calories.toString(),
-                        protein = meal.protein.toString(),
-                        carb = meal.carbs.toString(),
-                        fats = meal.fats.toString(),
-                        hour = meal.createdAt?.toHourString().orEmpty()
-                    ),
-                    false // isLoading flag
-                ))
+                allItems.add(
+                    Triple(
+                        meal.createdAt,
+                        ImageItem.Standard(
+                            image = meal.url,
+                            title = meal.ingredients?.joinToString { it.name.orEmpty() }.orEmpty(),
+                            calories = meal.calories.toString(),
+                            protein = meal.protein.toString(),
+                            carb = meal.carbs.toString(),
+                            fats = meal.fats.toString(),
+                            hour = meal.createdAt?.toHourString().orEmpty()
+                        ),
+                        false // isLoading flag
+                    )
+                )
             }
-            
+
             // Add exercises with their timestamps
             exercises.forEach { exercise ->
-                allItems.add(Triple(
-                    exercise.createdAt,
-                    ImageItem.Exercise(
-                        exerciseData = exercise
-                    ),
-                    false // isLoading flag
-                ))
+                allItems.add(
+                    Triple(
+                        exercise.createdAt,
+                        ImageItem.Exercise(
+                            exerciseData = exercise
+                        ),
+                        false // isLoading flag
+                    )
+                )
             }
-            
+
             // Sort all items by timestamp (newest first)
             allItems.sortWith(compareByDescending<Triple<Date?, ImageItem, Boolean>> { it.first }
                 .thenBy { it.third }) // Loading items go first if timestamps are equal
-            
+
             // Combine loading items with sorted content items
             val finalItems = loadingItems + allItems.map { it.second }
-            
+
             imageAdapter.setItems(finalItems)
             updateEmptyViewVisibility()
             sharedViewModel.fetchNutrition()
@@ -217,12 +234,14 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
             onItemClick = { item ->
                 when (item) {
                     is ImageItem.Standard -> {
-                        val foodDetail = viewModel.dailySummary.value?.meals?.firstOrNull { it.url == item.image }
+                        val foodDetail =
+                            viewModel.dailySummary.value?.meals?.firstOrNull { it.url == item.image }
                         if (foodDetail != null) {
                             viewModel.setFoodDetail(foodDetail)
                             findNavController().navigate(R.id.action_home_tab_to_food_detail)
                         }
                     }
+
                     is ImageItem.Exercise -> {
                         when (item.exerciseData.exerciseType) {
                             "run", "weightlifting" -> {
@@ -234,6 +253,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                                     bundle
                                 )
                             }
+
                             else -> {
                                 val bundle = Bundle().apply {
                                     putParcelable("exerciseData", item.exerciseData)
@@ -245,6 +265,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                             }
                         }
                     }
+
                     else -> {
                         // Handle loading items if needed
                     }
@@ -285,6 +306,31 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                 )
             }
         }
+    }
+
+    private fun showPaywallSnack(message: String) {
+        val snack: Snackbar = Snackbar.make(
+            binding.root, message, 3000
+        )
+        val iconPadding = resources.getDimensionPixelOffset(R.dimen.dimen_4dp)
+        snack.addIcon(
+            R.drawable.ic_sad,
+            iconPadding,
+            applyTint = true
+        )
+        snack.applyPaywallStyle()
+        snack.show()
+    }
+
+    fun showSnack(message: String) {
+        val snack: Snackbar = Snackbar.make(binding.root, message, 3000)
+        val iconPadding = resources.getDimensionPixelOffset(R.dimen.dimen_4dp)
+        val tintColor = resources.getColor(android.R.color.holo_red_dark, null)
+        snack.addIcon(
+            R.drawable.ic_close_circle, iconPadding, applyTint = true, tintColor = tintColor
+        )
+        snack.applyStyle()
+        snack.show()
     }
 
 }

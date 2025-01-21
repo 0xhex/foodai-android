@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codepad.foodai.R
+import com.codepad.foodai.domain.api.APIError
 import com.codepad.foodai.domain.models.ErrorCode
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
@@ -148,16 +149,24 @@ class HomeViewModel @Inject constructor(
                 is UseCaseResult.Success -> {
                     _nutritions.value = result.data
                     _calories.value = Nutrition(
-                        resourceHelper.getString(R.string.calorie_goal), result.data.totalCalories.toString(), R.drawable.kcal
+                        resourceHelper.getString(R.string.calorie_goal),
+                        result.data.totalCalories.toString(),
+                        R.drawable.kcal
                     )
                     _carbs.value = Nutrition(
-                        resourceHelper.getString(R.string.carb_goal), result.data.carbohydrates.toString(), R.drawable.carbs
+                        resourceHelper.getString(R.string.carb_goal),
+                        result.data.carbohydrates.toString(),
+                        R.drawable.carbs
                     )
                     _protein.value = Nutrition(
-                        resourceHelper.getString(R.string.protein_goal), result.data.protein.toString(), R.drawable.protein
+                        resourceHelper.getString(R.string.protein_goal),
+                        result.data.protein.toString(),
+                        R.drawable.protein
                     )
                     _fats.value = Nutrition(
-                        resourceHelper.getString(R.string.fat_goal), result.data.fat.toString(), R.drawable.fats
+                        resourceHelper.getString(R.string.fat_goal),
+                        result.data.fat.toString(),
+                        R.drawable.fats
                     )
                     fetchUserData()
                 }
@@ -190,7 +199,8 @@ class HomeViewModel @Inject constructor(
                 }
 
                 is UseCaseResult.Error -> {
-                    _homeEvent.value = HomeEvent.OnImageUploadError(result.message)
+                    _homeEvent.value =
+                        HomeEvent.OnImageUploadError(result.message, result.exception)
                 }
             }
         }
@@ -237,6 +247,7 @@ class HomeViewModel @Inject constructor(
                 is UseCaseResult.Success -> {
                     startPollingRecipeStatus(result.data.recipeID, mealType)
                 }
+
                 is UseCaseResult.Error -> {
                     _isRecipeLoading.value = false
                     if (result.code.toString() == ErrorCode.PREMIUM_REQUIRED.toString()) {
@@ -262,13 +273,16 @@ class HomeViewModel @Inject constructor(
                                 _isRecipeLoading.value = false
                                 break
                             }
+
                             "failed" -> {
                                 _isRecipeLoading.value = false
-                                _recipeError.value = result.data.errorMessage ?: "Recipe generation failed"
+                                _recipeError.value =
+                                    result.data.errorMessage ?: "Recipe generation failed"
                                 break
                             }
                         }
                     }
+
                     is UseCaseResult.Error -> {
                         _isRecipeLoading.value = false
                         _recipeError.value = result.message
@@ -291,7 +305,7 @@ class HomeViewModel @Inject constructor(
             try {
                 val key = generateRecipeKey(recipe.mealType)
                 val json = Gson().toJson(recipe)
-                resourceHelper.getSharedPreferences().edit().putString(key, json).apply()
+                resourceHelper.getSharedPreferences()?.edit()?.putString(key, json)?.apply()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -302,7 +316,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val key = generateRecipeKey(mealType)
-                val savedRecipe = resourceHelper.getSharedPreferences().getString(key, null)
+                val savedRecipe = resourceHelper.getSharedPreferences()?.getString(key, null)
                 if (savedRecipe != null) {
                     val recipe = Gson().fromJson(savedRecipe, Recipe::class.java)
                     if (recipe.status == "completed") {
@@ -330,7 +344,7 @@ class HomeViewModel @Inject constructor(
         data class OnMenuOptionSelected(val option: MenuOption) : HomeEvent()
         data object OnImageUploadStarted : HomeEvent()
         data class OnImageUploadSuccess(val response: ImageUploadResponse) : HomeEvent()
-        data class OnImageUploadError(val errorMessage: String) : HomeEvent()
+        data class OnImageUploadError(val errorMessage: String, val error: APIError?) : HomeEvent()
         data class OnImageFetchStarted(val bitmap: Bitmap) : HomeEvent()
         data class OnImageFetchSuccess(val response: ImageData) : HomeEvent()
         data class OnImageFetchError(val errorMessage: String) : HomeEvent()

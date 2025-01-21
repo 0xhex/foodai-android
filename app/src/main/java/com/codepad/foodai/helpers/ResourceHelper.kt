@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @Singleton
 class ResourceHelper @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences? = null,
 ) {
 
     private val contextRef = WeakReference(context)
@@ -63,7 +63,7 @@ class ResourceHelper @Inject constructor(
         return ContextCompat.getContextForLanguage(context)
     }
 
-    fun getSharedPreferences(): SharedPreferences = sharedPreferences
+    fun getSharedPreferences(): SharedPreferences? = sharedPreferences
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

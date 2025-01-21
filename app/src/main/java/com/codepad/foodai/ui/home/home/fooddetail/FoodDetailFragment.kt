@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentFoodDetailBinding
 import com.codepad.foodai.extensions.toHourString
+import com.codepad.foodai.helpers.RevenueCatManager
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.home.pager.HomePagerViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -22,6 +23,7 @@ import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
@@ -31,6 +33,9 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
     override val hideBottomNavBar: Boolean = true
 
     override fun getLayoutId(): Int = R.layout.fragment_food_detail
+
+    @Inject
+    lateinit var revenueCatManager: RevenueCatManager
 
     override fun onReadyView() {
         setupObservers()
@@ -270,7 +275,7 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
                 dialog.dismiss()
             }
             .setPositiveButton(getString(R.string.upgrade)) { _, _ ->
-                // TODO: Implement premium upgrade flow
+                revenueCatManager.triggerPaywall()
             }
             .show()
     }
