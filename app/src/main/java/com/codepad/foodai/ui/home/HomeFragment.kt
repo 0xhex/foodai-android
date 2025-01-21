@@ -17,6 +17,7 @@ import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.loading.LoadingType
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.onesignal.OneSignal
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -62,6 +63,11 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
             viewModel.uploadImage(userID, imageFile, fileName, mimeType)
         }
 
+        setupObservers()
+        requestNotificationPermission()
+    }
+
+    private fun setupObservers() {
         viewModel.homeEvent.observe(viewLifecycleOwner) { event ->
             when (event) {
                 is HomeViewModel.HomeEvent.OnMenuOptionSelected -> {
@@ -100,9 +106,13 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
                 }
             }
         }
-
     }
 
+    private fun requestNotificationPermission() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            OneSignal.Notifications.requestPermission(true)
+        }
+    }
 
     private fun showLoadingView(loadingType: LoadingType) {
         binding.loadingView.apply {

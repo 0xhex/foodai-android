@@ -10,9 +10,6 @@ import com.codepad.foodai.helpers.UserSession
 import com.onesignal.OneSignal
 import com.onesignal.debug.LogLevel
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 
@@ -44,12 +41,6 @@ class FoodAIApplication : Application() {
 
         // OneSignal Initialization
         OneSignal.initWithContext(this, BuildConfig.ONESIGNAL_APP_ID)
-
-        // requestPermission will show the native Android notification permission prompt.
-        // NOTE: It's recommended to use a OneSignal In-App Message to prompt instead.
-        CoroutineScope(Dispatchers.IO).launch {
-            OneSignal.Notifications.requestPermission(false)
-        }
     }
 
     override fun attachBaseContext(base: Context) {
