@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginHorizontal="40dp"
-        android:background="@drawable/rounded_background"
+        android:background="@drawable/rounded_background_purchase"
         android:clipToOutline="true"
         android:elevation="10dp"
         android:padding="20dp">
