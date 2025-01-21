@@ -1,0 +1,3 @@
+# Copy this file to local.properties and fill in the values
+sdk.dir=/path/to/android/sdk
+ONESIGNAL_APP_ID=your_onesignal_app_id_here 

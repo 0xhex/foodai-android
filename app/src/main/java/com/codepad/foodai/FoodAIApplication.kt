@@ -19,10 +19,6 @@ import timber.log.Timber.Forest.plant
 @HiltAndroidApp
 class FoodAIApplication : Application() {
 
-    companion object {
-        private const val ONESIGNAL_APP_ID = "b4708cee-066c-48e7-86af-7ed270c1580e"
-    }
-
     override fun onCreate() {
         super.onCreate()
         initModelPrefManager()
@@ -47,7 +43,7 @@ class FoodAIApplication : Application() {
         }
 
         // OneSignal Initialization
-        OneSignal.initWithContext(this, ONESIGNAL_APP_ID)
+        OneSignal.initWithContext(this, BuildConfig.ONESIGNAL_APP_ID)
 
         // requestPermission will show the native Android notification permission prompt.
         // NOTE: It's recommended to use a OneSignal In-App Message to prompt instead.
