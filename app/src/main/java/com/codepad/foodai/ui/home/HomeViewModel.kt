@@ -250,7 +250,7 @@ class HomeViewModel @Inject constructor(
 
                 is UseCaseResult.Error -> {
                     _isRecipeLoading.value = false
-                    if (result.code.toString() == ErrorCode.PREMIUM_REQUIRED.toString()) {
+                    if (result.exception?.errorCode == ErrorCode.PREMIUM_REQUIRED.toString()) {
                         _isPremiumRequired.value = true
                     } else {
                         _recipeError.value = result.message

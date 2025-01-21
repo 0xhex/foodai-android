@@ -66,11 +66,11 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
                 is HomeViewModel.HomeEvent.OnImageUploadError -> {
                     val message = event.errorMessage
-                   // if (event.errorCode == ErrorCode.DAILY_LIMIT_REACHED.code) {
-                   //     showPaywallSnack(message)
-                   // } else {
-                   //     showSnack(message)
-                   // }
+                    if (event.error?.errorCode == ErrorCode.DAILY_LIMIT_REACHED.code) {
+                        showPaywallSnack(message)
+                    } else {
+                        showSnack(message)
+                    }
                 }
 
                 HomeViewModel.HomeEvent.OnImageUploadStarted -> {}
