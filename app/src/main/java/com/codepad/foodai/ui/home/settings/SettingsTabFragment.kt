@@ -223,7 +223,18 @@ class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
     }
 
     private fun deleteAccount() {
+        viewModel.deleteAccount()
+        viewModel.deleteAccountResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is HomeViewModel.DeleteAccountResult.Success -> {
+                    requireActivity().finish()
+                }
 
+                is HomeViewModel.DeleteAccountResult.Error -> {
+                    Toast.makeText(requireContext(), result.message, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
     fun parseDate(dateString: String): Date? {
