@@ -12,9 +12,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentPaywallBinding
+import com.codepad.foodai.helpers.RevenueCatManager
 import com.codepad.foodai.ui.core.BaseFragment
 import com.google.android.material.card.MaterialCardView
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PaywallFragment : BaseFragment<FragmentPaywallBinding>() {
@@ -28,6 +30,9 @@ class PaywallFragment : BaseFragment<FragmentPaywallBinding>() {
     private var currentIndex = 0
 
     private val viewModel: PaywallViewModel by activityViewModels()
+
+    @Inject
+    lateinit var revenueCatManager: RevenueCatManager
 
     override fun getLayoutId(): Int = R.layout.fragment_paywall
 
@@ -43,6 +48,7 @@ class PaywallFragment : BaseFragment<FragmentPaywallBinding>() {
         super.onDestroyView()
         stopAnimationsAndHandlers()
         viewModel.logPaywallClosed()
+        revenueCatManager.resetPaywallTrigger()
     }
 
     private fun setupCardContent() {

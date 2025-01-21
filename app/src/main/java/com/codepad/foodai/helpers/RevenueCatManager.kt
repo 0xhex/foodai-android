@@ -199,6 +199,10 @@ class RevenueCatManager @Inject constructor(
         _showPaywall.value = true
     }
 
+    fun resetPaywallTrigger() {
+        _showPaywall.value = false
+    }
+
     fun triggerSpecialPaywall() {
         _showSpecialPaywall.value = true
     }
