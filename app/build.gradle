@@ -126,6 +126,9 @@ dependencies {
     implementation(libs.kwinStone)
 
     implementation libs.mpandroidchart
+
+    // OneSignal
+    implementation 'com.onesignal:OneSignal:[5.0.0, 5.99.99]'
 }
 
 kapt {

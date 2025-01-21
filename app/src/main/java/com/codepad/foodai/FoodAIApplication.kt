@@ -7,17 +7,28 @@ import com.codepad.foodai.helpers.FirebaseRemoteConfigManager
 import com.codepad.foodai.helpers.LocaleHelper
 import com.codepad.foodai.helpers.ModelPreferencesManager
 import com.codepad.foodai.helpers.UserSession
+import com.onesignal.OneSignal
+import com.onesignal.debug.LogLevel
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 
 @HiltAndroidApp
 class FoodAIApplication : Application() {
+
+    companion object {
+        private const val ONESIGNAL_APP_ID = "b4708cee-066c-48e7-86af-7ed270c1580e"
+    }
+
     override fun onCreate() {
         super.onCreate()
         initModelPrefManager()
         UserSession.init(this)
         FirebaseRemoteConfigManager.setUpRemoteConfig()
+        initOneSignal()
         if (BuildConfig.DEBUG) {
             plant(Timber.DebugTree())
         } else {
@@ -25,9 +36,24 @@ class FoodAIApplication : Application() {
         }
     }
 
-
     private fun initModelPrefManager() {
         ModelPreferencesManager.with(this)
+    }
+
+    private fun initOneSignal() {
+        // Verbose Logging set to help debug issues, remove before releasing your app.
+        if (BuildConfig.DEBUG) {
+            OneSignal.Debug.logLevel = LogLevel.VERBOSE
+        }
+
+        // OneSignal Initialization
+        OneSignal.initWithContext(this, ONESIGNAL_APP_ID)
+
+        // requestPermission will show the native Android notification permission prompt.
+        // NOTE: It's recommended to use a OneSignal In-App Message to prompt instead.
+        CoroutineScope(Dispatchers.IO).launch {
+            OneSignal.Notifications.requestPermission(false)
+        }
     }
 
     override fun attachBaseContext(base: Context) {
