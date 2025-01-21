@@ -2,7 +2,6 @@ package com.codepad.foodai.domain.repositories
 
 import com.codepad.foodai.domain.api.APIError
 import com.codepad.foodai.domain.api.RestApi
-import com.codepad.foodai.domain.models.APIResponse
 import com.codepad.foodai.domain.models.exercise.ExerciseData
 import com.codepad.foodai.domain.models.exercise.LogExerciseCustomRequest
 import com.codepad.foodai.domain.models.exercise.SubmitExerciseDescriptionRequest
@@ -15,17 +14,18 @@ import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
 import com.codepad.foodai.domain.models.recipe.GenerateRecipeRequest
 import com.codepad.foodai.domain.models.recipe.GenerateRecipeResponseData
 import com.codepad.foodai.domain.models.recipe.Recipe
+import com.codepad.foodai.domain.models.recommendation.Recommendation
+import com.codepad.foodai.domain.models.recommendation.RequestRecommendationRequest
+import com.codepad.foodai.domain.models.recommendation.RequestRecommendationResponse
 import com.codepad.foodai.domain.models.user.RegisterRequest
 import com.codepad.foodai.domain.models.user.StreakResponseData
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequest
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequestArray
 import com.codepad.foodai.domain.models.user.UpdateUserFieldResponseData
 import com.codepad.foodai.domain.models.user.User
-import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
 import com.codepad.foodai.domain.models.user.WeightLogData
-import com.codepad.foodai.domain.models.recommendation.RequestRecommendationRequest
-import com.codepad.foodai.domain.models.recommendation.RequestRecommendationResponse
-import com.codepad.foodai.domain.models.recommendation.Recommendation
+import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
+import com.google.gson.annotations.SerializedName
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -35,11 +35,12 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(
     private val restApi: RestApi,
 ) {
+
     private data class ErrorResponse(
-        val success: Boolean,
-        val errorCode: String?,
-        val message: String?,
-        val data: Any?
+        @SerializedName("success") val success: Boolean,
+        @SerializedName("errorCode") val errorCode: String?,
+        @SerializedName("message") val message: String?,
+        @SerializedName("data") val data: Any?,
     )
 
     private fun <T> handleException(e: Exception): RepositoryResult<T> {
@@ -47,7 +48,8 @@ class UserRepository @Inject constructor(
             e is retrofit2.HttpException -> {
                 try {
                     val errorBody = e.response()?.errorBody()?.string()
-                    val errorResponse = com.google.gson.Gson().fromJson(errorBody, ErrorResponse::class.java)
+                    val errorResponse =
+                        com.google.gson.Gson().fromJson(errorBody, ErrorResponse::class.java)
                     RepositoryResult.Error(
                         message = errorResponse.message ?: "Server error",
                         code = e.code(),
@@ -64,6 +66,7 @@ class UserRepository @Inject constructor(
                     )
                 }
             }
+
             else -> RepositoryResult.Error(
                 message = e.message ?: "Network error",
                 code = -1,

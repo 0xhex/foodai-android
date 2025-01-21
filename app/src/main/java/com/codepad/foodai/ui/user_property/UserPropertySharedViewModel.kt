@@ -58,8 +58,8 @@ class UserPropertySharedViewModel @Inject constructor(
     private val _measurementUnit = MutableLiveData<MeasurementUnit>()
     val measurementUnit: LiveData<MeasurementUnit> get() = _measurementUnit
 
-    private val _dateOfBirth = MutableLiveData<Date>()
-    val dateOfBirth: LiveData<Date> get() = _dateOfBirth
+    private val _dateOfBirth = MutableLiveData<Date?>()
+    val dateOfBirth: MutableLiveData<Date?> get() = _dateOfBirth
 
     private val _selectedGoal = MutableLiveData<String?>()
     val selectedGoal: LiveData<String?> get() = _selectedGoal
