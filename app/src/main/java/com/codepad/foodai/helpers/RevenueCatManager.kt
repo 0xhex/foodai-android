@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -26,6 +28,11 @@ import io.sentry.Sentry
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * RevenueCatManager handles all in-app purchase and subscription functionality
+ * using the RevenueCat SDK. It manages offerings, subscriptions, purchases,
+ * and user authentication with RevenueCat.
+ */
 @Singleton
 class RevenueCatManager @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -35,6 +42,7 @@ class RevenueCatManager @Inject constructor(
     val offerings = MutableLiveData<Offerings?>()
     val isUserSubscribed = MutableLiveData(false)
     val showPaywall = MutableLiveData(false)
+    val showSpecialPaywall = MutableLiveData(false)
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private lateinit var sharedPreferences: SharedPreferences
@@ -55,18 +63,21 @@ class RevenueCatManager @Inject constructor(
     fun fetchOfferings() {
         Purchases.sharedInstance.getOfferingsWith({ error ->
             Log.e("RevenueCat", "Error fetching offerings: ${error.message}")
-            firebaseManager.logEvent("fetchOfferingsError")
-            val params = Bundle().apply {
+            firebaseManager.logEvent(AnalyticsEvent.fetchOfferingsError, Bundle().apply {
                 putString(AnalyticsParameter.errorMessage, error.message)
-            }
+            })
             Sentry.captureException(Throwable("RevenueCat fetchOfferings error: ${error.message}"))
         }) { offerings ->
             this.offerings.postValue(offerings)
-            offerings.current?.let { current ->
-                Log.d("RevenueCat", "Current offering identifier: ${current.identifier}")
-                Log.d("RevenueCat", "Available packages count: ${current.availablePackages.size}")
-            } ?: run {
-                Log.d("RevenueCat", "No current offering found.")
+            if (offerings.current != null) {
+                Log.d("RevenueCat", "Current offering identifier: ${offerings.current!!.identifier}")
+                Log.d("RevenueCat", "Available packages count: ${offerings.current!!.availablePackages.size}")
+            } else {
+                val unknownErrorDescription = "No current offering found."
+                Log.d("RevenueCat", unknownErrorDescription)
+                firebaseManager.logEvent(AnalyticsEvent.fetchOfferingsError, Bundle().apply {
+                    putString(AnalyticsParameter.errorMessage, unknownErrorDescription)
+                })
             }
         }
     }
@@ -77,10 +88,9 @@ class RevenueCatManager @Inject constructor(
 
         Purchases.sharedInstance.getCustomerInfoWith({ error ->
             Log.e("RevenueCat", "Error fetching customer info: ${error.message}")
-            firebaseManager.logEvent("checkSubscriptionStatusError")
-            val params = Bundle().apply {
+            firebaseManager.logEvent(AnalyticsEvent.checkSubscriptionStatusError, Bundle().apply {
                 putString(AnalyticsParameter.errorMessage, error.message)
-            }
+            })
             Sentry.captureException(Throwable("RevenueCat checkSubscriptionStatus error: ${error.message}"))
         }) { customerInfo ->
             val isSubscribedNow = customerInfo.entitlements["premium_access"]?.isActive == true
@@ -98,8 +108,7 @@ class RevenueCatManager @Inject constructor(
                 storeTransaction: StoreTransaction,
                 customerInfo: CustomerInfo,
             ) {
-                val isSubscribedNow =
-                    customerInfo.entitlements.get("premium_access")?.isActive == true
+                val isSubscribedNow = customerInfo.entitlements["premium_access"]?.isActive == true
                 updateUserSubscribedState(isSubscribedNow)
                 fetchOfferings()
                 completion(true)
@@ -107,40 +116,45 @@ class RevenueCatManager @Inject constructor(
 
             override fun onError(error: PurchasesError, userCancelled: Boolean) {
                 Log.e("RevenueCat", "Purchase failed: ${error.message}")
-                firebaseManager.logEvent("purchaseError")
                 if (userCancelled) {
-                    firebaseManager.logEvent("purchaseCancelled")
-                }
-                val params = Bundle().apply {
-                    putString(AnalyticsParameter.errorMessage, error.message)
-                    putString(AnalyticsParameter.packageID, packageToPurchase.identifier)
+                    firebaseManager.logEvent(AnalyticsEvent.purchaseCancelled, Bundle().apply {
+                        putString(AnalyticsParameter.packageID, packageToPurchase.identifier)
+                    })
+                } else {
+                    firebaseManager.logEvent(AnalyticsEvent.purchaseError, Bundle().apply {
+                        putString(AnalyticsParameter.errorMessage, error.message)
+                        putString(AnalyticsParameter.packageID, packageToPurchase.identifier)
+                    })
                 }
                 Sentry.captureException(Throwable("RevenueCat purchase error: ${error.message} code ${error.code}"))
                 completion(false)
             }
-
-
         })
     }
 
     fun logInUser(userID: String, completion: (Boolean) -> Unit) {
         Purchases.sharedInstance.logInWith(userID, { error ->
             Log.e("RevenueCat", "RevenueCat logIn error: ${error.message}")
-            firebaseManager.logEvent("logInError")
-            val params = Bundle().apply {
+            firebaseManager.logEvent(AnalyticsEvent.logInError, Bundle().apply {
                 putString(AnalyticsParameter.errorMessage, error.message)
                 putString(AnalyticsParameter.userID, userID)
-            }
+            })
             Sentry.captureException(Throwable("RevenueCat logIn error: ${error.message} code ${error.code}"))
             completion(false)
         }) { customerInfo, created ->
             Log.d("RevenueCat", "Logged into RevenueCat with userID: $userID")
             if (created) {
                 Log.d("RevenueCat", "New RevenueCat user created.")
-                val params = Bundle().apply {
+                firebaseManager.logEvent("new_revenuecat_user_created", Bundle().apply {
                     putString(AnalyticsParameter.userID, userID)
-                }
-                firebaseManager.logEvent("new_revenuecat_user_created")
+                })
+            } else {
+                firebaseManager.logEvent("revenue_cat_login", Bundle().apply {
+                    putString(AnalyticsParameter.userID, userID)
+                })
+                Handler(Looper.getMainLooper()).postDelayed({
+                    checkAndShowSpecialPaywallIfNeeded()
+                }, 1000)
             }
             val isSubscribedNow = customerInfo.entitlements["premium_access"]?.isActive == true
             updateUserSubscribedState(isSubscribedNow)
@@ -154,6 +168,9 @@ class RevenueCatManager @Inject constructor(
     fun restorePurchases(completion: (Boolean) -> Unit) {
         Purchases.sharedInstance.restorePurchasesWith({ error ->
             Log.e("RevenueCat", "Restore failed: ${error.message}")
+            firebaseManager.logEvent(AnalyticsEvent.restorePurchasesError, Bundle().apply {
+                putString(AnalyticsParameter.errorMessage, error.message)
+            })
             completion(false)
         }) { customerInfo ->
             val isSubscribedNow = customerInfo.entitlements["premium_access"]?.isActive == true
@@ -167,6 +184,23 @@ class RevenueCatManager @Inject constructor(
         showPaywall.postValue(true)
     }
 
+    fun triggerSpecialPaywall() {
+        showSpecialPaywall.postValue(true)
+    }
+
+    fun checkAndShowSpecialPaywallIfNeeded() {
+        val user = UserSession.currentUser ?: return
+        val isSubscribed = isUserSubscribed.value ?: false
+        val isSpecialEvent = firebaseManager.isSpecialEventDay
+
+        val sixHoursAgo = System.currentTimeMillis() - (6 * 60 * 60 * 1000)
+        val userCreatedAt = user.createdAt?.time ?: return
+
+        if (!isSubscribed && isSpecialEvent && userCreatedAt < sixHoursAgo) {
+            triggerSpecialPaywall()
+        }
+    }
+
     override fun onReceived(customerInfo: CustomerInfo) {
         val isSubscribedNow = customerInfo.entitlements["premium_access"]?.isActive == true
         updateUserSubscribedState(isSubscribedNow)
@@ -178,8 +212,18 @@ class RevenueCatManager @Inject constructor(
     }
 }
 
+object AnalyticsEvent {
+    const val fetchOfferingsError = "fetch_offerings_error"
+    const val checkSubscriptionStatusError = "check_subscription_status_error"
+    const val purchaseError = "purchase_error"
+    const val purchaseCancelled = "purchase_cancelled"
+    const val logInError = "log_in_error"
+    const val restorePurchasesError = "restore_purchases_error"
+}
+
 object AnalyticsParameter {
     const val errorMessage = "error_message"
     const val userID = "user_id"
     const val packageID = "package_id"
+    const val additionalInfo = "additional_info"
 }

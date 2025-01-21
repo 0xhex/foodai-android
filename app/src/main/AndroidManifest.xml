@@ -75,6 +75,28 @@
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
             android:value="${crashlyticsEnabled}" />
+
+        <meta-data
+            android:name="io.sentry.dsn"
+            android:value="" />
+        <meta-data
+            android:name="io.sentry.traces.user-interaction.enable"
+            android:value="true" />
+        <meta-data
+            android:name="io.sentry.attach-screenshot"
+            android:value="true" />
+        <meta-data
+            android:name="io.sentry.attach-view-hierarchy"
+            android:value="true" />
+        <meta-data
+            android:name="io.sentry.traces.sample-rate"
+            android:value="1" />
+        <meta-data
+            android:name="io.sentry.traces.profiling.sample-rate"
+            android:value="1" />
+        <meta-data
+            android:name="io.sentry.traces.profiling.enable-app-start"
+            android:value="true" />
     </application>
 
     <queries>

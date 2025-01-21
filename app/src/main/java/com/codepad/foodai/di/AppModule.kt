@@ -3,11 +3,14 @@ package com.codepad.foodai.di
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.health.connect.client.HealthConnectClient
+import com.codepad.foodai.BuildConfig
 import com.codepad.foodai.helpers.FirebaseManager
 import com.codepad.foodai.helpers.RevenueCatManager
 import com.codepad.foodai.ui.home.settings.health.HealthConnectManager
 import com.codepad.foodai.ui.home.settings.health.HealthConnectReader
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,6 +26,23 @@ object AppModule {
     @Singleton
     fun provideFirebaseAnalytics(@ApplicationContext context: Context): FirebaseAnalytics {
         return FirebaseAnalytics.getInstance(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseRemoteConfig(): FirebaseRemoteConfig {
+        val remoteConfig = FirebaseRemoteConfig.getInstance()
+        val configSettings = FirebaseRemoteConfigSettings.Builder()
+            .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 3600)
+            .build()
+        remoteConfig.setConfigSettingsAsync(configSettings)
+        
+        // Set default values
+        val defaults = HashMap<String, Any>()
+        defaults["is_special_event_day"] = false
+        remoteConfig.setDefaultsAsync(defaults)
+        
+        return remoteConfig
     }
 
     @Singleton
@@ -49,6 +69,15 @@ object AppModule {
     @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseManager(
+        firebaseAnalytics: FirebaseAnalytics,
+        remoteConfig: FirebaseRemoteConfig
+    ): FirebaseManager {
+        return FirebaseManager(firebaseAnalytics, remoteConfig)
     }
 
     @Provides

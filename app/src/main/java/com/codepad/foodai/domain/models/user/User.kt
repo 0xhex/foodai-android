@@ -10,16 +10,22 @@ import java.util.Locale
 @Parcelize
 data class User(
     @SerializedName("_id") val id: String,
+    @SerializedName("email") val email: String?,
+    @SerializedName("name") val name: String?,
+    @SerializedName("createdAt") val createdAt: Date?,
+    @SerializedName("updatedAt") val updatedAt: Date?,
+    @SerializedName("isMetric") val isMetric: Boolean?,
+    @SerializedName("weight") val weight: Double?,
+    @SerializedName("height") val height: Double?,
+    @SerializedName("goalWeight") val goalWeight: Double?,
+    @SerializedName("birthDate") val birthDate: Date?,
+    @SerializedName("gender") val gender: String?,
     val deviceID: String,
     val deviceLang: String,
     val userPlatform: String,
     val isPremium: Boolean,
     val revenueCatID: String?,
-    val gender: String?,
     val workoutsPerWeek: String?,
-    val height: Double?,
-    val weight: Double?,
-    val dateOfBirth: String?, // Use String for date, or a custom Date adapter
     val goal: String?,
     val accomplishments: List<String>?,
     val targetWeight: Int?,
@@ -28,7 +34,7 @@ data class User(
     val dailyCarb: Int?,
     val dailyProtein: Int?,
     val dailyFat: Int?,
-    val isMetric: Boolean?
+    val dateOfBirth: String? // Use String for date, or a custom Date adapter
 ) : Parcelable {
     fun calculateCompletedRatio(startingWeight: Double, currentWeight: Double, targetWeight: Double): Double {
         val totalChange = targetWeight - startingWeight
