@@ -96,13 +96,20 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
                 is HomeViewModel.HomeEvent.OnImageFetchError -> {
                     showErrorBanner(event.errorMessage)
                 }
+
+                null -> {}
             }
         }
 
+        // Observe paywall trigger
+        var isNavigatingToPaywall = false
         viewLifecycleOwner.lifecycleScope.launch {
-            revenueCatManager.showPaywall.collectLatest {
-                if (it) {
+            revenueCatManager.showPaywall.collectLatest { show ->
+                if (show && !isNavigatingToPaywall) {
+                    isNavigatingToPaywall = true
                     findNavController().navigate(R.id.action_home_to_paywall)
+                    revenueCatManager.resetPaywallTrigger()
+                    isNavigatingToPaywall = false
                 }
             }
         }

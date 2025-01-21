@@ -73,6 +73,7 @@ class PaywallFragment : BaseFragment<FragmentPaywallBinding>() {
 
     private fun setupClickListeners() {
         binding.imgClose.setOnClickListener {
+            revenueCatManager.resetPaywallTrigger()
             findNavController().popBackStack()
         }
 

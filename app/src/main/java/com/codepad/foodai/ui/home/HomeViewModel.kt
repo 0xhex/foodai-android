@@ -52,8 +52,8 @@ class HomeViewModel @Inject constructor(
     private val getRecipeStatusUseCase: GetRecipeStatusUseCase,
 ) : ViewModel() {
 
-    private val _homeEvent = MutableLiveData<HomeEvent>()
-    val homeEvent: LiveData<HomeEvent> get() = _homeEvent
+    private val _homeEvent = MutableLiveData<HomeEvent?>()
+    val homeEvent: MutableLiveData<HomeEvent?> get() = _homeEvent
 
     private val _userDataResponse = MutableLiveData<User?>()
     val userDataResponse: LiveData<User?> get() = _userDataResponse
@@ -337,6 +337,10 @@ class HomeViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         recipePollingJob?.cancel()
+    }
+
+    fun clearErrorEvent() {
+        _homeEvent.value = null
     }
 
     sealed class HomeEvent {
