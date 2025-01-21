@@ -63,9 +63,9 @@ class MenuSheetFragment : BaseBottomSheetFragment<FragmentMenuBottomSheetBinding
 
     private val requestGalleryPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                openGallery()
-            }
+            // Even if not granted, try to open gallery as modern Android versions
+            // allow partial access through system picker
+            openGallery()
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -126,7 +126,10 @@ class MenuSheetFragment : BaseBottomSheetFragment<FragmentMenuBottomSheetBinding
                 ) == PackageManager.PERMISSION_GRANTED -> {
                     openGallery()
                 }
-
+                shouldShowRequestPermissionRationale(Manifest.permission.READ_MEDIA_IMAGES) -> {
+                    // Show rationale if needed
+                    openGallery()
+                }
                 else -> {
                     requestGalleryPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
                 }
@@ -139,7 +142,10 @@ class MenuSheetFragment : BaseBottomSheetFragment<FragmentMenuBottomSheetBinding
                 ) == PackageManager.PERMISSION_GRANTED -> {
                     openGallery()
                 }
-
+                shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
+                    // Show rationale if needed
+                    openGallery()
+                }
                 else -> {
                     requestGalleryPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
                 }
@@ -153,7 +159,12 @@ class MenuSheetFragment : BaseBottomSheetFragment<FragmentMenuBottomSheetBinding
     }
 
     private fun openGallery() {
-        galleryLauncher.launch("image/*")
+        try {
+            galleryLauncher.launch("image/*")
+        } catch (e: Exception) {
+            e.printStackTrace()
+            // Handle any potential ActivityNotFoundException
+        }
     }
 
     private fun convertBitmapToFile(bitmap: Bitmap): File {
