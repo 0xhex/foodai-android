@@ -78,7 +78,7 @@
 
         <meta-data
             android:name="io.sentry.dsn"
-            android:value="" />
+            android:value="https://4fd52e4a967d78633fc86552f8233fd8@o1116500.ingest.us.sentry.io/4508681370075136" />
         <meta-data
             android:name="io.sentry.traces.user-interaction.enable"
             android:value="true" />
