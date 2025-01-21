@@ -3,8 +3,10 @@ package com.codepad.foodai.di
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.health.connect.client.HealthConnectClient
-import com.codepad.foodai.ui.home.settings.health.HealthConnectReader
+import com.codepad.foodai.helpers.FirebaseManager
+import com.codepad.foodai.helpers.RevenueCatManager
 import com.codepad.foodai.ui.home.settings.health.HealthConnectManager
+import com.codepad.foodai.ui.home.settings.health.HealthConnectReader
 import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.Module
 import dagger.Provides
@@ -49,13 +51,12 @@ object AppModule {
         return context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
     }
 
-    // TODO
-    // @Provides
-    // @Singleton
-    // fun provideRevenueCatManager(
-    //     @ApplicationContext context: Context,
-    //     firebaseManager: FirebaseManager,
-    // ): RevenueCatManager {
-    //     return RevenueCatManager(context, firebaseManager)
-    // }
+    @Provides
+    @Singleton
+    fun provideRevenueCatManager(
+        @ApplicationContext context: Context,
+        firebaseManager: FirebaseManager,
+    ): RevenueCatManager {
+        return RevenueCatManager(context, firebaseManager)
+    }
 }

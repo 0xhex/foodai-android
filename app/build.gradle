@@ -118,7 +118,7 @@ dependencies {
     implementation(libs.mlkit.text.recognition)
     implementation(libs.ml.kit.doc)
     implementation(libs.revenuecat)
-    // TODO - Reenable with manifest configurations  - implementation(libs.sentry)
+    implementation(libs.sentry)
     implementation(libs.swipe)
     implementation(libs.dotindicator)
     implementation(libs.circleprogressbar)
