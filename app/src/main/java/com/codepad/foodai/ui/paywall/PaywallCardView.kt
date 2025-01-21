@@ -4,12 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import com.codepad.quicknotes.databinding.ViewPaywallCardBinding
+import com.codepad.foodai.databinding.ViewPaywallCardBinding
 
 class PaywallCardView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    defStyleAttr: Int = 0,
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     private val binding: ViewPaywallCardBinding = ViewPaywallCardBinding.inflate(

@@ -349,5 +349,9 @@
     <string name="try_3_days_free">Try 3 Days FREE</string>
     <string name="start_now_by_unlimited_access">Start now by unlimited access</string>
     <string name="start_now">Start Now</string>
+    <string name="special">Special</string>
+    <string name="restore_purchases_failed">Restore purchase failed</string>
+    <string name="purchase_timeout">Purchase timeout</string>
+    <string name="select_subscription_option">Select subscription option</string>
 
 </resources>

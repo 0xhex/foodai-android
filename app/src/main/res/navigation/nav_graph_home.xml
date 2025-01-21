@@ -81,6 +81,11 @@
             app:popUpTo="@id/navigation_settings" />
 
         <action
+            android:id="@+id/action_navigation_settings_to_paywallFragment"
+            app:destination="@id/paywallFragment"
+            app:popUpTo="@id/navigation_settings" />
+
+        <action
             android:id="@+id/action_navigation_settings_to_adjustGoalsFragment"
             app:destination="@id/adjustGoalsFragment"
             app:popUpTo="@id/navigation_settings" />
@@ -103,6 +108,11 @@
             android:id="@+id/action_personalFragment_to_genderFragment"
             app:destination="@id/genderFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/paywallFragment"
+        android:name="com.codepad.foodai.ui.paywall.PaywallFragment"
+        android:label="Paywall"/>
 
     <fragment
         android:id="@+id/adjustGoalsFragment"

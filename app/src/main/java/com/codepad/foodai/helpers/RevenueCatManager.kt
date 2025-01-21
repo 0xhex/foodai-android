@@ -25,6 +25,8 @@ import com.revenuecat.purchases.models.StoreTransaction
 import com.revenuecat.purchases.restorePurchasesWith
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.sentry.Sentry
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -39,10 +41,17 @@ class RevenueCatManager @Inject constructor(
     private val firebaseManager: FirebaseManager,
 ) : UpdatedCustomerInfoListener {
 
-    val offerings = MutableLiveData<Offerings?>()
-    val isUserSubscribed = MutableLiveData(false)
-    val showPaywall = MutableLiveData(false)
-    val showSpecialPaywall = MutableLiveData(false)
+    private val _offerings = MutableStateFlow<Offerings?>(null)
+    val offerings: StateFlow<Offerings?> = _offerings
+
+    private val _isSubscribed = MutableStateFlow(false)
+    val isSubscribed: StateFlow<Boolean> = _isSubscribed
+
+    private val _showPaywall = MutableStateFlow(false)
+    val showPaywall: StateFlow<Boolean> = _showPaywall
+
+    private val _showSpecialPaywall = MutableStateFlow(false)
+    val showSpecialPaywall: StateFlow<Boolean> = _showSpecialPaywall
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private lateinit var sharedPreferences: SharedPreferences
@@ -68,10 +77,16 @@ class RevenueCatManager @Inject constructor(
             })
             Sentry.captureException(Throwable("RevenueCat fetchOfferings error: ${error.message}"))
         }) { offerings ->
-            this.offerings.postValue(offerings)
+            _offerings.value = offerings
             if (offerings.current != null) {
-                Log.d("RevenueCat", "Current offering identifier: ${offerings.current!!.identifier}")
-                Log.d("RevenueCat", "Available packages count: ${offerings.current!!.availablePackages.size}")
+                Log.d(
+                    "RevenueCat",
+                    "Current offering identifier: ${offerings.current!!.identifier}"
+                )
+                Log.d(
+                    "RevenueCat",
+                    "Available packages count: ${offerings.current!!.availablePackages.size}"
+                )
             } else {
                 val unknownErrorDescription = "No current offering found."
                 Log.d("RevenueCat", unknownErrorDescription)
@@ -158,7 +173,7 @@ class RevenueCatManager @Inject constructor(
             }
             val isSubscribedNow = customerInfo.entitlements["premium_access"]?.isActive == true
             updateUserSubscribedState(isSubscribedNow)
-            offerings.postValue(null)
+            _offerings.value = null
             fetchOfferings()
             firebaseAnalytics.setUserId(userID)
             completion(true)
@@ -181,17 +196,17 @@ class RevenueCatManager @Inject constructor(
     }
 
     fun triggerPaywall() {
-        showPaywall.postValue(true)
+        _showPaywall.value = true
     }
 
     fun triggerSpecialPaywall() {
-        showSpecialPaywall.postValue(true)
+        _showSpecialPaywall.value = true
     }
 
     fun checkAndShowSpecialPaywallIfNeeded() {
         val user = UserSession.currentUser ?: return
-        val isSubscribed = isUserSubscribed.value ?: false
-        val isSpecialEvent = firebaseManager.isSpecialEventDay
+        val isSubscribed = _isSubscribed.value
+        val isSpecialEvent = firebaseManager.specialEventDay.value
 
         val sixHoursAgo = System.currentTimeMillis() - (6 * 60 * 60 * 1000)
         val userCreatedAt = user.createdAt?.time ?: return
@@ -207,7 +222,7 @@ class RevenueCatManager @Inject constructor(
     }
 
     private fun updateUserSubscribedState(isSubscribedNow: Boolean) {
-        isUserSubscribed.postValue(isSubscribedNow)
+        _isSubscribed.value = isSubscribedNow
         UserSession.isPremiumUser = isSubscribedNow
     }
 }

@@ -4,22 +4,34 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.HomeFragmentBinding
 import com.codepad.foodai.domain.models.image.ImageData
+import com.codepad.foodai.helpers.FirebaseManager
+import com.codepad.foodai.helpers.RevenueCatManager
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.loading.LoadingType
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.io.File
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeFragmentBinding>() {
     private val viewModel: HomeViewModel by activityViewModels()
+
+    @Inject
+    lateinit var revenueCatManager: RevenueCatManager
+
+    @Inject
+    lateinit var firebaseManager: FirebaseManager
 
     override fun getLayoutId(): Int {
         return R.layout.home_fragment
@@ -80,6 +92,15 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            revenueCatManager.showPaywall.collectLatest {
+                if (it) {
+                    findNavController().navigate(R.id.action_home_to_paywall)
+                }
+            }
+        }
+
     }
 
 

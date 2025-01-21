@@ -504,7 +504,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:fontFamily="@font/euro_stile_regular"
-                android:text="@string/terms_of_privacy"
+                android:text="@string/privacy_policy"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -36,18 +36,7 @@ object AppModule {
             .setMinimumFetchIntervalInSeconds(3600) // Match iOS 3600 seconds (1 hour)
             .build()
         remoteConfig.setConfigSettingsAsync(configSettings)
-        
-        // Set default values matching iOS implementation
-        val defaults = hashMapOf(
-            "firstProduct" to "foodai_weekly_tier1",
-            "secondProduct" to "foodai_yearly_standart",
-            "isPassedStore" to false,
-            "specialEventDay" to false,
-            "specialProduct" to "foodai_special_discount",
-            "finishDate" to "2024-12-25T23:59:59Z"
-        )
-        remoteConfig.setDefaultsAsync(defaults)
-        
+
         return remoteConfig
     }
 

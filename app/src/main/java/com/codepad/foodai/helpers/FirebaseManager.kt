@@ -37,21 +37,7 @@ class FirebaseManager @Inject constructor(
     val finishDate: StateFlow<Date?> = _finishDate
 
     init {
-        setupRemoteConfig()
         fetchRemoteConfig()
-    }
-
-    private fun setupRemoteConfig() {
-        // Default values matching iOS implementation
-        val defaults = hashMapOf(
-            "firstProduct" to "foodai_weekly_tier1",
-            "secondProduct" to "foodai_yearly_standart",
-            "isPassedStore" to false,
-            "specialEventDay" to false,
-            "specialProduct" to "foodai_special_discount",
-            "finishDate" to "2024-12-25T23:59:59Z"
-        )
-        remoteConfig.setDefaultsAsync(defaults)
     }
 
     fun fetchRemoteConfig() {
