@@ -6,10 +6,12 @@ import androidx.viewpager2.widget.ViewPager2
 import com.airbnb.lottie.LottieAnimationView
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.OnboardingFragmentBinding
+import com.codepad.foodai.helpers.RevenueCatManager
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.onboarding.pager.OnboardingPagerAdapter
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class OnboardingFragment : BaseFragment<OnboardingFragmentBinding>() {
@@ -19,12 +21,16 @@ class OnboardingFragment : BaseFragment<OnboardingFragmentBinding>() {
     private lateinit var nextButton: MaterialButton
     private lateinit var lottieAnimation: LottieAnimationView
 
+    @Inject
+    lateinit var revenueCatManager: RevenueCatManager
+
     override fun getLayoutId() = R.layout.onboarding_fragment
 
     override fun onReadyView() {
         viewPager = binding.viewPager
         nextButton = binding.nextButton
         lottieAnimation = binding.lottieAnimation
+        revenueCatManager.init()
 
         val adapter = OnboardingPagerAdapter(requireActivity())
         viewPager.adapter = adapter
@@ -64,7 +70,8 @@ class OnboardingFragment : BaseFragment<OnboardingFragmentBinding>() {
 
         viewModel.registerUserResponse.observe(viewLifecycleOwner) { registerUserResponse ->
             if (registerUserResponse != null) {
-                // login revenue cat user
+                val userID = registerUserResponse.id
+                revenueCatManager.logInUser(userID) {}
             }
         }
 
