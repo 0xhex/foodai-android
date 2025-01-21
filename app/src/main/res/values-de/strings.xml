@@ -342,4 +342,15 @@
     <string name="restore_purchases_failed">Wiederherstellung der Käufe fehlgeschlagen</string>
     <string name="purchase_timeout">Kaufzeitüberschreitung</string>
     <string name="select_subscription_option">Abonnementoption auswählen</string>
+
+    <string name="min_param">%s %s Min</string>
+    <string name="premium_required">Premium erforderlich</string>
+    <string name="you_ve_reached_today_s_limit_unlock_unlimited_access_and_exclusive_features_by_upgrading_to_premium">Sie haben das heutige Limit erreicht! Schalten Sie unbegrenzten Zugang und exklusive Funktionen frei, indem Sie auf Premium upgraden.</string>
+    <string name="detecting_ingredients">Zutaten werden erkannt...</string>
+    <string name="calculating_nutritional_values">Nährwerte werden berechnet...</string>
+    <string name="finalizing_your_meal_summary">Ihre Mahlzeitenzusammenfassung wird fertiggestellt...</string>
+    <string name="calorie_goal">Kalorienziel</string>
+    <string name="carb_goal">Kohlenhydratziel</string>
+    <string name="protein_goal">Proteinziel</string>
+    <string name="fat_goal">Fettziel</string>
 </resources>

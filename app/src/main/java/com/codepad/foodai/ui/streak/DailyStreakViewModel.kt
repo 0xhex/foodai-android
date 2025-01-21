@@ -19,7 +19,8 @@ class DailyStreakViewModel @Inject constructor() : ViewModel() {
     private val _selectedDays = MutableLiveData<List<Boolean>>()
     val selectedDays: LiveData<List<Boolean>> = _selectedDays
 
-    private val daySymbols = dayFormatter.weekdays.map { it.substring(0,1).uppercase() }
+    // Skip the first empty element and take only the weekdays (indices 1-7)
+    private val daySymbols = dayFormatter.weekdays.drop(1).take(7).map { it.substring(0,1).uppercase() }
 
     fun setStreakData(streakData: StreakResponseData) {
         _currentStreak.value = streakData.currentStreak

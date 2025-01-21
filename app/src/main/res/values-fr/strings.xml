@@ -342,4 +342,15 @@
     <string name="restore_purchases_failed">Échec de la restauration des achats</string>
     <string name="purchase_timeout">Délai d\'achat dépassé</string>
     <string name="select_subscription_option">Sélectionnez une option d\'abonnement</string>
+
+    <string name="min_param">%s %s min</string>
+    <string name="premium_required">Premium requis</string>
+    <string name="you_ve_reached_today_s_limit_unlock_unlimited_access_and_exclusive_features_by_upgrading_to_premium">Vous avez atteint la limite du jour ! Débloquez l\'accès illimité et les fonctionnalités exclusives en passant à Premium.</string>
+    <string name="detecting_ingredients">Détection des ingrédients...</string>
+    <string name="calculating_nutritional_values">Calcul des valeurs nutritionnelles...</string>
+    <string name="finalizing_your_meal_summary">Finalisation du résumé de votre repas...</string>
+    <string name="calorie_goal">Objectif calories</string>
+    <string name="carb_goal">Objectif glucides</string>
+    <string name="protein_goal">Objectif protéines</string>
+    <string name="fat_goal">Objectif lipides</string>
 </resources>
