@@ -88,7 +88,7 @@ class PaywallViewModel @Inject constructor(
 
     val secondProductName = secondPackage.map {
         val packageProductName = (it.product as? GoogleStoreProduct)?.productDetails?.name
-        if (packageProductName?.lowercase() == "monthly") {
+        if (packageProductName?.lowercase() == "yearly") {
             resourceHelper.getString(R.string.yearly)
         } else {
             packageProductName

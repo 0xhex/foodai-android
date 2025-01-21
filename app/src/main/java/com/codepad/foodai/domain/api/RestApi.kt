@@ -139,4 +139,7 @@ interface RestApi {
         @Path("recommendationID") recommendationID: String
     ): APIResponse<Recommendation>
 
+    @DELETE("users/{userID}/deleteAccount")
+    suspend fun deleteAccount(@Path("userID") userID: String): APIResponse<Unit>
+
 }

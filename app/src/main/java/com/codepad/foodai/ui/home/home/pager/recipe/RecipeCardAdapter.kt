@@ -20,6 +20,7 @@ class RecipeCardAdapter(
     private val mealTypes: List<MealType>,
     private val onCreateRecipeClick: (MealType) -> Unit,
     private val onViewRecipeClick: (Recipe) -> Unit,
+    private val onPremiumRequired: () -> Unit
 ) : RecyclerView.Adapter<RecipeCardAdapter.RecipeCardViewHolder>() {
 
     @Inject
@@ -388,7 +389,7 @@ class RecipeCardAdapter(
                     when {
                         recipe?.status == "completed" -> recipe?.let { onViewRecipeClick(it) }
                         isPremiumRequired -> {
-                            revenueCatManager.triggerPaywall()
+                            onPremiumRequired.invoke()
                         }
 
                         else -> onCreateRecipeClick(mealType)

@@ -24,6 +24,7 @@ import com.codepad.foodai.domain.use_cases.recipe.GetRecipeStatusUseCase
 import com.codepad.foodai.domain.use_cases.user.GetUserDataUseCase
 import com.codepad.foodai.domain.use_cases.user.GetUserStreakUseCase
 import com.codepad.foodai.domain.use_cases.user.UpdateUserFieldUseCase
+import com.codepad.foodai.domain.use_cases.user.DeleteAccountUseCase
 import com.codepad.foodai.helpers.ResourceHelper
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.user_property.result.Nutrition
@@ -50,10 +51,11 @@ class HomeViewModel @Inject constructor(
     private val dailyStreakUseCase: GetUserStreakUseCase,
     private val generateRecipeUseCase: GenerateRecipeUseCase,
     private val getRecipeStatusUseCase: GetRecipeStatusUseCase,
+    private val deleteAccountUseCase: DeleteAccountUseCase,
 ) : ViewModel() {
 
-    private val _homeEvent = MutableLiveData<HomeEvent>()
-    val homeEvent: LiveData<HomeEvent> get() = _homeEvent
+    private val _homeEvent = MutableLiveData<HomeEvent?>()
+    val homeEvent: MutableLiveData<HomeEvent?> get() = _homeEvent
 
     private val _userDataResponse = MutableLiveData<User?>()
     val userDataResponse: LiveData<User?> get() = _userDataResponse
@@ -95,6 +97,9 @@ class HomeViewModel @Inject constructor(
 
     private val _isPremiumRequired = MutableLiveData<Boolean>()
     val isPremiumRequired: LiveData<Boolean> = _isPremiumRequired
+
+    private val _deleteAccountResult = MutableLiveData<DeleteAccountResult>()
+    val deleteAccountResult: LiveData<DeleteAccountResult> = _deleteAccountResult
 
     private var recipePollingJob: Job? = null
 
@@ -238,23 +243,22 @@ class HomeViewModel @Inject constructor(
     fun generateRecipe(mealType: String) {
         viewModelScope.launch {
             _isRecipeLoading.value = true
-            _isPremiumRequired.value = false
-            _recipeError.value = null
 
             val userId = UserSession.user?.id ?: return@launch
 
             when (val result = generateRecipeUseCase.generateRecipe(userId, mealType.lowercase())) {
                 is UseCaseResult.Success -> {
+                    _recipeError.value = null
                     startPollingRecipeStatus(result.data.recipeID, mealType)
                 }
 
                 is UseCaseResult.Error -> {
-                    _isRecipeLoading.value = false
                     if (result.exception?.errorCode == ErrorCode.PREMIUM_REQUIRED.toString()) {
                         _isPremiumRequired.value = true
                     } else {
                         _recipeError.value = result.message
                     }
+                    _isRecipeLoading.value = false
                 }
             }
         }
@@ -340,6 +344,25 @@ class HomeViewModel @Inject constructor(
         recipePollingJob?.cancel()
     }
 
+    fun clearErrorEvent() {
+        _homeEvent.value = null
+    }
+
+    fun deleteAccount() {
+        viewModelScope.launch {
+            val userID = UserSession.user?.id ?: return@launch
+            when (val result = deleteAccountUseCase.deleteAccount(userID)) {
+                is UseCaseResult.Success -> {
+                    _deleteAccountResult.value = DeleteAccountResult.Success
+                    UserSession.clearSession()
+                }
+                is UseCaseResult.Error -> {
+                    _deleteAccountResult.value = DeleteAccountResult.Error(result.message)
+                }
+            }
+        }
+    }
+
     sealed class HomeEvent {
         data class OnMenuOptionSelected(val option: MenuOption) : HomeEvent()
         data object OnImageUploadStarted : HomeEvent()
@@ -348,6 +371,11 @@ class HomeViewModel @Inject constructor(
         data class OnImageFetchStarted(val bitmap: Bitmap) : HomeEvent()
         data class OnImageFetchSuccess(val response: ImageData) : HomeEvent()
         data class OnImageFetchError(val errorMessage: String) : HomeEvent()
+    }
+
+    sealed class DeleteAccountResult {
+        object Success : DeleteAccountResult()
+        data class Error(val message: String) : DeleteAccountResult()
     }
 }
 

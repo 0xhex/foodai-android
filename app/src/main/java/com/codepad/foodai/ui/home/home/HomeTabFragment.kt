@@ -68,6 +68,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                     val message = event.errorMessage
                     if (event.error?.errorCode == ErrorCode.DAILY_LIMIT_REACHED.code) {
                         showPaywallSnack(message)
+                        sharedViewModel.clearErrorEvent()
                     } else {
                         showSnack(message)
                     }
@@ -116,6 +117,8 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                         }
                     }
                 }
+
+                null -> {}
             }
         }
 

@@ -364,4 +364,9 @@
     <string name="protein_goal">Protein Goal</string>
     <string name="fat_goal">Fat Goal</string>
 
+    <!-- Time Range -->
+    <string name="time_range_last_30_days">Last 30 Days</string>
+    <string name="time_range_last_6_months">Last 6 Months</string>
+    <string name="time_range_last_1_year">Last 1 Year</string>
+
 </resources>

@@ -43,6 +43,21 @@ class GoogleHealthFragment : BaseFragment<FragmentGoogleHealthBinding>() {
             healthConnectManager.initContent(this)
             setupHealthConnectUI()
             setupStepChart()
+
+            // Move the observer setup inside the Health Connect supported block
+            healthConnectManager.onGoogleFitBodyDataRead = { stepData ->
+                val (currentDaySteps, previousDaySteps) = stepData
+                viewLifecycleOwner.lifecycleScope.launch {
+                    binding.notConnectedView.visibility = View.GONE
+                    binding.connectedView.visibility = View.VISIBLE
+                    
+                    // Always update the chart, even with empty data
+                    updateStepData(
+                        currentDaySteps.ifEmpty { listOf(0) },
+                        previousDaySteps.ifEmpty { List(6) { 0 } }
+                    )
+                }
+            }
         } else {
             setupNotSupportedUI()
         }
@@ -61,21 +76,6 @@ class GoogleHealthFragment : BaseFragment<FragmentGoogleHealthBinding>() {
                     Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.healthdata&hl=en")
                 )
                 startActivity(playStoreIntent)
-            }
-        }
-
-        // Add step count observer
-        healthConnectManager.onGoogleFitBodyDataRead = { stepData ->
-            val (currentDaySteps, previousDaySteps) = stepData
-            viewLifecycleOwner.lifecycleScope.launch {
-                binding.notConnectedView.visibility = View.GONE
-                binding.connectedView.visibility = View.VISIBLE
-                
-                // Always update the chart, even with empty data
-                updateStepData(
-                    currentDaySteps.ifEmpty { listOf(0) },
-                    previousDaySteps.ifEmpty { List(6) { 0 } }
-                )
             }
         }
 
@@ -277,8 +277,24 @@ class GoogleHealthFragment : BaseFragment<FragmentGoogleHealthBinding>() {
     private fun setupNotSupportedUI() {
         binding.apply {
             clHealth.visibility = View.VISIBLE
-            cardHealthCalories.visibility = View.GONE
-            cardDailyScore.visibility = View.GONE
+            cardHealthCalories.visibility = View.VISIBLE
+            cardDailyScore.visibility = View.VISIBLE
+            
+            // Show not connected state
+            notConnectedView.visibility = View.VISIBLE
+            connectedView.visibility = View.GONE
+            
+            // Setup initial values
+            txtStepCount.text = "0"
+            txtBurnedCalories.text = getString(R.string.calories_burned_format, 0)
+            progressBar.progress = 0
+            txtProgress.text = "0/10"
+            
+            // Setup empty chart
+            setupStepChart()
+            updateStepData(listOf(0), List(6) { 0 })
+            
+            // Setup auth button for Play Store
             authButton.setOnClickListener {
                 Toast.makeText(
                     requireContext(),

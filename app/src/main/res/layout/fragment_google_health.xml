@@ -14,7 +14,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_health"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16dp"
             app:layout_constraintBottom_toBottomOf="@id/card_health_calories"
             app:layout_constraintEnd_toStartOf="@id/card_health_calories"

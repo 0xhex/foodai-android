@@ -22,6 +22,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Read OneSignal App ID from local.properties
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+        buildConfigField "String", "ONESIGNAL_APP_ID", "\"${properties.getProperty('ONESIGNAL_APP_ID')}\""
     }
 
     buildTypes {
@@ -126,6 +131,9 @@ dependencies {
     implementation(libs.kwinStone)
 
     implementation libs.mpandroidchart
+
+    // OneSignal
+    implementation 'com.onesignal:OneSignal:[5.0.0, 5.99.99]'
 }
 
 kapt {

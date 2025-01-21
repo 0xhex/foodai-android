@@ -624,4 +624,28 @@ class UserRepository @Inject constructor(
             handleException<Recommendation>(e)
         }
     }
+
+    suspend fun deleteAccount(userID: String): RepositoryResult<Unit> {
+        return try {
+            val response = restApi.deleteAccount(userID)
+            if (response.success) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = Unit
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            handleException<Unit>(e)
+        }
+    }
 }

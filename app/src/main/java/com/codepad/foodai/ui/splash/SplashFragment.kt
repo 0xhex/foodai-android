@@ -7,14 +7,20 @@ import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.SplashFragmentBinding
 import com.codepad.foodai.helpers.FirebaseRemoteConfigManager
+import com.codepad.foodai.helpers.RevenueCatManager
+import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class SplashFragment: BaseFragment<SplashFragmentBinding>() {
+class SplashFragment : BaseFragment<SplashFragmentBinding>() {
     private val viewModel: SplashViewModel by viewModels()
+
+    @Inject
+    lateinit var revenueCatManager: RevenueCatManager
 
     override fun getLayoutId(): Int {
         return R.layout.splash_fragment
@@ -22,11 +28,16 @@ class SplashFragment: BaseFragment<SplashFragmentBinding>() {
 
     override fun onReadyView() {
         binding.viewModel = viewModel
-        FirebaseRemoteConfigManager.fetchRemoteConfigurations(requireActivity() as AppCompatActivity, {})
+        FirebaseRemoteConfigManager.fetchRemoteConfigurations(
+            requireActivity() as AppCompatActivity,
+            {})
+        revenueCatManager.init()
 
         viewModel.userDataResponse.observe(viewLifecycleOwner) { userDataResponse ->
             if (userDataResponse != null) {
-                navigateToHome()
+                revenueCatManager.logInUser(userDataResponse.id) {
+                    navigateToHome()
+                }
             } else {
                 navigateToOnboarding()
             }
