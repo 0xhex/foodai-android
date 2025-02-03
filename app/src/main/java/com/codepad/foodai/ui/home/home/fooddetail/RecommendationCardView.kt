@@ -107,6 +107,15 @@ class RecommendationCardView @JvmOverloads constructor(
         errorMessage.text = message
     }
 
+    fun resetToInitialState() {
+        stopLoadingMessages()
+        loadingView.visibility = View.GONE
+        recommendationsReadyView.visibility = View.GONE
+        errorView.visibility = View.GONE
+        initialView.visibility = View.VISIBLE
+        startButtonAnimation()
+    }
+
     fun showRecommendations(recommendation: Recommendation) {
         stopLoadingMessages()
         initialView.visibility = View.GONE

@@ -10,6 +10,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentUserPropertyBinding
+import com.codepad.foodai.helpers.FirebaseManager
 import com.codepad.foodai.helpers.FirebaseRemoteConfigManager
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.accomplish.AccomplishFragment
@@ -26,9 +27,27 @@ import com.codepad.foodai.ui.user_property.weightspeed.WeightSpeedSelectionFragm
 import com.codepad.foodai.ui.user_property.workout.WorkoutFragment
 import com.google.android.play.core.review.ReviewManagerFactory
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
+private object OnboardingAnalytics {
+    const val STEP_GENDER_COMPLETED = "onboard_gender_completed"
+    const val STEP_WORKOUT_COMPLETED = "onboard_workout_completed"
+    const val STEP_HEIGHT_WEIGHT_COMPLETED = "onboard_height_weight_completed"
+    const val STEP_BIRTH_COMPLETED = "onboard_birth_completed"
+    const val STEP_GOAL_COMPLETED = "onboard_goal_completed"
+    const val STEP_DESIRED_WEIGHT_COMPLETED = "onboard_desired_weight_completed"
+    const val STEP_WEIGHT_SPEED_COMPLETED = "onboard_weight_speed_completed"
+    const val STEP_REACHING_GOALS_COMPLETED = "onboard_reaching_goals_completed"
+    const val STEP_DIET_COMPLETED = "onboard_diet_completed"
+    const val STEP_ACCOMPLISH_COMPLETED = "onboard_accomplish_completed"
+    const val ONBOARDING_COMPLETED = "onboard_completed"
+}
 
 @AndroidEntryPoint
 class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
+    @Inject
+    lateinit var firebaseManager: FirebaseManager
+    
     private var currentStep = 1
     private val totalSteps = 10
     private val sharedViewModel: UserPropertySharedViewModel by activityViewModels()
@@ -74,6 +93,9 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             displaySelectionWarning()
             sharedViewModel.invalidateShowWarning()
         } else {
+            // Log analytics for the completed step
+            logEvents(requireDesiredWeight)
+
             if (currentStep <= totalSteps) {
                 val nextFragment = when (currentStep) {
                     1 -> WorkoutFragment()
@@ -181,6 +203,9 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
     }
 
     private fun navigateToLoader() {
+        // Log onboarding completion when navigating to loader
+        firebaseManager.logEvent(OnboardingAnalytics.ONBOARDING_COMPLETED)
+        
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.userPropertyFragment, true)
             .build()
@@ -189,6 +214,47 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
             null,
             navOptions
         )
+    }
+
+    private fun logEvents(requireDesiredWeight: Boolean) {
+        when (currentStep) {
+            1 -> firebaseManager.logEvent(OnboardingAnalytics.STEP_GENDER_COMPLETED)
+            2 -> firebaseManager.logEvent(OnboardingAnalytics.STEP_WORKOUT_COMPLETED)
+            3 -> firebaseManager.logEvent(OnboardingAnalytics.STEP_HEIGHT_WEIGHT_COMPLETED)
+            4 -> firebaseManager.logEvent(OnboardingAnalytics.STEP_BIRTH_COMPLETED)
+            5 -> firebaseManager.logEvent(OnboardingAnalytics.STEP_GOAL_COMPLETED)
+            6 -> {
+                if (requireDesiredWeight) {
+                    firebaseManager.logEvent(OnboardingAnalytics.STEP_DESIRED_WEIGHT_COMPLETED)
+                } else {
+                    firebaseManager.logEvent(OnboardingAnalytics.STEP_REACHING_GOALS_COMPLETED)
+                }
+            }
+            7 -> {
+                if (requireDesiredWeight) {
+                    firebaseManager.logEvent(OnboardingAnalytics.STEP_WEIGHT_SPEED_COMPLETED)
+                } else {
+                    firebaseManager.logEvent(OnboardingAnalytics.STEP_DIET_COMPLETED)
+                }
+            }
+            8 -> {
+                if (requireDesiredWeight) {
+                    firebaseManager.logEvent(OnboardingAnalytics.STEP_REACHING_GOALS_COMPLETED)
+                } else {
+                    firebaseManager.logEvent(OnboardingAnalytics.STEP_ACCOMPLISH_COMPLETED)
+                }
+            }
+            9 -> {
+                if (requireDesiredWeight) {
+                    firebaseManager.logEvent(OnboardingAnalytics.STEP_DIET_COMPLETED)
+                }
+            }
+            10 -> {
+                if (requireDesiredWeight) {
+                    firebaseManager.logEvent(OnboardingAnalytics.STEP_ACCOMPLISH_COMPLETED)
+                }
+            }
+        }
     }
 
 }

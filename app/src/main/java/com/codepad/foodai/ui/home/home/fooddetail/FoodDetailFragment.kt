@@ -268,6 +268,9 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
     }
 
     private fun showPremiumRequiredDialog() {
+        // Reset recommendation card to initial state
+        binding.recommendationCard.resetToInitialState()
+        
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.premium_required))
             .setMessage(getString(R.string.you_ve_reached_today_s_limit_unlock_unlimited_access_and_exclusive_features_by_upgrading_to_premium))
