@@ -1,6 +1,7 @@
 package com.codepad.foodai.ui.onboarding
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.airbnb.lottie.LottieAnimationView
@@ -11,6 +12,7 @@ import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.onboarding.pager.OnboardingPagerAdapter
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -64,7 +66,21 @@ class OnboardingFragment : BaseFragment<OnboardingFragmentBinding>() {
             if (nextItem < adapter.itemCount) {
                 viewPager.currentItem = nextItem
             } else {
-                findNavController().navigate(R.id.action_onBoardingFragment_to_userPropertyFragment)
+                try {
+                    val navController = findNavController()
+                    if (navController.currentDestination?.id == R.id.onBoardingFragment) {
+                        val navOptions = NavOptions.Builder()
+                            .setPopUpTo(R.id.onBoardingFragment, true)
+                            .build()
+                        navController.navigate(
+                            R.id.action_onBoardingFragment_to_userPropertyFragment,
+                            null,
+                            navOptions
+                        )
+                    }
+                } catch (e: Exception) {
+                    Timber.e(e, "Navigation error")
+                }
             }
         }
 

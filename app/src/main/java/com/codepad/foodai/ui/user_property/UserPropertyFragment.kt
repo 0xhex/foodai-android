@@ -28,6 +28,7 @@ import com.codepad.foodai.ui.user_property.workout.WorkoutFragment
 import com.google.android.play.core.review.ReviewManagerFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import timber.log.Timber
 
 private object OnboardingAnalytics {
     const val STEP_GENDER_COMPLETED = "onboard_gender_completed"
@@ -194,26 +195,50 @@ class UserPropertyFragment : BaseFragment<FragmentUserPropertyBinding>() {
                 val reviewInfo = task.result
                 playReviewManager.launchReviewFlow(requireActivity(), reviewInfo)
                     .addOnCompleteListener { reviewTask ->
-                        navigateToLoader()
+                        try {
+                            if (isAdded && !isDetached) {
+                                navigateToLoader()
+                            }
+                        } catch (e: Exception) {
+                            Timber.e(e, "Navigation error")
+                        }
                     }
             } else {
-                navigateToLoader()
+                try {
+                    if (isAdded && !isDetached) {
+                        navigateToLoader()
+                    }
+                } catch (e: Exception) {
+                    Timber.e(e, "Navigation error")
+                }
             }
         }
     }
 
     private fun navigateToLoader() {
-        // Log onboarding completion when navigating to loader
-        firebaseManager.logEvent(OnboardingAnalytics.ONBOARDING_COMPLETED)
-        
-        val navOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.userPropertyFragment, true)
-            .build()
-        findNavController().navigate(
-            R.id.action_userPropertyFragment_to_loadingFragment,
-            null,
-            navOptions
-        )
+        try {
+            if (!isAdded || isDetached) {
+                Timber.w("Fragment not attached, skipping navigation")
+                return
+            }
+            
+            // Log onboarding completion when navigating to loader
+            firebaseManager.logEvent(OnboardingAnalytics.ONBOARDING_COMPLETED)
+            
+            val navController = findNavController()
+            if (navController.currentDestination?.id == R.id.userPropertyFragment) {
+                val navOptions = NavOptions.Builder()
+                    .setPopUpTo(R.id.userPropertyFragment, true)
+                    .build()
+                navController.navigate(
+                    R.id.action_userPropertyFragment_to_loadingFragment,
+                    null,
+                    navOptions
+                )
+            }
+        } catch (e: Exception) {
+            Timber.e(e, "Navigation error")
+        }
     }
 
     private fun logEvents(requireDesiredWeight: Boolean) {
