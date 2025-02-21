@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="9dp"
+    android:clipToPadding="false"
+    android:clipChildren="false">
+
+    <ImageView
+        android:id="@+id/stepIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center_vertical"
+        tools:src="@drawable/ic_circle"
+        android:contentDescription="Step status" />
+
+    <TextView
+        android:id="@+id/stepText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/euro_stile_regular"
+        android:textColor="@color/white"
+        tools:text="Analyzing your answers" />
+
+</LinearLayout> 

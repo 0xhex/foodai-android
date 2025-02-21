@@ -25,8 +25,8 @@
     <string name="billed_every_week">Facturado cada semana</string>
     <string name="billed_every_year">Facturado cada año</string>
     <string name="BMI_guidelines">Las categorías y cálculos de IMC se basan en las directrices de la Organización Mundial de la Salud.</string>
-    <string name="Boost_energy_mood">Mejorar mi energía y estado de ánimo</string>
-    <string name="Busy_schedule">Horario ocupado</string>
+    <string name="Boost_energy_mood">⚡ Mejorar mi energía y estado de ánimo</string>
+    <string name="Busy_schedule">⏰ Horario ocupado</string>
     <string name="Calculating_nutrients">Calculando nutrientes…</string>
     <string name="Calories_burned">Calorías quemadas</string>
     <string name="Calories_left">Calorías restantes</string>
@@ -35,7 +35,7 @@
     <string name="carbs_left">Carbohidratos restantes</string>
     <string name="choose_your_gender">Elige tu género</string>
     <string name="citations">Citas</string>
-    <string name="classic">Clásico</string>
+    <string name="classic">🍽️ Clásico</string>
     <string name="completed">Completado %%%lld</string>
     <string name="confirm_account_deletion">Confirmar eliminación de cuenta</string>
     <string name="congratulations_custom_plan">¡Felicidades \ntu plan personalizado está listo!</string>
@@ -65,7 +65,7 @@
     <string name="do_you_follow_a_specific_diet" translatable="false">¿Sigues una dieta específica?</string>
     <string name="done" translatable="false">Hecho</string>
     <string name="drag_over_the_chart_to_see_weight_details" translatable="false">Desliza sobre el gráfico para ver detalles de peso</string>
-    <string name="eat_and_live_healthier" translatable="false">Comer y vivir más saludable</string>
+    <string name="eat_and_live_healthier">🥗 Comer y vivir más saludable</string>
     <string name="edit_weight" translatable="false">Editar peso</string>
     <string name="edit_weight_goal" translatable="false">Editar meta de peso</string>
     <string name="enjoy_unlimited_features_with_this_plan" translatable="false">Disfruta de funciones ilimitadas con este plan.</string>
@@ -76,8 +76,8 @@
     <string name="example_frappuccino">Ejemplo: Al frappuccino le falta el chorrito de caramelo y la crema batida.</string>
     <string name="experience_food_ai">Experimenta todo el poder de Food-AI</string>
     <string name="fat_left">Grasas restantes</string>
-    <string name="feel_better">Sentirme mejor con mi cuerpo</string>
-    <string name="female">Femenino</string>
+    <string name="feel_better">🤗 Sentirme mejor con mi cuerpo</string>
+    <string name="female">♀️ Femenino</string>
     <string name="finalizing_results">Finalizando resultados…</string>
     <string name="finalizing">Finalizando…</string>
     <string name="fix_result">Corregir resultado</string>
@@ -86,7 +86,7 @@
     <string name="food_ai_for_you">Food AI fue creado para personas como tú</string>
     <string name="food_ai_comprehensive_tracking">El seguimiento completo de alimentos de Food AI me permitió monitorear mi ingesta con precisión, llevando a una pérdida de peso significativa.</string>
     <string name="food_ai_scanner">food-ai-scanner.com</string>
-    <string name="gain_weight">Ganar peso</string>
+    <string name="gain_weight">📈 Ganar peso</string>
     <string name="gained_10lbs">Gané 10 libras de músculo siguiendo los planes nutricionales personalizados. ¡La función de seguimiento de micros es excelente!</string>
     <string name="gaining_muscle_breeze">Ganar músculo fue muy fácil gracias al seguimiento detallado de micros. ¡Food AI es un cambio de juego!</string>
     <string name="gallery">Galería</string>
@@ -107,19 +107,19 @@
     <string name="lost_15_lbs">¡Perdí 15 libras en 2 meses! Seguir mis calorías y macros con Food AI hizo que fuera tan fácil mantenerme en el camino.</string>
     <string name="imperial">Imperial</string>
     <string name="ingredients">Ingredientes</string>
-    <string name="lack_of_consistency">Falta de consistencia</string>
-    <string name="lack_of_meal_inspiration">Falta de inspiración para las comidas</string>
-    <string name="lack_of_support">Falta de apoyo</string>
+    <string name="lack_of_consistency">🙃 Falta de consistencia</string>
+    <string name="lack_of_meal_inspiration">🤔 Falta de inspiración para las comidas</string>
+    <string name="lack_of_support">😔 Falta de apoyo</string>
     <string name="learn_more_bmi">Aprende más sobre el IMC de la OMS</string>
     <string name="legal">Legal</string>
     <string name="limited_time_offer">¡Oferta por tiempo limitado: Prueba gratuita de 3 días!</string>
     <string name="loading_subscription">Cargando opciones de suscripción…</string>
     <string name="loading">Cargando…</string>
     <string name="log_exercise">Registrar ejercicio</string>
-    <string name="lose_weight">Perder peso</string>
+    <string name="lose_weight">📉 Perder peso</string>
     <string name="lost_20_lbs">Perdí 20 libras en 3 meses al rastrear diligentemente mi ingesta de alimentos con Food AI. Los conocimientos de la aplicación son invaluables.</string>
-    <string name="maintain">Mantener</string>
-    <string name="male">Masculino</string>
+    <string name="maintain">⚖️ Mantener</string>
+    <string name="male">♂️ Masculino</string>
     <string name="metric">Métrico</string>
     <string name="mock_data">Datos simulados</string>
     <string name="monthly">Mensual</string>
@@ -140,7 +140,7 @@
     <string name="overweight">Sobrepeso</string>
     <string name="personal_details">Datos personales</string>
     <string name="personal_details_title">Datos personales</string>
-    <string name="pescatarian">Pescetariano</string>
+    <string name="pescatarian">🐟 Pescetariano</string>
     <string name="please_enable_health_permissions_in_settings_to_allow_the_app_to_access_your_step_count_data">
         Por favor, habilite los permisos de Salud en Configuración para permitir que la aplicación acceda a sus datos de conteo de pasos.
     </string>
@@ -182,7 +182,7 @@
     <string name="set_intensity">Establecer intensidad</string>
     <string name="settings">Configuración</string>
     <string name="start_tracking_meals">Comience a rastrear las comidas de hoy tomando una foto rápida.</string>
-    <string name="stay_motivated">Manténgase motivado y consistente</string>
+    <string name="stay_motivated">🔥 Manténgase motivado y constante</string>
     <string name="step">Paso</string>
     <string name="step_count">Recuento de pasos</string>
     <string name="step_data_not_found">Datos de pasos no encontrados.</string>
@@ -202,7 +202,7 @@
     <string name="unable_to_access_healthkit">No se puede acceder a los datos de HealthKit.</string>
     <string name="unable_to_authorize_apple_health_access">No se puede autorizar el acceso a Apple Salud.</string>
     <string name="underweight">Bajo peso</string>
-    <string name="unhealthy_eating_habits">Hábitos alimenticios poco saludables</string>
+    <string name="unhealthy_eating_habits">🍔 Hábitos alimenticios poco saludables</string>
     <string name="unlock_all_features">Desbloquee todas las funciones</string>
     <string name="unlock_unlimited_access_and_exclusive_features">Desbloquee acceso ilimitado y funciones exclusivas actualizando a Premium. ¡Continúe disfrutando de la aplicación sin restricciones!</string>
     <string name="update">Actualizar</string>
@@ -213,8 +213,8 @@
     <string name="upgrade_to_premium_and_enjoy_all_features">Actualice a Premium y disfrute de todas las funciones sin limitaciones.</string>
     <string name="uploading_image">Subiendo imagen…</string>
     <string name="uploading">Subiendo…</string>
-    <string name="vegan">Vegano</string>
-    <string name="vegetarian">Vegetariano</string>
+    <string name="vegan">🌱 Vegano</string>
+    <string name="vegetarian">🥕 Vegetariano</string>
     <string name="view_recipe">Ver receta</string>
     <string name="we_use_your_step_count_data_from_apple_health">Utilizamos sus datos de conteo de pasos de Apple Salud para proporcionar información personalizada</string>
     <string name="step_count_data">Utilizamos sus datos de conteo de pasos de Apple Salud para proporcionar información personalizada y ayudarle a alcanzar sus objetivos de fitness.</string>
@@ -358,4 +358,9 @@
     <string name="time_range_last_30_days">Últimos 30 días</string>
     <string name="time_range_last_6_months">Últimos 6 meses</string>
     <string name="time_range_last_1_year">Último año</string>
+
+    <string name="analyzing_your_answers">Analizando tus respuestas</string>
+    <string name="calculating_your_calorie_goal">Calculando tu meta calórica</string>
+    <string name="estimating_your_progress">Estimando tu progreso</string>
+    <string name="finalizing_your_plan">Finalizando tu plan</string>
 </resources>

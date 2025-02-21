@@ -26,8 +26,8 @@
     <string name="billed_every_week">Billed every week</string>
     <string name="billed_every_year">Billed every year</string>
     <string name="BMI_guidelines">BMI categories and calculations are based on guidelines from the World Health Organization.</string>
-    <string name="Boost_energy_mood">Boost my energy and mood</string>
-    <string name="Busy_schedule">Busy schedule</string>
+    <string name="Boost_energy_mood">⚡ Boost my energy and mood</string>
+    <string name="Busy_schedule">⏰ Busy schedule</string>
     <string name="Calculating_nutrients">Calculating nutrients…</string>
     <string name="Calories_burned">Calories burned</string>
     <string name="Calories_left">Calories left</string>
@@ -36,7 +36,7 @@
     <string name="carbs_left">Carbs left</string>
     <string name="choose_your_gender">Choose your Gender</string>
     <string name="citations">Citations</string>
-    <string name="classic">Classic</string>
+    <string name="classic">🍽️ Classic</string>
     <string name="completed">Completed %%%lld</string>
     <string name="confirm_account_deletion">Confirm Account Deletion</string>
     <string name="congratulations_custom_plan">Congratulations \nyour custom plan is ready!</string>
@@ -65,7 +65,7 @@
     <string name="do_you_follow_a_specific_diet">Do you follow a specific diet?</string>
     <string name="done">Done</string>
     <string name="drag_over_the_chart_to_see_weight_details">Drag over the chart to see weight details</string>
-    <string name="eat_and_live_healthier">Eat and live healthier</string>
+    <string name="eat_and_live_healthier">🥗 Eat and live healthier</string>
     <string name="edit_weight">Edit Weight</string>
     <string name="edit_weight_goal">Edit Weight Goal</string>
     <string name="enjoy_unlimited_features_with_this_plan">Enjoy unlimited features with this plan.</string>
@@ -76,8 +76,8 @@
     <string name="example_frappuccino">Example: The frappuccino is missing the caramel drizzle and whipped topping.</string>
     <string name="experience_food_ai">Experience the full power of Food-AI</string>
     <string name="fat_left">Fat left</string>
-    <string name="feel_better">Feel better about my body</string>
-    <string name="female">Female</string>
+    <string name="feel_better">🤗 Feel better about my body</string>
+    <string name="female">♀️ Female</string>
     <string name="finalizing_results">Finalizing results…</string>
     <string name="finalizing">Finalizing…</string>
     <string name="fix_result">Fix Result</string>
@@ -86,7 +86,7 @@
     <string name="food_ai_for_you">Food AI was made for people like you</string>
     <string name="food_ai_comprehensive_tracking">Food AI\ns comprehensive food tracking allowed me to monitor my intake precisely, leading to significant weight loss.</string>
     <string name="food_ai_scanner">food-ai-scanner.com</string>
-    <string name="gain_weight">Gain Weight</string>
+    <string name="gain_weight">📈 Gain Weight</string>
     <string name="gained_10lbs">Gained 10 lbs of muscle by following the tailored nutrition plans. The micros tracking feature is excellent!</string>
     <string name="gaining_muscle_breeze">Gaining muscle was a breeze thanks to the detailed micros tracking. Food AI is a game-changer!</string>
     <string name="gallery">Gallery</string>
@@ -106,19 +106,19 @@
     <string name="lost_15_lbs">I lost 15 pounds in 2 months! Tracking my calories and macros with Food AI made it so easy to stay on track.</string>
     <string name="imperial">Imperial</string>
     <string name="ingredients">Ingredients</string>
-    <string name="lack_of_consistency">Lack of consistency</string>
-    <string name="lack_of_meal_inspiration">Lack of meal inspiration</string>
-    <string name="lack_of_support">Lack of support</string>
+    <string name="lack_of_consistency">🙃 Lack of consistency</string>
+    <string name="lack_of_meal_inspiration">🤔 Lack of meal inspiration</string>
+    <string name="lack_of_support">😔 Lack of support</string>
     <string name="learn_more_bmi">Learn more about BMI from the WHO</string>
     <string name="legal">Legal</string>
     <string name="limited_time_offer">Limited time offer: Try a 3-day free trial!</string>
     <string name="loading_subscription">Loading subscription options…</string>
     <string name="loading">Loading…</string>
     <string name="log_exercise">Log Exercise</string>
-    <string name="lose_weight">Lose Weight</string>
+    <string name="lose_weight">📉 Lose Weight</string>
     <string name="lost_20_lbs">I lost 20 pounds in 3 months by carefully tracking my food intake with Food AI. The app\'s insights are invaluable.</string>
-    <string name="maintain">Maintain</string>
-    <string name="male">Male</string>
+    <string name="maintain">⚖️ Maintain</string>
+    <string name="male">♂️ Male</string>
     <string name="metric">Metric</string>
     <string name="mock_data">Mock Data</string>
     <string name="monthly">Monthly</string>
@@ -138,7 +138,7 @@
     <string name="overweight">Overweight</string>
     <string name="personal_details">Personal details</string>
     <string name="personal_details_title">Personal Details</string>
-    <string name="pescatarian">Pescatarian</string>
+    <string name="pescatarian">🐟 Pescatarian</string>
     <string name="please_enable_health_permissions_in_settings_to_allow_the_app_to_access_your_step_count_data">
         Please enable health permissions in settings to allow the app to access your step count data.
     </string>
@@ -180,7 +180,7 @@
     <string name="set_intensity">Set intensity</string>
     <string name="settings">Settings</string>
     <string name="start_tracking_meals">Start tracking today\'s meals by taking a quick picture.</string>
-    <string name="stay_motivated">Stay motivated and consistent</string>
+    <string name="stay_motivated">🔥 Stay motivated and consistent</string>
     <string name="step">Step</string>
     <string name="step_count">Step Count</string>
     <string name="step_data_not_found">Step data not found.</string>
@@ -200,7 +200,7 @@
     <string name="unable_to_access_healthkit">Unable to access HealthKit data.</string>
     <string name="unable_to_authorize_apple_health_access">Unable to authorize Apple Health access.</string>
     <string name="underweight">Underweight</string>
-    <string name="unhealthy_eating_habits">Unhealthy eating habits</string>
+    <string name="unhealthy_eating_habits">🍔 Unhealthy eating habits</string>
     <string name="unlock_all_features">Unlock All Features</string>
     <string name="unlock_unlimited_access_and_exclusive_features">Unlock unlimited access and exclusive features by upgrading to Premium. Continue enjoying the App without any restrictions!</string>
     <string name="update">Update</string>
@@ -211,8 +211,8 @@
     <string name="upgrade_to_premium_and_enjoy_all_features">Upgrade to Premium and enjoy all features without limitations.</string>
     <string name="uploading_image">Uploading Image…</string>
     <string name="uploading">Uploading…</string>
-    <string name="vegan">Vegan</string>
-    <string name="vegetarian">Vegetarian</string>
+    <string name="vegan">🌱 Vegan</string>
+    <string name="vegetarian">🥕 Vegetarian</string>
     <string name="we_use_your_step_count_data_from_apple_health">We use your step count data from Apple Health to provide personalized insights</string>
     <string name="step_count_data">We use your step count data from Apple Health to provide personalized insights and help you achieve your fitness goals.</string>
     <string name="notify_when_done">We\'ll notify you when done!</string>
@@ -368,5 +368,10 @@
     <string name="time_range_last_30_days">Last 30 Days</string>
     <string name="time_range_last_6_months">Last 6 Months</string>
     <string name="time_range_last_1_year">Last 1 Year</string>
+
+    <string name="analyzing_your_answers">Analyzing your answers</string>
+    <string name="calculating_your_calorie_goal">Calculating your calorie goal</string>
+    <string name="estimating_your_progress">Estimating your progress</string>
+    <string name="finalizing_your_plan">Finalizing your plan</string>
 
 </resources>
