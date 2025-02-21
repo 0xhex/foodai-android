@@ -358,4 +358,9 @@
     <string name="time_range_last_30_days">Últimos 30 días</string>
     <string name="time_range_last_6_months">Últimos 6 meses</string>
     <string name="time_range_last_1_year">Último año</string>
+
+    <string name="analyzing_your_answers">Analizando tus respuestas</string>
+    <string name="calculating_your_calorie_goal">Calculando tu meta calórica</string>
+    <string name="estimating_your_progress">Estimando tu progreso</string>
+    <string name="finalizing_your_plan">Finalizando tu plan</string>
 </resources>
