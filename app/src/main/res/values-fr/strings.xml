@@ -25,8 +25,8 @@
     <string name="billed_every_week">Facturé chaque semaine</string>
     <string name="billed_every_year">Facturé chaque année</string>
     <string name="BMI_guidelines">Les catégories et calculs de l\nIMC sont basés sur les directives de l\nOrganisation mondiale de la santé.</string>
-    <string name="Boost_energy_mood">Booster mon énergie et mon humeur</string>
-    <string name="Busy_schedule">Emploi du temps chargé</string>
+    <string name="Boost_energy_mood">⚡ Booster mon énergie et mon humeur</string>
+    <string name="Busy_schedule">⏰ Emploi du temps chargé</string>
     <string name="Calculating_nutrients">Calcul des nutriments…</string>
     <string name="Calories_burned">Calories brûlées</string>
     <string name="Calories_left">Calories restantes</string>
@@ -35,7 +35,7 @@
     <string name="carbs_left">Glucides restants</string>
     <string name="choose_your_gender">Choisissez votre sexe</string>
     <string name="citations">Citations</string>
-    <string name="classic">Classique</string>
+    <string name="classic">🍽️ Classique</string>
     <string name="completed">Terminé %%%lld</string>
     <string name="confirm_account_deletion">Confirmer la suppression du compte</string>
     <string name="congratulations_custom_plan">Félicitations \nvotre plan personnalisé est prêt !</string>
@@ -65,7 +65,7 @@
     <string name="do_you_follow_a_specific_diet" translatable="false">Suivez-vous un régime spécifique ?</string>
     <string name="done" translatable="false">Terminé</string>
     <string name="drag_over_the_chart_to_see_weight_details" translatable="false">Glissez sur le graphique pour voir les détails du poids</string>
-    <string name="eat_and_live_healthier" translatable="false">Manger et vivre plus sainement</string>
+    <string name="eat_and_live_healthier">🥗 Manger et vivre plus sainement</string>
     <string name="edit_weight" translatable="false">Modifier le poids</string>
     <string name="edit_weight_goal" translatable="false">Modifier l\nobjectif de poids</string>
     <string name="enjoy_unlimited_features_with_this_plan" translatable="false">Profitez de fonctionnalités illimitées avec ce plan.</string>
@@ -76,8 +76,8 @@
     <string name="example_frappuccino">Exemple : Le frappuccino manque de filet de caramel et de crème fouettée.</string>
     <string name="experience_food_ai">Découvrez toute la puissance de Food-AI</string>
     <string name="fat_left">Lipides restants</string>
-    <string name="feel_better">Me sentir mieux dans mon corps</string>
-    <string name="female">Femme</string>
+    <string name="feel_better">🤗 Me sentir mieux dans mon corps</string>
+    <string name="female">♀️ Femme</string>
     <string name="finalizing_results">Finalisation des résultats…</string>
     <string name="finalizing">Finalisation…</string>
     <string name="fix_result">Corriger le résultat</string>
@@ -86,7 +86,7 @@
     <string name="food_ai_for_you">Food AI a été créé pour des gens comme vous</string>
     <string name="food_ai_comprehensive_tracking">Le suivi alimentaire complet de Food AI m\na permis de surveiller précisément mon apport, conduisant à une perte de poids significative.</string>
     <string name="food_ai_scanner">food-ai-scanner.com</string>
-    <string name="gain_weight">Prendre du poids</string>
+    <string name="gain_weight">📈 Prendre du poids</string>
     <string name="gained_10lbs">J\nai gagné 10 livres de muscle en suivant les plans nutritionnels sur mesure. La fonction de suivi des micros est excellente !</string>
     <string name="gaining_muscle_breeze">Gagner du muscle a été un jeu d\nenfant grâce au suivi détaillé des micros. Food AI change la donne!</string>
     <string name="gallery">Galerie</string>
@@ -107,19 +107,19 @@
     <string name="lost_15_lbs">J\nai perdu 15 livres en 2 mois ! Suivre mes calories et macros avec Food AI a rendu si facile de rester sur la bonne voie.</string>
     <string name="imperial">Impérial</string>
     <string name="ingredients">Ingrédients</string>
-    <string name="lack_of_consistency">Manque de cohérence</string>
-    <string name="lack_of_meal_inspiration">Manque d\ninspiration pour les repas</string>
-    <string name="lack_of_support">Manque de soutien</string>
+    <string name="lack_of_consistency">🙃 Manque de cohérence</string>
+    <string name="lack_of_meal_inspiration">🤔 Manque d\'inspiration pour les repas</string>
+    <string name="lack_of_support">😔 Manque de soutien</string>
     <string name="learn_more_bmi">En savoir plus sur l\nIMC de l\nOMS</string>
     <string name="legal">Mentions légales</string>
     <string name="limited_time_offer">Offre à durée limitée : Essayez l\nessai gratuit de 3 jours !</string>
     <string name="loading_subscription">Chargement des options d\nabonnement…</string>
     <string name="loading">Chargement…</string>
     <string name="log_exercise">Enregistrer un exercice</string>
-    <string name="lose_weight">Perdre du poids</string>
+    <string name="lose_weight">📉 Perdre du poids</string>
     <string name="lost_20_lbs">J\nai perdu 20 livres en 3 mois en suivant assidûment mon apport alimentaire avec Food AI. Les insights de l\napplication sont inestimables.</string>
-    <string name="maintain">Maintenir</string>
-    <string name="male">Homme</string>
+    <string name="maintain">⚖️ Maintenir</string>
+    <string name="male">♂️ Homme</string>
     <string name="metric">Métrique</string>
     <string name="mock_data">Données fictives</string>
     <string name="monthly">Mensuel</string>
@@ -140,7 +140,7 @@
     <string name="overweight">Surpoids</string>
     <string name="personal_details">Détails personnels</string>
     <string name="personal_details_title">Détails personnels</string>
-    <string name="pescatarian">Pescétarien</string>
+    <string name="pescatarian">🐟 Pescétarien</string>
     <string name="please_enable_health_permissions_in_settings_to_allow_the_app_to_access_your_step_count_data">
         Veuillez activer les autorisations Santé dans les paramètres pour permettre à l\napplication d\naccéder à vos données de nombre de pas.
     </string>
@@ -182,7 +182,7 @@
     <string name="set_intensity">Définir l\nintensité</string>
     <string name="settings">Paramètres</string>
     <string name="start_tracking_meals">Commencez à suivre les repas d\naujourd\nhui en prenant une photo rapide.</string>
-    <string name="stay_motivated">Restez motivé et constant</string>
+    <string name="stay_motivated">🔥 Restez motivé et constant</string>
     <string name="step">Étape</string>
     <string name="step_count">Nombre de pas</string>
     <string name="step_data_not_found">Données de pas introuvables.</string>
@@ -202,7 +202,7 @@
     <string name="unable_to_access_healthkit">Impossible d\naccéder aux données HealthKit.</string>
     <string name="unable_to_authorize_apple_health_access">Impossible d\nautoriser l\naccès à Apple Santé.</string>
     <string name="underweight">Insuffisance pondérale</string>
-    <string name="unhealthy_eating_habits">Habitudes alimentaires malsaines</string>
+    <string name="unhealthy_eating_habits">🍔 Habitudes alimentaires malsaines</string>
     <string name="unlock_all_features">Débloquez toutes les fonctionnalités</string>
     <string name="unlock_unlimited_access_and_exclusive_features">Débloquez un accès illimité et des fonctionnalités exclusives en passant à Premium. Continuez à profiter de l\napplication sans aucune restriction !</string>
     <string name="update">Mettre à jour</string>
@@ -213,8 +213,8 @@
     <string name="upgrade_to_premium_and_enjoy_all_features">Passez à Premium et profitez de toutes les fonctionnalités sans limitations.</string>
     <string name="uploading_image">Téléchargement de l\nimage…</string>
     <string name="uploading">Téléchargement…</string>
-    <string name="vegan">Végan</string>
-    <string name="vegetarian">Végétarien</string>
+    <string name="vegan">🌱 Végan</string>
+    <string name="vegetarian">🥕 Végétarien</string>
     <string name="view_recipe">Voir la recette</string>
     <string name="we_use_your_step_count_data_from_apple_health">Nous utilisons vos données de nombre de pas d\nApple Santé pour fournir des informations personnalisées</string>
     <string name="step_count_data">Nous utilisons vos données de nombre de pas d\nApple Santé pour fournir des informations personnalisées et vous aider à atteindre vos objectifs de forme physique.</string>
