@@ -3,12 +3,10 @@ package com.codepad.foodai.ui.user_property.rating
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.commit
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentRatingBinding
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.UserPropertySharedViewModel
-import com.codepad.foodai.ui.user_property.loading.LoadingFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Timer
 import java.util.TimerTask

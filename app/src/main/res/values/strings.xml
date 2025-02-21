@@ -369,4 +369,9 @@
     <string name="time_range_last_6_months">Last 6 Months</string>
     <string name="time_range_last_1_year">Last 1 Year</string>
 
+    <string name="analyzing_your_answers">Analyzing your answers</string>
+    <string name="calculating_your_calorie_goal">Calculating your calorie goal</string>
+    <string name="estimating_your_progress">Estimating your progress</string>
+    <string name="finalizing_your_plan">Finalizing your plan</string>
+
 </resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Outer blur -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#0D0A84FF" />
+            <size android:width="420dp" android:height="420dp" />
+        </shape>
+    </item>
+    <!-- Inner blur -->
+    <item android:left="32dp" android:top="32dp" android:right="32dp" android:bottom="32dp">
+        <shape android:shape="oval">
+            <solid android:color="#1A007aff" />
+        </shape>
+    </item>
+</layer-list> 
