@@ -1,11 +1,16 @@
 package com.codepad.foodai.ui.home.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewpager2.widget.ViewPager2
@@ -17,10 +22,12 @@ import com.codepad.foodai.extensions.applyPaywallStyle
 import com.codepad.foodai.extensions.applyStyle
 import com.codepad.foodai.extensions.getFormattedDate
 import com.codepad.foodai.extensions.toHourString
+import com.codepad.foodai.helpers.HealthConnectStatus
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.HomeViewModel
 import com.codepad.foodai.ui.home.MenuOption
+import com.codepad.foodai.ui.home.home.adapter.WaterGlassAdapter
 import com.codepad.foodai.ui.home.home.calendar.CalendarAdapter
 import com.codepad.foodai.ui.home.home.calendar.CalendarUtils
 import com.codepad.foodai.ui.home.home.pager.HomePagerViewModel
@@ -41,6 +48,8 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
     private var selectedCalendarPosition: Pair<Int, Int>? = null
     private var selectedCalendarItem: Triple<Date, Int, String>? = null
     private lateinit var imageAdapter: ImageAdapter
+    private lateinit var waterGlassAdapter: WaterGlassAdapter
+    private var selectedDate = Date()
 
     override fun getLayoutId(): Int = R.layout.fragment_home_tab
 
@@ -50,6 +59,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
         setupRecyclerView()
         setupStreakView()
         setupEmptyView()
+        setupDailyMissions()
 
         sharedViewModel.homeEvent.observe(viewLifecycleOwner) { event ->
             when (event) {
@@ -80,8 +90,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                 is HomeViewModel.HomeEvent.OnImageFetchError -> {}
                 is HomeViewModel.HomeEvent.OnImageFetchStarted -> {
                     val loadingItem = ImageItem.Loading(
-                        image = event.bitmap,
-                        statusMessages = listOf(
+                        image = event.bitmap, statusMessages = listOf(
                             getString(R.string.detecting_ingredients),
                             getString(R.string.calculating_nutritional_values),
                             getString(R.string.finalizing_your_meal_summary)
@@ -95,18 +104,14 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
                 is HomeViewModel.HomeEvent.OnImageFetchSuccess -> {
                     val existingItems = imageAdapter.foodItems.filterNot { it is ImageItem.Loading }
-                    val items = listOf(
-                        ImageItem.Standard(
-                            image = event.response.url,
-                            title = event.response.ingredients?.joinToString { it.name.orEmpty() }
-                                .orEmpty(),
-                            calories = event.response.calories.toString(),
-                            protein = event.response.protein.toString(),
-                            carb = event.response.carbs.toString(),
-                            fats = event.response.fats.toString(),
-                            hour = event.response.createdAt?.toHourString().toString()
-                        )
-                    )
+                    val items = listOf(ImageItem.Standard(image = event.response.url,
+                        title = event.response.ingredients?.joinToString { it.name.orEmpty() }
+                            .orEmpty(),
+                        calories = event.response.calories.toString(),
+                        protein = event.response.protein.toString(),
+                        carb = event.response.carbs.toString(),
+                        fats = event.response.fats.toString(),
+                        hour = event.response.createdAt?.toHourString().toString()))
                     imageAdapter.setItems(items + existingItems)
                     updateEmptyViewVisibility()
 
@@ -137,8 +142,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
             meals.forEach { meal ->
                 allItems.add(
                     Triple(
-                        meal.createdAt,
-                        ImageItem.Standard(
+                        meal.createdAt, ImageItem.Standard(
                             image = meal.url,
                             title = meal.ingredients?.joinToString { it.name.orEmpty() }.orEmpty(),
                             calories = meal.calories.toString(),
@@ -146,8 +150,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                             carb = meal.carbs.toString(),
                             fats = meal.fats.toString(),
                             hour = meal.createdAt?.toHourString().orEmpty()
-                        ),
-                        false // isLoading flag
+                        ), false // isLoading flag
                     )
                 )
             }
@@ -156,18 +159,15 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
             exercises.forEach { exercise ->
                 allItems.add(
                     Triple(
-                        exercise.createdAt,
-                        ImageItem.Exercise(
+                        exercise.createdAt, ImageItem.Exercise(
                             exerciseData = exercise
-                        ),
-                        false // isLoading flag
+                        ), false // isLoading flag
                     )
                 )
             }
 
             // Sort all items by timestamp (newest first)
-            allItems.sortWith(compareByDescending<Triple<Date?, ImageItem, Boolean>> { it.first }
-                .thenBy { it.third }) // Loading items go first if timestamps are equal
+            allItems.sortWith(compareByDescending<Triple<Date?, ImageItem, Boolean>> { it.first }.thenBy { it.third }) // Loading items go first if timestamps are equal
 
             // Combine loading items with sorted content items
             val finalItems = loadingItems + allItems.map { it.second }
@@ -189,19 +189,24 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
     private fun setupCalendarView() {
         val calendarView = binding.rvCalendar
         calendarView.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         val weeks = CalendarUtils.generateMonthDays()
         selectedCalendarPosition = CalendarUtils.findCurrentDayPosition(weeks)
         selectedCalendarItem =
             weeks[selectedCalendarPosition!!.first][selectedCalendarPosition!!.second]
-        calendarAdapter =
-            CalendarAdapter(weeks, selectedCalendarPosition) { mainPosition, subPosition, item ->
+        calendarAdapter = CalendarAdapter(weeks,
+            selectedCalendarPosition,
+            onSubItemSelected = { mainPosition, subPosition, item ->
                 selectedCalendarPosition = Pair(mainPosition, subPosition)
                 selectedCalendarItem = item
                 calendarAdapter.updateSelectedPosition(selectedCalendarPosition)
                 fetchDataForSelectedDate(item.first)
-            }
+
+                selectedDate = item.first
+                viewModel.getWaterIntakeForDate(selectedDate)
+            })
+
         calendarView.adapter = calendarAdapter
 
         PagerSnapHelper().attachToRecyclerView(calendarView)
@@ -233,49 +238,44 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
     private fun setupRecyclerView() {
         binding.rvFood.layoutManager = LinearLayoutManager(requireContext())
-        imageAdapter = ImageAdapter(
-            foodItems = emptyList(),
-            onItemClick = { item ->
-                when (item) {
-                    is ImageItem.Standard -> {
-                        val foodDetail =
-                            viewModel.dailySummary.value?.meals?.firstOrNull { it.url == item.image }
-                        if (foodDetail != null) {
-                            viewModel.setFoodDetail(foodDetail)
-                            findNavController().navigate(R.id.action_home_tab_to_food_detail)
-                        }
-                    }
-
-                    is ImageItem.Exercise -> {
-                        when (item.exerciseData.exerciseType) {
-                            "run", "weightlifting" -> {
-                                val bundle = Bundle().apply {
-                                    putParcelable("exerciseData", item.exerciseData)
-                                }
-                                findNavController().navigate(
-                                    R.id.action_home_tab_to_exercise_detail,
-                                    bundle
-                                )
-                            }
-
-                            else -> {
-                                val bundle = Bundle().apply {
-                                    putParcelable("exerciseData", item.exerciseData)
-                                }
-                                findNavController().navigate(
-                                    R.id.action_home_tab_to_describe_exercise_detail,
-                                    bundle
-                                )
-                            }
-                        }
-                    }
-
-                    else -> {
-                        // Handle loading items if needed
+        imageAdapter = ImageAdapter(foodItems = emptyList(), onItemClick = { item ->
+            when (item) {
+                is ImageItem.Standard -> {
+                    val foodDetail =
+                        viewModel.dailySummary.value?.meals?.firstOrNull { it.url == item.image }
+                    if (foodDetail != null) {
+                        viewModel.setFoodDetail(foodDetail)
+                        findNavController().navigate(R.id.action_home_tab_to_food_detail)
                     }
                 }
+
+                is ImageItem.Exercise -> {
+                    when (item.exerciseData.exerciseType) {
+                        "run", "weightlifting" -> {
+                            val bundle = Bundle().apply {
+                                putParcelable("exerciseData", item.exerciseData)
+                            }
+                            findNavController().navigate(
+                                R.id.action_home_tab_to_exercise_detail, bundle
+                            )
+                        }
+
+                        else -> {
+                            val bundle = Bundle().apply {
+                                putParcelable("exerciseData", item.exerciseData)
+                            }
+                            findNavController().navigate(
+                                R.id.action_home_tab_to_describe_exercise_detail, bundle
+                            )
+                        }
+                    }
+                }
+
+                else -> {
+                    // Handle loading items if needed
+                }
             }
-        )
+        })
         binding.rvFood.adapter = imageAdapter
     }
 
@@ -324,9 +324,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
         )
         val iconPadding = resources.getDimensionPixelOffset(R.dimen.dimen_4dp)
         snack.addIcon(
-            R.drawable.ic_sad,
-            iconPadding,
-            applyTint = true
+            R.drawable.ic_sad, iconPadding, applyTint = true
         )
         snack.applyPaywallStyle()
         snack.show()
@@ -343,4 +341,116 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
         snack.show()
     }
 
+    private fun setupDailyMissions() {
+        setupWaterIntake()
+        setupDailySteps()
+    }
+
+    private fun setupWaterIntake() {
+        val binding = binding.dailyWaterIntakeView
+
+        waterGlassAdapter = WaterGlassAdapter(
+            glassCount = 18, currentGlasses = 0
+        ) { position ->
+            viewModel.incrementWaterIntake(selectedDate)
+        }
+
+        binding.rvWaterGlasses.apply {
+            layoutManager = GridLayoutManager(context, 6)
+            adapter = waterGlassAdapter
+        }
+
+        // Load initial water intake data
+        viewModel.getWaterIntakeForDate(selectedDate)
+
+        viewModel.waterIntake.observe(viewLifecycleOwner) { glasses ->
+            waterGlassAdapter.updateCurrentGlasses(glasses)
+            binding.txtCurrentWater.text = String.format(" Current: %.2f L", glasses * 0.25)
+
+            viewModel.targetWaterIntake.value?.let { target ->
+                val progress = (glasses * 0.25 / target * 100).toInt()
+                binding.progressWater.progress = progress
+            }
+        }
+
+        viewModel.targetWaterIntake.observe(viewLifecycleOwner) { target ->
+            binding.txtTargetWater.text = String.format("Target: %.2f L", target)
+        }
+
+        UserSession.user?.let { user ->
+            viewModel.calculateTargetWaterIntake(user)
+        }
+    }
+
+    private fun setupDailySteps() {
+        val binding = binding.dailyStepsView
+
+        if (viewModel.isHealthConnectSupported() || viewModel.isHealthConnectSDKAvailable(
+                requireContext()
+            )
+        ) {
+            viewModel.initHealthConnect(this)
+            viewModel.checkHealthConnectStatus {
+                // Connected callback
+            }
+        }
+
+        binding.notConnectedView.btnAuthorize.setOnClickListener {
+            if (viewModel.isHealthConnectSupported() || viewModel.isHealthConnectSDKAvailable(
+                    requireContext()
+                )
+            ) {
+                viewModel.requestHealthConnect()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.install_health_connect_toast),
+                    Toast.LENGTH_LONG
+                ).show()
+                val playStoreIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.healthdata&hl=en")
+                )
+                startActivity(playStoreIntent)
+            }
+        }
+
+        viewModel.healthConnectStatus.observe(viewLifecycleOwner) { status ->
+            binding.connectedView.isVisible = status == HealthConnectStatus.CONNECTED
+            binding.notConnectedView.root.isVisible = status != HealthConnectStatus.CONNECTED
+        }
+
+        viewModel.currentSteps.observe(viewLifecycleOwner) { steps ->
+            binding.txtStepsCount.text = "$steps/${viewModel.targetSteps.value ?: 0}"
+
+            viewModel.targetSteps.value?.let { target ->
+                val progress = (steps.toFloat() / target * 100).toInt()
+                binding.progressSteps.progress = progress
+            }
+
+            val distance = viewModel.stepsDistance.value ?: 0.0
+            val calories = viewModel.stepsBurnedCalories.value ?: 0
+            binding.txtStepsInfo.text = String.format("%.2f km, %d kcal", distance, calories)
+        }
+
+        UserSession.user?.let { user ->
+            viewModel.calculateTargetSteps(user)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh water intake data when returning to the fragment
+        viewModel.getWaterIntakeForDate(selectedDate)
+
+        // Existing health connect check
+        if (viewModel.isHealthConnectSupported() || viewModel.isHealthConnectSDKAvailable(
+                requireContext()
+            )
+        ) {
+            viewModel.checkHealthConnectStatus {
+                // Connected callback
+            }
+        }
+    }
 }

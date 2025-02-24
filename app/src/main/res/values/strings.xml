@@ -380,5 +380,6 @@
 
     <string name="empty_food_title">You haven\'t uploaded any food</string>
     <string name="empty_food_desc">Start tracking today\'s meals by taking a quick picture.</string>
+    <string name="daily_missions">Daily Missions</string>
 
 </resources>

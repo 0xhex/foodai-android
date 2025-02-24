@@ -11,8 +11,10 @@ import java.util.Date
 class CalendarAdapter(
     private val items: List<List<Triple<Date, Int, String>>>,
     private var selectedPosition: Pair<Int, Int>?,
-    private val onSubItemSelected: (Int, Int, Triple<Date, Int, String>) -> Unit,
+    private val onSubItemSelected: (Int, Int, Triple<Date, Int, String>) -> Unit
 ) : RecyclerView.Adapter<CalendarAdapter.MainViewHolder>() {
+
+    var onDateSelected: ((Date) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_calendar, parent, false)
