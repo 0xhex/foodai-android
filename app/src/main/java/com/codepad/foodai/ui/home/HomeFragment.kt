@@ -119,6 +119,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
         viewLifecycleOwner.lifecycleScope.launch {
             OneSignal.Notifications.requestPermission(true)
         }
+        OneSignal.login(UserSession.user?.id.orEmpty())
     }
 
     private fun showLoadingView(loadingType: LoadingType) {
