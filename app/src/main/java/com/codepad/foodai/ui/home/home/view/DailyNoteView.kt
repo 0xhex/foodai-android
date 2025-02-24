@@ -1,11 +1,11 @@
 package com.codepad.foodai.ui.home.home.view
 
+import MoodChipsAdapter
 import android.content.Context
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codepad.foodai.R
 import com.codepad.foodai.domain.models.note.DailyNote
-import com.codepad.foodai.ui.home.home.adapter.MoodChipAdapter
 import com.google.android.material.card.MaterialCardView
 
 class DailyNoteView @JvmOverloads constructor(
@@ -27,7 +26,7 @@ class DailyNoteView @JvmOverloads constructor(
     private lateinit var txtNoteContent: TextView
     private lateinit var btnStartJournaling: TextView
     private lateinit var rvMoodChips: RecyclerView
-    private val moodAdapter = MoodChipAdapter({ /* Read-only in this view */ }, false)
+    private val moodAdapter = MoodChipsAdapter({ /* Read-only in this view */ }, false)
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_daily_note_content, this, true)
@@ -48,7 +47,12 @@ class DailyNoteView @JvmOverloads constructor(
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = moodAdapter
             addItemDecoration(object : RecyclerView.ItemDecoration() {
-                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+                override fun getItemOffsets(
+                    outRect: Rect,
+                    view: View,
+                    parent: RecyclerView,
+                    state: RecyclerView.State,
+                ) {
                     outRect.right = resources.getDimensionPixelSize(R.dimen.dimen_8dp)
                     if (parent.getChildAdapterPosition(view) == 0) {
                         outRect.left = resources.getDimensionPixelSize(R.dimen.dimen_8dp)

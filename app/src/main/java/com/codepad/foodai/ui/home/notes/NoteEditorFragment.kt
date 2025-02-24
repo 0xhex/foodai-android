@@ -71,9 +71,12 @@ class NoteEditorFragment : BaseFragment<FragmentNoteEditorBinding>() {
     }
 
     private fun setupMoodChips() {
-        moodAdapter = MoodChipsAdapter({ moods ->
-            selectedMoods = moods.joinToString(",")
-        })
+        moodAdapter = MoodChipsAdapter(
+            onMoodSelected = { moods ->
+                selectedMoods = moods.joinToString(",")
+            },
+            isEditing = true
+        )
 
         // Calculate span count dynamically
         val screenWidth = resources.displayMetrics.widthPixels
@@ -83,16 +86,14 @@ class NoteEditorFragment : BaseFragment<FragmentNoteEditorBinding>() {
 
         // Calculate minimum chip width based on longest text
         val paint = android.graphics.Paint().apply {
-            textSize = resources.getDimensionPixelSize(R.dimen.dimen_14dp).toFloat() // Chip text size
+            textSize = resources.getDimensionPixelSize(R.dimen.dimen_14dp).toFloat()
         }
         
-        // Get longest chip width
-        val longestChipText = getString(R.string.mood_stomach_ache) // One of the longer mood texts
+        val longestChipText = getString(R.string.mood_stomach_ache)
         val textWidth = paint.measureText(longestChipText)
-        val chipPadding = resources.getDimensionPixelSize(R.dimen.dimen_16dp) * 2 // Horizontal padding
+        val chipPadding = resources.getDimensionPixelSize(R.dimen.dimen_16dp) * 2
         val minChipWidth = (textWidth + chipPadding).toInt()
 
-        // Calculate optimal span count
         val spanCount = (availableWidth / (minChipWidth + chipSpacing)).coerceIn(2, 3)
 
         binding.rvMoodChips.apply {
