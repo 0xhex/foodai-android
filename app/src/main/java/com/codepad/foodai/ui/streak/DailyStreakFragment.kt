@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -78,6 +79,24 @@ class DailyStreakFragment : BaseFragment<FragmentDailyStreakBinding>() {
             val dayText = view.findViewById<TextView>(R.id.day_text)
             val circleBackground = view.findViewById<View>(R.id.circle_background)
             lateinit var day: WeekDay
+
+            init {
+                view.setOnClickListener {
+                    // Optional: Add click animation
+                    view.animate()
+                        .scaleX(1.1f)
+                        .scaleY(1.1f)
+                        .setDuration(100)
+                        .withEndAction {
+                            view.animate()
+                                .scaleX(1f)
+                                .scaleY(1f)
+                                .setDuration(100)
+                                .start()
+                        }
+                        .start()
+                }
+            }
         }
 
         binding.weekCalendarView.dayBinder = object : WeekDayBinder<DayViewContainer> {
@@ -91,8 +110,17 @@ class DailyStreakFragment : BaseFragment<FragmentDailyStreakBinding>() {
                 viewModel.selectedDays.value?.let { selectedDays ->
                     val isSelected = selectedDays.getOrNull(dayIndex) ?: false
                     container.circleBackground.isSelected = isSelected
+                    
+                    // Add shadow effect for selected days
+                    if (isSelected) {
+                        ViewCompat.setElevation(container.circleBackground, 8f)
+                    } else {
+                        ViewCompat.setElevation(container.circleBackground, 0f)
+                    }
+
                     container.dayText.setTextColor(
-                        requireContext().getColor(
+                        ContextCompat.getColor(
+                            requireContext(),
                             if (isSelected) R.color.white else R.color.gray
                         )
                     )

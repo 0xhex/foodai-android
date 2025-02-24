@@ -26,5 +26,6 @@
     <color name="orange_start">#FF9500</color>
     <color name="orange_end">#FFD700</color>
     <color name="orange_shadow">#80FF9500</color>
+    <color name="gray_50">#80808080</color>
 
 </resources>
