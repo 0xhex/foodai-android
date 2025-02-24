@@ -21,9 +21,14 @@ import com.codepad.foodai.domain.use_cases.image.FixImageResultsUseCase
 import com.codepad.foodai.domain.use_cases.recommendation.GetRecommendationUseCase
 import com.codepad.foodai.domain.use_cases.recommendation.RequestRecommendationsUseCase
 import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
+import com.codepad.foodai.domain.use_cases.user.GetUserWeightLogsUseCase
+import com.codepad.foodai.domain.use_cases.user.UpdateUserFieldUseCase
 import com.codepad.foodai.extensions.toFormattedString
 import com.codepad.foodai.helpers.HealthConnectStatus
+import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.home.settings.health.HealthConnectManager
+import com.codepad.foodai.domain.models.note.DailyNote
+import com.codepad.foodai.helpers.NotesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -40,8 +45,11 @@ class HomePagerViewModel @Inject constructor(
     private val fixImageResultsUseCase: FixImageResultsUseCase,
     private val requestRecommendationsUseCase: RequestRecommendationsUseCase,
     private val getRecommendationUseCase: GetRecommendationUseCase,
+    private val getUserWeightLogsUseCase: GetUserWeightLogsUseCase,
+    private val updateUserFieldUseCase: UpdateUserFieldUseCase,
     private val sharedPreferences: SharedPreferences,
     private val healthConnectManager: HealthConnectManager,
+    private val notesManager: NotesManager
 ) : ViewModel() {
 
     private val _dailySummary = MutableLiveData<DailySummaryResponseData>()
@@ -100,6 +108,12 @@ class HomePagerViewModel @Inject constructor(
 
     private val _healthConnectStatus = MutableLiveData<HealthConnectStatus>()
     val healthConnectStatus: LiveData<HealthConnectStatus> = _healthConnectStatus
+
+    private val _currentNote = MutableLiveData<DailyNote?>()
+    val currentNote: LiveData<DailyNote?> = _currentNote
+
+    private val _showWeightUpdateBanner = MutableLiveData<Boolean>()
+    val showWeightUpdateBanner: LiveData<Boolean> = _showWeightUpdateBanner
 
     private fun parseDate(dateString: String): Date? {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
@@ -359,5 +373,73 @@ class HomePagerViewModel @Inject constructor(
             age--
         }
         return age
+    }
+
+    fun getNote(date: Date): DailyNote? {
+        return notesManager.fetchNote(date)
+    }
+
+    fun saveNote(date: Date, noteText: String, mood: String = "") {
+        val note = DailyNote(
+            keyDate = DailyNote.dateKeyString(date),
+            noteText = noteText,
+            mood = mood
+        )
+        notesManager.saveNote(note)
+        _currentNote.value = note
+    }
+
+    fun loadNoteForDate(date: Date) {
+        _currentNote.value = getNote(date)
+    }
+
+    fun updateWeight(weight: Double) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            UserSession.user?.id?.let { userId ->
+                when (val result = updateUserFieldUseCase.updateUserFields(
+                    userID = userId,
+                    fieldName = "weight",
+                    fieldValue = weight.toString()
+                )) {
+                    is UseCaseResult.Success -> {
+                        // Update local user
+                        val updatedUser = UserSession.user?.copy(weight = weight)
+                        updatedUser?.let { UserSession.updateSession(it) }
+                        
+                        // Check if we should show banner
+                        checkWeightUpdateBanner()
+                    }
+                    is UseCaseResult.Error -> {
+                        // Handle error
+                    }
+                }
+            }
+            _isLoading.value = false
+        }
+    }
+
+    fun checkWeightUpdateBanner() {
+        viewModelScope.launch {
+            UserSession.user?.id?.let { userId ->
+                when (val result = getUserWeightLogsUseCase.getUserWeightLogs(userId)) {
+                    is UseCaseResult.Success -> {
+                        val logs = result.data
+                        val sevenDaysAgo = Calendar.getInstance().apply {
+                            add(Calendar.DAY_OF_YEAR, -7)
+                        }.time
+
+                        _showWeightUpdateBanner.value = when {
+                            logs.isEmpty() -> true
+                            logs.firstOrNull()?.date!! < sevenDaysAgo -> true
+                            else -> false
+                        }
+                    }
+                    is UseCaseResult.Error -> {
+                        // Handle error
+                    }
+                }
+            }
+        }
     }
 }

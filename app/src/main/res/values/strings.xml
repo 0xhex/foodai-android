@@ -386,4 +386,37 @@
     <string name="glass_info">1 Glass (250 ML)</string>
     <string name="current_water">Current: %s L</string>
     <string name="target_water">Target: %s L</string>
+
+    <!-- Body Weight Section -->
+    <string name="body_weight">Body Weight</string>
+    <string name="weight_target">Target: %1$d %2$s</string>
+
+    <!-- Notes Section -->
+    <string name="notes">Notes</string>
+    <string name="capture_your_day">Capture Your Day</string>
+    <string name="reflect_on_experiences">Reflect on your experiences and emotions to create meaningful daily insights</string>
+    <string name="start_journaling">Start Journaling</string>
+    <string name="daily_journal">Daily Journal</string>
+    <string name="no_additional_notes">No additional notes…</string>
+    <string name="today_date">Today, %s</string>
+    <string name="add_notes_here">Add your notes here…</string>
+    <string name="characters_left">%d characters left</string>
+    <string name="select_moods_symptoms">Select Moods / Symptoms</string>
+    <string name="back">Back</string>
+
+    <!-- Moods -->
+    <string name="mood_allergy">🤧 Allergy</string>
+    <string name="mood_heartbreak">💔 Heartbreak</string>
+    <!-- Add all other moods... -->
+
+    <!-- Weight Update Banner -->
+    <string name="weight_update_available">Weight Update Available</string>
+    <string name="weight_update_message">Keep your progress accurate by updating your current weight.</string>
+    <string name="later">Later</string>
+    <string name="update_now">Update Now</string>
+
+    <!-- Colors -->
+    <color name="amber_20">#33FFC107</color>
+    <color name="gray_20">#33868686</color>
+    <color name="custom_dark_gray_80">#CC323233</color>
 </resources>

@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -16,6 +19,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewpager2.widget.ViewPager2
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentHomeTabBinding
+import com.codepad.foodai.databinding.ViewWeightUpdateBannerBinding
 import com.codepad.foodai.domain.models.ErrorCode
 import com.codepad.foodai.extensions.addIcon
 import com.codepad.foodai.extensions.applyPaywallStyle
@@ -35,6 +39,8 @@ import com.codepad.foodai.ui.home.home.pager.ViewPagerAdapter
 import com.codepad.foodai.ui.home.home.pager.goals.GoalViewFragment
 import com.codepad.foodai.ui.home.home.pager.health.GoogleHealthFragment
 import com.codepad.foodai.ui.home.home.pager.recipe.FoodRecipesFragment
+import com.codepad.foodai.ui.home.home.view.BodyWeightView
+import com.codepad.foodai.ui.home.home.view.DailyNoteView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
@@ -50,6 +56,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
     private lateinit var imageAdapter: ImageAdapter
     private lateinit var waterGlassAdapter: WaterGlassAdapter
     private var selectedDate = Date()
+    private var weightUpdateBanner: ViewWeightUpdateBannerBinding? = null
 
     override fun getLayoutId(): Int = R.layout.fragment_home_tab
 
@@ -183,6 +190,14 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
         sharedViewModel.dailyStreak.observe(viewLifecycleOwner) { streak ->
             binding.txtStreak.text = streak?.currentStreak?.toString() ?: "0"
+        }
+
+        viewModel.showWeightUpdateBanner.observe(viewLifecycleOwner) { show ->
+            if (show) {
+                showWeightUpdateBanner()
+            } else {
+                hideWeightUpdateBanner()
+            }
         }
     }
 
@@ -344,6 +359,8 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
     private fun setupDailyMissions() {
         setupWaterIntake()
         setupDailySteps()
+        setupBodyWeight()
+        setupDailyNote()
     }
 
     private fun setupWaterIntake() {
@@ -437,6 +454,58 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
         }
     }
 
+    private fun setupBodyWeight() {
+        UserSession.user?.let { user ->
+            (binding.bodyWeightView as BodyWeightView).apply {
+                updateWeight(
+                    currentWeight = user.weight ?: 70.0,
+                    targetWeight = user.targetWeight ?: 70,
+                    isMetric = user.isMetric ?: true
+                )
+
+                setOnWeightChangeListener(
+                    onIncrease = {
+                        val newWeight = (user.weight ?: 70.0) + 1
+                        viewModel.updateWeight(newWeight)
+                    },
+                    onDecrease = {
+                        val newWeight = (user.weight ?: 70.0) - 1
+                        viewModel.updateWeight(newWeight)
+                    }
+                )
+            }
+        }
+    }
+
+    private fun setupDailyNote() {
+        (binding.dailyNoteView as DailyNoteView).apply {
+            setOnStartJournalingClickListener {
+                navigateToNoteEditor()
+            }
+
+            setOnNoteClickListener {
+                navigateToNoteEditor()
+            }
+
+            viewModel.currentNote.observe(viewLifecycleOwner) { note ->
+                updateNote(note)
+            }
+
+            // Load note for current date
+            viewModel.loadNoteForDate(selectedDate)
+        }
+    }
+
+    private fun navigateToNoteEditor() {
+        findNavController().navigate(
+            HomeTabFragmentDirections.actionHomeTabToNoteEditor(selectedDate)
+        )
+    }
+
+    private fun navigateToWeightUpdate() {
+        findNavController().navigate(R.id.action_home_tab_to_weight_update)
+    }
+
     override fun onResume() {
         super.onResume()
         // Refresh water intake data when returning to the fragment
@@ -450,6 +519,53 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
             viewModel.checkHealthConnectStatus {
                 // Connected callback
             }
+        }
+    }
+
+    private fun showWeightUpdateBanner() {
+        if (weightUpdateBanner == null) {
+            weightUpdateBanner = ViewWeightUpdateBannerBinding.inflate(layoutInflater)
+            weightUpdateBanner?.apply {
+                root.alpha = 0f
+                root.translationY = -100f
+
+                btnLater.setOnClickListener { hideWeightUpdateBanner() }
+                btnUpdateNow.setOnClickListener {
+                    hideWeightUpdateBanner()
+                    navigateToWeightUpdate()
+                }
+
+                // Add banner to the top of the screen
+                (binding.root as ViewGroup).addView(root, 0)
+
+                // Animate banner in
+                root.animate()
+                    .alpha(1f)
+                    .translationY(0f)
+                    .setDuration(300)
+                    .setInterpolator(DecelerateInterpolator())
+                    .start()
+
+                // Auto dismiss after 12 seconds
+                Handler(Looper.getMainLooper()).postDelayed({
+                    hideWeightUpdateBanner()
+                }, 12000)
+            }
+        }
+    }
+
+    private fun hideWeightUpdateBanner() {
+        weightUpdateBanner?.let { banner ->
+            banner.root.animate()
+                .alpha(0f)
+                .translationY(-100f)
+                .setDuration(300)
+                .setInterpolator(AccelerateInterpolator())
+                .withEndAction {
+                    (binding.root as ViewGroup).removeView(banner.root)
+                    weightUpdateBanner = null
+                }
+                .start()
         }
     }
 }
