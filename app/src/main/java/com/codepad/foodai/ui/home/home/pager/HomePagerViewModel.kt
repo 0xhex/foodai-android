@@ -379,7 +379,11 @@ class HomePagerViewModel @Inject constructor(
         return notesManager.fetchNote(date)
     }
 
-    fun saveNote(date: Date, noteText: String, mood: String = "") {
+    fun loadNoteForDate(date: Date) {
+        _currentNote.value = notesManager.fetchNote(date)
+    }
+
+    fun saveNote(date: Date, noteText: String, mood: String) {
         val note = DailyNote(
             keyDate = DailyNote.dateKeyString(date),
             noteText = noteText,
@@ -387,10 +391,6 @@ class HomePagerViewModel @Inject constructor(
         )
         notesManager.saveNote(note)
         _currentNote.value = note
-    }
-
-    fun loadNoteForDate(date: Date) {
-        _currentNote.value = getNote(date)
     }
 
     fun updateWeight(weight: Double) {

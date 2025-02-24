@@ -18,6 +18,9 @@ class BodyWeightView @JvmOverloads constructor(
     private lateinit var txtCurrentWeight: TextView
     private lateinit var btnIncrease: ImageButton
     private lateinit var btnDecrease: ImageButton
+    
+    private var currentWeight = 70.0
+    private var isMetric = true
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_body_weight_content, this, true)
@@ -32,13 +35,35 @@ class BodyWeightView @JvmOverloads constructor(
     }
 
     fun updateWeight(currentWeight: Double, targetWeight: Int, isMetric: Boolean) {
+        this.currentWeight = currentWeight
+        this.isMetric = isMetric
         val unit = if (isMetric) "kg" else "lb"
         txtWeightTarget.text = context.getString(R.string.weight_target, targetWeight, unit)
         txtCurrentWeight.text = "${currentWeight.toInt()} $unit"
     }
 
-    fun setOnWeightChangeListener(onIncrease: () -> Unit, onDecrease: () -> Unit) {
-        btnIncrease.setOnClickListener { onIncrease() }
-        btnDecrease.setOnClickListener { onDecrease() }
+    fun setOnWeightChangeListener(
+        onIncrease: (Double) -> Unit,
+        onDecrease: (Double) -> Unit,
+    ) {
+        btnIncrease.setOnClickListener { 
+            // Update UI with new weight
+            currentWeight += 1
+            val unit = if (isMetric) "kg" else "lb"
+            txtCurrentWeight.text = "${currentWeight.toInt()} $unit"
+            
+            // Notify listener of new weight
+            onIncrease(currentWeight)
+        }
+        
+        btnDecrease.setOnClickListener { 
+            // Update UI with new weight
+            currentWeight -= 1
+            val unit = if (isMetric) "kg" else "lb"
+            txtCurrentWeight.text = "${currentWeight.toInt()} $unit"
+            
+            // Notify listener of new weight
+            onDecrease(currentWeight)
+        }
     }
 } 

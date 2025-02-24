@@ -220,6 +220,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
                 selectedDate = item.first
                 viewModel.getWaterIntakeForDate(selectedDate)
+                viewModel.loadNoteForDate(selectedDate)
             })
 
         calendarView.adapter = calendarAdapter
@@ -464,12 +465,12 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                 )
 
                 setOnWeightChangeListener(
-                    onIncrease = {
-                        val newWeight = (user.weight ?: 70.0) + 1
+                    onIncrease = { newWeight ->
+                        // Send update to backend
                         viewModel.updateWeight(newWeight)
                     },
-                    onDecrease = {
-                        val newWeight = (user.weight ?: 70.0) - 1
+                    onDecrease = { newWeight ->
+                        // Send update to backend
                         viewModel.updateWeight(newWeight)
                     }
                 )
@@ -479,6 +480,9 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
     private fun setupDailyNote() {
         (binding.dailyNoteView as DailyNoteView).apply {
+            // Clear any existing note first
+            updateNote(null)
+            
             setOnStartJournalingClickListener {
                 navigateToNoteEditor()
             }
@@ -487,11 +491,15 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                 navigateToNoteEditor()
             }
 
+            // Observe note changes for the selected date
             viewModel.currentNote.observe(viewLifecycleOwner) { note ->
-                updateNote(note)
+                // Ensure we're on the main thread
+                view?.post {
+                    updateNote(note)
+                }
             }
 
-            // Load note for current date
+            // Load note for initial date
             viewModel.loadNoteForDate(selectedDate)
         }
     }
@@ -508,8 +516,9 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
     override fun onResume() {
         super.onResume()
-        // Refresh water intake data when returning to the fragment
+        // Refresh both water and note data using same selectedDate
         viewModel.getWaterIntakeForDate(selectedDate)
+        viewModel.loadNoteForDate(selectedDate)
 
         // Existing health connect check
         if (viewModel.isHealthConnectSupported() || viewModel.isHealthConnectSDKAvailable(

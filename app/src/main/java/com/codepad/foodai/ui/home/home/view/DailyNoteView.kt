@@ -1,6 +1,7 @@
 package com.codepad.foodai.ui.home.home.view
 
 import android.content.Context
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -44,19 +45,31 @@ class DailyNoteView @JvmOverloads constructor(
         rvMoodChips.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = moodAdapter
+            addItemDecoration(object : RecyclerView.ItemDecoration() {
+                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+                    outRect.right = resources.getDimensionPixelSize(R.dimen.dimen_8dp)
+                    outRect.left = if (parent.getChildAdapterPosition(view) == 0) {
+                        resources.getDimensionPixelSize(R.dimen.dimen_8dp)
+                    } else {
+                        0
+                    }
+                }
+            })
         }
     }
 
     fun updateNote(note: DailyNote?) {
-        if (note != null && note.noteText.isNotEmpty()) {
-            noteContent.visibility = View.VISIBLE
-            emptyState.visibility = View.GONE
-            txtNoteContent.text = note.noteText.takeIf { it.isNotEmpty() }
-                ?: context.getString(R.string.no_additional_notes)
-            moodAdapter.setSelectedMoods(note.mood)
-        } else {
-            noteContent.visibility = View.GONE
-            emptyState.visibility = View.VISIBLE
+        post {  // Ensure UI updates happen on main thread
+            if (note != null && note.noteText.isNotEmpty()) {
+                emptyState.visibility = View.GONE
+                noteContent.visibility = View.VISIBLE
+                txtNoteContent.text = note.noteText
+                moodAdapter.setSelectedMoods(note.mood)
+            } else {
+                noteContent.visibility = View.GONE
+                emptyState.visibility = View.VISIBLE
+                moodAdapter.setSelectedMoods("")
+            }
         }
     }
 

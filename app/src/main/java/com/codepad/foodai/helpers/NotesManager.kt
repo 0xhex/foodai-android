@@ -21,6 +21,8 @@ class NotesManager @Inject constructor(
 
     fun saveNote(note: DailyNote) {
         val noteJson = gson.toJson(note)
-        sharedPreferences.edit().putString("note_${note.keyDate}", noteJson).apply()
+        sharedPreferences.edit()
+            .putString("note_${note.keyDate}", noteJson)
+            .apply()
     }
 } 

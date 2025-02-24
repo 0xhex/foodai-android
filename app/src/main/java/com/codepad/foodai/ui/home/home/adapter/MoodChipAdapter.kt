@@ -77,7 +77,7 @@ class MoodChipAdapter(
     fun setSelectedMoods(moodString: String) {
         selectedMoods.clear()
         if (moodString.isNotEmpty()) {
-            selectedMoods.addAll(moodString.split(","))
+            selectedMoods.addAll(moodString.split(",").map { it.trim() })
         }
         notifyDataSetChanged()
     }
