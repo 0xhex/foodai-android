@@ -27,7 +27,7 @@ class DailyNoteView @JvmOverloads constructor(
     private lateinit var txtNoteContent: TextView
     private lateinit var btnStartJournaling: TextView
     private lateinit var rvMoodChips: RecyclerView
-    private val moodAdapter = MoodChipAdapter { /* Read-only in this view */ }
+    private val moodAdapter = MoodChipAdapter({ /* Read-only in this view */ }, false)
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_daily_note_content, this, true)

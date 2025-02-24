@@ -407,7 +407,28 @@
     <!-- Moods -->
     <string name="mood_allergy">🤧 Allergy</string>
     <string name="mood_heartbreak">💔 Heartbreak</string>
-    <!-- Add all other moods... -->
+    <string name="mood_in_love">🥰 In Love</string>
+    <string name="mood_overeating">🍔 Overeating</string>
+    <string name="mood_headache">🤯 Headache</string>
+    <string name="mood_successful">🏆 Successful</string>
+    <string name="mood_exhausted">😞 Exhausted</string>
+    <string name="mood_balanced">⚖️ Balanced</string>
+    <string name="mood_depressed">🥺 Depressed</string>
+    <string name="mood_energetic">💪 Energetic</string>
+    <string name="mood_gas_pain">💨 Gas Pain</string>
+    <string name="mood_proud">🥇 Proud</string>
+    <string name="mood_hospital">🏥 Hospital</string>
+    <string name="mood_constipation">🚽 Constipation</string>
+    <string name="mood_stomach_ache">💣 Stomach Ache</string>
+    <string name="mood_concentrated">🤔 Concentrated</string>
+    <string name="mood_nausea">🤮 Nausea</string>
+    <string name="mood_bad_mood">😔 Bad Mood</string>
+    <string name="mood_slept_poorly">👻 Slept Poorly</string>
+    <string name="mood_content">😌 Content</string>
+    <string name="mood_queasy">🤢 Queasy</string>
+    <string name="mood_migraine">🤕 Migraine</string>
+    <string name="mood_grateful">🙏 Grateful</string>
+    <string name="mood_motivated">✊ Motivated</string>
 
     <!-- Weight Update Banner -->
     <string name="weight_update_available">Weight Update Available</string>
