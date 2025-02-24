@@ -54,7 +54,7 @@
     <string name="daily_score">Tägliche Punktzahl</string>
     <string name="date" translatable="false">Datum</string>
     <string name="day" translatable="false">Tag</string>
-    <string name="day_streak" translatable="false">Tage in Folge: %d</string>
+    <string name="day_streak" translatable="false">%d Tage in Folge</string>
     <string name="dedicated_athlete" translatable="false">Engagierter Athlet</string>
     <string name="delete_account" translatable="false">Konto löschen</string>
     <string name="delete_exercise" translatable="false">Übung löschen</string>

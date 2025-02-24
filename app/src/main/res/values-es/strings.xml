@@ -54,7 +54,7 @@
     <string name="daily_score">Puntuación diaria</string>
     <string name="date" translatable="false">Fecha</string>
     <string name="day" translatable="false">Día</string>
-    <string name="day_streak" translatable="false">Racha de días: %d</string>
+    <string name="day_streak" translatable="false">%d Racha de días</string>
     <string name="dedicated_athlete" translatable="false">Atleta dedicado</string>
     <string name="delete_account" translatable="false">Eliminar cuenta</string>
     <string name="delete_exercise" translatable="false">Eliminar ejercicio</string>
