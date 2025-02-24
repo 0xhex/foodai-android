@@ -430,7 +430,6 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
             val distance = viewModel.stepsDistance.value ?: 0.0
             val calories = viewModel.stepsBurnedCalories.value ?: 0
-            binding.txtStepsInfo.text = String.format("%.2f km, %d kcal", distance, calories)
         }
 
         UserSession.user?.let { user ->
