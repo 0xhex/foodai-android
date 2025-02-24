@@ -363,4 +363,5 @@
     <string name="calculating_your_calorie_goal">Calculando tu meta calórica</string>
     <string name="estimating_your_progress">Estimando tu progreso</string>
     <string name="finalizing_your_plan">Finalizando tu plan</string>
+    <string name="daily_summary">Resumen diario</string>
 </resources>

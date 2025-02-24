@@ -373,5 +373,6 @@
     <string name="calculating_your_calorie_goal">Calculating your calorie goal</string>
     <string name="estimating_your_progress">Estimating your progress</string>
     <string name="finalizing_your_plan">Finalizing your plan</string>
+    <string name="daily_summary">Daily Summary</string>
 
 </resources>

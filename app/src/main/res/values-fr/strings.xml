@@ -363,4 +363,5 @@
     <string name="calculating_your_calorie_goal">Calcul de votre objectif calorique</string>
     <string name="estimating_your_progress">Estimation de vos progrès</string>
     <string name="finalizing_your_plan">Finalisation de votre plan</string>
+    <string name="daily_summary">Résumé quotidien</string>
 </resources>
