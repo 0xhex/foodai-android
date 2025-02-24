@@ -12,4 +12,5 @@
     <dimen name="dimen_60dp">60dp</dimen>
     <dimen name="dimen_100dp">100dp</dimen>
     <dimen name="spacing_small">8dp</dimen>
+    <dimen name="logo_elevation">4dp</dimen>
 </resources>

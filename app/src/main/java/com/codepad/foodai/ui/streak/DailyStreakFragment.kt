@@ -1,15 +1,17 @@
 package com.codepad.foodai.ui.streak
 
+import android.graphics.LinearGradient
+import android.graphics.Shader
 import android.view.View
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentDailyStreakBinding
 import com.codepad.foodai.ui.core.BaseFragment
-import com.codepad.foodai.ui.home.HomeFragment
 import com.kizitonwose.calendar.core.WeekDay
 import com.kizitonwose.calendar.core.atStartOfMonth
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
@@ -32,8 +34,27 @@ class DailyStreakFragment : BaseFragment<FragmentDailyStreakBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.setStreakData(args.streakData)
+        setupHeaderEffects()
         setupWeekCalendar()
         setupNavigation()
+    }
+
+    private fun setupHeaderEffects() {
+        // Create and apply gradient to app title
+        val paint = binding.appTitle.paint
+        paint.isFakeBoldText = true  // Force bold rendering
+        val width = paint.measureText(binding.appTitle.text.toString())
+        val textShader = LinearGradient(
+            0f, 0f, width, binding.appTitle.textSize,
+            intArrayOf(
+                ContextCompat.getColor(requireContext(), R.color.orange_start),
+                ContextCompat.getColor(requireContext(), R.color.orange_end),
+                ContextCompat.getColor(requireContext(), R.color.orange_start)
+            ),
+            floatArrayOf(0f, 0.5f, 1f),
+            Shader.TileMode.CLAMP
+        )
+        paint.shader = textShader
     }
 
     private fun setupNavigation() {

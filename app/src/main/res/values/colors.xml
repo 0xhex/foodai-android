@@ -23,5 +23,8 @@
     <color name="green">#27c174</color>
     <color name="blue">#007aff</color>
     <color name="yellow">#ffcc00</color>
+    <color name="orange_start">#FF9500</color>
+    <color name="orange_end">#FFD700</color>
+    <color name="orange_shadow">#80FF9500</color>
 
 </resources>
