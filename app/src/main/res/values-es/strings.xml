@@ -54,7 +54,7 @@
     <string name="daily_score">Puntuación diaria</string>
     <string name="date" translatable="false">Fecha</string>
     <string name="day" translatable="false">Día</string>
-    <string name="day_streak" translatable="false">Racha de días: %d</string>
+    <string name="day_streak" translatable="false">%d Racha de días</string>
     <string name="dedicated_athlete" translatable="false">Atleta dedicado</string>
     <string name="delete_account" translatable="false">Eliminar cuenta</string>
     <string name="delete_exercise" translatable="false">Eliminar ejercicio</string>
@@ -363,4 +363,15 @@
     <string name="calculating_your_calorie_goal">Calculando tu meta calórica</string>
     <string name="estimating_your_progress">Estimando tu progreso</string>
     <string name="finalizing_your_plan">Finalizando tu plan</string>
+    <string name="daily_summary">Resumen diario</string>
+    <string name="remain">Restante</string>
+    <string name="consumed">Consumido</string>
+    <string name="burned">Quemado</string>
+
+    <string name="daily_missions">Misiones diarias</string>
+    <string name="daily_steps">Pasos diarios</string>
+    <string name="daily_water_intake">Ingesta diaria de agua</string>
+    <string name="glass_info">1 vaso (250 ML)</string>
+    <string name="current_water">Actual: %s L</string>
+    <string name="target_water">Objetivo: %s L</string>
 </resources>

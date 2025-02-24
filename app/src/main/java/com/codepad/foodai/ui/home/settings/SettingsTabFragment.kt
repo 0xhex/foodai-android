@@ -183,7 +183,7 @@ class SettingsTabFragment : BaseFragment<FragmentSettingsBinding>() {
     }
 
     private fun sendSupportEmail() {
-        val email = "help@codepad.studio"
+        val email = "hello@food-ai-scanner.com"
         val subject = "Support Request - App Version ${BuildConfig.VERSION_NAME}"
         val body = """
             Hello Support Team,

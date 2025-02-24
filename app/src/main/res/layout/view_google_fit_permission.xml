@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingVertical="@dimen/dimen_4dp"
+        android:paddingHorizontal="16dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/health_connect"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="24dp"
+            android:fontFamily="@font/euro_stile_bold"
+            android:text="@string/connect_with_google_health"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="24dp"
+            android:fontFamily="@font/euro_stile_regular"
+            android:text="@string/we_use_your_step_count_data_from_google_health"
+            android:textAlignment="center"
+            android:textColor="#868686"
+            android:textSize="10sp"
+            android:maxLines="3"
+            android:ellipsize="end"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_authorize"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="32dp"
+            android:text="@string/authorize"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:visibility="visible"
+            app:backgroundTint="#037aff"
+            app:cornerRadius="12dp"
+            app:fontFamily="@font/euro_stile_bold"/>
+
+    </LinearLayout>
+</layout>

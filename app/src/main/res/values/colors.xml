@@ -23,5 +23,12 @@
     <color name="green">#27c174</color>
     <color name="blue">#007aff</color>
     <color name="yellow">#ffcc00</color>
-
+    <color name="orange_start">#FF9500</color>
+    <color name="orange_end">#FFD700</color>
+    <color name="orange_shadow">#80FF9500</color>
+    <color name="gray_50">#80808080</color>
+    <color name="purple">#6B3CE3</color>
+    <color name="blue_shadow">#33007AFF</color>
+    <color name="soft_blue">#007AFF</color>
+    <color name="custom_dark_gray_new">#292929</color>
 </resources>

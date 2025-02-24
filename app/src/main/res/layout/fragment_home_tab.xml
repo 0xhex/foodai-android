@@ -108,8 +108,9 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_food"
+                android:layout_marginHorizontal="16dp"
                 android:nestedScrollingEnabled="false"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -120,58 +121,140 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_empty_view"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dots_indicator">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp"
+                android:padding="16dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/rv_food">
 
                 <TextView
-                    android:id="@+id/txt_empty_view_title"
-                    android:layout_width="0dp"
+                    android:id="@+id/tv_empty_title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dimen_24dp"
-                    android:layout_marginTop="@dimen/dimen_24dp"
                     android:fontFamily="@font/euro_stile_bold"
                     android:text="@string/no_food_uploaded"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/txt_empty_view_subtitle"
-                    android:layout_width="0dp"
+                    android:id="@+id/tv_empty_desc"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dimen_24dp"
-                    android:layout_marginTop="@dimen/dimen_16dp"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/euro_stile_regular"
                     android:text="@string/start_tracking_meals"
-                    android:textColor="#85858a"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="@id/txt_empty_view_title"
-                    app:layout_constraintStart_toStartOf="@id/txt_empty_view_title"
-                    app:layout_constraintTop_toBottomOf="@id/txt_empty_view_title" />
+                    android:textAlignment="center"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_empty_title" />
 
                 <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/lottie_arrow"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_marginTop="@dimen/dimen_32dp"
-                    android:layout_marginEnd="@dimen/dimen_32dp"
-                    app:layout_constraintEnd_toEndOf="@id/txt_empty_view_subtitle"
-                    app:layout_constraintTop_toBottomOf="@id/txt_empty_view_subtitle"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="@dimen/dimen_32dp"
-                    app:layout_constraintVertical_bias=".0"
+                    android:id="@+id/lottie_add_button"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_empty_desc"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/arrow_right" />
-
+                    app:lottie_rawRes="@raw/add_button" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/txt_daily_missions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/daily_missions"
+                android:textSize="20sp"
+                android:textColor="#17A2B8"
+                android:fontFamily="@font/euro_stile_bold"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_empty_view" />
+
+            <include
+                android:id="@+id/daily_steps_view"
+                layout="@layout/view_daily_steps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="@dimen/dimen_16dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/txt_daily_missions" />
+
+            <include
+                android:id="@+id/daily_water_intake_view"
+                layout="@layout/view_daily_water_intake"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="@dimen/dimen_16dp"
+                app:layout_constraintTop_toBottomOf="@id/daily_steps_view" />
+
+            <TextView
+                android:id="@+id/txt_body_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/body_weight"
+                android:textSize="20sp"
+                android:textColor="#17A2B8"
+                android:fontFamily="@font/euro_stile_bold"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/daily_water_intake_view"/>
+
+            <include
+                android:id="@+id/body_weight_view"
+                layout="@layout/view_body_weight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginHorizontal="@dimen/dimen_16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_body_weight"/>
+
+            <TextView
+                android:id="@+id/txt_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/notes"
+                android:textSize="20sp"
+                android:textColor="#17A2B8"
+                android:fontFamily="@font/euro_stile_bold"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/body_weight_view"/>
+
+            <include
+                android:id="@+id/daily_note_view"
+                layout="@layout/view_daily_note"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginHorizontal="@dimen/dimen_16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/dimen_16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_notes"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

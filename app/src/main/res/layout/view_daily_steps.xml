@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/bg_custom_black_rounded"
+        android:paddingHorizontal="20dp">
+
+        <!-- Connected State -->
+        <LinearLayout
+            android:id="@+id/connected_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/dimen_16dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/foot_step"
+                    android:background="@drawable/bg_circle_icon"
+                    android:padding="4dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/daily_steps"
+                    android:textColor="@color/amber"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/euro_stile_bold"/>
+
+                <TextView
+                    android:id="@+id/txt_steps_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/euro_stile_regular"/>
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_steps"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="8dp"
+                android:progressDrawable="@drawable/progress_bar_green"/>
+
+        </LinearLayout>
+
+        <!-- Not Connected State -->
+        <include
+            android:id="@+id/not_connected_view"
+            layout="@layout/view_google_fit_permission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

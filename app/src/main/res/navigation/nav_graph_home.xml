@@ -32,6 +32,22 @@
         <action
             android:id="@+id/action_home_tab_to_describe_exercise_detail"
             app:destination="@id/describeExerciseDetailFragment" />
+
+        <action
+            android:id="@+id/action_navigation_home_to_menuDialog"
+            app:destination="@id/menuDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/action_home_tab_to_note_editor"
+            app:destination="@id/note_editor_fragment" />
+
+        <action
+            android:id="@+id/action_home_tab_to_weight_update"
+            app:destination="@id/weightUpdateFragment" />
     </fragment>
 
     <fragment
@@ -186,4 +202,18 @@
         android:name="com.codepad.foodai.ui.home.exercise.detail.DescribeExerciseDetailFragment"
         android:label="DescribeExerciseDetailFragment"
         tools:layout="@layout/fragment_describe_exercise" />
+
+    <fragment
+        android:id="@+id/menuDialog"
+        android:name="com.codepad.foodai.ui.home.menu.MenuSheetFragment"
+        android:label="MenuDialog" />
+
+    <fragment
+        android:id="@+id/note_editor_fragment"
+        android:name="com.codepad.foodai.ui.home.notes.NoteEditorFragment"
+        android:label="NoteEditorFragment">
+        <argument
+            android:name="selectedDate"
+            app:argType="java.util.Date" />
+    </fragment>
 </navigation>

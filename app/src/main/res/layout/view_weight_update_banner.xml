@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        app:cardBackgroundColor="@color/custom_dark_gray"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_scale"
+                android:background="@drawable/bg_circle_amber"
+                app:tint="@color/amber" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/weight_update_available"
+                    android:textSize="16sp"
+                    android:textColor="@color/amber"
+                    android:fontFamily="@font/euro_stile_bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/weight_update_message"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:alpha="0.9"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/euro_stile_regular"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:id="@+id/btn_later"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/later"
+                        android:textSize="14sp"
+                        android:textColor="@color/gray"
+                        android:fontFamily="@font/euro_stile_regular"
+                        android:padding="8dp"
+                        android:background="@drawable/bg_capsule_gray"/>
+
+                    <TextView
+                        android:id="@+id/btn_update_now"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/update_now"
+                        android:textSize="14sp"
+                        android:textColor="@color/amber"
+                        android:fontFamily="@font/euro_stile_bold"
+                        android:padding="8dp"
+                        android:layout_marginStart="12dp"
+                        android:background="@drawable/bg_capsule_amber"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout> 
