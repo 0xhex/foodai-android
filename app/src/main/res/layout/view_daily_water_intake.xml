@@ -22,7 +22,7 @@
                 android:id="@+id/txt_water_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Daily Water Intake"
+                android:text="@string/daily_water_intake"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:fontFamily="@font/euro_stile_bold"/>
@@ -56,7 +56,7 @@
                 android:id="@+id/txt_glass_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1 Glass (250 ML)"
+                android:text="@string/glass_info"
                 android:textColor="@color/white"
                 android:textSize="10sp"
                 android:fontFamily="@font/euro_stile_regular"/>
