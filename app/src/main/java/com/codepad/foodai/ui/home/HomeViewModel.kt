@@ -105,6 +105,8 @@ class HomeViewModel @Inject constructor(
 
     private var shouldShowStreakView = false
 
+    val launchFoodLogDialog = MutableLiveData<Boolean>(false)
+
     fun fetchUserData() {
         viewModelScope.launch {
             when (val result = getUserDataUseCase.getUserData(UserSession.user?.id.orEmpty())) {

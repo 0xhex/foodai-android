@@ -330,7 +330,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
 
     private fun setupEmptyView() {
         binding.clEmptyView.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_home_to_menuDialog)
+            sharedViewModel.launchFoodLogDialog.value = true
         }
     }
 

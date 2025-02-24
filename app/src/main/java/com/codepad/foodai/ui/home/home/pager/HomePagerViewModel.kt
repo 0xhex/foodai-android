@@ -380,7 +380,14 @@ class HomePagerViewModel @Inject constructor(
     }
 
     fun loadNoteForDate(date: Date) {
-        _currentNote.value = notesManager.fetchNote(date)
+        viewModelScope.launch {
+            try {
+                val note = notesManager.fetchNote(date)
+                _currentNote.value = note
+            } catch (e: Exception) {
+                _currentNote.value = null
+            }
+        }
     }
 
     fun saveNote(date: Date, noteText: String, mood: String) {

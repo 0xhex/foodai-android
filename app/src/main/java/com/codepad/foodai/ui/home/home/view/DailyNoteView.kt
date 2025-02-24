@@ -8,11 +8,13 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codepad.foodai.R
 import com.codepad.foodai.domain.models.note.DailyNote
 import com.codepad.foodai.ui.home.home.adapter.MoodChipAdapter
+import com.google.android.material.card.MaterialCardView
 
 class DailyNoteView @JvmOverloads constructor(
     context: Context,
@@ -20,8 +22,8 @@ class DailyNoteView @JvmOverloads constructor(
     defStyleAttr: Int = 0,
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private lateinit var noteContent: LinearLayout
-    private lateinit var emptyState: LinearLayout
+    private lateinit var noteContent: MaterialCardView
+    private lateinit var emptyState: MaterialCardView
     private lateinit var txtNoteContent: TextView
     private lateinit var btnStartJournaling: TextView
     private lateinit var rvMoodChips: RecyclerView
@@ -48,10 +50,8 @@ class DailyNoteView @JvmOverloads constructor(
             addItemDecoration(object : RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
                     outRect.right = resources.getDimensionPixelSize(R.dimen.dimen_8dp)
-                    outRect.left = if (parent.getChildAdapterPosition(view) == 0) {
-                        resources.getDimensionPixelSize(R.dimen.dimen_8dp)
-                    } else {
-                        0
+                    if (parent.getChildAdapterPosition(view) == 0) {
+                        outRect.left = resources.getDimensionPixelSize(R.dimen.dimen_8dp)
                     }
                 }
             })
@@ -60,14 +60,14 @@ class DailyNoteView @JvmOverloads constructor(
 
     fun updateNote(note: DailyNote?) {
         post {  // Ensure UI updates happen on main thread
-            if (note != null && note.noteText.isNotEmpty()) {
-                emptyState.visibility = View.GONE
-                noteContent.visibility = View.VISIBLE
+            if (note != null && note.noteText.isNotBlank()) {
+                emptyState.isVisible = false
+                noteContent.isVisible = true
                 txtNoteContent.text = note.noteText
                 moodAdapter.setSelectedMoods(note.mood)
             } else {
-                noteContent.visibility = View.GONE
-                emptyState.visibility = View.VISIBLE
+                noteContent.isVisible = false
+                emptyState.isVisible = true
                 moodAdapter.setSelectedMoods("")
             }
         }

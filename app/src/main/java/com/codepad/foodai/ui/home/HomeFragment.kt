@@ -101,6 +101,13 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
             }
         }
 
+        viewModel.launchFoodLogDialog.observe(viewLifecycleOwner) { event ->
+            if (event) {
+                findNavController().navigate(R.id.action_homeFragment_to_menuDialog)
+                viewModel.launchFoodLogDialog.value = false
+            }
+        }
+
         // Observe paywall trigger
         var isNavigatingToPaywall = false
         viewLifecycleOwner.lifecycleScope.launch {
