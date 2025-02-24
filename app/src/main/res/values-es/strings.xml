@@ -364,4 +364,7 @@
     <string name="estimating_your_progress">Estimando tu progreso</string>
     <string name="finalizing_your_plan">Finalizando tu plan</string>
     <string name="daily_summary">Resumen diario</string>
+    <string name="remain">Restante</string>
+    <string name="consumed">Consumido</string>
+    <string name="burned">Quemado</string>
 </resources>

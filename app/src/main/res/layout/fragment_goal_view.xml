@@ -84,7 +84,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Consumed"
+                            android:text="@string/consumed"
                             android:textSize="14sp"
                             android:textColor="@color/white"
                             android:fontFamily="@font/euro_stile_regular"/>
@@ -132,7 +132,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Burned"
+                            android:text="@string/burned"
                             android:textSize="14sp"
                             android:textColor="@color/white"
                             android:fontFamily="@font/euro_stile_regular"/>

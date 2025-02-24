@@ -357,7 +357,7 @@
     <string name="premium_required">Premium Required</string>
     <string name="you_ve_reached_today_s_limit_unlock_unlimited_access_and_exclusive_features_by_upgrading_to_premium">You\'ve Reached Today\'s Limit! Unlock unlimited access and exclusive features by upgrading to Premium.</string>
     <string name="detecting_ingredients">Detecting ingredients…</string>
-    <string name="calculating_nutritional_values">Calculating nutritional values...</string>
+    <string name="calculating_nutritional_values">Calculating nutritional values…</string>
     <string name="finalizing_your_meal_summary">Finalizing your meal summary…</string>
     <string name="calorie_goal">Calorie Goal</string>
     <string name="carb_goal">Carb Goal</string>
@@ -374,5 +374,8 @@
     <string name="estimating_your_progress">Estimating your progress</string>
     <string name="finalizing_your_plan">Finalizing your plan</string>
     <string name="daily_summary">Daily Summary</string>
+    <string name="remain">Remain</string>
+    <string name="consumed">Consumed</string>
+    <string name="burned">Burned</string>
 
 </resources>
