@@ -49,6 +49,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
         setupViewPager()
         setupRecyclerView()
         setupStreakView()
+        setupEmptyView()
 
         sharedViewModel.homeEvent.observe(viewLifecycleOwner) { event ->
             when (event) {
@@ -308,6 +309,12 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                     HomeTabFragmentDirections.actionHomeTabToDailyStreakFragment(streak)
                 )
             }
+        }
+    }
+
+    private fun setupEmptyView() {
+        binding.clEmptyView.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_menuDialog)
         }
     }
 

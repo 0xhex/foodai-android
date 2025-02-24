@@ -32,6 +32,14 @@
         <action
             android:id="@+id/action_home_tab_to_describe_exercise_detail"
             app:destination="@id/describeExerciseDetailFragment" />
+
+        <action
+            android:id="@+id/action_navigation_home_to_menuDialog"
+            app:destination="@id/menuDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -186,4 +194,9 @@
         android:name="com.codepad.foodai.ui.home.exercise.detail.DescribeExerciseDetailFragment"
         android:label="DescribeExerciseDetailFragment"
         tools:layout="@layout/fragment_describe_exercise" />
+
+    <dialog
+        android:id="@+id/menuDialog"
+        android:name="com.codepad.foodai.ui.home.menu.MenuSheetFragment"
+        android:label="MenuDialog" />
 </navigation>
