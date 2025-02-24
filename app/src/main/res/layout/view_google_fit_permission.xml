@@ -6,7 +6,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="16dp">
+        android:paddingVertical="@dimen/dimen_4dp"
+        android:paddingHorizontal="16dp">
 
         <ImageView
             android:layout_width="40dp"

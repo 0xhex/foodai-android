@@ -367,4 +367,11 @@
     <string name="remain">Übrig</string>
     <string name="consumed">Verbraucht</string>
     <string name="burned">Verbrannt</string>
+
+    <string name="daily_missions">Tägliche Missionen</string>
+    <string name="daily_steps">Tägliche Schritte</string>
+    <string name="daily_water_intake">Tägliche Wasseraufnahme</string>
+    <string name="glass_info">1 Glas (250 ML)</string>
+    <string name="current_water">Aktuell: %s L</string>
+    <string name="target_water">Ziel: %s L</string>
 </resources>

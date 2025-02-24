@@ -378,8 +378,12 @@
     <string name="consumed">Consumed</string>
     <string name="burned">Burned</string>
 
-    <string name="empty_food_title">You haven\'t uploaded any food</string>
-    <string name="empty_food_desc">Start tracking today\'s meals by taking a quick picture.</string>
     <string name="daily_missions">Daily Missions</string>
 
+    <!-- Daily Missions -->
+    <string name="daily_steps">Daily Steps</string>
+    <string name="daily_water_intake">Daily Water Intake</string>
+    <string name="glass_info">1 Glass (250 ML)</string>
+    <string name="current_water">Current: %s L</string>
+    <string name="target_water">Target: %s L</string>
 </resources>
