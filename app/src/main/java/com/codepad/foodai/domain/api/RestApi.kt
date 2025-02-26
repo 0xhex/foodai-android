@@ -1,5 +1,6 @@
 package com.codepad.foodai.domain.api
 
+import CommunityResponseData
 import com.codepad.foodai.domain.models.APIResponse
 import com.codepad.foodai.domain.models.exercise.ExerciseData
 import com.codepad.foodai.domain.models.exercise.LogExerciseCustomRequest
@@ -13,17 +14,17 @@ import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
 import com.codepad.foodai.domain.models.recipe.GenerateRecipeRequest
 import com.codepad.foodai.domain.models.recipe.GenerateRecipeResponseData
 import com.codepad.foodai.domain.models.recipe.Recipe
+import com.codepad.foodai.domain.models.recommendation.Recommendation
+import com.codepad.foodai.domain.models.recommendation.RequestRecommendationRequest
+import com.codepad.foodai.domain.models.recommendation.RequestRecommendationResponse
 import com.codepad.foodai.domain.models.user.RegisterRequest
 import com.codepad.foodai.domain.models.user.StreakResponseData
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequest
 import com.codepad.foodai.domain.models.user.UpdateUserFieldRequestArray
 import com.codepad.foodai.domain.models.user.UpdateUserFieldResponseData
 import com.codepad.foodai.domain.models.user.User
-import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
 import com.codepad.foodai.domain.models.user.WeightLogData
-import com.codepad.foodai.domain.models.recommendation.RequestRecommendationResponse
-import com.codepad.foodai.domain.models.recommendation.Recommendation
-import com.codepad.foodai.domain.models.recommendation.RequestRecommendationRequest
+import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -141,5 +142,10 @@ interface RestApi {
 
     @DELETE("users/{userID}/deleteAccount")
     suspend fun deleteAccount(@Path("userID") userID: String): APIResponse<Unit>
+
+    @GET("community")
+    suspend fun getCommunityPosts(
+        @Query("userID") userID: String
+    ): APIResponse<CommunityResponseData>
 
 }

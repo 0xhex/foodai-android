@@ -1,5 +1,6 @@
 package com.codepad.foodai.domain.repositories
 
+import CommunityResponseData
 import com.codepad.foodai.domain.api.APIError
 import com.codepad.foodai.domain.api.RestApi
 import com.codepad.foodai.domain.models.exercise.ExerciseData
@@ -649,6 +650,30 @@ class UserRepository @Inject constructor(
             }
         } catch (e: Exception) {
             handleException<Unit>(e)
+        }
+    }
+
+    suspend fun getCommunityPosts(userID: String): RepositoryResult<CommunityResponseData> {
+        return try {
+            val response = restApi.getCommunityPosts(userID)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            handleException<CommunityResponseData>(e)
         }
     }
 }
