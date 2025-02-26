@@ -170,13 +170,13 @@ interface RestApi {
         @Body request: LikePostRequest,
     ): APIResponse<CommunityPost>
 
-    @POST("community/{postID}/comments")
+    @POST("community/{postId}/comments")
     suspend fun addComment(
         @Path("postId") postId: String,
         @Body request: AddCommentRequest,
     ): APIResponse<CommunityPost>
 
-    @DELETE("community/{postID}/comments")
+    @HTTP(method = "DELETE", path = "community/{postId}/comments", hasBody = true)
     suspend fun deleteComment(
         @Path("postId") postId: String,
         @Body request: DeleteCommentRequest,

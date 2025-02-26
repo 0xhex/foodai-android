@@ -21,18 +21,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical"
-                android:background="@color/custom_dark_gray"
-                android:alpha="0.3">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Likes"
-                    android:textSize="16sp"
+                    android:text="@string/likes"
                     android:textColor="@color/white"
+                    android:textSize="16sp"
                     android:fontFamily="@font/euro_stile_bold"/>
 
                 <ImageView
@@ -40,21 +37,18 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_chevron_down"
-                    app:tint="@color/gray" />
+                    app:tint="@color/gray"/>
             </LinearLayout>
 
-            <!-- Content (Initially Gone) -->
+            <!-- Content -->
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/likes_container"
+                android:id="@+id/content_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:padding="16dp"
                 android:visibility="gone"
+                android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:itemCount="5"
-                tools:listitem="@layout/item_liked_user"/>
+                android:padding="16dp"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

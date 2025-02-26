@@ -28,6 +28,7 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
     private val viewModel: CommunityPostDetailViewModel by viewModels()
     private lateinit var commentsAdapter: CommentsAdapter
     private lateinit var likedUsersAdapter: LikedUsersAdapter
+    override val hideBottomNavBar: Boolean = true
 
     private var isFoodDetailsExpanded = false
     private var isLikedUsersExpanded = false
@@ -76,7 +77,7 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
 
             // Setup liked users adapter
             likedUsersAdapter = LikedUsersAdapter()
-            sectionLikes.likesContainer.adapter = likedUsersAdapter
+            sectionLikes.contentContainer.adapter = likedUsersAdapter
 
             // Setup collapsible sections
             sectionFoodDetails.headerContainer.setOnClickListener {
@@ -177,6 +178,28 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
                         R.drawable.ic_heart
                     })
                 }
+
+                // Only show likes section if there are likes
+                post.likes?.let { likes ->
+                    if (likes.isNotEmpty()) {
+                        sectionLikes.root.isVisible = true
+
+                        // Setup likes section click listener
+                        sectionLikes.headerContainer.setOnClickListener {
+                            isLikedUsersExpanded = !isLikedUsersExpanded
+                            toggleLikesSection(isLikedUsersExpanded)
+                        }
+
+                        // Setup liked users adapter
+                        likedUsersAdapter = LikedUsersAdapter()
+                        sectionLikes.contentContainer.adapter = likedUsersAdapter
+                        likedUsersAdapter.submitList(likes)
+                    } else {
+                        sectionLikes.root.isVisible = false
+                    }
+                } ?: run {
+                    sectionLikes.root.isVisible = false
+                }
             }
 
             // Update food details
@@ -192,8 +215,15 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
                 getString(R.string.comments_count, post.comments?.size ?: 0)
             commentsAdapter.submitList(post.comments)
 
-            // Update likes
-            likedUsersAdapter.submitList(post.likes)
+            // Update likes section visibility and content
+            post.likes?.let { likes ->
+                binding.sectionLikes.apply {
+                    root.isVisible = likes.isNotEmpty()
+                    if (likes.isNotEmpty()) {
+                        likedUsersAdapter.submitList(likes)
+                    }
+                }
+            }
 
             // Setup ingredients adapter if needed
             val ingredientsAdapter = IngredientsAdapter()
@@ -255,8 +285,10 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
     }
 
     private fun toggleLikesSection(show: Boolean) {
-        binding.sectionLikes.root.isVisible = show
-        binding.sectionLikes.imgExpand.rotation = if (show) 180f else 0f
+        binding.sectionLikes.apply {
+            contentContainer.isVisible = show
+            imgExpand.rotation = if (show) 180f else 0f
+        }
     }
 
     private fun showSnackbar(message: String) {
