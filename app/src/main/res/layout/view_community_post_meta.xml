@@ -194,6 +194,7 @@
                 android:paddingVertical="6dp"
                 android:text="Like"
                 android:textAllCaps="false"
+                app:iconSize="17dp"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:cornerRadius="10dp"

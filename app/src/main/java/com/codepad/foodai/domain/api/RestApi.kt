@@ -166,18 +166,18 @@ interface RestApi {
     @DELETE("community/{postID}/like")
     suspend fun unlikePost(
         @Path("postID") postID: String,
-        @Body request: LikePostRequest
+        @Query("userID") userID: String
     ): APIResponse<CommunityPost>
 
     @POST("community/{postID}/comments")
     suspend fun addComment(
-        @Path("postID") postID: String,
+        @Path("postId") postId: String,
         @Body request: AddCommentRequest
     ): APIResponse<CommunityPost>
 
     @DELETE("community/{postID}/comments")
     suspend fun deleteComment(
-        @Path("postID") postID: String,
+        @Path("postId") postId: String,
         @Body request: DeleteCommentRequest
     ): APIResponse<CommunityPost>
 

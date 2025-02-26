@@ -7,7 +7,6 @@ import LikePostRequest
 import com.codepad.foodai.domain.api.APIError
 import com.codepad.foodai.domain.api.RestApi
 import com.codepad.foodai.domain.models.community.CommunityPost
-import com.codepad.foodai.domain.models.community.CommunityResponseData
 import com.codepad.foodai.domain.models.exercise.ExerciseData
 import com.codepad.foodai.domain.models.exercise.LogExerciseCustomRequest
 import com.codepad.foodai.domain.models.exercise.SubmitExerciseDescriptionRequest
@@ -710,10 +709,9 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun likePost(postID: String, userID: String): RepositoryResult<CommunityPost> {
+    suspend fun likePost(postId: String, userId: String): RepositoryResult<CommunityPost> {
         return try {
-            val request = LikePostRequest(userID = userID)
-            val response = restApi.likePost(postID, request)
+            val response = restApi.likePost(postId, LikePostRequest(userId))
             if (response.success && response.data != null) {
                 RepositoryResult.Success(
                     message = response.message ?: "Success",
@@ -738,7 +736,7 @@ class UserRepository @Inject constructor(
     suspend fun unlikePost(postID: String, userID: String): RepositoryResult<CommunityPost> {
         return try {
             val request = LikePostRequest(userID = userID)
-            val response = restApi.unlikePost(postID, request)
+            val response = restApi.unlikePost(postID, userID)
             if (response.success && response.data != null) {
                 RepositoryResult.Success(
                     message = response.message ?: "Success",

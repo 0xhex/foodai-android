@@ -51,24 +51,23 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
             }
 
             // Setup comments adapter
-            commentsAdapter = CommentsAdapter(
-                currentUserId = UserSession.user?.id,
-                onDeleteClick = { commentId ->
-                    viewModel?.deleteComment(commentId)
-                }
-            )
+            commentsAdapter =
+                CommentsAdapter(currentUserId = UserSession.user?.id, onDeleteClick = { commentId ->
+                    this@CommunityPostDetailFragment.viewModel.deleteComment(commentId)
+                })
             sectionComments.apply {
                 rvComments.adapter = commentsAdapter
                 btnSend.setOnClickListener {
                     val commentText = sectionComments.editComment.text.toString().trim()
                     if (commentText.isNotEmpty()) {
-                        viewModel?.addComment(commentText)
+                        this@CommunityPostDetailFragment.viewModel.addComment(commentText)
                         sectionComments.editComment.text?.clear()
-                        
+
                         // Hide keyboard
-                        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        val imm =
+                            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                         imm.hideSoftInputFromWindow(sectionComments.editComment.windowToken, 0)
-                        
+
                         // Show loading indicator if needed
                         // sectionComments.progressBar.isVisible = true
                     }
@@ -92,14 +91,15 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
 
             // Like button
             sectionMeta.btnLike.setOnClickListener {
-                viewModel?.toggleLike()
+                this@CommunityPostDetailFragment.viewModel.toggleLike()
             }
 
             // Add this to setupViews method:
             sectionFoodDetails.ingredientsSection.root.setOnClickListener {
                 val isExpanded = sectionFoodDetails.ingredientsSection.rvIngredients.isVisible
                 sectionFoodDetails.ingredientsSection.rvIngredients.isVisible = !isExpanded
-                sectionFoodDetails.ingredientsSection.imgIngredientsExpand.rotation = if (!isExpanded) 180f else 0f
+                sectionFoodDetails.ingredientsSection.imgIngredientsExpand.rotation =
+                    if (!isExpanded) 180f else 0f
             }
         }
     }
@@ -129,8 +129,7 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
     private fun updateUI(post: CommunityPost) {
         with(binding) {
             // Load food image
-            Glide.with(requireContext())
-                .load(post.image.url)
+            Glide.with(requireContext()).load(post.image.url)
                 .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.dimen_16dp)))
                 .into(imgFood)
 
@@ -141,16 +140,13 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
             sectionMeta.apply {
                 // User info
                 if (!post.user.profilePicUrl.isNullOrEmpty()) {
-                    Glide.with(requireContext())
-                        .load(post.user.profilePicUrl)
-                        .circleCrop()
+                    Glide.with(requireContext()).load(post.user.profilePicUrl).circleCrop()
                         .into(imgProfile)
                     txtProfileLetter.visibility = android.view.View.GONE
                 } else {
                     imgProfile.setBackgroundColor(
                         ContextCompat.getColor(
-                            requireContext(),
-                            R.color.gray
+                            requireContext(), R.color.gray
                         )
                     )
                     txtProfileLetter.visibility = android.view.View.VISIBLE
@@ -175,13 +171,11 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
                     } else {
                         getString(R.string.like)
                     }
-                    setIconResource(
-                        if (post.likes?.any { it.id == UserSession.user?.id } == true) {
-                            R.drawable.ic_heart_filled
-                        } else {
-                            R.drawable.ic_heart
-                        }
-                    )
+                    setIconResource(if (post.likes?.any { it.id == UserSession.user?.id } == true) {
+                        R.drawable.ic_heart_filled
+                    } else {
+                        R.drawable.ic_heart
+                    })
                 }
             }
 
@@ -290,10 +284,12 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
     private fun updateLikeButton(isLiked: Boolean) {
         binding.sectionMeta.btnLike.apply {
             text = if (isLiked) getString(R.string.unlike) else getString(R.string.like)
-            icon = ContextCompat.getDrawable(requireContext(), 
-                if (isLiked) R.drawable.ic_heart_filled else R.drawable.ic_heart)
+            icon = ContextCompat.getDrawable(
+                requireContext(), if (isLiked) R.drawable.ic_heart_filled else R.drawable.ic_heart
+            )
             iconTint = ColorStateList.valueOf(
-                ContextCompat.getColor(requireContext(), if (isLiked) R.color.red else R.color.gray))
+                ContextCompat.getColor(requireContext(), if (isLiked) R.color.red else R.color.gray)
+            )
         }
     }
 } 
