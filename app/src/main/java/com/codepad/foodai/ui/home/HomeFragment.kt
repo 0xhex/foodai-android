@@ -46,20 +46,6 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
             bottomNavigationView.setupWithNavController(it)
         }
 
-        // Hide FAB on community and settings tabs
-        navController?.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.communityTabFragment, R.id.navigation_settings -> {
-                    binding.imgPlus.visibility = View.GONE
-                    binding.imgCircle.visibility = View.GONE
-                }
-                else -> {
-                    binding.imgPlus.visibility = View.VISIBLE
-                    binding.imgCircle.visibility = View.VISIBLE
-                }
-            }
-        }
-
         binding.imgPlus.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_menuDialog)
         }
