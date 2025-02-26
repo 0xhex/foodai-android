@@ -5,10 +5,10 @@
     <color name="black_50_opacity">#8C000000</color>
     <color name="black_60_opacity">#99000000</color>
 
-    <color name="custom_black">#FF1A1A1A</color>
+    <color name="custom_black">#1E1E1E</color>
     <color name="custom_green">#28A745</color>
     <color name="custom_white">#FFFFFF</color>
-    <color name="custom_dark_gray">#66323233</color>
+    <color name="custom_dark_gray">#2C2C2C</color>
     <color name="custom_light_gray">#F5F5F5</color>
     <color name="rounded_snack_bg">#ffffff</color>
     <color name="color_splash_bg">#121622</color>

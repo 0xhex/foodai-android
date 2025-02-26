@@ -32,12 +32,8 @@ class CommunityTabFragment : BaseFragment<FragmentCommunityTabBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        // Set filter button texts with emojis
-        binding.btnWorld.text = "🌍 World"
-        binding.btnCountry.text = "${getCountryFlag()} Country"
-        binding.btnLanguage.text = "🗣️ Language"
-        
-        // ... rest of your code
+        setupTabs()
+        setupClickListeners()
     }
 
     private fun setupViews() {
@@ -50,30 +46,6 @@ class CommunityTabFragment : BaseFragment<FragmentCommunityTabBinding>() {
         }
 
         binding.rvPosts.adapter = postsAdapter
-
-        // Setup filter buttons
-        binding.apply {
-            btnWorld.setOnClickListener {
-                viewModel?.setFilter(CommunityTabViewModel.FilterType.WORLD)
-            }
-            btnCountry.setOnClickListener {
-                viewModel?.setFilter(CommunityTabViewModel.FilterType.COUNTRY)
-            }
-            btnLanguage.setOnClickListener {
-                viewModel?.setFilter(CommunityTabViewModel.FilterType.LANGUAGE)
-            }
-
-            // Set initial country text
-            btnCountry.text = "${viewModel?.getCountryFlag(UserSession.user?.countryCode)} Country"
-
-            btnWorld.text = "\uD83C\uDF0D World"  // 🌍
-            btnLanguage.text = "\uD83D\uDDE3 Language"  // 🗣️
-
-            // Country text will be set when updating filter UI
-            viewModel?.selectedFilter?.value?.let { filter ->
-                updateFilterUI(filter)
-            } ?: updateFilterUI(CommunityTabViewModel.FilterType.WORLD)
-        }
 
         binding.btnRetry.setOnClickListener {
             viewModel?.fetchPosts()
@@ -110,13 +82,42 @@ class CommunityTabFragment : BaseFragment<FragmentCommunityTabBinding>() {
         }
     }
 
+    private fun setupTabs() {
+        binding.apply {
+            // Set initial texts
+            btnWorld.text = "🌍 World"
+            btnCountry.text = "${getCountryFlag()} Country"
+            btnLanguage.text = "🗣️ Language"
+            
+            // Set initial selection
+            updateFilterUI(this@CommunityTabFragment.viewModel.selectedFilter.value ?: CommunityTabViewModel.FilterType.WORLD)
+        }
+    }
+
+    private fun setupClickListeners() {
+        binding.apply {
+            btnWorld.setOnClickListener {
+                this@CommunityTabFragment.viewModel.setFilter(CommunityTabViewModel.FilterType.WORLD)
+            }
+            btnCountry.setOnClickListener {
+                this@CommunityTabFragment.viewModel.setFilter(CommunityTabViewModel.FilterType.COUNTRY)
+            }
+            btnLanguage.setOnClickListener {
+                this@CommunityTabFragment.viewModel.setFilter(CommunityTabViewModel.FilterType.LANGUAGE)
+            }
+        }
+    }
+
     private fun updateFilterUI(filter: CommunityTabViewModel.FilterType) {
         binding.apply {
-            // Update text styles
+            // Update selection states
+            btnWorld.isSelected = filter == CommunityTabViewModel.FilterType.WORLD
+            btnCountry.isSelected = filter == CommunityTabViewModel.FilterType.COUNTRY
+            btnLanguage.isSelected = filter == CommunityTabViewModel.FilterType.LANGUAGE
+
+            // Update text styles and alpha
             btnWorld.apply {
-                isSelected = filter == CommunityTabViewModel.FilterType.WORLD
                 alpha = if (isSelected) 1f else 0.35f
-                setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 typeface = ResourcesCompat.getFont(
                     requireContext(),
                     if (isSelected) R.font.euro_stile_bold else R.font.euro_stile_regular
@@ -124,8 +125,7 @@ class CommunityTabFragment : BaseFragment<FragmentCommunityTabBinding>() {
             }
 
             btnCountry.apply {
-                text = "${viewModel?.getCountryFlag(UserSession.user?.countryCode)} Country"
-                isSelected = filter == CommunityTabViewModel.FilterType.COUNTRY
+                text = "${getCountryFlag()} Country"
                 alpha = if (isSelected) 1f else 0.35f
                 typeface = ResourcesCompat.getFont(
                     requireContext(),
@@ -134,7 +134,6 @@ class CommunityTabFragment : BaseFragment<FragmentCommunityTabBinding>() {
             }
 
             btnLanguage.apply {
-                isSelected = filter == CommunityTabViewModel.FilterType.LANGUAGE
                 alpha = if (isSelected) 1f else 0.35f
                 typeface = ResourcesCompat.getFont(
                     requireContext(),
