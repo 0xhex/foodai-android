@@ -25,13 +25,14 @@
                 android:padding="16dp">
 
                 <TextView
+                    android:id="@+id/txt_header"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/euro_stile_bold"
-                    android:text="Food Details"
+                    android:text="@string/food_details"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:id="@+id/img_expand"
@@ -74,7 +75,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/euro_stile_regular"
-                            android:text="Calories"
+                            android:text="@string/calories"
                             android:textColor="@color/gray"
                             android:textSize="15sp" />
 
@@ -121,7 +122,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
                                 android:fontFamily="@font/euro_stile_regular"
-                                android:text="Protein"
+                                android:text="@string/protein"
                                 android:textColor="@color/gray"
                                 android:textSize="15sp" />
                         </LinearLayout>
@@ -162,7 +163,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
                                 android:fontFamily="@font/euro_stile_regular"
-                                android:text="Carbs"
+                                android:text="@string/carbs"
                                 android:textColor="@color/gray"
                                 android:textSize="15sp" />
                         </LinearLayout>
@@ -203,7 +204,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
                                 android:fontFamily="@font/euro_stile_regular"
-                                android:text="Fats"
+                                android:text="@string/fats"
                                 android:textColor="@color/gray"
                                 android:textSize="15sp" />
                         </LinearLayout>

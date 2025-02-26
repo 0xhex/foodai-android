@@ -160,10 +160,9 @@
                     android:id="@+id/txt_likes_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/euro_stile_regular"
-                    android:textColor="@color/soft_blue"
-                    android:textSize="14sp"
-                    tools:text="5 likes" />
+                    android:text="@string/likes_count"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"

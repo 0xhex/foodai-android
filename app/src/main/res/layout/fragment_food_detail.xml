@@ -96,7 +96,7 @@
                     android:id="@+id/btn_share_community"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+Share on Community"
+                    android:text="@string/share_on_community"
                     android:textColor="@color/blue"
                     android:textSize="15sp"
                     android:fontFamily="@font/euro_stile_bold"

@@ -75,7 +75,7 @@ class CommunityTabFragment : BaseFragment<FragmentCommunityTabBinding>() {
             if (error != null) {
                 binding.errorView.visibility = View.VISIBLE
                 binding.rvPosts.visibility = View.GONE
-                binding.txtError.text = "Error: $error"
+                binding.txtError.text = getString(R.string.error_message_format, error)
                 Log.e("CommunityTab", "Error loading posts: $error")
             } else {
                 binding.errorView.visibility = View.GONE
@@ -96,9 +96,9 @@ class CommunityTabFragment : BaseFragment<FragmentCommunityTabBinding>() {
     private fun setupTabs() {
         binding.apply {
             // Set initial texts
-            btnWorld.text = "🌍 World"
-            btnCountry.text = "${getCountryFlag()} Country"
-            btnLanguage.text = "🗣️ Language"
+            btnWorld.text = getString(R.string.filter_world)
+            btnCountry.text = "${getCountryFlag()} ${getString(R.string.filter_country)}"
+            btnLanguage.text = getString(R.string.filter_language)
             
             // Set initial selection
             updateFilterUI(this@CommunityTabFragment.viewModel.selectedFilter.value ?: CommunityTabViewModel.FilterType.WORLD)
@@ -136,7 +136,7 @@ class CommunityTabFragment : BaseFragment<FragmentCommunityTabBinding>() {
             }
 
             btnCountry.apply {
-                text = "${getCountryFlag()} Country"
+                text = "${getCountryFlag()} ${getString(R.string.filter_country)}"
                 alpha = if (isSelected) 1f else 0.35f
                 typeface = ResourcesCompat.getFont(
                     requireContext(),

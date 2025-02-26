@@ -266,7 +266,7 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
 
             startActivity(Intent.createChooser(shareIntent, "Share screenshot"))
         } catch (e: Exception) {
-            Snackbar.make(binding.root, "Failed to share screenshot", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, getString(R.string.failed_to_share_screenshot), Snackbar.LENGTH_SHORT).show()
         }
     }
 

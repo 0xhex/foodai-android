@@ -470,4 +470,28 @@
 
     <string name="shared_on_community">Shared on Community!</string>
     <string name="error_sharing">Error sharing on community</string>
+
+    <!-- Community Tab -->
+    <string name="filter_world">🌍 World</string>
+    <string name="filter_country">Country</string>
+    <string name="filter_language">🗣️ Language</string>
+    <string name="loading_community_posts">Loading Community Posts…</string>
+    <string name="retry">Retry</string>
+
+    <!-- Community Post Detail -->
+    <string name="community_post">Community Post</string>
+    <string name="calories_value">%s kcal</string>
+    <string name="protein_value">%sg</string>
+    <string name="carbs_value">%sg</string>
+    <string name="fats_value">%sg</string>
+    <string name="weight_kg">%skg</string>
+    <string name="weight_lbs">%slbs</string>
+    <string name="unknown">Unknown</string>
+
+    <!-- Food Detail -->
+    <string name="failed_to_share_screenshot">Failed to share screenshot</string>
+    <string name="share_on_community">+Share on Community</string>
+
+    <!-- Community -->
+    <string name="error_message_format">Error: %s</string>
 </resources>

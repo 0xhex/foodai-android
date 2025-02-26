@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/euro_stile_regular"
-                    android:text="Loading Community Posts..."
+                    android:text="@string/loading_community_posts"
                     android:textColor="@color/soft_blue"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -145,7 +145,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/euro_stile_bold"
                     android:padding="16dp"
-                    android:text="Retry"
+                    android:text="@string/retry"
                     android:textSize="18sp"
                     app:backgroundTint="@color/custom_dark_gray" />
             </LinearLayout>

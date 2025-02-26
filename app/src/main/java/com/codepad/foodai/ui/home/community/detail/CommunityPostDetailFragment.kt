@@ -162,7 +162,7 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
                 updateUserStats(post.user)
 
                 // Likes and date
-                txtLikesCount.text = "${post.likes?.size ?: 0} likes"
+                txtLikesCount.text = getString(R.string.likes_count, post.likes?.size ?: 0)
                 txtDate.text = post.createdAt?.toShortTimeString()
 
                 // Update like button
@@ -204,10 +204,10 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
 
             // Update food details
             sectionFoodDetails.apply {
-                txtCalories.text = "${post.image.calories} kcal"
-                txtProtein.text = "${post.image.protein}g"
-                txtCarbs.text = "${post.image.carbs}g"
-                txtFats.text = "${post.image.fats}g"
+                txtCalories.text = getString(R.string.calories_value, post.image.calories)
+                txtProtein.text = getString(R.string.protein_value, post.image.protein)
+                txtCarbs.text = getString(R.string.carbs_value, post.image.carbs)
+                txtFats.text = getString(R.string.fats_value, post.image.fats)
             }
 
             // Update comments
@@ -246,9 +246,9 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
                 imgIcon.setImageResource(R.drawable.ic_weight)
                 txtLabel.text = getString(R.string.weight)
                 txtValue.text = if (user.isMetric == true) {
-                    "${user.weight}kg"
+                    getString(R.string.weight_kg, user.weight)
                 } else {
-                    "${user.weight?.times(2.205)?.toInt()}lbs"
+                    getString(R.string.weight_lbs, user.weight?.times(2.205)?.toInt())
                 }
             }
 
@@ -257,9 +257,9 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
                 imgIcon.setImageResource(R.drawable.ic_target_weight)
                 txtLabel.text = getString(R.string.target)
                 txtValue.text = if (user.isMetric == true) {
-                    "${user.targetWeight}kg"
+                    getString(R.string.weight_kg, user.targetWeight)
                 } else {
-                    "${user.targetWeight?.times(2.205)?.toInt()}lbs"
+                    getString(R.string.weight_lbs, user.targetWeight?.times(2.205)?.toInt())
                 }
             }
 
@@ -309,7 +309,7 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
             "lose_weight" -> getString(R.string.goal_lose_weight)
             "maintain" -> getString(R.string.goal_maintain)
             "gain_weight" -> getString(R.string.goal_gain_weight)
-            else -> "Unknown"
+            else -> getString(R.string.unknown)
         }
     }
 
