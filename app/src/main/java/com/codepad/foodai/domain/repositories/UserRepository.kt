@@ -711,7 +711,8 @@ class UserRepository @Inject constructor(
 
     suspend fun likePost(postId: String, userId: String): RepositoryResult<CommunityPost> {
         return try {
-            val response = restApi.likePost(postId, LikePostRequest(userId))
+            val request = LikePostRequest(userID = userId)
+            val response = restApi.likePost(postId, request)
             if (response.success && response.data != null) {
                 RepositoryResult.Success(
                     message = response.message ?: "Success",
@@ -733,10 +734,10 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun unlikePost(postID: String, userID: String): RepositoryResult<CommunityPost> {
+    suspend fun unlikePost(postId: String, userId: String): RepositoryResult<CommunityPost> {
         return try {
-            val request = LikePostRequest(userID = userID)
-            val response = restApi.unlikePost(postID, userID)
+            val request = LikePostRequest(userID = userId)
+            val response = restApi.unlikePost(postId, request)
             if (response.success && response.data != null) {
                 RepositoryResult.Success(
                     message = response.message ?: "Success",
