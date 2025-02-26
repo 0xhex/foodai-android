@@ -28,7 +28,6 @@ import com.codepad.foodai.domain.models.user.UpdateUserFieldResponseData
 import com.codepad.foodai.domain.models.user.User
 import com.codepad.foodai.domain.models.user.WeightLogData
 import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
-import com.codepad.foodai.domain.models.community.LikePostRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -159,6 +158,12 @@ interface RestApi {
 
     @POST("community/{postID}/like")
     suspend fun likePost(
+        @Path("postID") postID: String,
+        @Body request: LikePostRequest
+    ): APIResponse<CommunityPost>
+
+    @DELETE("community/{postID}/like")
+    suspend fun unlikePost(
         @Path("postID") postID: String,
         @Body request: LikePostRequest
     ): APIResponse<CommunityPost>

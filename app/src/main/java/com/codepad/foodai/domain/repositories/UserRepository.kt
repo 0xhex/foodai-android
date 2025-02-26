@@ -729,4 +729,29 @@ class UserRepository @Inject constructor(
             handleException<CommunityPost>(e)
         }
     }
+
+    suspend fun unlikePost(postID: String, userID: String): RepositoryResult<CommunityPost> {
+        return try {
+            val request = LikePostRequest(userID = userID)
+            val response = restApi.unlikePost(postID, request)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            handleException<CommunityPost>(e)
+        }
+    }
 }
