@@ -31,4 +31,5 @@
     <color name="blue_shadow">#33007AFF</color>
     <color name="soft_blue">#007AFF</color>
     <color name="custom_dark_gray_new">#292929</color>
+    <color name="custom_dark_gray_35">#22323233</color>
 </resources>

@@ -12,6 +12,9 @@ data class User(
     @SerializedName("_id") val id: String,
     @SerializedName("email") val email: String?,
     @SerializedName("name") val name: String?,
+    @SerializedName("assignedEmoji") val assignedEmoji: String?,
+    @SerializedName("countryCode") val countryCode: String?,
+    @SerializedName("profilePicUrl") val profilePicUrl: String?,
     @SerializedName("createdAt") val createdAt: Date?,
     @SerializedName("updatedAt") val updatedAt: Date?,
     @SerializedName("isMetric") val isMetric: Boolean?,
@@ -27,6 +30,7 @@ data class User(
     @SerializedName("revenueCatID") val revenueCatID: String?,
     @SerializedName("workoutsPerWeek") val workoutsPerWeek: String?,
     @SerializedName("goal") val goal: String?,
+    @SerializedName("diet_type") val dietType: String?,
     @SerializedName("accomplishments") val accomplishments: List<String>?,
     @SerializedName("targetWeight") val targetWeight: Int?,
     @SerializedName("targetPerWeek") val targetPerWeek: Double?,
@@ -34,7 +38,8 @@ data class User(
     @SerializedName("dailyCarb") val dailyCarb: Int?,
     @SerializedName("dailyProtein") val dailyProtein: Int?,
     @SerializedName("dailyFat") val dailyFat: Int?,
-    @SerializedName("dateOfBirth") val dateOfBirth: String? // Use String for date, or a custom Date adapter
+    @SerializedName("dateOfBirth") val dateOfBirth: String?,
+    @SerializedName("pushSubsID") val pushSubsID: String?
 ) : Parcelable {
     fun calculateCompletedRatio(startingWeight: Double, currentWeight: Double, targetWeight: Double): Double {
         val totalChange = targetWeight - startingWeight

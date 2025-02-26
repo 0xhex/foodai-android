@@ -1,12 +1,14 @@
 package com.codepad.foodai.ui.home.home.fooddetail
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +17,7 @@ import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentFoodDetailBinding
 import com.codepad.foodai.extensions.toHourString
 import com.codepad.foodai.helpers.RevenueCatManager
+import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.home.pager.HomePagerViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -30,6 +33,7 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
     private val sharedViewModel: HomePagerViewModel by activityViewModels()
     private var recommendationPollingHandler: Handler? = null
     private var recommendationPollingRunnable: Runnable? = null
+    private var isShared = false
     override val hideBottomNavBar: Boolean = true
 
     override fun getLayoutId(): Int = R.layout.fragment_food_detail
@@ -41,6 +45,15 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
         setupObservers()
         setupClickListeners()
         setupRecommendationCard()
+        checkIfShared()
+    }
+
+    private fun checkIfShared() {
+        sharedViewModel.foodDetail.value?.id?.let { imageId ->
+            isShared = requireContext().getSharedPreferences("food_prefs", Context.MODE_PRIVATE)
+                .getBoolean("${imageId}_isShared", false)
+            binding.btnShareCommunity.isVisible = !isShared
+        }
     }
 
     private fun setupRecommendationCard() {
@@ -155,6 +168,21 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
                 stopPollingRecommendation()
             }
         }
+
+        sharedViewModel.createPostResult.observe(viewLifecycleOwner) { result ->
+            binding.progressOverlay.isVisible = false
+            // Save shared state
+            sharedViewModel.foodDetail.value?.id?.let { imageId ->
+                requireContext().getSharedPreferences("food_prefs", Context.MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("${imageId}_isShared", true)
+                    .apply()
+            }
+
+            isShared = true
+            binding.btnShareCommunity.isVisible = false
+            Snackbar.make(binding.root, getString(R.string.shared_on_community), Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupClickListeners() {
@@ -173,6 +201,23 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
         binding.btnFix.setOnClickListener {
             findNavController().navigate(R.id.fixResultFragment)
         }
+
+        binding.btnShareCommunity.setOnClickListener {
+            shareOnCommunity()
+        }
+    }
+
+    private fun shareOnCommunity() {
+        sharedViewModel.foodDetail.value?.id?.let { imageId ->
+            UserSession.user?.id?.let { userId ->
+                binding.progressOverlay.isVisible = true
+                sharedViewModel.createCommunityPost(imageId)
+            }
+        }
+    }
+
+    private fun showSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun showDeleteConfirmationDialog() {
@@ -221,7 +266,7 @@ class FoodDetailFragment : BaseFragment<FragmentFoodDetailBinding>() {
 
             startActivity(Intent.createChooser(shareIntent, "Share screenshot"))
         } catch (e: Exception) {
-            Snackbar.make(binding.root, "Failed to share screenshot", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, getString(R.string.failed_to_share_screenshot), Snackbar.LENGTH_SHORT).show()
         }
     }
 

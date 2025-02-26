@@ -10,12 +10,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codepad.foodai.domain.api.APIError
+import com.codepad.foodai.domain.models.community.CommunityPost
 import com.codepad.foodai.domain.models.image.ImageData
+import com.codepad.foodai.domain.models.note.DailyNote
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
 import com.codepad.foodai.domain.models.recommendation.Recommendation
 import com.codepad.foodai.domain.models.user.GetUserDailySummaryUseCase
 import com.codepad.foodai.domain.models.user.User
 import com.codepad.foodai.domain.use_cases.UseCaseResult
+import com.codepad.foodai.domain.use_cases.community.CreateCommunityPostUseCase
 import com.codepad.foodai.domain.use_cases.image.DeleteImageUseCase
 import com.codepad.foodai.domain.use_cases.image.FixImageResultsUseCase
 import com.codepad.foodai.domain.use_cases.recommendation.GetRecommendationUseCase
@@ -25,10 +28,9 @@ import com.codepad.foodai.domain.use_cases.user.GetUserWeightLogsUseCase
 import com.codepad.foodai.domain.use_cases.user.UpdateUserFieldUseCase
 import com.codepad.foodai.extensions.toFormattedString
 import com.codepad.foodai.helpers.HealthConnectStatus
+import com.codepad.foodai.helpers.NotesManager
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.home.settings.health.HealthConnectManager
-import com.codepad.foodai.domain.models.note.DailyNote
-import com.codepad.foodai.helpers.NotesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -49,7 +51,8 @@ class HomePagerViewModel @Inject constructor(
     private val updateUserFieldUseCase: UpdateUserFieldUseCase,
     private val sharedPreferences: SharedPreferences,
     private val healthConnectManager: HealthConnectManager,
-    private val notesManager: NotesManager
+    private val notesManager: NotesManager,
+    private val createCommunityPostUseCase: CreateCommunityPostUseCase,
 ) : ViewModel() {
 
     private val _dailySummary = MutableLiveData<DailySummaryResponseData>()
@@ -114,6 +117,9 @@ class HomePagerViewModel @Inject constructor(
 
     private val _showWeightUpdateBanner = MutableLiveData<Boolean>()
     val showWeightUpdateBanner: LiveData<Boolean> = _showWeightUpdateBanner
+
+    private val _createPostResult = MutableLiveData<CommunityPost>()
+    val createPostResult: LiveData<CommunityPost> = _createPostResult
 
     private fun parseDate(dateString: String): Date? {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
@@ -413,10 +419,11 @@ class HomePagerViewModel @Inject constructor(
                         // Update local user
                         val updatedUser = UserSession.user?.copy(weight = weight)
                         updatedUser?.let { UserSession.updateSession(it) }
-                        
+
                         // Check if we should show banner
                         checkWeightUpdateBanner()
                     }
+
                     is UseCaseResult.Error -> {
                         // Handle error
                     }
@@ -442,11 +449,32 @@ class HomePagerViewModel @Inject constructor(
                             else -> false
                         }
                     }
+
                     is UseCaseResult.Error -> {
                         // Handle error
                     }
                 }
             }
+        }
+    }
+
+    fun createCommunityPost(imageId: String) {
+        viewModelScope.launch {
+            _isLoading.value = true
+
+            UserSession.user?.id?.let { userId ->
+                when (val result = createCommunityPostUseCase.createPost(userId, imageId)) {
+                    is UseCaseResult.Success -> {
+                        _createPostResult.value = result.data
+                    }
+
+                    is UseCaseResult.Error -> {
+
+                    }
+                }
+            }
+
+            _isLoading.value = false
         }
     }
 }

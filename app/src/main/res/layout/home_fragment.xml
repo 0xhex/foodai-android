@@ -39,6 +39,7 @@
             app:itemTextAppearanceInactive="@style/BottomNavigationViewTextAppearance"
             app:itemIconTint="@color/tab_icon_color_selector"
             app:itemTextColor="@color/tab_text_color_selector"
+            app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

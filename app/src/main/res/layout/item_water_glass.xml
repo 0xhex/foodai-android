@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -11,15 +11,15 @@
             android:layout_height="40dp"
             android:scaleType="fitCenter"/>
 
-        <TextView
+        <ImageView
             android:id="@+id/txt_plus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            app:srcCompat="@drawable/ic_plus"
             android:layout_gravity="center"
-            android:text="+"
-            android:textSize="24sp"
-            android:textColor="@color/custom_light_gray"
-            android:fontFamily="@font/euro_stile_bold"
+            android:elevation="4dp"
+            android:background="@drawable/water_plus_background"
+            app:tint="@color/white"
             android:visibility="gone"/>
 
     </FrameLayout>

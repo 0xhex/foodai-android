@@ -374,4 +374,45 @@
     <string name="glass_info">1 Glas (250 ML)</string>
     <string name="current_water">Aktuell: %s L</string>
     <string name="target_water">Ziel: %s L</string>
+
+    <!-- Community Tab -->
+    <string name="filter_world">🌍 Welt</string>
+    <string name="filter_country">Land</string>
+    <string name="filter_language">🗣 Sprache</string>
+    <string name="loading_community_posts">Lade Community-Beiträge…</string>
+    <string name="retry">Wiederholen</string>
+
+    <!-- Community Post Detail -->
+    <string name="community_post">Community-Beitrag</string>
+    <string name="likes_count">%s Gefällt mir</string>
+    <string name="calories_value">%s kcal</string>
+    <string name="protein_value">%sg</string>
+    <string name="carbs_value">%sg</string>
+    <string name="fats_value">%sg</string>
+    <string name="weight_kg">%skg</string>
+    <string name="weight_lbs">%slbs</string>
+    <string name="unknown">Unbekannt</string>
+    <string name="food_details">Lebensmitteldetails</string>
+    <string name="likes">Gefällt mir</string>
+    <string name="comments_count">Kommentare (%s)</string>
+    <string name="add_comment">Kommentar hinzufügen...</string>
+    <string name="send">Senden</string>
+
+    <!-- Food Detail -->
+    <string name="failed_to_share_screenshot">Screenshot konnte nicht geteilt werden</string>
+    <string name="share_on_community">+In Community teilen</string>
+
+    <!-- Community -->
+    <string name="error_message_format">Fehler: %s</string>
+    <string name="community">Community</string>
+    <string name="shared_on_community">In der Community geteilt!</string>
+    <string name="error_sharing">Fehler beim Teilen in der Community</string>
+
+    <!-- User Stats -->
+    <string name="target">Ziel</string>
+    <string name="workouts">Workouts</string>
+    <string name="diet">Ernährung</string>
+    <string name="goal_placeholder">Ziel</string>
+    <string name="unlike">Gefällt mir nicht mehr</string>
+    <string name="like">Gefällt mir</string>
 </resources>

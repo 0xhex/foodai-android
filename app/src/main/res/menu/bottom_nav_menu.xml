@@ -4,12 +4,19 @@
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home"
         android:title="@string/home" />
+
     <item
         android:id="@+id/navigation_analytics"
         android:icon="@drawable/ic_bars"
         android:title="@string/analytics" />
+
     <item
         android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_gear"
         android:title="@string/settings" />
+
+    <item
+        android:id="@+id/communityTabFragment"
+        android:icon="@drawable/ic_community"
+        android:title="@string/community" />
 </menu>

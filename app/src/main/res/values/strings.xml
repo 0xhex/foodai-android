@@ -440,4 +440,58 @@
     <color name="amber_20">#33FFC107</color>
     <color name="gray_20">#33868686</color>
     <color name="custom_dark_gray_80">#CC323233</color>
+
+    <string name="community">Community</string>
+
+    <!-- Community Post Detail -->
+    <string name="target">Target</string>
+    <string name="workouts">Workouts</string>
+    <string name="diet">Diet</string>
+    <string name="likes_count">%d likes</string>
+    <string name="comments_count">Comments (%d)</string>
+    <string name="like">Like</string>
+    <string name="goal_placeholder">Goal</string>
+    <string name="unlike">Unlike</string>
+    <string name="add_comment">Add a comment...</string>
+    <string name="send">Send</string>
+    <string name="food_details">Food Details</string>
+    <string name="likes">Likes</string>
+    
+    <!-- Goal Types -->
+    <string name="goal_lose_weight">Lose Weight</string>
+    <string name="goal_maintain">Maintain</string>
+    <string name="goal_gain_weight">Gain Weight</string>
+    
+    <!-- Diet Types -->
+    <string name="diet_classic">Classic</string>
+    <string name="diet_pescatarian">Pescatarian</string>
+    <string name="diet_vegetarian">Vegetarian</string>
+    <string name="diet_vegan">Vegan</string>
+
+    <string name="shared_on_community">Shared on Community!</string>
+    <string name="error_sharing">Error sharing on community</string>
+
+    <!-- Community Tab -->
+    <string name="filter_world">🌍 World</string>
+    <string name="filter_country">Country</string>
+    <string name="filter_language">🗣️ Language</string>
+    <string name="loading_community_posts">Loading Community Posts…</string>
+    <string name="retry">Retry</string>
+
+    <!-- Community Post Detail -->
+    <string name="community_post">Community Post</string>
+    <string name="calories_value">%s kcal</string>
+    <string name="protein_value">%sg</string>
+    <string name="carbs_value">%sg</string>
+    <string name="fats_value">%sg</string>
+    <string name="weight_kg">%skg</string>
+    <string name="weight_lbs">%slbs</string>
+    <string name="unknown">Unknown</string>
+
+    <!-- Food Detail -->
+    <string name="failed_to_share_screenshot">Failed to share screenshot</string>
+    <string name="share_on_community">+Share on Community</string>
+
+    <!-- Community -->
+    <string name="error_message_format">Error: %s</string>
 </resources>

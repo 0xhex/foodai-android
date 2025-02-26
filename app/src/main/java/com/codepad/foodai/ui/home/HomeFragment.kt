@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.HomeFragmentBinding
-import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.helpers.FirebaseManager
 import com.codepad.foodai.helpers.RevenueCatManager
 import com.codepad.foodai.helpers.UserSession
