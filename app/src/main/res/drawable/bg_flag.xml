@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#CC323233"/> <!-- customDarkGray with 0.8 opacity -->
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <stroke
+                android:width="2dp"
+                android:color="#4D000000"/> <!-- Black with 0.3 opacity for shadow -->
+        </shape>
+    </item>
+</layer-list> 

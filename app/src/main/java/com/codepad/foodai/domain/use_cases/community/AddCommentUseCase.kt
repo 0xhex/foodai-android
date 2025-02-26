@@ -1,3 +1,4 @@
+import com.codepad.foodai.domain.models.community.CommunityPost
 import com.codepad.foodai.domain.repositories.RepositoryResult
 import com.codepad.foodai.domain.repositories.UserRepository
 import com.codepad.foodai.domain.use_cases.UseCaseResult
@@ -6,7 +7,11 @@ import javax.inject.Inject
 class AddCommentUseCase @Inject constructor(
     private val userRepository: UserRepository,
 ) {
-    suspend fun addComment(postID: String, userID: String, text: String): UseCaseResult<CommunityPost> {
+    suspend fun addComment(
+        postID: String,
+        userID: String,
+        text: String,
+    ): UseCaseResult<CommunityPost> {
         return when (val result = userRepository.addComment(postID, userID, text)) {
             is RepositoryResult.Success -> {
                 UseCaseResult.Success(

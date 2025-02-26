@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="post"
+            type="com.codepad.foodai.domain.models.community.CommunityPost" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardBackgroundColor="#66323233"
+        app:cardElevation="8dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="#1AFFFFFF"
+        app:rippleColor="@android:color/transparent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+
+            <!-- Meal Type Label -->
+            <TextView
+                android:id="@+id/txt_meal_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_meal_type"
+                android:fontFamily="@font/euro_stile_bold"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="7sp"
+                android:autoSizeMaxTextSize="10sp"
+                android:autoSizeStepGranularity="1sp"
+                android:maxLines="1"
+                android:translationZ="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="-80dp"
+                android:layout_marginTop="40dp"
+                tools:text="BREAKFAST"/>
+
+            <!-- Country Flag -->
+            <TextView
+                android:id="@+id/txt_country_flag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_flag"
+                android:padding="8dp"
+                android:textSize="28sp"
+                android:translationZ="3dp"
+                android:elevation="3dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="-80dp"
+                android:layout_marginTop="-50dp"
+                tools:text="🇹🇷"/>
+
+            <!-- Content Container -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- Food Image -->
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img_food"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:elevation="6dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/RoundedCorners12dp"
+                    app:cornerFamily="rounded"
+                    app:cornerSize="12dp"/>
+
+                <!-- Info Container -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toEndOf="@id/img_food"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Username -->
+                    <TextView
+                        android:id="@+id/txt_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/euro_stile_bold"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        tools:text="JohnDoe"/>
+
+                    <!-- Description -->
+                    <TextView
+                        android:id="@+id/txt_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/euro_stile_regular"
+                        android:textColor="#CCFFFFFF"
+                        android:textSize="12sp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:alpha="0.8"
+                        tools:text="Homemade chicken cutlets with crispy coating"/>
+
+                    <!-- Stats Row 1 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:baselineAligned="false">
+
+                        <include
+                            android:id="@+id/badge_calories"
+                            layout="@layout/view_nutrition_badge"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+
+                        <include
+                            android:id="@+id/badge_health_score"
+                            layout="@layout/view_nutrition_badge"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+
+                    <!-- Stats Row 2 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:baselineAligned="false">
+
+                        <include
+                            android:id="@+id/badge_time"
+                            layout="@layout/view_nutrition_badge"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+
+                        <include
+                            android:id="@+id/badge_likes"
+                            layout="@layout/view_nutrition_badge"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout> 

@@ -1,3 +1,4 @@
+import com.codepad.foodai.domain.models.community.CommunityPost
 import com.codepad.foodai.domain.repositories.RepositoryResult
 import com.codepad.foodai.domain.repositories.UserRepository
 import com.codepad.foodai.domain.use_cases.UseCaseResult

@@ -1,13 +1,13 @@
 package com.codepad.foodai.domain.repositories
 
 import AddCommentRequest
-import CommunityPost
-import CommunityResponseData
 import CreateCommunityPostRequest
 import DeleteCommentRequest
 import LikePostRequest
 import com.codepad.foodai.domain.api.APIError
 import com.codepad.foodai.domain.api.RestApi
+import com.codepad.foodai.domain.models.community.CommunityPost
+import com.codepad.foodai.domain.models.community.CommunityResponseData
 import com.codepad.foodai.domain.models.exercise.ExerciseData
 import com.codepad.foodai.domain.models.exercise.LogExerciseCustomRequest
 import com.codepad.foodai.domain.models.exercise.SubmitExerciseDescriptionRequest
@@ -658,7 +658,7 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun getCommunityPosts(userID: String): RepositoryResult<CommunityResponseData> {
+    suspend fun getCommunityPosts(userID: String): RepositoryResult<List<CommunityPost>> {
         return try {
             val response = restApi.getCommunityPosts(userID)
             if (response.success && response.data != null) {
@@ -678,11 +678,14 @@ class UserRepository @Inject constructor(
                 )
             }
         } catch (e: Exception) {
-            handleException<CommunityResponseData>(e)
+            handleException<List<CommunityPost>>(e)
         }
     }
 
-    suspend fun createCommunityPost(userID: String, imageID: String): RepositoryResult<CommunityPost> {
+    suspend fun createCommunityPost(
+        userID: String,
+        imageID: String,
+    ): RepositoryResult<CommunityPost> {
         return try {
             val request = CreateCommunityPostRequest(userID = userID, imageID = imageID)
             val response = restApi.createCommunityPost(request)
@@ -757,7 +760,11 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun addComment(postID: String, userID: String, text: String): RepositoryResult<CommunityPost> {
+    suspend fun addComment(
+        postID: String,
+        userID: String,
+        text: String,
+    ): RepositoryResult<CommunityPost> {
         return try {
             val request = AddCommentRequest(userID = userID, text = text)
             val response = restApi.addComment(postID, request)
@@ -782,7 +789,11 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteComment(postID: String, commentID: String, userID: String): RepositoryResult<CommunityPost> {
+    suspend fun deleteComment(
+        postID: String,
+        commentID: String,
+        userID: String,
+    ): RepositoryResult<CommunityPost> {
         return try {
             val request = DeleteCommentRequest(commentID = commentID, userID = userID)
             val response = restApi.deleteComment(postID, request)

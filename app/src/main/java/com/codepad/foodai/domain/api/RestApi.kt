@@ -1,12 +1,11 @@
 package com.codepad.foodai.domain.api
 
 import AddCommentRequest
-import CommunityPost
-import CommunityResponseData
 import CreateCommunityPostRequest
 import DeleteCommentRequest
 import LikePostRequest
 import com.codepad.foodai.domain.models.APIResponse
+import com.codepad.foodai.domain.models.community.CommunityPost
 import com.codepad.foodai.domain.models.exercise.ExerciseData
 import com.codepad.foodai.domain.models.exercise.LogExerciseCustomRequest
 import com.codepad.foodai.domain.models.exercise.SubmitExerciseDescriptionRequest
@@ -151,7 +150,7 @@ interface RestApi {
     @GET("community")
     suspend fun getCommunityPosts(
         @Query("userID") userID: String
-    ): APIResponse<CommunityResponseData>
+    ): APIResponse<List<CommunityPost>>
 
     @POST("community")
     suspend fun createCommunityPost(

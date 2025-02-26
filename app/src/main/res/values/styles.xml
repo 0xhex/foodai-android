@@ -118,4 +118,9 @@
         <item name="android:colorControlNormal">@color/gray</item>
     </style>
 
+    <style name="RoundedCorners12dp">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
 </resources>

@@ -13,4 +13,6 @@
     <dimen name="dimen_100dp">100dp</dimen>
     <dimen name="spacing_small">8dp</dimen>
     <dimen name="logo_elevation">4dp</dimen>
+    <dimen name="screen_width_quarter_negative">-25%</dimen>
+    <dimen name="screen_width_quarter">25%</dimen>
 </resources>
