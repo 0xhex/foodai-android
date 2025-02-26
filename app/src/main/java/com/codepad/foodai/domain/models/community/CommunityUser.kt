@@ -6,16 +6,16 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CommunityUser(
-    @SerializedName("id") val id: String,
-    @SerializedName("name") val name: String,
-    @SerializedName("assignedEmoji") val assignedEmoji: String,
-    @SerializedName("countryCode") val countryCode: String? = null,
+    @SerializedName("_id") val id: String,
+    @SerializedName("name") val name: String?,
+    @SerializedName("profilePicUrl") val profilePicUrl: String?,
     @SerializedName("deviceLang") val deviceLang: String? = null,
-    @SerializedName("profilePicUrl") val profilePicUrl: String? = null,
-    @SerializedName("goal") val goal: String? = null,
-    @SerializedName("weight") val weight: Double? = null,
-    @SerializedName("targetWeight") val targetWeight: Double? = null,
-    @SerializedName("workoutsPerWeek") val workoutsPerWeek: String? = null,
-    @SerializedName("diet_type") val dietType: String? = null,
-    @SerializedName("isMetric") val isMetric: Boolean? = null
+    @SerializedName("countryCode") val countryCode: String?,
+    @SerializedName("goal") val goal: String?,
+    @SerializedName("weight") val weight: Double?,
+    @SerializedName("targetWeight") val targetWeight: Double?,
+    @SerializedName("isMetric") val isMetric: Boolean?,
+    @SerializedName("workoutsPerWeek") val workoutsPerWeek: String?,
+    @SerializedName("diet_type") val dietType: String?,
+    @SerializedName("assignedEmoji") val assignedEmoji: String?
 ) : Parcelable

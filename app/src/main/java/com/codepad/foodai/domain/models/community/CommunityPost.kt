@@ -6,13 +6,12 @@ import java.util.Date
 
 @Parcelize
 data class CommunityPost(
-    @SerializedName("_id") val id: String,
+    @SerializedName("_id") val id: String?,
     @SerializedName("user") val user: CommunityUser,
     @SerializedName("image") val image: CommunityImage,
-    @SerializedName("likes") val likes: List<CommunityUser>,
-    @SerializedName("comments") val comments: List<CommunityComment>,
-    @SerializedName("createdAt") val createdAt: String,
-    @SerializedName("updatedAt") val updatedAt: String? = null,
+    @SerializedName("likes") val likes: List<CommunityUser>?,
+    @SerializedName("comments") val comments: List<CommunityComment>?,
+    @SerializedName("createdAt") val createdAt: Date?
 ) : Parcelable
 
 @Parcelize

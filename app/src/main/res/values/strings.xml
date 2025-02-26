@@ -442,4 +442,28 @@
     <color name="custom_dark_gray_80">#CC323233</color>
 
     <string name="community">Community</string>
+
+    <!-- Community Post Detail -->
+    <string name="target">Target</string>
+    <string name="workouts">Workouts</string>
+    <string name="diet">Diet</string>
+    <string name="likes_count">%d likes</string>
+    <string name="comments_count">Comments (%d)</string>
+    <string name="like">Like</string>
+    <string name="unlike">Unlike</string>
+    <string name="add_comment">Add a comment...</string>
+    <string name="send">Send</string>
+    <string name="food_details">Food Details</string>
+    <string name="likes">Likes</string>
+    
+    <!-- Goal Types -->
+    <string name="goal_lose_weight">Lose Weight</string>
+    <string name="goal_maintain">Maintain</string>
+    <string name="goal_gain_weight">Gain Weight</string>
+    
+    <!-- Diet Types -->
+    <string name="diet_classic">Classic</string>
+    <string name="diet_pescatarian">Pescatarian</string>
+    <string name="diet_vegetarian">Vegetarian</string>
+    <string name="diet_vegan">Vegan</string>
 </resources>

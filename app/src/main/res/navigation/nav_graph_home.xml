@@ -110,8 +110,12 @@
     <fragment
         android:id="@+id/communityTabFragment"
         android:name="com.codepad.foodai.ui.home.community.CommunityTabFragment"
-        android:label="@string/community"
-        tools:layout="@layout/fragment_community_tab" />
+        android:label="CommunityTabFragment">
+        
+        <action
+            android:id="@+id/action_communityTab_to_communityPostDetail"
+            app:destination="@id/communityPostDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/personalFragment"
@@ -221,5 +225,15 @@
         <argument
             android:name="selectedDate"
             app:argType="java.util.Date" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/communityPostDetailFragment"
+        android:name="com.codepad.foodai.ui.home.community.detail.CommunityPostDetailFragment"
+        android:label="CommunityPostDetailFragment">
+        
+        <argument
+            android:name="post"
+            app:argType="com.codepad.foodai.domain.models.community.CommunityPost"/>
     </fragment>
 </navigation>

@@ -17,35 +17,17 @@ import com.codepad.foodai.extensions.dpToPx
 import com.codepad.foodai.extensions.getTimeAgo
 
 class CommunityPostsAdapter(
-    private val onPostClick: (CommunityPost) -> Unit,
-) : ListAdapter<CommunityPost, CommunityPostsAdapter.ViewHolder>(PostDiffCallback()) {
+    private val onPostClick: (CommunityPost) -> Unit
+) : ListAdapter<CommunityPost, CommunityPostsAdapter.PostViewHolder>(PostDiffCallback()) {
 
-    inner class ViewHolder(
-        private val binding: ItemCommunityPostBinding,
+    inner class PostViewHolder(
+        private val binding: ItemCommunityPostBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener { view ->
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    // Scale animation
-                    view.animate()
-                        .scaleX(0.98f)
-                        .scaleY(0.98f)
-                        .setDuration(300)
-                        .setInterpolator(SpringInterpolator(0.3f, 0.6f))
-                        .withEndAction {
-                            view.animate()
-                                .scaleX(1f)
-                                .scaleY(1f)
-                                .setDuration(300)
-                                .setInterpolator(SpringInterpolator(0.3f, 0.6f))
-                                .withEndAction {
-                                    onPostClick(getItem(position))
-                                }
-                                .start()
-                        }
-                        .start()
+            binding.root.setOnClickListener {
+                getItem(bindingAdapterPosition)?.let { post ->
+                    onPostClick(post)
                 }
             }
         }
@@ -129,12 +111,12 @@ class CommunityPostsAdapter(
 
                 badgeTime.apply {
                     txtIcon.text = "\u23F0"
-                    txtValue.text = post.createdAt.getTimeAgo()
+                    txtValue.text = post.createdAt?.getTimeAgo()
                 }
 
                 badgeLikes.apply {
                     txtIcon.text = "\u2764\uFE0F"
-                    txtValue.text = post.likes.size.toString()
+                    txtValue.text = post.likes?.size.toString()
                 }
             }
         }
@@ -160,8 +142,8 @@ class CommunityPostsAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
+        return PostViewHolder(
             ItemCommunityPostBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -170,7 +152,7 @@ class CommunityPostsAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 

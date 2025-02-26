@@ -14,6 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import androidx.core.content.ContextCompat
 import android.util.Log
 import android.os.Bundle
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 
 @AndroidEntryPoint
 class CommunityTabFragment : BaseFragment<FragmentCommunityTabBinding>() {
@@ -39,10 +41,19 @@ class CommunityTabFragment : BaseFragment<FragmentCommunityTabBinding>() {
     private fun setupViews() {
         // Setup adapter
         postsAdapter = CommunityPostsAdapter { post ->
-            // Navigate to post detail
-            // findNavController().navigate(
-            //     CommunityTabFragmentDirections.actionCommunityTabToCommunityPostDetail(post.id)
-            //)
+            // Verify post has required fields before navigation
+            if (post.id?.isNotEmpty() == true && post.user.id.isNotEmpty() && post.image.id.isNotEmpty()) {
+                findNavController().navigate(
+                    CommunityTabFragmentDirections.actionCommunityTabToCommunityPostDetail(post)
+                )
+            } else {
+                // Show error message
+                Snackbar.make(
+                    binding.root,
+                    "Unable to open post details",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
 
         binding.rvPosts.adapter = postsAdapter
