@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="12dp"
-    android:gravity="center_vertical"
-    android:background="@drawable/bg_nutrient_item">
-
-    <TextView
-        android:id="@+id/txt_ingredient_name"
-        android:layout_width="0dp"
+<layout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="14sp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/euro_stile_regular"
-        tools:text="Chicken breast"/>
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:background="@drawable/bg_nutrient_item">
 
-    <TextView
-        android:id="@+id/txt_ingredient_calories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@color/gray"
-        android:fontFamily="@font/euro_stile_regular"
-        tools:text="250 kcal"/>
+        <TextView
+            android:id="@+id/txt_ingredient_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:fontFamily="@font/euro_stile_regular"
+            tools:text="Ingredient name"/>
 
-</LinearLayout> 
+        <TextView
+            android:id="@+id/txt_calories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:fontFamily="@font/euro_stile_regular"
+            tools:text="100 kcal"/>
+
+    </LinearLayout>
+</layout> 

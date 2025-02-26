@@ -34,7 +34,7 @@ class CommentsAdapter(
 
                 // Set username and date
                 txtUsername.text = comment.user.name
-                txtDate.text = comment.createdAt?.toFormattedString()
+                txtDate.text = comment.createdAt?.toShortTimeString()
 
                 // Set comment text
                 txtComment.text = comment.text

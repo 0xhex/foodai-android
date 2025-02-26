@@ -2,6 +2,9 @@ package com.codepad.foodai.ui.home.community.detail
 
 import CommentsAdapter
 import LikedUsersAdapter
+import android.content.Context
+import android.content.res.ColorStateList
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -14,9 +17,10 @@ import com.codepad.foodai.domain.models.community.CommunityPost
 import com.codepad.foodai.domain.models.community.CommunityUser
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseFragment
+import com.codepad.foodai.ui.home.community.detail.adapter.IngredientsAdapter
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import toFormattedString
+import toShortTimeString
 
 @AndroidEntryPoint
 class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBinding>() {
@@ -56,9 +60,18 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
             sectionComments.apply {
                 rvComments.adapter = commentsAdapter
                 btnSend.setOnClickListener {
-                    val commentText = editComment.text.toString()
-                    viewModel?.addComment(commentText)
-                    editComment.text?.clear()
+                    val commentText = sectionComments.editComment.text.toString().trim()
+                    if (commentText.isNotEmpty()) {
+                        viewModel?.addComment(commentText)
+                        sectionComments.editComment.text?.clear()
+                        
+                        // Hide keyboard
+                        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm.hideSoftInputFromWindow(sectionComments.editComment.windowToken, 0)
+                        
+                        // Show loading indicator if needed
+                        // sectionComments.progressBar.isVisible = true
+                    }
                 }
             }
 
@@ -81,6 +94,13 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
             sectionMeta.btnLike.setOnClickListener {
                 viewModel?.toggleLike()
             }
+
+            // Add this to setupViews method:
+            sectionFoodDetails.ingredientsSection.root.setOnClickListener {
+                val isExpanded = sectionFoodDetails.ingredientsSection.rvIngredients.isVisible
+                sectionFoodDetails.ingredientsSection.rvIngredients.isVisible = !isExpanded
+                sectionFoodDetails.ingredientsSection.imgIngredientsExpand.rotation = if (!isExpanded) 180f else 0f
+            }
         }
     }
 
@@ -94,6 +114,15 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
                 showSnackbar(it)
                 //viewModel.errorMessage.value = null
             }
+        }
+
+        viewModel.isLiked.observe(viewLifecycleOwner) { isLiked ->
+            updateLikeButton(isLiked)
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            // Update loading indicators if needed
+            // binding.sectionComments.progressBar.isVisible = isLoading
         }
     }
 
@@ -136,8 +165,8 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
                 updateUserStats(post.user)
 
                 // Likes and date
-                txtLikesCount.text = getString(R.string.likes_count, post.likes?.size ?: 0)
-                txtDate.text = post.createdAt?.toFormattedString()
+                txtLikesCount.text = "${post.likes?.size ?: 0} likes"
+                txtDate.text = post.createdAt?.toShortTimeString()
 
                 // Update like button
                 btnLike.apply {
@@ -171,6 +200,11 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
 
             // Update likes
             likedUsersAdapter.submitList(post.likes)
+
+            // Setup ingredients adapter if needed
+            val ingredientsAdapter = IngredientsAdapter()
+            sectionFoodDetails.ingredientsSection.rvIngredients.adapter = ingredientsAdapter
+            ingredientsAdapter.submitList(post.image.ingredients)
         }
     }
 
@@ -250,6 +284,16 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
             "maintain" -> getString(R.string.goal_maintain)
             "gain_weight" -> getString(R.string.goal_gain_weight)
             else -> "Unknown"
+        }
+    }
+
+    private fun updateLikeButton(isLiked: Boolean) {
+        binding.sectionMeta.btnLike.apply {
+            text = if (isLiked) getString(R.string.unlike) else getString(R.string.like)
+            icon = ContextCompat.getDrawable(requireContext(), 
+                if (isLiked) R.drawable.ic_heart_filled else R.drawable.ic_heart)
+            iconTint = ColorStateList.valueOf(
+                ContextCompat.getColor(requireContext(), if (isLiked) R.color.red else R.color.gray))
         }
     }
 } 

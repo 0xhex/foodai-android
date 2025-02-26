@@ -75,7 +75,6 @@ class CommunityPostDetailViewModel @Inject constructor(
                     _post.postValue(result.data)
                     _isLiked.postValue(result.data.likes?.any { it.id == currentUserId } ?: false)
                 }
-
                 is UseCaseResult.Error -> {
                     _errorMessage.postValue(getCustomErrorMessage(result.exception))
                 }
@@ -105,7 +104,6 @@ class CommunityPostDetailViewModel @Inject constructor(
                     _post.postValue(result.data)
                     _newCommentText.postValue("")
                 }
-
                 is UseCaseResult.Error -> {
                     _errorMessage.postValue(getCustomErrorMessage(result.exception))
                 }
