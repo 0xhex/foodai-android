@@ -1,8 +1,10 @@
 package com.codepad.foodai.domain.repositories
 
+import AddCommentRequest
 import CommunityPost
 import CommunityResponseData
 import CreateCommunityPostRequest
+import DeleteCommentRequest
 import LikePostRequest
 import com.codepad.foodai.domain.api.APIError
 import com.codepad.foodai.domain.api.RestApi
@@ -734,6 +736,56 @@ class UserRepository @Inject constructor(
         return try {
             val request = LikePostRequest(userID = userID)
             val response = restApi.unlikePost(postID, request)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            handleException<CommunityPost>(e)
+        }
+    }
+
+    suspend fun addComment(postID: String, userID: String, text: String): RepositoryResult<CommunityPost> {
+        return try {
+            val request = AddCommentRequest(userID = userID, text = text)
+            val response = restApi.addComment(postID, request)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            handleException<CommunityPost>(e)
+        }
+    }
+
+    suspend fun deleteComment(postID: String, commentID: String, userID: String): RepositoryResult<CommunityPost> {
+        return try {
+            val request = DeleteCommentRequest(commentID = commentID, userID = userID)
+            val response = restApi.deleteComment(postID, request)
             if (response.success && response.data != null) {
                 RepositoryResult.Success(
                     message = response.message ?: "Success",

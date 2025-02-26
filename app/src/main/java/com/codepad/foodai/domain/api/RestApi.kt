@@ -1,8 +1,10 @@
 package com.codepad.foodai.domain.api
 
+import AddCommentRequest
 import CommunityPost
 import CommunityResponseData
 import CreateCommunityPostRequest
+import DeleteCommentRequest
 import LikePostRequest
 import com.codepad.foodai.domain.models.APIResponse
 import com.codepad.foodai.domain.models.exercise.ExerciseData
@@ -166,6 +168,18 @@ interface RestApi {
     suspend fun unlikePost(
         @Path("postID") postID: String,
         @Body request: LikePostRequest
+    ): APIResponse<CommunityPost>
+
+    @POST("community/{postID}/comments")
+    suspend fun addComment(
+        @Path("postID") postID: String,
+        @Body request: AddCommentRequest
+    ): APIResponse<CommunityPost>
+
+    @DELETE("community/{postID}/comments")
+    suspend fun deleteComment(
+        @Path("postID") postID: String,
+        @Body request: DeleteCommentRequest
     ): APIResponse<CommunityPost>
 
 }
