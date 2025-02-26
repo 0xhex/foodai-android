@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -22,62 +22,77 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <!-- Profile Picture/Initial -->
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/img_profile"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    app:shapeAppearanceOverlay="@style/CircleImageView"
-                    android:background="@color/gray"/>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <!-- Profile Picture/Initial -->
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/img_profile"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@color/gray"
+                        app:shapeAppearanceOverlay="@style/CircleImageView" />
+
+                    <TextView
+                        android:id="@+id/txt_profile_letter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/euro_stile_bold"
+                        android:textSize="20sp"
+                        tools:text="F" />
+                </FrameLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginStart="12dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txt_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="21sp"
-                        android:textColor="@color/white"
                         android:fontFamily="@font/euro_stile_regular"
-                        tools:text="Username"/>
+                        android:textColor="@color/white"
+                        android:textSize="21sp"
+                        tools:text="Username" />
 
                     <TextView
                         android:id="@+id/txt_country_flag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="24sp"
+                        android:layout_marginTop="@dimen/dimen_8dp"
                         android:fontFamily="@font/euro_stile_bold"
                         android:textColor="@color/white"
-                        tools:text="🇹🇷"/>
+                        android:textSize="22sp"
+                        tools:text="🇹🇷" />
                 </LinearLayout>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#33FFFFFF"
-                android:layout_marginVertical="16dp"/>
+                android:layout_marginVertical="16dp"
+                android:background="#33FFFFFF" />
 
             <!-- Description -->
             <TextView
                 android:id="@+id/txt_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/white"
                 android:fontFamily="@font/euro_stile_regular"
-                tools:text="Description text goes here"/>
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                tools:text="Description text goes here" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#33FFFFFF"
-                android:layout_marginVertical="16dp"/>
+                android:layout_marginVertical="16dp"
+                android:background="#33FFFFFF" />
 
             <!-- User Stats ScrollView -->
             <HorizontalScrollView
@@ -88,47 +103,42 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:spacing="8dp">
+                    android:orientation="horizontal">
 
                     <!-- Goal Chip -->
                     <include
                         android:id="@+id/chip_goal"
                         layout="@layout/view_info_chip"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"/>
+                        android:layout_height="wrap_content" />
 
                     <!-- Weight Chip -->
                     <include
                         android:id="@+id/chip_weight"
                         layout="@layout/view_info_chip"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"/>
+                        android:layout_height="wrap_content" />
 
                     <!-- Target Weight Chip -->
                     <include
                         android:id="@+id/chip_target"
                         layout="@layout/view_info_chip"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"/>
+                        android:layout_height="wrap_content" />
 
                     <!-- Workouts Chip -->
                     <include
                         android:id="@+id/chip_workouts"
                         layout="@layout/view_info_chip"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"/>
+                        android:layout_height="wrap_content"/>
 
                     <!-- Diet Chip -->
                     <include
                         android:id="@+id/chip_diet"
                         layout="@layout/view_info_chip"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
             </HorizontalScrollView>
@@ -136,40 +146,40 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#33FFFFFF"
-                android:layout_marginVertical="16dp"/>
+                android:layout_marginVertical="16dp"
+                android:background="#33FFFFFF" />
 
             <!-- Likes and Date -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/txt_likes_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textColor="@color/soft_blue"
                     android:fontFamily="@font/euro_stile_regular"
-                    tools:text="5 likes"/>
+                    android:textColor="@color/soft_blue"
+                    android:textSize="14sp"
+                    tools:text="5 likes" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" • "
                     android:textColor="@color/soft_blue"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/txt_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="@color/green"
                     android:fontFamily="@font/euro_stile_regular"
-                    tools:text="Feb 26, 2024"/>
+                    android:textColor="@color/green"
+                    android:textSize="12sp"
+                    tools:text="Feb 26, 2024" />
             </LinearLayout>
 
             <!-- Like Button -->
@@ -178,16 +188,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:paddingVertical="6dp"
-                android:paddingHorizontal="12dp"
-                android:textSize="14sp"
+                android:backgroundTint="@color/custom_dark_gray"
                 android:fontFamily="@font/euro_stile_regular"
-                app:icon="@drawable/ic_heart"
-                app:iconTint="@color/red"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
                 android:text="Like"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
+                android:textSize="14sp"
                 app:cornerRadius="10dp"
-                android:backgroundTint="@color/custom_dark_gray"/>
+                app:icon="@drawable/ic_heart"
+                app:iconTint="@color/red" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

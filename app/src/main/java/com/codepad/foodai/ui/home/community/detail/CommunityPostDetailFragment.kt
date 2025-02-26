@@ -116,6 +116,7 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
                         .load(post.user.profilePicUrl)
                         .circleCrop()
                         .into(imgProfile)
+                    txtProfileLetter.visibility = android.view.View.GONE
                 } else {
                     imgProfile.setBackgroundColor(
                         ContextCompat.getColor(
@@ -123,6 +124,8 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
                             R.color.gray
                         )
                     )
+                    txtProfileLetter.visibility = android.view.View.VISIBLE
+                    txtProfileLetter.text = post.user.name?.firstOrNull()?.uppercase().toString()
                 }
 
                 txtUsername.text = post.user.name
@@ -176,7 +179,7 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
             // Goal
             chipGoal.apply {
                 imgIcon.setImageResource(R.drawable.ic_target)
-                txtLabel.text = getString(R.string.goal)
+                txtLabel.text = getString(R.string.goal_placeholder)
                 txtValue.text = user.goal?.toDisplayString()
             }
 
@@ -204,7 +207,7 @@ class CommunityPostDetailFragment : BaseFragment<FragmentCommunityPostDetailBind
 
             // Workouts
             chipWorkouts.apply {
-                this.imgIcon.setImageResource(R.drawable.ic_workout)
+                this.imgIcon.setImageResource(R.drawable.ic_run)
                 this.txtLabel.text = getString(R.string.workouts)
                 this.txtValue.text = user.workoutsPerWeek
             }

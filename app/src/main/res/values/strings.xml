@@ -450,6 +450,7 @@
     <string name="likes_count">%d likes</string>
     <string name="comments_count">Comments (%d)</string>
     <string name="like">Like</string>
+    <string name="goal_placeholder">Goal</string>
     <string name="unlike">Unlike</string>
     <string name="add_comment">Add a comment...</string>
     <string name="send">Send</string>
