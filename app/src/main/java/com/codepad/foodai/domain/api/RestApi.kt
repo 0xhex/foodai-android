@@ -1,6 +1,8 @@
 package com.codepad.foodai.domain.api
 
+import CommunityPost
 import CommunityResponseData
+import CreateCommunityPostRequest
 import com.codepad.foodai.domain.models.APIResponse
 import com.codepad.foodai.domain.models.exercise.ExerciseData
 import com.codepad.foodai.domain.models.exercise.LogExerciseCustomRequest
@@ -147,5 +149,10 @@ interface RestApi {
     suspend fun getCommunityPosts(
         @Query("userID") userID: String
     ): APIResponse<CommunityResponseData>
+
+    @POST("community")
+    suspend fun createCommunityPost(
+        @Body request: CreateCommunityPostRequest
+    ): APIResponse<CommunityPost>
 
 }
