@@ -108,6 +108,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/communityTabFragment"
+        android:name="com.codepad.foodai.ui.home.community.CommunityTabFragment"
+        android:label="@string/community"
+        tools:layout="@layout/fragment_community_tab" />
+
+    <fragment
         android:id="@+id/personalFragment"
         android:name="com.codepad.foodai.ui.home.settings.personal.PersonalFragment"
         android:label="PersonalFragment">

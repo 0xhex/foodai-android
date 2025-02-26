@@ -440,4 +440,6 @@
     <color name="amber_20">#33FFC107</color>
     <color name="gray_20">#33868686</color>
     <color name="custom_dark_gray_80">#CC323233</color>
+
+    <string name="community">Community</string>
 </resources>

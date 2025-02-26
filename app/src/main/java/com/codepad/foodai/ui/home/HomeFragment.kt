@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.HomeFragmentBinding
-import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.helpers.FirebaseManager
 import com.codepad.foodai.helpers.RevenueCatManager
 import com.codepad.foodai.helpers.UserSession
@@ -45,6 +44,20 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
 
         navController?.let {
             bottomNavigationView.setupWithNavController(it)
+        }
+
+        // Hide FAB on community and settings tabs
+        navController?.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.communityTabFragment, R.id.navigation_settings -> {
+                    binding.imgPlus.visibility = View.GONE
+                    binding.imgCircle.visibility = View.GONE
+                }
+                else -> {
+                    binding.imgPlus.visibility = View.VISIBLE
+                    binding.imgCircle.visibility = View.VISIBLE
+                }
+            }
         }
 
         binding.imgPlus.setOnClickListener {
