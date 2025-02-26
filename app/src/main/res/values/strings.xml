@@ -467,4 +467,7 @@
     <string name="diet_pescatarian">Pescatarian</string>
     <string name="diet_vegetarian">Vegetarian</string>
     <string name="diet_vegan">Vegan</string>
+
+    <string name="shared_on_community">Shared on Community!</string>
+    <string name="error_sharing">Error sharing on community</string>
 </resources>

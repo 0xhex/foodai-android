@@ -78,6 +78,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/card_food" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_food">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/btn_share_community"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+Share on Community"
+                    android:textColor="@color/blue"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/euro_stile_bold"
+                    android:background="?attr/selectableItemBackground"/>
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/txt_title"
                 android:layout_width="wrap_content"

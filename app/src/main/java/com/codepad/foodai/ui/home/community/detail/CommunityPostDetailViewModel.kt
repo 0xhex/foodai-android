@@ -12,6 +12,7 @@ import com.codepad.foodai.domain.use_cases.community.AddCommentUseCase
 import com.codepad.foodai.domain.use_cases.community.DeleteCommentUseCase
 import com.codepad.foodai.domain.use_cases.community.LikePostUseCase
 import com.codepad.foodai.domain.use_cases.community.UnlikePostUseCase
+import com.codepad.foodai.domain.use_cases.community.CreateCommunityPostUseCase
 import com.codepad.foodai.helpers.UserSession
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ class CommunityPostDetailViewModel @Inject constructor(
     private val unlikePostUseCase: UnlikePostUseCase,
     private val addCommentUseCase: AddCommentUseCase,
     private val deleteCommentUseCase: DeleteCommentUseCase,
+    private val createCommunityPostUseCase: CreateCommunityPostUseCase,
 ) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
