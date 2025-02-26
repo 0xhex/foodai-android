@@ -3,6 +3,7 @@ package com.codepad.foodai.domain.api
 import CommunityPost
 import CommunityResponseData
 import CreateCommunityPostRequest
+import LikePostRequest
 import com.codepad.foodai.domain.models.APIResponse
 import com.codepad.foodai.domain.models.exercise.ExerciseData
 import com.codepad.foodai.domain.models.exercise.LogExerciseCustomRequest
@@ -27,6 +28,7 @@ import com.codepad.foodai.domain.models.user.UpdateUserFieldResponseData
 import com.codepad.foodai.domain.models.user.User
 import com.codepad.foodai.domain.models.user.WeightLogData
 import com.codepad.foodai.domain.use_cases.user.DailySummaryResponseData
+import com.codepad.foodai.domain.models.community.LikePostRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -153,6 +155,12 @@ interface RestApi {
     @POST("community")
     suspend fun createCommunityPost(
         @Body request: CreateCommunityPostRequest
+    ): APIResponse<CommunityPost>
+
+    @POST("community/{postID}/like")
+    suspend fun likePost(
+        @Path("postID") postID: String,
+        @Body request: LikePostRequest
     ): APIResponse<CommunityPost>
 
 }

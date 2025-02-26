@@ -3,6 +3,7 @@ package com.codepad.foodai.domain.repositories
 import CommunityPost
 import CommunityResponseData
 import CreateCommunityPostRequest
+import LikePostRequest
 import com.codepad.foodai.domain.api.APIError
 import com.codepad.foodai.domain.api.RestApi
 import com.codepad.foodai.domain.models.exercise.ExerciseData
@@ -683,6 +684,31 @@ class UserRepository @Inject constructor(
         return try {
             val request = CreateCommunityPostRequest(userID = userID, imageID = imageID)
             val response = restApi.createCommunityPost(request)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            handleException<CommunityPost>(e)
+        }
+    }
+
+    suspend fun likePost(postID: String, userID: String): RepositoryResult<CommunityPost> {
+        return try {
+            val request = LikePostRequest(userID = userID)
+            val response = restApi.likePost(postID, request)
             if (response.success && response.data != null) {
                 RepositoryResult.Success(
                     message = response.message ?: "Success",
