@@ -13,6 +13,7 @@ import com.codepad.foodai.ui.home.community.adapter.CommunityPostsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.core.content.ContextCompat
 import android.util.Log
+import android.os.Bundle
 
 @AndroidEntryPoint
 class CommunityTabFragment : BaseFragment<FragmentCommunityTabBinding>() {
@@ -26,6 +27,17 @@ class CommunityTabFragment : BaseFragment<FragmentCommunityTabBinding>() {
         setupViews()
         setupObservers()
         viewModel.fetchPosts()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        
+        // Set filter button texts with emojis
+        binding.btnWorld.text = "🌍 World"
+        binding.btnCountry.text = "${getCountryFlag()} Country"
+        binding.btnLanguage.text = "🗣️ Language"
+        
+        // ... rest of your code
     }
 
     private fun setupViews() {
@@ -52,10 +64,10 @@ class CommunityTabFragment : BaseFragment<FragmentCommunityTabBinding>() {
             }
 
             // Set initial country text
-            txtCountry.text = "${viewModel?.getCountryFlag(UserSession.user?.countryCode)} Country"
+            btnCountry.text = "${viewModel?.getCountryFlag(UserSession.user?.countryCode)} Country"
 
-            txtWorld.text = "\uD83C\uDF0D World"  // 🌍
-            txtLanguage.text = "\uD83D\uDDE3 Language"  // 🗣️
+            btnWorld.text = "\uD83C\uDF0D World"  // 🌍
+            btnLanguage.text = "\uD83D\uDDE3 Language"  // 🗣️
 
             // Country text will be set when updating filter UI
             viewModel?.selectedFilter?.value?.let { filter ->
@@ -101,60 +113,41 @@ class CommunityTabFragment : BaseFragment<FragmentCommunityTabBinding>() {
     private fun updateFilterUI(filter: CommunityTabViewModel.FilterType) {
         binding.apply {
             // Update text styles
-            txtWorld.apply {
-                alpha = if (filter == CommunityTabViewModel.FilterType.WORLD) 1f else 0.35f
+            btnWorld.apply {
+                isSelected = filter == CommunityTabViewModel.FilterType.WORLD
+                alpha = if (isSelected) 1f else 0.35f
                 setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 typeface = ResourcesCompat.getFont(
                     requireContext(),
-                    if (filter == CommunityTabViewModel.FilterType.WORLD) 
-                        R.font.euro_stile_bold 
-                    else 
-                        R.font.euro_stile_regular
+                    if (isSelected) R.font.euro_stile_bold else R.font.euro_stile_regular
                 )
             }
 
-            txtCountry.apply {
+            btnCountry.apply {
                 text = "${viewModel?.getCountryFlag(UserSession.user?.countryCode)} Country"
-                alpha = if (filter == CommunityTabViewModel.FilterType.COUNTRY) 1f else 0.35f
+                isSelected = filter == CommunityTabViewModel.FilterType.COUNTRY
+                alpha = if (isSelected) 1f else 0.35f
                 typeface = ResourcesCompat.getFont(
                     requireContext(),
-                    if (filter == CommunityTabViewModel.FilterType.COUNTRY) 
-                        R.font.euro_stile_bold 
-                    else 
-                        R.font.euro_stile_regular
+                    if (isSelected) R.font.euro_stile_bold else R.font.euro_stile_regular
                 )
             }
 
-            txtLanguage.apply {
-                alpha = if (filter == CommunityTabViewModel.FilterType.LANGUAGE) 1f else 0.35f
+            btnLanguage.apply {
+                isSelected = filter == CommunityTabViewModel.FilterType.LANGUAGE
+                alpha = if (isSelected) 1f else 0.35f
                 typeface = ResourcesCompat.getFont(
                     requireContext(),
-                    if (filter == CommunityTabViewModel.FilterType.LANGUAGE) 
-                        R.font.euro_stile_bold 
-                    else 
-                        R.font.euro_stile_regular
+                    if (isSelected) R.font.euro_stile_bold else R.font.euro_stile_regular
                 )
             }
-
-            // Update backgrounds with opacity
-            btnWorld.setCardBackgroundColor(
-                if (filter == CommunityTabViewModel.FilterType.WORLD)
-                    Color.parseColor("#66323233") 
-                else 
-                    Color.parseColor("#22323233")
-            )
-            btnCountry.setCardBackgroundColor(
-                if (filter == CommunityTabViewModel.FilterType.COUNTRY)
-                    Color.parseColor("#66323233") 
-                else 
-                    Color.parseColor("#22323233")
-            )
-            btnLanguage.setCardBackgroundColor(
-                if (filter == CommunityTabViewModel.FilterType.LANGUAGE)
-                    Color.parseColor("#66323233") 
-                else 
-                    Color.parseColor("#22323233")
-            )
         }
+    }
+
+    private fun getCountryFlag(): String {
+        val countryCode = UserSession.user?.countryCode ?: return "🏳️"
+        val firstLetter = Character.codePointAt(countryCode, 0) - 0x41 + 0x1F1E6
+        val secondLetter = Character.codePointAt(countryCode, 1) - 0x41 + 0x1F1E6
+        return String(Character.toChars(firstLetter)) + String(Character.toChars(secondLetter))
     }
 } 
