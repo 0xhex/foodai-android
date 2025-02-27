@@ -6,12 +6,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.HomeFragmentBinding
 import com.codepad.foodai.helpers.FirebaseManager
 import com.codepad.foodai.helpers.RevenueCatManager
 import com.codepad.foodai.helpers.UserSession
+import com.codepad.foodai.helpers.navigateSafely
+import com.codepad.foodai.helpers.setupWithNavControllerSafely
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.loading.LoadingType
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeFragmentBinding>() {
@@ -43,15 +45,23 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
         val bottomNavigationView: BottomNavigationView = binding.bottomNavigation
 
         navController?.let {
-            bottomNavigationView.setupWithNavController(it)
+            bottomNavigationView.setupWithNavControllerSafely(it)
         }
 
         binding.imgPlus.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_menuDialog)
+            try {
+                findNavController().navigateSafely(R.id.action_homeFragment_to_menuDialog)
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to navigate to menu dialog")
+            }
         }
 
         binding.imgCircle.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_menuDialog)
+            try {
+                findNavController().navigateSafely(R.id.action_homeFragment_to_menuDialog)
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to navigate to menu dialog")
+            }
         }
 
         setFragmentResultListener("uploadResult") { key, bundle ->
@@ -102,7 +112,11 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
 
         viewModel.launchFoodLogDialog.observe(viewLifecycleOwner) { event ->
             if (event) {
-                findNavController().navigate(R.id.action_homeFragment_to_menuDialog)
+                try {
+                    findNavController().navigateSafely(R.id.action_homeFragment_to_menuDialog)
+                } catch (e: Exception) {
+                    Timber.e(e, "Failed to navigate to menu dialog")
+                }
                 viewModel.launchFoodLogDialog.value = false
             }
         }
@@ -113,7 +127,11 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
             revenueCatManager.showPaywall.collectLatest { show ->
                 if (show && !isNavigatingToPaywall) {
                     isNavigatingToPaywall = true
-                    findNavController().navigate(R.id.action_home_to_paywall)
+                    try {
+                        findNavController().navigateSafely(R.id.action_home_to_paywall)
+                    } catch (e: Exception) {
+                        Timber.e(e, "Failed to navigate to paywall")
+                    }
                     revenueCatManager.resetPaywallTrigger()
                     isNavigatingToPaywall = false
                 }
