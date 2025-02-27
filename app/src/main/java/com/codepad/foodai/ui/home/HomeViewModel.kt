@@ -107,6 +107,12 @@ class HomeViewModel @Inject constructor(
 
     val launchFoodLogDialog = MutableLiveData<Boolean>(false)
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage: LiveData<String?> get() = _errorMessage
+
     fun fetchUserData() {
         viewModelScope.launch {
             when (val result = getUserDataUseCase.getUserData(UserSession.user?.id.orEmpty())) {
@@ -361,6 +367,39 @@ class HomeViewModel @Inject constructor(
                 is UseCaseResult.Error -> {
                     _deleteAccountResult.value = DeleteAccountResult.Error(result.message)
                 }
+            }
+        }
+    }
+
+    fun updateUserField(fieldName: String, fieldValue: String) {
+        viewModelScope.launch {
+            try {
+                // Show loading state if needed
+                _isLoading.value = true
+                
+                // Get the current user ID
+                val userId = UserSession.user?.id ?: return@launch
+                
+                // Call the use case to update the field
+                val result = updateUserFieldUseCase.updateUserFields(
+                    userID = userId,
+                    fieldName = fieldName,
+                    fieldValue = fieldValue
+                )
+                
+                when (result) {
+                    is UseCaseResult.Success -> {
+                        // Update the local user data
+                        fetchUserData()
+                    }
+                    is UseCaseResult.Error -> {
+                        _errorMessage.value = result.message
+                    }
+                }
+            } catch (e: Exception) {
+                _errorMessage.value = e.message
+            } finally {
+                _isLoading.value = false
             }
         }
     }

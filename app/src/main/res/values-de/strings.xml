@@ -415,4 +415,8 @@
     <string name="goal_placeholder">Ziel</string>
     <string name="unlike">Gefällt mir nicht mehr</string>
     <string name="like">Gefällt mir</string>
+
+    <string name="enter_your_name">Geben Sie Ihren Namen ein</string>
+    <string name="edit_name">Name bearbeiten</string>
+    <string name="feature_coming_soon">Funktion kommt bald</string>
 </resources>

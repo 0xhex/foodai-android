@@ -494,4 +494,9 @@
 
     <!-- Community -->
     <string name="error_message_format">Error: %s</string>
+
+    <string name="enter_your_name">Enter your name</string>
+    <string name="edit_name">Edit Name</string>
+    <string name="cancel">Cancel</string>
+    <string name="feature_coming_soon">Feature coming soon</string>
 </resources>

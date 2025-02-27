@@ -415,4 +415,9 @@
     <string name="goal_placeholder">Objectif</string>
     <string name="unlike">Ne plus aimer</string>
     <string name="like">J\'aime</string>
+
+    <string name="enter_your_name">Entrez votre nom</string>
+    <string name="edit_name">Modifier le nom</string>
+    <string name="cancel">Annuler</string>
+    <string name="feature_coming_soon">Fonctionnalité à venir</string>
 </resources>
