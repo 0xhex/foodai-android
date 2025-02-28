@@ -41,8 +41,11 @@ import com.codepad.foodai.ui.home.home.pager.health.GoogleHealthFragment
 import com.codepad.foodai.ui.home.home.pager.recipe.FoodRecipesFragment
 import com.codepad.foodai.ui.home.home.view.BodyWeightView
 import com.codepad.foodai.ui.home.home.view.DailyNoteView
+import com.codepad.foodai.ui.home.settings.HealthConnectManagerEntryPoint
+import com.codepad.foodai.ui.home.settings.health.HealthConnectManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 import java.util.Date
 
 @AndroidEntryPoint
@@ -50,6 +53,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
     private val viewModel: HomePagerViewModel by activityViewModels()
     private val sharedViewModel: HomeViewModel by activityViewModels()
 
+    private lateinit var healthConnectManager: HealthConnectManager
     private lateinit var calendarAdapter: CalendarAdapter
     private var selectedCalendarPosition: Pair<Int, Int>? = null
     private var selectedCalendarItem: Triple<Date, Int, String>? = null
@@ -407,8 +411,13 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                 requireContext()
             )
         ) {
-            viewModel.initHealthConnect(this)
-            viewModel.checkHealthConnectStatus {
+            val entryPoint = EntryPointAccessors.fromApplication(
+                requireContext(), HealthConnectManagerEntryPoint::class.java
+            )
+            healthConnectManager = entryPoint.getHealthConnectManager()
+            healthConnectManager.initContent(this)
+            viewModel.initHealthConnect(healthConnectManager)
+            viewModel.checkHealthConnectStatus(healthConnectManager) {
                 // Connected callback
             }
         }
@@ -418,7 +427,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                     requireContext()
                 )
             ) {
-                viewModel.requestHealthConnect()
+                viewModel.requestHealthConnect(healthConnectManager)
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -482,7 +491,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
         (binding.dailyNoteView as DailyNoteView).apply {
             // Clear any existing note first
             updateNote(null)
-            
+
             setOnStartJournalingClickListener {
                 navigateToNoteEditor()
             }
@@ -525,7 +534,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                 requireContext()
             )
         ) {
-            viewModel.checkHealthConnectStatus {
+            viewModel.checkHealthConnectStatus(healthConnectManager) {
                 // Connected callback
             }
         }
