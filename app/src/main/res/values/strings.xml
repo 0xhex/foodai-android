@@ -499,4 +499,12 @@
     <string name="edit_name">Edit Name</string>
     <string name="cancel">Cancel</string>
     <string name="feature_coming_soon">Feature coming soon</string>
+
+    <!-- Rating Dialog Strings -->
+    <string name="rating_dialog_title">Did you like our App?</string>
+    <string name="rating_dialog_subtitle">Help us grow!</string>
+    <string name="rating_dialog_2_title">Your opinion matters to us!</string>
+    <string name="rating_dialog_2_message">We work super hard to serve you better and would love to know what you think of our app.</string>
+    <string name="rate_on_play_store">Rate us on the Play Store</string>
+    <string name="not_now">Not now</string>
 </resources>
