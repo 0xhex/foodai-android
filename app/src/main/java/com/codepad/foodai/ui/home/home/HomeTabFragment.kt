@@ -1,6 +1,7 @@
 package com.codepad.foodai.ui.home.home
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
+import androidx.core.content.edit
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -26,11 +28,14 @@ import com.codepad.foodai.extensions.applyPaywallStyle
 import com.codepad.foodai.extensions.applyStyle
 import com.codepad.foodai.extensions.getFormattedDate
 import com.codepad.foodai.extensions.toHourString
+import com.codepad.foodai.helpers.FirebaseManager
 import com.codepad.foodai.helpers.HealthConnectStatus
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.HomeViewModel
 import com.codepad.foodai.ui.home.MenuOption
+import com.codepad.foodai.ui.home.dialogs.RatingPrompt1Dialog
+import com.codepad.foodai.ui.home.dialogs.RatingPrompt2Dialog
 import com.codepad.foodai.ui.home.home.adapter.WaterGlassAdapter
 import com.codepad.foodai.ui.home.home.calendar.CalendarAdapter
 import com.codepad.foodai.ui.home.home.calendar.CalendarUtils
@@ -44,14 +49,23 @@ import com.codepad.foodai.ui.home.home.view.DailyNoteView
 import com.codepad.foodai.ui.home.settings.HealthConnectManagerEntryPoint
 import com.codepad.foodai.ui.home.settings.health.HealthConnectManager
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.play.core.review.ReviewManagerFactory
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import java.util.Date
+import javax.inject.Inject
+import kotlin.random.Random
 
 @AndroidEntryPoint
 class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
     private val viewModel: HomePagerViewModel by activityViewModels()
     private val sharedViewModel: HomeViewModel by activityViewModels()
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+
+    @Inject
+    lateinit var firebaseManager: FirebaseManager
 
     private lateinit var healthConnectManager: HealthConnectManager
     private lateinit var calendarAdapter: CalendarAdapter
@@ -61,6 +75,18 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
     private lateinit var waterGlassAdapter: WaterGlassAdapter
     private var selectedDate = Date()
     private var weightUpdateBanner: ViewWeightUpdateBannerBinding? = null
+
+    private val playReviewManager by lazy {
+        ReviewManagerFactory.create(requireContext())
+    }
+
+    private var ratingProbability: Double
+        get() = sharedPreferences.getFloat("ratingProbability", 1.0f).toDouble()
+        set(value) = sharedPreferences.edit { putFloat("ratingProbability", value.toFloat()) }
+
+    private var appRated: Boolean
+        get() = sharedPreferences.getBoolean("appRated", false)
+        set(value) = sharedPreferences.edit { putBoolean("appRated", value) }
 
     override fun getLayoutId(): Int = R.layout.fragment_home_tab
 
@@ -203,6 +229,8 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                 hideWeightUpdateBanner()
             }
         }
+
+        checkForRateUs()
     }
 
     private fun setupCalendarView() {
@@ -584,6 +612,65 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                     weightUpdateBanner = null
                 }
                 .start()
+        }
+    }
+
+    private fun checkForRateUs() {
+        if (!appRated) {
+            viewModel.dailySummary.observe(viewLifecycleOwner) { summary ->
+                if (!summary.meals.isNullOrEmpty()) {
+                    val randomNumber = Random.nextDouble()
+                    if (randomNumber < ratingProbability) {
+                        if (Random.nextDouble() < 0.5) {
+                            showRatingPrompt1()
+                        } else {
+                            showRatingPrompt2()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showRatingPrompt1() {
+        RatingPrompt1Dialog().apply {
+            onYesClicked = {
+                openPlayStoreRating()
+                appRated = true
+                firebaseManager.logEvent("yes_rating1_prompt")
+                dismiss()
+            }
+            onNoClicked = {
+                ratingProbability *= 0.5
+                firebaseManager.logEvent("no_rating1_prompt")
+                dismiss()
+            }
+        }.show(childFragmentManager, "RatingPrompt1")
+    }
+
+    private fun showRatingPrompt2() {
+        RatingPrompt2Dialog().apply {
+            onRateNowClicked = {
+                openPlayStoreRating()
+                appRated = true
+                firebaseManager.logEvent("yes_rating2_prompt")
+                dismiss()
+            }
+            onNotNowClicked = {
+                ratingProbability *= 0.5
+                firebaseManager.logEvent("no_rating2_prompt")
+                dismiss()
+            }
+        }.show(childFragmentManager, "RatingPrompt2")
+    }
+
+    private fun openPlayStoreRating() {
+        val request = playReviewManager.requestReviewFlow()
+        request.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val reviewInfo = task.result
+                playReviewManager.launchReviewFlow(requireActivity(), reviewInfo)
+            }
         }
     }
 }
