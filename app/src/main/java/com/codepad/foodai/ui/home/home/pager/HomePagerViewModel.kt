@@ -3,7 +3,6 @@ package com.codepad.foodai.ui.home.home.pager
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
-import androidx.fragment.app.Fragment
 import androidx.health.connect.client.HealthConnectClient
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -50,7 +49,6 @@ class HomePagerViewModel @Inject constructor(
     private val getUserWeightLogsUseCase: GetUserWeightLogsUseCase,
     private val updateUserFieldUseCase: UpdateUserFieldUseCase,
     private val sharedPreferences: SharedPreferences,
-    private val healthConnectManager: HealthConnectManager,
     private val notesManager: NotesManager,
     private val createCommunityPostUseCase: CreateCommunityPostUseCase,
 ) : ViewModel() {
@@ -329,8 +327,7 @@ class HomePagerViewModel @Inject constructor(
         _stepsBurnedCalories.value = (steps * 0.05).toInt()
     }
 
-    fun initHealthConnect(fragment: Fragment) {
-        healthConnectManager.initContent(fragment)
+    fun initHealthConnect(healthConnectManager: HealthConnectManager) {
         healthConnectManager.onGoogleFitBodyDataRead = { stepData ->
             val (currentDaySteps, previousDaySteps) = stepData
             viewModelScope.launch {
@@ -351,11 +348,14 @@ class HomePagerViewModel @Inject constructor(
         return availabilityStatus == HealthConnectClient.SDK_AVAILABLE
     }
 
-    fun requestHealthConnect() {
+    fun requestHealthConnect(healthConnectManager: HealthConnectManager) {
         healthConnectManager.readData()
     }
 
-    fun checkHealthConnectStatus(onConnected: () -> Unit) {
+    fun checkHealthConnectStatus(
+        healthConnectManager: HealthConnectManager,
+        onConnected: () -> Unit
+    ) {
         healthConnectManager.hasUnlockedIntegration { isConnected ->
             if (isConnected) {
                 _healthConnectStatus.value = HealthConnectStatus.CONNECTED
