@@ -419,4 +419,12 @@
     <string name="enter_your_name">Geben Sie Ihren Namen ein</string>
     <string name="edit_name">Name bearbeiten</string>
     <string name="feature_coming_soon">Funktion kommt bald</string>
+
+    <!-- Rating Dialog Strings -->
+    <string name="rating_dialog_title">Gefällt dir unsere App?</string>
+    <string name="rating_dialog_subtitle">Hilf uns zu wachsen!</string>
+    <string name="rating_dialog_2_title">Deine Meinung ist uns wichtig!</string>
+    <string name="rating_dialog_2_message">Wir arbeiten sehr hart daran, dir einen besseren Service zu bieten, und würden gerne wissen, was du von unserer App hältst.</string>
+    <string name="rate_on_play_store">Bewerte uns im Play Store</string>
+    <string name="not_now">Nicht jetzt</string>
 </resources>

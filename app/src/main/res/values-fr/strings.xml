@@ -420,4 +420,12 @@
     <string name="edit_name">Modifier le nom</string>
     <string name="cancel">Annuler</string>
     <string name="feature_coming_soon">Fonctionnalité à venir</string>
+
+    <!-- Rating Dialog Strings -->
+    <string name="rating_dialog_title">Avez-vous aimé notre application ?</string>
+    <string name="rating_dialog_subtitle">Aidez-nous à grandir !</string>
+    <string name="rating_dialog_2_title">Votre avis compte pour nous !</string>
+    <string name="rating_dialog_2_message">Nous travaillons très dur pour vous offrir le meilleur service et nous aimerions savoir ce que vous pensez de notre application.</string>
+    <string name="rate_on_play_store">Évaluez-nous sur le Play Store</string>
+    <string name="not_now">Pas maintenant</string>
 </resources>
