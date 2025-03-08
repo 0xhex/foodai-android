@@ -166,6 +166,14 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
             }
         }
 
+        // Add observer for openAdjustGoals
+        sharedViewModel.openAdjustGoals.observe(viewLifecycleOwner) { shouldOpen ->
+            if (shouldOpen) {
+                findNavController().navigateSafely(R.id.action_home_tab_to_adjust_goals)
+                sharedViewModel.clearAdjustGoalsOpen()
+            }
+        }
+
         viewModel.dailySummary.observe(viewLifecycleOwner) { dailySummary ->
             val meals = dailySummary.meals.orEmpty()
             val exercises = dailySummary.exercises.orEmpty()

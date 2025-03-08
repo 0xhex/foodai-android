@@ -113,6 +113,17 @@ class HomeViewModel @Inject constructor(
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> get() = _errorMessage
 
+    private val _openAdjustGoals = MutableLiveData<Boolean>()
+    val openAdjustGoals: LiveData<Boolean> = _openAdjustGoals
+
+    fun triggerAdjustGoalsOpen() {
+        _openAdjustGoals.value = true
+    }
+
+    fun clearAdjustGoalsOpen() {
+        _openAdjustGoals.value = false
+    }
+
     fun fetchUserData() {
         viewModelScope.launch {
             when (val result = getUserDataUseCase.getUserData(UserSession.user?.id.orEmpty())) {
