@@ -17,6 +17,10 @@
             app:popUpTo="@id/foodDetailFragment" />
 
         <action
+            android:id="@+id/action_home_tab_to_adjust_goals"
+            app:destination="@id/adjustGoalsFragment" />
+
+        <action
             android:id="@+id/action_home_tab_to_dailyStreakFragment"
             app:destination="@id/dailyStreakFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
@@ -176,7 +180,12 @@
         android:id="@+id/goalViewFragment"
         android:name="com.codepad.foodai.ui.home.home.pager.goals.GoalViewFragment"
         android:label="GoalViewFragment"
-        tools:layout="@layout/fragment_goal_view"></fragment>
+        tools:layout="@layout/fragment_goal_view">
+        
+        <action
+            android:id="@+id/action_goalView_to_adjustGoals"
+            app:destination="@id/adjustGoalsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/foodDetailFragment"

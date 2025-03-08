@@ -31,6 +31,7 @@ import com.codepad.foodai.extensions.toHourString
 import com.codepad.foodai.helpers.FirebaseManager
 import com.codepad.foodai.helpers.HealthConnectStatus
 import com.codepad.foodai.helpers.UserSession
+import com.codepad.foodai.helpers.navigateSafely
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.HomeViewModel
 import com.codepad.foodai.ui.home.MenuOption
@@ -165,6 +166,14 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
             }
         }
 
+        // Add observer for openAdjustGoals
+        sharedViewModel.openAdjustGoals.observe(viewLifecycleOwner) { shouldOpen ->
+            if (shouldOpen) {
+                findNavController().navigateSafely(R.id.action_home_tab_to_adjust_goals)
+                sharedViewModel.clearAdjustGoalsOpen()
+            }
+        }
+
         viewModel.dailySummary.observe(viewLifecycleOwner) { dailySummary ->
             val meals = dailySummary.meals.orEmpty()
             val exercises = dailySummary.exercises.orEmpty()
@@ -293,7 +302,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                         viewModel.dailySummary.value?.meals?.firstOrNull { it.url == item.image }
                     if (foodDetail != null) {
                         viewModel.setFoodDetail(foodDetail)
-                        findNavController().navigate(R.id.action_home_tab_to_food_detail)
+                        findNavController().navigateSafely(R.id.action_home_tab_to_food_detail)
                     }
                 }
 

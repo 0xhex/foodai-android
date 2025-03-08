@@ -34,7 +34,9 @@ class FixResultFragment : BaseFragment<FragmentFixResultBinding>() {
                         .addCallback(object : Snackbar.Callback() {
                             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                                 super.onDismissed(transientBottomBar, event)
-                                findNavController().popBackStack()
+                                if (isAdded && !isDetached) {
+                                    findNavController().popBackStack()
+                                }
                             }
                         }).show()
                 }
