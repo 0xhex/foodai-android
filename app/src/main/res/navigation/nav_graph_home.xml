@@ -21,14 +21,12 @@
             app:destination="@id/adjustGoalsFragment" />
 
         <action
-            android:id="@+id/action_home_tab_to_dailyStreakFragment"
+            android:id="@+id/actionHomeTabToDailyStreakFragment"
             app:destination="@id/dailyStreakFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/navigation_home"
-            app:popUpToInclusive="false" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
         <action
             android:id="@+id/action_home_tab_to_exercise_detail"
@@ -46,7 +44,7 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
         <action
-            android:id="@+id/action_home_tab_to_note_editor"
+            android:id="@+id/actionHomeTabToNoteEditor"
             app:destination="@id/note_editor_fragment" />
 
         <action
@@ -198,7 +196,8 @@
     <fragment
         android:id="@+id/dailyStreakFragment"
         android:name="com.codepad.foodai.ui.streak.DailyStreakFragment"
-        android:label="DailyStreakFragment">
+        android:label="DailyStreakFragment"
+        tools:layout="@layout/fragment_daily_streak">
         <argument
             android:name="streakData"
             app:argType="com.codepad.foodai.domain.models.user.StreakResponseData" />

@@ -19,6 +19,7 @@ import com.codepad.foodai.databinding.FragmentLoadingBinding
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.user_property.UserPropertySharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LoadingFragment : BaseFragment<FragmentLoadingBinding>() {
@@ -118,7 +119,21 @@ class LoadingFragment : BaseFragment<FragmentLoadingBinding>() {
                     completeLoadingAnimations {
                         // Then navigate after 2 seconds
                         handler.postDelayed({
-                            findNavController().navigate(R.id.action_loadingFragment_to_resultFragment)
+                            try {
+                                if (!isAdded || isDetached) {
+                                    Timber.w("Fragment not attached, skipping navigation")
+                                    return@postDelayed
+                                }
+                                
+                                val navController = findNavController()
+                                if (navController.currentDestination?.id == R.id.loadingFragment) {
+                                    navController.navigate(R.id.action_loadingFragment_to_resultFragment)
+                                } else {
+                                    Timber.w("Invalid navigation state: current destination is not loadingFragment")
+                                }
+                            } catch (e: Exception) {
+                                Timber.e(e, "Navigation error")
+                            }
                         }, 2000) // 2 seconds delay before navigation
                     }
                 }
