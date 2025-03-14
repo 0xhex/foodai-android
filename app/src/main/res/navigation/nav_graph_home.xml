@@ -21,7 +21,7 @@
             app:destination="@id/adjustGoalsFragment" />
 
         <action
-            android:id="@+id/action_home_tab_to_dailyStreakFragment"
+            android:id="@+id/actionHomeTabToDailyStreakFragment"
             app:destination="@id/dailyStreakFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
