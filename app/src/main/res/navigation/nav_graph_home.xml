@@ -44,7 +44,7 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
         <action
-            android:id="@+id/action_home_tab_to_note_editor"
+            android:id="@+id/actionHomeTabToNoteEditor"
             app:destination="@id/note_editor_fragment" />
 
         <action
