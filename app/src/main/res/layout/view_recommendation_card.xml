@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/custom_dark_gray"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="6dp">
+    app:cardCornerRadius="24dp"
+    app:cardElevation="8dp">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -18,34 +18,70 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/ai_recommendations"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/ai_recommendations_description"
-                android:textColor="@color/custom_light_gray" />
+                <!-- Brain icon with glow effect -->
+                <FrameLayout
+                    android:layout_width="70dp"
+                    android:layout_height="70dp">
+
+                    <View
+                        android:id="@+id/glowEffect"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/circle_glow_green"
+                        android:alpha="0.5"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        app:cardCornerRadius="25dp"
+                        app:cardBackgroundColor="#1E1E1E">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_brain"
+                            app:tint="@color/green"/>
+                    </androidx.cardview.widget.CardView>
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/ready_to_see_how_you_can_improve"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/euro_stile_bold"/>
+            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnGetRecommendations"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/blue"
-                android:padding="12dp"
+                android:layout_marginHorizontal="20dp"
                 android:text="@string/get_recommendations"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                app:cornerRadius="10dp" />
+                android:textSize="14sp"
+                android:fontFamily="@font/euro_stile_bold"
+                app:cornerRadius="16dp"
+                app:backgroundTint="@color/green"
+                app:rippleColor="@color/white"
+                android:stateListAnimator="@null"
+                app:elevation="8dp"/>
         </LinearLayout>
 
         <!-- Loading View -->
@@ -54,107 +90,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:padding="20dp"
+            android:gravity="center"
             android:visibility="gone">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/generating_recommendations"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <ProgressBar
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:indeterminateTint="@color/blue" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loadingAnimation"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:lottie_rawRes="@raw/loading"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"/>
 
             <TextView
                 android:id="@+id/txtRecommendationLoading"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:gravity="center"
                 android:text="@string/analyzing_your_meal"
-                android:textColor="@color/custom_light_gray" />
-        </LinearLayout>
-
-        <!-- Error View -->
-        <LinearLayout
-            android:id="@+id/recommendationErrorView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/oops"
                 android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txtRecommendationError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/something_went_wrong"
-                android:textColor="@color/custom_light_gray" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnRecommendationTryAgain"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/blue"
-                android:padding="12dp"
-                android:text="@string/try_again"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                app:cornerRadius="10dp" />
-        </LinearLayout>
-
-        <!-- Premium Required View -->
-        <LinearLayout
-            android:id="@+id/recommendationPremiumView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/premium_feature"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/premium_recommendations_description"
-                android:textColor="@color/custom_light_gray" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnRecommendationUpgrade"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/gold"
-                android:padding="12dp"
-                android:text="@string/upgrade_to_premium"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                app:cornerRadius="10dp" />
+                android:textSize="16sp"
+                android:fontFamily="@font/euro_stile_regular"
+                android:textAlignment="center"/>
         </LinearLayout>
 
         <!-- Content View -->
@@ -166,80 +123,183 @@
             android:padding="16dp"
             android:visibility="gone">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/ai_recommendations"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_check_circle"
+                    app:tint="@color/green"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/your_recommendations"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/euro_stile_bold"/>
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvRecommendations"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:nestedScrollingEnabled="false"
                 tools:itemCount="3"
-                tools:listitem="@layout/item_recommendation" />
+                tools:listitem="@layout/item_recommendation"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/changeSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="12dp"
+                android:padding="4dp">
 
-                <TextView
-                    android:id="@+id/lblWhatToChange"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/what_to_change"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
+                <ImageView
+                    android:id="@+id/imgChange"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_refresh"
+                    app:tint="@color/yellow"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/txtWhatToChange"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/custom_light_gray"
+                    android:layout_marginStart="12dp"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/euro_stile_regular"
+                    app:layout_constraintStart_toEndOf="@id/imgChange"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/lblWhatToChange"
-                    tools:text="Consider reducing the amount of saturated fats in your meal by replacing some ingredients with healthier alternatives." />
+                    app:layout_constraintTop_toTopOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cautionSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="12dp"
+                android:padding="4dp">
 
-                <TextView
-                    android:id="@+id/lblWhatToBeCareful"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/what_to_be_careful_about"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
+                <ImageView
+                    android:id="@+id/imgCaution"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_warning"
+                    app:tint="@color/orange"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/txtWhatToBeCareful"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/custom_light_gray"
+                    android:layout_marginStart="12dp"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/euro_stile_regular"
+                    app:layout_constraintStart_toEndOf="@id/imgCaution"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/lblWhatToBeCareful"
-                    tools:text="Be mindful of sodium content in prepared sauces and condiments." />
+                    app:layout_constraintTop_toTopOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
+
+        <!-- Error View -->
+        <LinearLayout
+            android:id="@+id/recommendationErrorView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_warning"
+                app:tint="@color/red"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/failed_to_get_recommendations"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@font/euro_stile_bold"/>
+
+            <TextView
+                android:id="@+id/txtRecommendationError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:fontFamily="@font/euro_stile_regular"
+                android:textAlignment="center"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRecommendationTryAgain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/try_again"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:fontFamily="@font/euro_stile_bold"
+                app:cornerRadius="12dp"
+                app:backgroundTint="@color/blue"/>
+        </LinearLayout>
+
+        <!-- Premium Required View -->
+        <LinearLayout
+            android:id="@+id/recommendationPremiumView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/premium_required"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:fontFamily="@font/euro_stile_bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/premium_recommendations_description"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:fontFamily="@font/euro_stile_regular"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRecommendationUpgrade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/upgrade"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@font/euro_stile_bold"
+                app:cornerRadius="12dp"
+                app:backgroundTint="@color/gold"/>
+        </LinearLayout>
     </FrameLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

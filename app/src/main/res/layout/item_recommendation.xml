@@ -7,25 +7,28 @@
     android:paddingVertical="8dp">
 
     <ImageView
-        android:id="@+id/imgDot"
-        android:layout_width="8dp"
-        android:layout_height="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/circle_background_white"
+        android:id="@+id/imgCheckmark"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_check_circle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/blue" />
+        app:tint="@color/green" />
 
     <TextView
         android:id="@+id/txtRecommendation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="10dp"
         android:textColor="@color/white"
         android:textSize="14sp"
+        android:fontFamily="@font/euro_stile_regular"
+        android:alpha="0.9"
+        android:lineSpacingExtra="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imgDot"
+        app:layout_constraintStart_toEndOf="@id/imgCheckmark"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Add more vegetables to balance out the high protein content of your meal." />
+        tools:text="Consider reducing the amount of saturated fats in your meal by replacing some ingredients with healthier alternatives." />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

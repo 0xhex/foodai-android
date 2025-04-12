@@ -31,6 +31,7 @@ import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.home.community.detail.adapter.IngredientsAdapter
 import com.codepad.foodai.ui.home.home.pager.HomePagerViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -100,6 +101,19 @@ class NewFoodDetailFragment : BaseFragment<FragmentNewFoodDetailBinding>(),
         binding.nutritionDetailsView.visibility = View.VISIBLE
         binding.recommendationCardView.visibility = View.VISIBLE
         binding.btnFixResult.visibility = View.VISIBLE
+
+        // Setup recommendation card callbacks
+        binding.recommendationCardView.apply {
+            onGetRecommendationsClick = {
+                sharedViewModel.requestRecommendations()
+            }
+            onTryAgainClick = {
+                sharedViewModel.requestRecommendations()
+            }
+            onUpgradeClick = {
+                revenueCatManager.triggerPaywall()
+            }
+        }
     }
 
     private fun checkIfShared() {
@@ -331,19 +345,33 @@ class NewFoodDetailFragment : BaseFragment<FragmentNewFoodDetailBinding>(),
 
     // Recommendation methods
     private fun showRecommendationLoadingState() {
-        // Implementation will depend on your RecommendationCardView implementation
+        binding.recommendationCardView.showLoading()
+        startRecommendationLoadingMessages()
     }
 
     private fun showRecommendationError(errorMessage: String) {
-        // Implementation will depend on your RecommendationCardView implementation
+        binding.recommendationCardView.showError(errorMessage)
     }
 
     private fun showRecommendationPremiumRequired() {
-        // Implementation will depend on your RecommendationCardView implementation
+        // Reset recommendation card to initial state
+        binding.recommendationCardView.resetToInitialState()
+        
+        // Show premium required dialog
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.premium_required))
+            .setMessage(getString(R.string.you_ve_reached_today_s_limit_unlock_unlimited_access_and_exclusive_features_by_upgrading_to_premium))
+            .setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton(getString(R.string.upgrade)) { _, _ ->
+                revenueCatManager.triggerPaywall()
+            }
+            .show()
     }
 
     private fun showRecommendationContent(recommendation: Recommendation) {
-        // Implementation will depend on your RecommendationCardView implementation
+        binding.recommendationCardView.showRecommendations(recommendation)
     }
 
     private fun startRecommendationLoadingMessages() {

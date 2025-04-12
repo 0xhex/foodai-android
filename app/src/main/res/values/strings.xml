@@ -560,4 +560,6 @@
     <!-- Food details -->
     <string name="already_shared_to_community">This dish has already been shared to community</string>
     <string name="need_high_health_score_to_share">You need a health score above 7.0 to share to community</string>
+    <string name="ready_to_see_how_you_can_improve">Ready to see how you can improve your meal choices?</string>
+    <string name="failed_to_get_recommendations">Failed to get recommendations</string>
 </resources>
