@@ -17,6 +17,11 @@
             app:popUpTo="@id/foodDetailFragment" />
 
         <action
+            android:id="@+id/action_home_tab_to_new_food_detail"
+            app:destination="@id/newFoodDetailFragment"
+            app:popUpTo="@id/newFoodDetailFragment" />
+
+        <action
             android:id="@+id/action_home_tab_to_adjust_goals"
             app:destination="@id/adjustGoalsFragment" />
 
@@ -190,6 +195,15 @@
         android:name="com.codepad.foodai.ui.home.home.fooddetail.FoodDetailFragment">
         <action
             android:id="@+id/action_navigation_food_detail_to_fixResultFragment"
+            app:destination="@id/fixResultFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/newFoodDetailFragment"
+        android:name="com.codepad.foodai.ui.home.home.fooddetail.NewFoodDetailFragment"
+        tools:layout="@layout/fragment_new_food_detail">
+        <action
+            android:id="@+id/action_navigation_new_food_detail_to_fixResultFragment"
             app:destination="@id/fixResultFragment" />
     </fragment>
 

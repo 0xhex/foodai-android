@@ -65,16 +65,18 @@
         <action
             android:id="@+id/action_home_to_paywall"
             app:destination="@id/paywallFragment" />
-
         <action
-            android:id="@+id/action_home_to_newResult"
-            app:destination="@id/newResultFragment" />
+            android:id="@+id/action_homeFragment_to_foodDetailFragment"
+            app:destination="@id/foodDetailFragment" />
+        <action
+            android:id="@+id/action_home_to_new_result_fragment"
+            app:destination="@id/newResultFragment"/>
     </fragment>
 
     <fragment
         android:id="@+id/paywallFragment"
         android:name="com.codepad.foodai.ui.paywall.PaywallFragment"
-        android:label="Paywall"/>
+        android:label="Paywall" />
 
     <fragment
         android:id="@+id/loadingFragment"
@@ -111,8 +113,8 @@
 
         <argument
             android:name="isAdjustGoals"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
 
         <action
             android:id="@+id/action_newResultFragment_to_homeFragment"
@@ -211,5 +213,21 @@
         android:id="@+id/descriptionFragment"
         android:name="com.codepad.foodai.ui.home.exercise.describe.DescribeExerciseFragment"
         tools:layout="@layout/fragment_describe_exercise" />
+
+    <fragment
+        android:id="@+id/foodDetailFragment"
+        android:name="com.codepad.foodai.ui.home.home.fooddetail.FoodDetailFragment"
+        android:label="FoodDetailFragment"
+        tools:layout="@layout/fragment_food_detail">
+        <action
+            android:id="@+id/action_navigation_food_detail_to_fixResultFragment"
+            app:destination="@id/fixResultFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fixResultFragment"
+        android:name="com.codepad.foodai.ui.home.home.fooddetail.FixResultFragment"
+        android:label="FixResultFragment"
+        tools:layout="@layout/fragment_fix_result" />
 
 </navigation>

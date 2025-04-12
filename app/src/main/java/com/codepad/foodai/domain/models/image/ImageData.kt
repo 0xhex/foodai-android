@@ -18,6 +18,7 @@ data class ImageData(
     val fats: Int?,
     val healthScore: Int?,
     val ingredients: List<Ingredient>?,
+    val mealName: String?,
     val description: String?,
     val totalResponse: String?,
     val createdAt: Date?,

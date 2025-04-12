@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
+        android:background="@color/ios_background">
+
+        <!-- Left side: Pie Chart with calories - adjusted weight -->
+        <FrameLayout
+            android:id="@+id/chart_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:visibility="visible">
+
+            <!-- Background "glow" effect is drawn by particleView -->
+            <View
+                android:id="@+id/particle_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- Pie Chart -->
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/nutrition_pie_chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:layout_gravity="center" />
+
+            <!-- Centered calories display -->
+            <FrameLayout
+                android:id="@+id/calories_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/calories_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/euro_stile_bold"
+                        android:shadowColor="#80000000"
+                        android:shadowDx="0"
+                        android:shadowDy="1"
+                        android:shadowRadius="1"
+                        android:textColor="@color/white"
+                        android:textSize="36sp"
+                        tools:text="950" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/calories_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/euro_stile_regular"
+                            android:text="calories"
+                            android:textColor="@color/custom_light_gray"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/edit_icon"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_marginStart="4dp"
+                            android:src="@drawable/ic_edit"
+                            app:tint="@color/white" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+        </FrameLayout>
+
+        <!-- Right side: Macro cards -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:orientation="vertical"
+            android:clipToPadding="false"
+            android:paddingStart="12dp"
+            android:paddingEnd="4dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <!-- Protein Card - added clip to parent false to allow animation expansion -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/protein_card"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginVertical="4dp"
+                app:cardBackgroundColor="@color/custom_dark_gray"
+                app:cardCornerRadius="10dp"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/macro_protein_background"
+                        android:padding="6dp">
+
+                        <TextView
+                            android:id="@+id/protein_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/euro_stile_bold"
+                            android:textColor="@color/white"
+                            android:shadowColor="#335A6BFF"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="4"
+                            android:textSize="16sp"
+                            tools:text="25g" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/euro_stile_bold"
+                        android:text="Protein"
+                        android:textColor="@color/proteinColor"
+                        android:shadowColor="#335A6BFF"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="2"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/ic_edit"
+                        app:tint="@color/white" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Carbs Card - added clip to parent false to allow animation expansion -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/carbs_card"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginVertical="4dp"
+                app:cardBackgroundColor="@color/custom_dark_gray"
+                app:cardCornerRadius="10dp"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/macro_carbs_background"
+                        android:padding="6dp">
+
+                        <TextView
+                            android:id="@+id/carbs_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/euro_stile_bold"
+                            android:textColor="@color/white"
+                            android:shadowColor="#3334C759"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="4"
+                            android:textSize="16sp"
+                            tools:text="95g" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/euro_stile_bold"
+                        android:text="Carbs"
+                        android:textColor="@color/carbsColor"
+                        android:shadowColor="#3334C759"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="2"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/ic_edit"
+                        app:tint="@color/white" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Fats Card - added clip to parent false to allow animation expansion -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/fats_card"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginVertical="4dp"
+                app:cardBackgroundColor="@color/custom_dark_gray"
+                app:cardCornerRadius="10dp"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/macro_fats_background"
+                        android:padding="6dp">
+
+                        <TextView
+                            android:id="@+id/fats_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/euro_stile_bold"
+                            android:textColor="@color/white"
+                            android:shadowColor="#33FF6259"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="4"
+                            android:textSize="16sp"
+                            tools:text="50g" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/euro_stile_bold"
+                        android:text="Fats"
+                        android:textColor="@color/fatsColor"
+                        android:shadowColor="#33FF6259"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="2"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/ic_edit"
+                        app:tint="@color/white" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </LinearLayout>
+</merge> 

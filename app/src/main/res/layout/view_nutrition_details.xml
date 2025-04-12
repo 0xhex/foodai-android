@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@drawable/rounded_black_bg">
+
+    <TextView
+        android:id="@+id/lblNutritionDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nutrition Details"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Calories -->
+    <TextView
+        android:id="@+id/lblCalories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Calories"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblNutritionDetails" />
+
+    <TextView
+        android:id="@+id/txtCaloriesValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0 kcal"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/lblCalories"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Protein -->
+    <TextView
+        android:id="@+id/lblProtein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Protein"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblCalories" />
+
+    <TextView
+        android:id="@+id/txtProteinValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0g"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/lblProtein"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Carbs -->
+    <TextView
+        android:id="@+id/lblCarbs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Carbohydrates"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblProtein" />
+
+    <TextView
+        android:id="@+id/txtCarbsValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0g"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/lblCarbs"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Fats -->
+    <TextView
+        android:id="@+id/lblFats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Fats"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblCarbs" />
+
+    <TextView
+        android:id="@+id/txtFatsValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0g"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/lblFats"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Fiber -->
+    <TextView
+        android:id="@+id/lblFiber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Fiber"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblFats" />
+
+    <TextView
+        android:id="@+id/txtFiberValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0g"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/lblFiber"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Sugar -->
+    <TextView
+        android:id="@+id/lblSugar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Sugar"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblFiber" />
+
+    <TextView
+        android:id="@+id/txtSugarValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0g"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/lblSugar"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Sodium -->
+    <TextView
+        android:id="@+id/lblSodium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Sodium"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblSugar" />
+
+    <TextView
+        android:id="@+id/txtSodiumValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0mg"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/lblSodium"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Cholesterol -->
+    <TextView
+        android:id="@+id/lblCholesterol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Cholesterol"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblSodium" />
+
+    <TextView
+        android:id="@+id/txtCholesterolValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0mg"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/lblCholesterol"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout> 

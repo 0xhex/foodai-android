@@ -3,6 +3,7 @@
     <dimen name="dimen_2dp">2dp</dimen>
     <dimen name="dimen_4dp">4dp</dimen>
     <dimen name="dimen_8dp">8dp</dimen>
+    <dimen name="dimen_10dp">10dp</dimen>
     <dimen name="dimen_12dp">12dp</dimen>
     <dimen name="dimen_14dp">14dp</dimen>
     <dimen name="dimen_16dp">16dp</dimen>
@@ -15,4 +16,8 @@
     <dimen name="logo_elevation">4dp</dimen>
     <dimen name="screen_width_quarter_negative">-25%</dimen>
     <dimen name="screen_width_quarter">25%</dimen>
+    <dimen name="dimen_20dp">20dp</dimen>
+    <dimen name="dimen_50dp">50dp</dimen>
+    <dimen name="dimen_1_5dp">1.5dp</dimen>
+    <dimen name="dimen_1dp">1dp</dimen>
 </resources>

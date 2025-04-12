@@ -517,4 +517,47 @@
     <string name="your_nutrition_goals">Your Daily \nNutrition Goals</string>
     <string name="current_nutrition_goals">Current nutrition goals</string>
     <string name="tap_values_to_adjust">Tap on values to adjust</string>
+
+    <!-- Food Detail Strings -->
+    <string name="share_with_friends">Share with Friends</string>
+    <string name="share_your_meal_details">Share your meal details</string>
+    <string name="post_to_community">Post to Community</string>
+    <string name="share_with_food_enthusiasts">Share with food enthusiasts</string>
+    <string name="already_shared_with_community">Already shared with community</string>
+    <string name="requires_health_score_above_7">Requires health score above 7</string>
+    <string name="remove_from_history">Remove from history</string>
+    <string name="analyze_nutrition">Analyze Nutrition</string>
+    <string name="analyzing_your_meal">Analyzing your meal…</string>
+    <string name="fetching_personalized_insights">Fetching personalized insights…</string>
+    <string name="finalizing_your_unique_recommendations">Finalizing your unique recommendations…</string>
+    <string name="unlock_detailed_nutrition">Unlock detailed nutrition analysis with premium</string>
+    <string name="unlock_personalized_recommendations">Unlock personalized meal recommendations with premium</string>
+    <string name="try_again">Try Again</string>
+    <string name="your_recommendations">Your Recommendations</string>
+    <string name="analyzing_nutritional_content">Analyzing nutritional content…</string>
+    <string name="calculating_vitamin_and_mineral_levels">Calculating vitamin and mineral levels…</string>
+    <string name="preparing_your_nutrition_profile">Preparing your detailed nutrition profile…</string>
+    <string name="nutritional_profile">Nutritional Profile</string>
+    <string name="dietary_fiber">Dietary Fiber</string>
+    <string name="daily_value">daily value</string>
+    <string name="vitamins">Vitamins</string>
+    <string name="minerals">Minerals</string>
+    <string name="meal_time">⏱ %s</string>
+    <string name="health_score_format">%.1f/10</string>
+    <string name="items_count">%d items</string>
+
+    <!-- Recommendation Card -->
+    <string name="ai_recommendations">AI Recommendations</string>
+    <string name="ai_recommendations_description">Get personalized recommendations to improve your meal based on nutritional analysis</string>
+    <string name="generating_recommendations">Generating Recommendations</string>
+    <string name="oops">Oops!</string>
+    <string name="something_went_wrong">Something went wrong. Please try again.</string>
+    <string name="premium_feature">Premium Feature</string>
+    <string name="premium_recommendations_description">Unlock personalized meal recommendations with premium subscription</string>
+    <string name="what_to_change">What to Change</string>
+    <string name="what_to_be_careful_about">What to Be Careful About</string>
+
+    <!-- Food details -->
+    <string name="already_shared_to_community">This dish has already been shared to community</string>
+    <string name="need_high_health_score_to_share">You need a health score above 7.0 to share to community</string>
 </resources>
