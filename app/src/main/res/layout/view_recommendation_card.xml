@@ -10,6 +10,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:background="@drawable/bg_nutrition_details"
         android:layout_height="wrap_content">
 
         <!-- Initial View -->
@@ -40,10 +41,10 @@
                         android:alpha="0.5"/>
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_gravity="center"
-                        app:cardCornerRadius="25dp"
+                        app:cardCornerRadius="55dp"
                         app:cardBackgroundColor="#1E1E1E">
 
                         <ImageView

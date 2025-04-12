@@ -25,6 +25,7 @@
             android:id="@+id/txtEmoji"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:layout_gravity="center"
             android:textSize="22sp"
             tools:text="🥦" />

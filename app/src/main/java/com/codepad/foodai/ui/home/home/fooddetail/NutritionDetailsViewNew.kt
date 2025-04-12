@@ -89,6 +89,8 @@ class NutritionDetailsViewNew @JvmOverloads constructor(
         }
     }
 
+    private lateinit var detailsContentContainer: ConstraintLayout
+
     init {
         initView()
         setupListeners()
@@ -135,6 +137,7 @@ class NutritionDetailsViewNew @JvmOverloads constructor(
             .inflate(R.layout.view_nutrition_details_new, this, true)
         
         // Reference all views
+        detailsContentContainer = findViewById(R.id.detailsContentContainer)
         tabLayout = findViewById(R.id.tabLayout)
         viewPager = findViewById(R.id.viewPager)
         initialView = findViewById(R.id.initialView)
@@ -161,6 +164,7 @@ class NutritionDetailsViewNew @JvmOverloads constructor(
         fiberIndicator = findViewById(R.id.fiberIndicator)
         
         // Set the initial state
+        detailsContentContainer.visibility = View.GONE
         initialView.visibility = View.VISIBLE
         loadingView.visibility = View.GONE
         errorView.visibility = View.GONE
@@ -293,6 +297,7 @@ class NutritionDetailsViewNew @JvmOverloads constructor(
         currentLoadingMessageIndex = 0
         txtLoadingMessage.setText(loadingMessages[currentLoadingMessageIndex])
         
+        detailsContentContainer.visibility = View.GONE
         initialView.visibility = View.GONE
         loadingView.visibility = View.VISIBLE
         errorView.visibility = View.GONE
@@ -308,6 +313,7 @@ class NutritionDetailsViewNew @JvmOverloads constructor(
     private fun showDetailsView() {
         loadingMessageHandler.removeCallbacks(loadingMessageRunnable)
         
+        detailsContentContainer.visibility = View.VISIBLE
         initialView.visibility = View.GONE
         loadingView.visibility = View.GONE
         errorView.visibility = View.GONE
@@ -336,6 +342,7 @@ class NutritionDetailsViewNew @JvmOverloads constructor(
     private fun showErrorView(errorMessage: String) {
         loadingMessageHandler.removeCallbacks(loadingMessageRunnable)
         
+        detailsContentContainer.visibility = View.GONE
         initialView.visibility = View.GONE
         loadingView.visibility = View.GONE
         errorView.visibility = View.VISIBLE
@@ -350,6 +357,7 @@ class NutritionDetailsViewNew @JvmOverloads constructor(
     private fun showPremiumRequiredView() {
         loadingMessageHandler.removeCallbacks(loadingMessageRunnable)
         
+        detailsContentContainer.visibility = View.GONE
         initialView.visibility = View.GONE
         loadingView.visibility = View.GONE
         errorView.visibility = View.GONE
