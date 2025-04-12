@@ -17,6 +17,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentNewResultBinding
 import com.codepad.foodai.databinding.ItemMacroNutrientBinding
@@ -36,6 +37,7 @@ class NewResultFragment : BaseFragment<FragmentNewResultBinding>() {
     
     private val viewModel: ResultViewModel by activityViewModels()
     private val mainScope = CoroutineScope(Dispatchers.Main)
+    private val args: NewResultFragmentArgs by navArgs()
     
     // Flag to track if animations have already run
     private var animationsShown = false
@@ -50,10 +52,13 @@ class NewResultFragment : BaseFragment<FragmentNewResultBinding>() {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         
         // Add particle view and configure to run animation only first time
-        val particleView = ParticleView(requireContext()).apply {
-            shouldRunAnimation = !animationsShown
+        // Only show particles for new user mode, not for adjust goals mode
+        if (!args.isAdjustGoals) {
+            val particleView = ParticleView(requireContext()).apply {
+                shouldRunAnimation = !animationsShown
+            }
+            binding.particleContainer.addView(particleView)
         }
-        binding.particleContainer.addView(particleView)
         
         return view
     }
@@ -61,6 +66,9 @@ class NewResultFragment : BaseFragment<FragmentNewResultBinding>() {
     override fun onReadyView() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        
+        // Configure UI based on view mode
+        configureViewMode()
         
         // Initially hide header until animation
         binding.headerContainer.alpha = 0f
@@ -108,6 +116,22 @@ class NewResultFragment : BaseFragment<FragmentNewResultBinding>() {
         }
     }
     
+    private fun configureViewMode() {
+        if (args.isAdjustGoals) {
+            // Update UI for adjust goals mode
+            binding.titleText.text = getString(R.string.your_nutrition_goals)
+            binding.subtitleText.text = getString(R.string.current_nutrition_goals)
+            binding.descriptionText.text = getString(R.string.tap_values_to_adjust)
+            binding.nextButton.text = getString(R.string.done)
+        } else {
+            // Default UI for new user mode
+            binding.titleText.text = getString(R.string.congratulations_custom_plan)
+            binding.subtitleText.text = getString(R.string.daily_recommendation)
+            binding.descriptionText.text = getString(R.string.you_can_edit_this_anytime)
+            binding.nextButton.text = getString(R.string.next)
+        }
+    }
+    
     private fun showMacroItemsWithoutAnimation(binding: ItemMacroNutrientBinding) {
         binding.glowCircle.scaleX = 1f
         binding.glowCircle.scaleY = 1f
@@ -138,8 +162,14 @@ class NewResultFragment : BaseFragment<FragmentNewResultBinding>() {
     private fun setUpListeners() {
         // Next button
         binding.nextButton.setOnClickListener {
-            viewModel.navigateToNextScreen()
-            findNavController().navigate(R.id.action_newResultFragment_to_homeFragment)
+            if (args.isAdjustGoals) {
+                // Just go back when in adjust goals mode
+                findNavController().popBackStack()
+            } else {
+                // Navigate to next screen in new user mode
+                viewModel.navigateToNextScreen()
+                findNavController().navigate(R.id.action_newResultFragment_to_homeFragment)
+            }
         }
         
         // Error OK button
@@ -335,5 +365,9 @@ class NewResultFragment : BaseFragment<FragmentNewResultBinding>() {
         animations.add(textFade)
         animations.add(labelFade)
         animations.add(editFade)
+    }
+    
+    companion object {
+        const val ARG_IS_ADJUST_GOALS = "isAdjustGoals"
     }
 } 

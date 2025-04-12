@@ -433,4 +433,9 @@
     <string name="loading_your_plan">Chargement de votre plan...</string>
     <string name="camp_scene_image">Image de scène de camp</string>
     <string name="error">Erreur</string>
+    
+    <!-- Adjust Goals Mode Strings -->
+    <string name="your_nutrition_goals">Vos Objectifs \nNutritionnels Quotidiens</string>
+    <string name="current_nutrition_goals">Objectifs nutritionnels actuels</string>
+    <string name="tap_values_to_adjust">Appuyez sur les valeurs pour ajuster</string>
 </resources>

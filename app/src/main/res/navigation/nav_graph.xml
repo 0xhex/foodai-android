@@ -65,6 +65,10 @@
         <action
             android:id="@+id/action_home_to_paywall"
             app:destination="@id/paywallFragment" />
+
+        <action
+            android:id="@+id/action_home_to_newResult"
+            app:destination="@id/newResultFragment" />
     </fragment>
 
     <fragment
@@ -104,6 +108,11 @@
     <fragment
         android:id="@+id/newResultFragment"
         android:name="com.codepad.foodai.ui.user_property.result.NewResultFragment">
+
+        <argument
+            android:name="isAdjustGoals"
+            app:argType="boolean"
+            android:defaultValue="false" />
 
         <action
             android:id="@+id/action_newResultFragment_to_homeFragment"

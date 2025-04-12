@@ -4,10 +4,12 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentGoalViewBinding
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.custom.MacroProgressBar
+import com.codepad.foodai.ui.home.HomeFragmentDirections
 import com.codepad.foodai.ui.home.HomeViewModel
 import com.codepad.foodai.ui.home.home.pager.HomePagerViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class GoalViewFragment : BaseFragment<FragmentGoalViewBinding>() {
     private val viewModel: HomePagerViewModel by activityViewModels()
     private val sharedViewModel: HomeViewModel by activityViewModels()
-    
+
     override fun getLayoutId(): Int = R.layout.fragment_goal_view
 
     override fun onReadyView() {
@@ -27,15 +29,16 @@ class GoalViewFragment : BaseFragment<FragmentGoalViewBinding>() {
 
     private fun setupClickListeners() {
         binding.root.setOnClickListener {
-            sharedViewModel.triggerAdjustGoalsOpen()
+            findNavController().navigate(HomeFragmentDirections.actionHomeToNewResult(true))
         }
     }
 
     private fun setupObservers() {
         viewModel.dailySummary.observe(viewLifecycleOwner) { summary ->
             // Update consumed calories
-            binding.consumedCalories.text = summary.meals?.sumOf { it.calories ?: 0 }?.toString() ?: "0"
-            
+            binding.consumedCalories.text =
+                summary.meals?.sumOf { it.calories ?: 0 }?.toString() ?: "0"
+
             // Update remaining calories
             val remainingCalories = summary.remainingNutrition?.calories ?: 0
             binding.calorieProgress.setProgress(
@@ -44,7 +47,8 @@ class GoalViewFragment : BaseFragment<FragmentGoalViewBinding>() {
             )
 
             // Update burned calories
-            binding.burnedCalories.text = (summary.exercises?.firstOrNull()?.caloriesBurned ?: 0).toString()
+            binding.burnedCalories.text =
+                (summary.exercises?.firstOrNull()?.caloriesBurned ?: 0).toString()
 
             // Update macros
             updateMacroProgress(
@@ -75,9 +79,12 @@ class GoalViewFragment : BaseFragment<FragmentGoalViewBinding>() {
 
     private fun setupMacroViews() {
         // Initial setup of macro titles
-        binding.carbsProgress.findViewById<TextView>(R.id.macro_title).text = getString(R.string.carbs)
-        binding.proteinProgress.findViewById<TextView>(R.id.macro_title).text = getString(R.string.protein)
-        binding.fatsProgress.findViewById<TextView>(R.id.macro_title).text = getString(R.string.fats)
+        binding.carbsProgress.findViewById<TextView>(R.id.macro_title).text =
+            getString(R.string.carbs)
+        binding.proteinProgress.findViewById<TextView>(R.id.macro_title).text =
+            getString(R.string.protein)
+        binding.fatsProgress.findViewById<TextView>(R.id.macro_title).text =
+            getString(R.string.fats)
     }
 
     private fun updateMacroProgress(
@@ -85,7 +92,7 @@ class GoalViewFragment : BaseFragment<FragmentGoalViewBinding>() {
         title: String,
         consumed: Int,
         remaining: Int,
-        color: Int
+        color: Int,
     ) {
         val total = consumed + remaining
         view.findViewById<MacroProgressBar>(R.id.progress_bar).setProgress(consumed, total, color)
