@@ -19,6 +19,7 @@ class EditCaloriesFragment : BaseFragment<FragmentEditCaloriesBinding>() {
     private val viewModel: ResultViewModel by viewModels()
     override fun getLayoutId() = R.layout.fragment_edit_calories
     private val args by navArgs<EditCaloriesFragmentArgs>()
+    override val hideBottomNavBar: Boolean = true
 
     override fun onReadyView() {
         val title = args.title
@@ -38,6 +39,10 @@ class EditCaloriesFragment : BaseFragment<FragmentEditCaloriesBinding>() {
                 "dailyProtein" -> R.drawable.protein
                 "dailyFat" -> R.drawable.fats
                 "dailyCalories" -> R.drawable.ic_flame
+                "carbs" -> R.drawable.carbs
+                "protein" -> R.drawable.protein
+                "fats" -> R.drawable.fats
+                "calories" -> R.drawable.ic_flame
                 else -> R.drawable.ic_flame
             }
         )
@@ -51,10 +56,23 @@ class EditCaloriesFragment : BaseFragment<FragmentEditCaloriesBinding>() {
         }
 
         binding.btnDone.setOnClickListener {
-            val userID = UserSession.user?.id ?: return@setOnClickListener
-            val fieldValue =
-                binding.etValue.text.toString().toIntOrNull() ?: return@setOnClickListener
-            viewModel.updateUserFields(userID, nutritionType, fieldValue.toString())
+            val fieldValue = binding.etValue.text.toString().toIntOrNull() ?: return@setOnClickListener
+
+            when {
+                // Handle user daily goals update
+                nutritionType.startsWith("daily") -> {
+                    val userID = UserSession.user?.id ?: return@setOnClickListener
+                    viewModel.updateUserFields(userID, nutritionType, fieldValue.toString())
+                }
+                // Handle food nutrition update
+                else -> {
+                    setFragmentResult("updateFoodNutrition", bundleOf(
+                        "type" to nutritionType,
+                        "value" to fieldValue
+                    ))
+                    findNavController().popBackStack()
+                }
+            }
         }
 
         viewModel.updatedUser.observe(viewLifecycleOwner) { updated ->

@@ -205,6 +205,25 @@
         <action
             android:id="@+id/action_navigation_new_food_detail_to_fixResultFragment"
             app:destination="@id/fixResultFragment" />
+        <action
+            android:id="@+id/action_newFoodDetailFragment_to_editCaloriesFragment"
+            app:destination="@id/editCaloriesFragment">
+            <argument
+                android:name="title"
+                app:argType="string" />
+            <argument
+                android:name="textAreaTitle"
+                app:argType="string" />
+            <argument
+                android:name="nutritionType"
+                app:argType="string" />
+            <argument
+                android:name="value"
+                app:argType="string" />
+            <argument
+                android:name="color"
+                app:argType="integer" />
+        </action>
     </fragment>
 
     <fragment
@@ -257,5 +276,27 @@
         <argument
             android:name="post"
             app:argType="com.codepad.foodai.domain.models.community.CommunityPost"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/editCaloriesFragment"
+        android:name="com.codepad.foodai.ui.user_property.result.edit.EditCaloriesFragment"
+        android:label="EditCaloriesFragment"
+        tools:layout="@layout/fragment_edit_calories">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="textAreaTitle"
+            app:argType="string" />
+        <argument
+            android:name="nutritionType"
+            app:argType="string" />
+        <argument
+            android:name="value"
+            app:argType="string" />
+        <argument
+            android:name="color"
+            app:argType="integer" />
     </fragment>
 </navigation>

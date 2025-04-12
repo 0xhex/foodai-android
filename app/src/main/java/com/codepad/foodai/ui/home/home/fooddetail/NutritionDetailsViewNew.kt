@@ -206,20 +206,26 @@ class NutritionDetailsViewNew @JvmOverloads constructor(
         // Setup vitamin indicator
         val vitaminEmoji = vitaminIndicator.findViewById<TextView>(R.id.txtEmoji)
         val vitaminLabel = vitaminIndicator.findViewById<TextView>(R.id.txtLabel)
+        val vitaminFrame = vitaminIndicator.findViewById<FrameLayout>(R.id.emojiContainer)
         vitaminEmoji.text = "💊"
         vitaminLabel.text = context.getString(R.string.vitamins)
+        vitaminFrame.background = ContextCompat.getDrawable(context, R.drawable.nutrition_indicator_vitamins)
         
         // Setup mineral indicator
         val mineralEmoji = mineralIndicator.findViewById<TextView>(R.id.txtEmoji)
         val mineralLabel = mineralIndicator.findViewById<TextView>(R.id.txtLabel)
+        val mineralFrame = mineralIndicator.findViewById<FrameLayout>(R.id.emojiContainer)
         mineralEmoji.text = "🔬"
         mineralLabel.text = context.getString(R.string.minerals)
+        mineralFrame.background = ContextCompat.getDrawable(context, R.drawable.nutrition_indicator_minerals)
         
         // Setup fiber indicator
         val fiberEmoji = fiberIndicator.findViewById<TextView>(R.id.txtEmoji)
         val fiberLabel = fiberIndicator.findViewById<TextView>(R.id.txtLabel)
+        val fiberFrame = fiberIndicator.findViewById<FrameLayout>(R.id.emojiContainer)
         fiberEmoji.text = "🥦"
         fiberLabel.text = context.getString(R.string.dietary_fiber)
+        fiberFrame.background = ContextCompat.getDrawable(context, R.drawable.nutrition_indicator_fiber)
     }
     
     private fun startGlowAnimation() {

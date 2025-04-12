@@ -192,6 +192,10 @@ class HomePagerViewModel @Inject constructor(
         _foodDetail.value = foodDetail
     }
 
+    fun updateFoodDetail(foodDetail: ImageData) {
+        _foodDetail.value = foodDetail
+    }
+
     fun deleteImage(imageId: String) {
         viewModelScope.launch {
             _isLoading.value = true
@@ -520,5 +524,10 @@ class HomePagerViewModel @Inject constructor(
     fun clearNutritionDetailsData() {
         _nutritionDetails.value = null
         _nutritionDetailsError.value = null
+    }
+
+    fun isNutritionOrRecommendationLoading(): Boolean {
+        return nutritionDetails.value?.status == "processing" || 
+               recommendationId.value != null
     }
 }

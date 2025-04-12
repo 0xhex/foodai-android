@@ -17,8 +17,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.codepad.foodai.R
@@ -42,6 +44,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class NewFoodDetailFragment : BaseFragment<FragmentNewFoodDetailBinding>(),
     MoreOptionsBottomSheet.OptionsListener {
+
+    companion object {
+        private var hasRunInitialAnimations = false
+        private var lastAnimatedFoodId: String? = null
+    }
 
     private val sharedViewModel: HomePagerViewModel by activityViewModels()
     private var recommendationPollingHandler: Handler? = null
@@ -92,7 +99,29 @@ class NewFoodDetailFragment : BaseFragment<FragmentNewFoodDetailBinding>(),
         setupViews()
         setupObservers()
         setupClickListeners()
+        setupFragmentResultListeners()
         checkIfShared()
+    }
+
+    private fun setupFragmentResultListeners() {
+        // Listen for food nutrition updates
+        setFragmentResultListener("updateFoodNutrition") { _, bundle ->
+            val type = bundle.getString("type") ?: return@setFragmentResultListener
+            val value = bundle.getInt("value")
+            
+            // Update the food detail in ViewModel
+            sharedViewModel.foodDetail.value?.let { food ->
+                val updatedFood = food.copy().apply {
+                    when (type) {
+                        "calories" -> calories = value
+                        "protein" -> protein = value
+                        "carbs" -> carbs = value
+                        "fats" -> fats = value
+                    }
+                }
+                sharedViewModel.updateFoodDetail(updatedFood)
+            }
+        }
     }
 
     private fun setupViews() {
@@ -121,6 +150,53 @@ class NewFoodDetailFragment : BaseFragment<FragmentNewFoodDetailBinding>(),
         
         // Connect nutrition details view to the ViewModel
         binding.nutritionDetailsView.connectToViewModel(sharedViewModel, viewLifecycleOwner)
+
+        // Setup nutrition ring click listeners
+        binding.nutritionRingView.apply {
+            setOnCaloriesClickListener {
+                val action = NewFoodDetailFragmentDirections.actionNewFoodDetailFragmentToEditCaloriesFragment(
+                    title = getString(R.string.calories),
+                    textAreaTitle = getString(R.string.calories),
+                    nutritionType = "calories",
+                    value = sharedViewModel.foodDetail.value?.calories?.toString() ?: "0",
+                    color = ContextCompat.getColor(requireContext(), CARBS_COLOR)
+                )
+                findNavController().navigate(action)
+            }
+
+            setOnProteinClickListener {
+                val action = NewFoodDetailFragmentDirections.actionNewFoodDetailFragmentToEditCaloriesFragment(
+                    title = getString(R.string.protein),
+                    textAreaTitle = getString(R.string.protein),
+                    nutritionType = "protein",
+                    value = sharedViewModel.foodDetail.value?.protein?.toString() ?: "0",
+                    color = ContextCompat.getColor(requireContext(), PROTEIN_COLOR)
+                )
+                findNavController().navigate(action)
+            }
+
+            setOnCarbsClickListener {
+                val action = NewFoodDetailFragmentDirections.actionNewFoodDetailFragmentToEditCaloriesFragment(
+                    title = getString(R.string.carbs),
+                    textAreaTitle = getString(R.string.carbs),
+                    nutritionType = "carbs",
+                    value = sharedViewModel.foodDetail.value?.carbs?.toString() ?: "0",
+                    color = ContextCompat.getColor(requireContext(), CARBS_COLOR)
+                )
+                findNavController().navigate(action)
+            }
+
+            setOnFatsClickListener {
+                val action = NewFoodDetailFragmentDirections.actionNewFoodDetailFragmentToEditCaloriesFragment(
+                    title = getString(R.string.fats),
+                    textAreaTitle = getString(R.string.fats),
+                    nutritionType = "fats",
+                    value = sharedViewModel.foodDetail.value?.fats?.toString() ?: "0",
+                    color = ContextCompat.getColor(requireContext(), FATS_COLOR)
+                )
+                findNavController().navigate(action)
+            }
+        }
     }
 
     private fun checkIfShared() {
@@ -141,7 +217,12 @@ class NewFoodDetailFragment : BaseFragment<FragmentNewFoodDetailBinding>(),
         }
 
         sharedViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressOverlay.visibility = if (isLoading) View.VISIBLE else View.GONE
+            // Only show loading for operations other than nutrition and recommendations
+            if (isLoading && !sharedViewModel.isNutritionOrRecommendationLoading()) {
+                binding.progressOverlay.visibility = View.VISIBLE
+            } else {
+                binding.progressOverlay.visibility = View.GONE
+            }
         }
 
         sharedViewModel.deleteResult.observe(viewLifecycleOwner) { result ->
@@ -232,6 +313,13 @@ class NewFoodDetailFragment : BaseFragment<FragmentNewFoodDetailBinding>(),
         // Set meal name
         binding.txtMealName.text = foodDetail.mealName ?: "Food"
 
+        // Run animations if this is a different food or first time
+        val shouldAnimate = lastAnimatedFoodId != foodDetail.id
+        binding.nutritionRingView.updateWithNutritionData(foodDetail, shouldAnimate)
+        if (shouldAnimate) {
+            lastAnimatedFoodId = foodDetail.id
+        }
+
         // Set health score with appropriate color
         val healthScore = foodDetail.healthScore?.toDouble() ?: 0.0
         binding.txtHealthScore.text = String.format("%.1f", healthScore)
@@ -284,9 +372,6 @@ class NewFoodDetailFragment : BaseFragment<FragmentNewFoodDetailBinding>(),
             binding.healthScoreContainer.outlineAmbientShadowColor = shadowColor
             binding.healthScoreContainer.outlineSpotShadowColor = shadowColor
         }
-        
-        // Update nutrition ring view
-        binding.nutritionRingView.updateWithNutritionData(foodDetail)
         
         // Set image ID for nutrition details view
         binding.nutritionDetailsView.setImageId(foodDetail.id)

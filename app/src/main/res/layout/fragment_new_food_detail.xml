@@ -208,6 +208,7 @@
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_marginBottom="30dp"
+                        android:elevation="3dp"
                         android:layout_gravity="bottom|end"
                         android:visibility="gone"
                         app:lottie_autoPlay="false"

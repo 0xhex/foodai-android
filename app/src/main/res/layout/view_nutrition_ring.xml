@@ -125,7 +125,7 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/macro_protein_background"
+                        android:background="@drawable/rounded_rect_protein"
                         android:padding="6dp">
 
                         <TextView
@@ -149,8 +149,8 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/euro_stile_bold"
                         android:text="Protein"
-                        android:textColor="@color/proteinColor"
-                        android:shadowColor="#335A6BFF"
+                        android:textColor="#4285F4"
+                        android:shadowColor="#334285F4"
                         android:shadowDx="0"
                         android:shadowDy="0"
                         android:shadowRadius="3"
@@ -187,7 +187,7 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/macro_carbs_background"
+                        android:background="@drawable/rounded_rect_carbs"
                         android:padding="6dp">
 
                         <TextView
@@ -211,8 +211,8 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/euro_stile_bold"
                         android:text="Carbs"
-                        android:textColor="@color/carbsColor"
-                        android:shadowColor="#33FF9500"
+                        android:textColor="#34A853"
+                        android:shadowColor="#3334A853"
                         android:shadowDx="0"
                         android:shadowDy="0"
                         android:shadowRadius="3"
@@ -249,7 +249,7 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/macro_fats_background"
+                        android:background="@drawable/rounded_rect_fats"
                         android:padding="6dp">
 
                         <TextView
@@ -263,7 +263,7 @@
                             android:shadowDy="0"
                             android:shadowRadius="4"
                             android:textSize="18sp"
-                            tools:text="50g" />
+                            tools:text="30g" />
                     </FrameLayout>
 
                     <TextView
@@ -273,8 +273,8 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/euro_stile_bold"
                         android:text="Fats"
-                        android:textColor="@color/fatsColor"
-                        android:shadowColor="#334285F4"
+                        android:textColor="#FF5A6B"
+                        android:shadowColor="#33FF5A6B"
                         android:shadowDx="0"
                         android:shadowDy="0"
                         android:shadowRadius="3"
