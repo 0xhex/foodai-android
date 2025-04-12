@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" 
-    android:shape="rectangle">
-    <!-- Dark background with slightly transparent blue tint -->
-    <solid android:color="#101b33" />
-    <corners android:radius="12dp" />
-    <!-- Semi-transparent blue stroke for glow effect -->
-    <stroke android:color="#335A6BFF" android:width="1dp" />
-</shape> 
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Base shape with darker background -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#151515" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    
+    <!-- Inner gradient for subtle glow effect -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="135"
+                android:startColor="#2B5A6BFF"
+                android:centerColor="#185A6BFF"
+                android:endColor="#105A6BFF" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    
+    <!-- Outer stroke for definition -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="8dp" />
+            <stroke 
+                android:color="#335A6BFF" 
+                android:width="1dp" />
+        </shape>
+    </item>
+</layer-list> 

@@ -13,6 +13,7 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewOutlineProvider
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
@@ -498,9 +499,40 @@ class NutritionRingView @JvmOverloads constructor(
         if (highlight) {
             // Also highlight the corresponding pie chart segment
             highlightPieChartSegment(macroType)
+            
+            // Apply a better glow effect based on the macro type - requires Android P (API 28+)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                when (macroType) {
+                    "Protein" -> {
+                        // Enhanced protein glow
+                        card.outlineProvider = ViewOutlineProvider.BACKGROUND
+                        card.outlineSpotShadowColor = Color.parseColor("#5A6BFF")
+                        card.outlineAmbientShadowColor = Color.parseColor("#5A6BFF")
+                    }
+                    "Carbs" -> {
+                        // Enhanced carbs glow
+                        card.outlineProvider = ViewOutlineProvider.BACKGROUND
+                        card.outlineSpotShadowColor = Color.parseColor("#FF9500")
+                        card.outlineAmbientShadowColor = Color.parseColor("#FF9500")
+                    }
+                    "Fats" -> {
+                        // Enhanced fats glow
+                        card.outlineProvider = ViewOutlineProvider.BACKGROUND
+                        card.outlineSpotShadowColor = Color.parseColor("#4285F4")
+                        card.outlineAmbientShadowColor = Color.parseColor("#4285F4")
+                    }
+                }
+            }
         } else {
             // Reset pie chart highlights
             resetPieChartHighlights()
+            
+            // Reset glow effect - requires Android P (API 28+)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                card.outlineProvider = ViewOutlineProvider.BACKGROUND
+                card.outlineSpotShadowColor = Color.BLACK
+                card.outlineAmbientShadowColor = Color.BLACK
+            }
         }
         
         // Scale animation - match iOS exact scale factor of 1.08
@@ -520,7 +552,7 @@ class NutritionRingView @JvmOverloads constructor(
         }
         
         // Elevation animation - adds depth similar to iOS shadow effect
-        val elevationValue = if (highlight) 12f else 4f
+        val elevationValue = if (highlight) 16f else 4f
         ObjectAnimator.ofFloat(card, "cardElevation", elevationValue).apply {
             duration = 350
             interpolator = AccelerateDecelerateInterpolator()
