@@ -507,4 +507,9 @@
     <string name="rating_dialog_2_message">We work super hard to serve you better and would love to know what you think of our app.</string>
     <string name="rate_on_play_store">Rate us on the Play Store</string>
     <string name="not_now">Not now</string>
+
+    <string name="you_can_edit_this_anytime">You can edit this anytime</string>
+    <string name="loading_your_plan">Loading your plan...</string>
+    <string name="camp_scene_image">Camp Scene Image</string>
+    <string name="error">Error</string>
 </resources>

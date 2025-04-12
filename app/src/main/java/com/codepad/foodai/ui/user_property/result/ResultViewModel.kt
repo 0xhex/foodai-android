@@ -133,4 +133,8 @@ class ResultViewModel @Inject constructor(
         }
     }
 
+    fun clearErrorMessage() {
+        _errorMessage.value = null
+    }
+
 }

@@ -41,10 +41,9 @@
         <action
             android:id="@+id/action_userPropertyFragment_to_loadingFragment"
             app:destination="@id/loadingFragment" />
-
         <action
-            android:id="@+id/action_userPropertyFragment_to_resultFragment"
-            app:destination="@id/resultFragment" />
+            android:id="@+id/action_userPropertyFragment_to_newResultFragment"
+            app:destination="@id/newResultFragment" />
     </fragment>
 
     <fragment
@@ -82,6 +81,9 @@
             android:id="@+id/action_loadingFragment_to_resultFragment"
             app:destination="@id/resultFragment" />
 
+        <action
+            android:id="@+id/action_loadingFragment_to_newResultFragment"
+            app:destination="@id/newResultFragment" />
     </fragment>
 
     <fragment
@@ -96,6 +98,21 @@
 
         <action
             android:id="@+id/action_resultFragment_to_editCaloriesFragment"
+            app:destination="@id/editCaloriesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/newResultFragment"
+        android:name="com.codepad.foodai.ui.user_property.result.NewResultFragment">
+
+        <action
+            android:id="@+id/action_newResultFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/newResultFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_newResultFragment_to_editCaloriesFragment"
             app:destination="@id/editCaloriesFragment" />
     </fragment>
 

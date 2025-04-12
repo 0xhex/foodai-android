@@ -428,4 +428,9 @@
     <string name="rating_dialog_2_message">Nous travaillons très dur pour vous offrir le meilleur service et nous aimerions savoir ce que vous pensez de notre application.</string>
     <string name="rate_on_play_store">Évaluez-nous sur le Play Store</string>
     <string name="not_now">Pas maintenant</string>
+
+    <string name="you_can_edit_this_anytime">Vous pouvez modifier ceci à tout moment</string>
+    <string name="loading_your_plan">Chargement de votre plan...</string>
+    <string name="camp_scene_image">Image de scène de camp</string>
+    <string name="error">Erreur</string>
 </resources>

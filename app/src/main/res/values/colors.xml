@@ -32,4 +32,9 @@
     <color name="soft_blue">#007AFF</color>
     <color name="custom_dark_gray_new">#292929</color>
     <color name="custom_dark_gray_35">#22323233</color>
+    
+    <!-- Glow colors for macros -->
+    <color name="glow_carbs">#ccf2cc</color>
+    <color name="glow_protein">#cce5ff</color>
+    <color name="glow_fats">#fff099</color>
 </resources>
