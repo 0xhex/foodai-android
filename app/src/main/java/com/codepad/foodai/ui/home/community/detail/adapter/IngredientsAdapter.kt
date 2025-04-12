@@ -19,6 +19,13 @@ class IngredientsAdapter : ListAdapter<Ingredient, IngredientsAdapter.Ingredient
         totalCalories = list?.sumOf { it.calory ?: 0 } ?: 0
         super.submitList(list)
     }
+    
+    /**
+     * Alias for submitList to maintain compatibility with existing code
+     */
+    fun updateData(list: List<Ingredient>) {
+        submitList(list)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
         val binding = ItemIngredientBinding.inflate(

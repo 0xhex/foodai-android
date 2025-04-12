@@ -30,6 +30,9 @@ import com.codepad.foodai.helpers.HealthConnectStatus
 import com.codepad.foodai.helpers.NotesManager
 import com.codepad.foodai.helpers.UserSession
 import com.codepad.foodai.ui.home.settings.health.HealthConnectManager
+import com.codepad.foodai.domain.models.nutrition.NutritionDetailsData
+import com.codepad.foodai.domain.use_cases.nutrition.CreateNutritionDetailsUseCase
+import com.codepad.foodai.domain.use_cases.nutrition.GetNutritionDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -51,6 +54,8 @@ class HomePagerViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
     private val notesManager: NotesManager,
     private val createCommunityPostUseCase: CreateCommunityPostUseCase,
+    private val getNutritionDetailsUseCase: GetNutritionDetailsUseCase,
+    private val createNutritionDetailsUseCase: CreateNutritionDetailsUseCase,
 ) : ViewModel() {
 
     private val _dailySummary = MutableLiveData<DailySummaryResponseData>()
@@ -118,6 +123,12 @@ class HomePagerViewModel @Inject constructor(
 
     private val _createPostResult = MutableLiveData<CommunityPost>()
     val createPostResult: LiveData<CommunityPost> = _createPostResult
+
+    private val _nutritionDetails = MutableLiveData<NutritionDetailsData?>()
+    val nutritionDetails: LiveData<NutritionDetailsData?> = _nutritionDetails
+
+    private val _nutritionDetailsError = MutableLiveData<APIError?>()
+    val nutritionDetailsError: LiveData<APIError?> = _nutritionDetailsError
 
     private fun parseDate(dateString: String): Date? {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
@@ -476,5 +487,38 @@ class HomePagerViewModel @Inject constructor(
 
             _isLoading.value = false
         }
+    }
+
+    fun getNutritionDetails(imageId: String) {
+        viewModelScope.launch {
+            when (val result = getNutritionDetailsUseCase.getNutritionDetails(imageId)) {
+                is UseCaseResult.Success -> {
+                    _nutritionDetails.value = result.data
+                }
+                is UseCaseResult.Error -> {
+                    _nutritionDetailsError.value = result.exception
+                }
+            }
+        }
+    }
+
+    fun createNutritionDetails(imageId: String, userId: String) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            when (val result = createNutritionDetailsUseCase.createNutritionDetails(imageId, userId)) {
+                is UseCaseResult.Success -> {
+                    _nutritionDetails.value = result.data
+                }
+                is UseCaseResult.Error -> {
+                    _nutritionDetailsError.value = result.exception
+                }
+            }
+            _isLoading.value = false
+        }
+    }
+
+    fun clearNutritionDetailsData() {
+        _nutritionDetails.value = null
+        _nutritionDetailsError.value = null
     }
 }

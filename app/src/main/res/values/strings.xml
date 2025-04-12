@@ -562,4 +562,17 @@
     <string name="need_high_health_score_to_share">You need a health score above 7.0 to share to community</string>
     <string name="ready_to_see_how_you_can_improve">Ready to see how you can improve your meal choices?</string>
     <string name="failed_to_get_recommendations">Failed to get recommendations</string>
+
+    <!-- Add these new strings for NutritionDetailsView after existing strings -->
+    <string name="discover_meals_nutrition">Discover your meal\'s complete nutritional profile</string>
+    <string name="get_detailed_breakdown">Get detailed vitamin and mineral breakdown</string>
+    <string name="calculating_vitamin_mineral_levels">Calculating vitamin and mineral levels…</string>
+    <string name="preparing_nutrition_profile">Preparing your nutrition profile…</string>
+    <string name="failed_to_get_nutrition_details">Failed to get nutrition details</string>
+    <string name="premium_required_nutrition_details">You\'ve reached today\'s limit. Unlock unlimited access and exclusive features by upgrading to premium!</string>
+
+    <!-- Add this missing string for NutritionDetailsView -->
+    <string name="no_information_available">No information available</string>
+    <string name="percentage_daily_value_format">(%d%% daily value)</string>
+    <string name="items_format">%d items</string>
 </resources>

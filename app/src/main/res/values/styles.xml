@@ -161,6 +161,13 @@
         <item name="android:fontFamily">@font/euro_stile_bold</item>
     </style>
 
+    <!-- Nutrition tab text appearance -->
+    <style name="NutritionTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/euro_stile_bold</item>
+    </style>
+
     <!-- Bottom sheet dialog style -->
     <style name="BottomSheetDialog" parent="Theme.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheet</item>

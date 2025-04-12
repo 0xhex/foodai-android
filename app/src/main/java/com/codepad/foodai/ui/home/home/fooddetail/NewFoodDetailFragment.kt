@@ -98,7 +98,6 @@ class NewFoodDetailFragment : BaseFragment<FragmentNewFoodDetailBinding>(),
     private fun setupViews() {
         // Initial state setup
         binding.ingredientsContent.visibility = View.VISIBLE
-        binding.nutritionDetailsView.visibility = View.VISIBLE
         binding.recommendationCardView.visibility = View.VISIBLE
         binding.btnFixResult.visibility = View.VISIBLE
 
@@ -114,6 +113,14 @@ class NewFoodDetailFragment : BaseFragment<FragmentNewFoodDetailBinding>(),
                 revenueCatManager.triggerPaywall()
             }
         }
+        
+        // Setup nutrition details view callbacks
+        binding.nutritionDetailsView.setOnNeedPremiumCallback {
+            revenueCatManager.triggerPaywall()
+        }
+        
+        // Connect nutrition details view to the ViewModel
+        binding.nutritionDetailsView.connectToViewModel(sharedViewModel, viewLifecycleOwner)
     }
 
     private fun checkIfShared() {
@@ -217,90 +224,91 @@ class NewFoodDetailFragment : BaseFragment<FragmentNewFoodDetailBinding>(),
     }
 
     private fun updateFoodDetailUI(foodDetail: ImageData) {
-        binding.apply {
-            // Image and gradient
-            Glide.with(imgFood)
-                .load(foodDetail.url)
-                .centerCrop()
-                .into(imgFood)
+        // Load food image
+        Glide.with(this)
+            .load(foodDetail.url)
+            .into(binding.imgFood)
 
-            // Title and health score
-            txtMealName.text = foodDetail.mealName?: "N/A"
+        // Set meal name
+        binding.txtMealName.text = foodDetail.mealName ?: "Food"
 
-            val healthScore = foodDetail.healthScore?.toDouble() ?: 0.0
-            txtHealthScore.text = String.format("%.1f", healthScore)
+        // Set health score with appropriate color
+        val healthScore = foodDetail.healthScore?.toDouble() ?: 0.0
+        binding.txtHealthScore.text = String.format("%.1f", healthScore)
+        
+        // Get the health score color based on score value
+        val healthScoreColor = getHealthScoreColor(healthScore)
+        
+        // Set text color
+        binding.txtHealthScore.setTextColor(healthScoreColor)
+        
+        // Create a GradientDrawable for the inner stroke with the health score color
+        val innerStroke = GradientDrawable()
+        innerStroke.cornerRadius = resources.getDimensionPixelSize(R.dimen.dimen_10dp).toFloat()
+        innerStroke.setStroke(resources.getDimensionPixelSize(R.dimen.dimen_1dp), 
+            Color.argb(38, Color.red(healthScoreColor), Color.green(healthScoreColor), Color.blue(healthScoreColor)))
+        
+        // Create a GradientDrawable for the outer blur stroke
+        val outerStroke = GradientDrawable()
+        outerStroke.cornerRadius = resources.getDimensionPixelSize(R.dimen.dimen_10dp).toFloat()
+        outerStroke.setStroke(resources.getDimensionPixelSize(R.dimen.dimen_1dp), 
+            Color.argb(64, Color.red(healthScoreColor), Color.green(healthScoreColor), Color.blue(healthScoreColor)))
+        
+        // Apply the drawable to the health score container
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            // For newer versions, we can use layer drawable for more complex effects
+            val layerDrawable = binding.healthScoreContainer.background as LayerDrawable
             
-            // Get the health score color based on score value
-            val healthScoreColor = getHealthScoreColor(healthScore)
-            
-            // Set text color
-            txtHealthScore.setTextColor(healthScoreColor)
-            
-            // Create a GradientDrawable for the inner stroke with the health score color
-            val innerStroke = GradientDrawable()
-            innerStroke.cornerRadius = resources.getDimensionPixelSize(R.dimen.dimen_10dp).toFloat()
-            innerStroke.setStroke(resources.getDimensionPixelSize(R.dimen.dimen_1dp), 
+            // Get the third item (outer stroke) and set its color
+            val outerStrokeShape = layerDrawable.getDrawable(2) as GradientDrawable
+            outerStrokeShape.setStroke(resources.getDimensionPixelSize(R.dimen.dimen_1dp), 
                 Color.argb(38, Color.red(healthScoreColor), Color.green(healthScoreColor), Color.blue(healthScoreColor)))
-            
-            // Create a GradientDrawable for the outer blur stroke
-            val outerStroke = GradientDrawable()
-            outerStroke.cornerRadius = resources.getDimensionPixelSize(R.dimen.dimen_10dp).toFloat()
-            outerStroke.setStroke(resources.getDimensionPixelSize(R.dimen.dimen_1dp), 
-                Color.argb(64, Color.red(healthScoreColor), Color.green(healthScoreColor), Color.blue(healthScoreColor)))
-            
-            // Apply the drawable to the health score container
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                // For newer versions, we can use layer drawable for more complex effects
-                val layerDrawable = healthScoreContainer.background as LayerDrawable
+        }
+        
+        // Apply shadow effect using elevation to match iOS
+        binding.healthScoreContainer.elevation = 8f
+        
+        // Apply outer shadow using TranslationZ for a glow effect
+        binding.healthScoreContainer.translationZ = 1f
+        
+        // Create a shadow color based on health score color
+        val shadowColor = Color.argb(
+            38, // 15% opacity
+            Color.red(healthScoreColor),
+            Color.green(healthScoreColor),
+            Color.blue(healthScoreColor)
+        )
+        
+        // Apply the shadow color using OutlineProvider if available
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+            binding.healthScoreContainer.outlineAmbientShadowColor = shadowColor
+            binding.healthScoreContainer.outlineSpotShadowColor = shadowColor
+        }
+        
+        // Update nutrition ring view
+        binding.nutritionRingView.updateWithNutritionData(foodDetail)
+        
+        // Set image ID for nutrition details view
+        binding.nutritionDetailsView.setImageId(foodDetail.id)
+
+        // Update ingredients
+        foodDetail.ingredients?.let { ingredients ->
+            (binding.ingredientsGrid.adapter as IngredientsAdapter).updateData(ingredients)
+            binding.txtIngredientsCount.text = getString(R.string.items_format, ingredients.size)
+        }
+
+        // Check if health score is high enough to show confetti animation
+        if (healthScore > HEALTH_SCORE_CONFETTI_THRESHOLD) {
+            lifecycleScope.launch {
+                delay(1500) // Wait for UI to settle
+                binding.confettiView.visibility = View.VISIBLE
+                binding.confettiView.playAnimation()
                 
-                // Get the third item (outer stroke) and set its color
-                val outerStrokeShape = layerDrawable.getDrawable(2) as GradientDrawable
-                outerStrokeShape.setStroke(resources.getDimensionPixelSize(R.dimen.dimen_1dp), 
-                    Color.argb(38, Color.red(healthScoreColor), Color.green(healthScoreColor), Color.blue(healthScoreColor)))
-            }
-            
-            // Apply shadow effect using elevation to match iOS
-            healthScoreContainer.elevation = 8f
-            
-            // Apply outer shadow using TranslationZ for a glow effect
-            healthScoreContainer.translationZ = 1f
-            
-            // Create a shadow color based on health score color
-            val shadowColor = Color.argb(
-                38, // 15% opacity
-                Color.red(healthScoreColor),
-                Color.green(healthScoreColor),
-                Color.blue(healthScoreColor)
-            )
-            
-            // Apply the shadow color using OutlineProvider if available
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-                healthScoreContainer.outlineAmbientShadowColor = shadowColor
-                healthScoreContainer.outlineSpotShadowColor = shadowColor
-            }
-            
-            // Update ingredients
-            val ingredients = foodDetail.ingredients ?: emptyList()
-            txtIngredientsCount.text = getString(R.string.items_count, ingredients.size)
-            
-            // Set ingredients to the adapter
-            (ingredientsGrid.adapter as? IngredientsAdapter)?.submitList(ingredients)
-            
-            // Update nutrition ring view with the food detail data
-            nutritionRingView.updateWithNutritionData(foodDetail)
-            
-            // Update nutrition details
-            nutritionDetailsView.setNutritionData(foodDetail)
-            
-            // Show confetti if health score is above threshold
-            if (healthScore > HEALTH_SCORE_CONFETTI_THRESHOLD) {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    delay(4000)
-                    confettiView.visibility = View.VISIBLE
-                    confettiView.playAnimation()
-                }
-            } else {
-                confettiView.visibility = View.GONE
+                // Provide haptic feedback
+                requireView().performHapticFeedback(android.view.HapticFeedbackConstants.LONG_PRESS)
+                
+                delay(3000) // Duration of animation
+                binding.confettiView.visibility = View.GONE
             }
         }
     }
