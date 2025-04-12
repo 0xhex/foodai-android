@@ -15,6 +15,8 @@ import com.codepad.foodai.domain.models.exercise.UpdateExerciseDescriptionReques
 import com.codepad.foodai.domain.models.image.FixImageResultsRequest
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
+import com.codepad.foodai.domain.models.nutrition.NutritionDetailsData
+import com.codepad.foodai.domain.models.nutrition.NutritionDetailsRequest
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
 import com.codepad.foodai.domain.models.recipe.GenerateRecipeRequest
 import com.codepad.foodai.domain.models.recipe.GenerateRecipeResponseData
@@ -814,6 +816,57 @@ class UserRepository @Inject constructor(
             }
         } catch (e: Exception) {
             handleException<CommunityPost>(e)
+        }
+    }
+
+    suspend fun createNutritionDetails(
+        imageId: String,
+        request: NutritionDetailsRequest
+    ): RepositoryResult<NutritionDetailsData> {
+        return try {
+            val response = restApi.createNutritionDetails(imageId, request)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            handleException<NutritionDetailsData>(e)
+        }
+    }
+
+    suspend fun getNutritionDetails(imageId: String): RepositoryResult<NutritionDetailsData> {
+        return try {
+            val response = restApi.getNutritionDetails(imageId)
+            if (response.success && response.data != null) {
+                RepositoryResult.Success(
+                    message = response.message ?: "Success",
+                    code = response.errorCode ?: 0,
+                    data = response.data
+                )
+            } else {
+                RepositoryResult.Error(
+                    message = response.message ?: "Unknown error",
+                    code = response.errorCode ?: -1,
+                    exception = APIError.ServerError(
+                        errorMessage = response.message ?: "Unknown error",
+                        code = response.errorCode?.toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            handleException<NutritionDetailsData>(e)
         }
     }
 }
