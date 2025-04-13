@@ -85,6 +85,11 @@
             android:layout_marginStart="1dp"
             android:fontFamily="@font/euro_stile_regular"
             android:text="@string/per_week"
+            android:maxWidth="80dp"
+            app:autoSizeMaxTextSize="10sp"
+            app:autoSizeMinTextSize="6sp"
+            app:autoSizeTextType="uniform"
+            android:maxLines="1"
             android:textColor="@color/custom_black"
             android:textSize="10sp"/>
     </LinearLayout>
