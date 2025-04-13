@@ -437,4 +437,124 @@
     <string name="your_nutrition_goals">Ihre täglichen \nErnährungsziele</string>
     <string name="current_nutrition_goals">Aktuelle Ernährungsziele</string>
     <string name="tap_values_to_adjust">Tippen Sie auf Werte zum Anpassen</string>
+
+    <!-- Food Detail Strings -->
+    <string name="share_with_friends">Mit Freunden teilen</string>
+    <string name="share_your_meal_details">Teile deine Mahlzeit-Details</string>
+    <string name="post_to_community">In Community posten</string>
+    <string name="share_with_food_enthusiasts">Mit Food-Enthusiasten teilen</string>
+    <string name="already_shared_with_community">Bereits in Community geteilt</string>
+    <string name="requires_health_score_above_7">Erfordert einen Gesundheitswert über 7</string>
+    <string name="remove_from_history">Aus Verlauf entfernen</string>
+    <string name="analyze_nutrition">Nährwerte analysieren</string>
+    <string name="analyzing_your_meal">Deine Mahlzeit wird analysiert…</string>
+    <string name="fetching_personalized_insights">Personalisierte Einblicke werden geladen…</string>
+    <string name="finalizing_your_unique_recommendations">Deine individuellen Empfehlungen werden finalisiert…</string>
+    <string name="unlock_detailed_nutrition">Detaillierte Nährwertanalyse mit Premium freischalten</string>
+    <string name="unlock_personalized_recommendations">Personalisierte Mahlzeitenempfehlungen mit Premium freischalten</string>
+    <string name="try_again">Erneut versuchen</string>
+    <string name="your_recommendations">Deine Empfehlungen</string>
+    <string name="analyzing_nutritional_content">Nährwertgehalt wird analysiert…</string>
+    <string name="calculating_vitamin_and_mineral_levels">Vitamin- und Mineralstoffwerte werden berechnet…</string>
+    <string name="preparing_your_nutrition_profile">Dein detailliertes Ernährungsprofil wird erstellt…</string>
+    <string name="nutritional_profile">Ernährungsprofil</string>
+    <string name="dietary_fiber">Ballaststoffe</string>
+    <string name="daily_value">Tageswert</string>
+    <string name="vitamins">Vitamine</string>
+    <string name="minerals">Mineralstoffe</string>
+    <string name="meal_time">⏱ %s</string>
+    <string name="health_score_format">%.1f/10</string>
+    <string name="items_count">%d Artikel</string>
+
+    <!-- Recommendation Card -->
+    <string name="ai_recommendations">KI-Empfehlungen</string>
+    <string name="ai_recommendations_description">Erhalte personalisierte Empfehlungen zur Verbesserung deiner Mahlzeit basierend auf Nährwertanalysen</string>
+    <string name="generating_recommendations">Empfehlungen werden generiert</string>
+    <string name="oops">Hoppla!</string>
+    <string name="something_went_wrong">Etwas ist schief gelaufen. Bitte versuche es noch einmal.</string>
+    <string name="premium_feature">Premium-Funktion</string>
+    <string name="premium_recommendations_description">Schalte personalisierte Mahlzeitenempfehlungen mit Premium-Abonnement frei</string>
+    <string name="what_to_change">Was zu ändern ist</string>
+    <string name="what_to_be_careful_about">Worauf zu achten ist</string>
+
+    <!-- Food details -->
+    <string name="already_shared_to_community">Dieses Gericht wurde bereits in der Community geteilt</string>
+    <string name="need_high_health_score_to_share">Du benötigst einen Gesundheitswert über 7,0, um in der Community zu teilen</string>
+    <string name="ready_to_see_how_you_can_improve">Bereit zu sehen, wie du deine Mahlzeitwahl verbessern kannst?</string>
+    <string name="failed_to_get_recommendations">Empfehlungen konnten nicht abgerufen werden</string>
+
+    <!-- Add these new strings for NutritionDetailsView after existing strings -->
+    <string name="discover_meals_nutrition">Entdecke das vollständige Ernährungsprofil deiner Mahlzeit</string>
+    <string name="get_detailed_breakdown">Erhalte detaillierte Vitamin- und Mineralstoffübersicht</string>
+    <string name="calculating_vitamin_mineral_levels">Vitamin- und Mineralstoffgehalte werden berechnet…</string>
+    <string name="preparing_nutrition_profile">Dein Ernährungsprofil wird erstellt…</string>
+    <string name="failed_to_get_nutrition_details">Nährwertdetails konnten nicht abgerufen werden</string>
+    <string name="premium_required_nutrition_details">Du hast das heutige Limit erreicht. Schalte unbegrenzten Zugang und exklusive Funktionen durch ein Upgrade auf Premium frei!</string>
+
+    <!-- Add this missing string for NutritionDetailsView -->
+    <string name="no_information_available">Keine Informationen verfügbar</string>
+    <string name="percentage_daily_value_format">(%d%% Tageswert)</string>
+    <string name="items_format">%d Artikel</string>
+    <string name="plus">Plus</string>
+    <string name="and">und</string>
+    <string name="period">.</string>
+
+    <!-- Paywall Strings -->
+    <string name="welcome_to_premium">Willkommen bei Premium</string>
+    <string name="enjoy_premium_features">Genieße alle Premium-Funktionen und entfalte dein volles Potenzial!</string>
+    <string name="a_personal_health_coach">Ein persönlicher Gesundheitscoach in deiner Hand</string>
+    <string name="make_a_commitment">Verpflichte dich selbst – für ein gesünderes, glücklicheres Du!</string>
+    <string name="free_to_cancel_anytime">Jederzeit kündbar</string>
+    <string name="subscription_details_1">Dein Abonnement läuft weiter, bis du es kündigst und wird erneuert. Abonnementzahlungen werden bei Bestätigung des Kaufs und zu Beginn jeder Verlängerungsperiode deinem iTunes-Konto belastet.</string>
+    <string name="subscription_details_2">*Jeder ungenutzte Teil einer kostenlosen Testphase verfällt, wenn du ein Premium-Abonnement kaufst.</string>
+    <string name="subscription_details_3">*Du kannst eine kostenlose Testphase oder ein Abonnement jederzeit kündigen, indem du dein Abonnement in den iTunes-Kontoeinstellungen kündigst.</string>
+    <string name="if_you_choose_to_continue">Wenn du fortfahren möchtest,</string>
+
+    <!-- Subscription Messages -->
+    <string name="yearly_message_1">Ein Jahr Premium für weniger als dein Mittagsbudget</string>
+    <string name="yearly_message_2">Vollständiger Premium-Zugang für ein Jahr zum Preis eines Kochbuchs</string>
+    <string name="yearly_message_3">365 Tage Premium-Begleitung für zwei Abendessen</string>
+
+    <string name="monthly_message_1">Ein Monat Premium zum gleichen Preis wie eine Mahlzeit</string>
+    <string name="monthly_message_2">Monatlicher Premium-Zugang kostet weniger als eine Pizza-Lieferung</string>
+    <string name="monthly_message_3">30 Tage Premium kosten weniger als ein Kinoabend</string>
+
+    <string name="weekly_message_1">Eine Woche Premium kostet weniger als ein morgendlicher Latte</string>
+    <string name="weekly_message_2">7 Tage Premium-Begleitung zum Preis eines schnellen Mittagessens</string>
+    <string name="weekly_message_3">Wöchentliche Premium-Einblicke für weniger als ein Smoothie</string>
+
+    <!-- Purchase Confirmation Sheet Strings -->
+    <string name="you_have_chosen">Du hast gewählt</string>
+    <string name="per_week">/Woche</string>
+    <string name="total">Gesamt</string>
+    <string name="incl_feel_good_guarantee">Inkl. Wohlfühl-Garantie</string>
+    <string name="subscription_renewal_details">Dein Abonnement verlängert sich automatisch, wenn es nicht mindestens 24 Stunden vor Ende der aktuellen Periode gekündigt wird. Du kannst dein Abonnement in deinen App Store-Einstellungen verwalten und kündigen.</string>
+
+    <!-- Paywall Feature Row Strings -->
+    <string name="a_plan_just_for_you">Ein Plan nur für dich</string>
+    <string name="stay_on_track_with_nutrition">Bleibe auf Kurs mit einem individuellen Ernährungsplan, mit Einblicken in deine wöchentliche Leistung</string>
+    <string name="always_motivated">Immer motiviert</string>
+    <string name="feel_rewarded_everyday">Fühle dich jeden Tag belohnt, während du neue, langfristige gesunde Gewohnheiten entwickelst</string>
+    <string name="you_save_format">Du sparst %d%%</string>
+    <string name="twelve_months">12 Monate</string>
+    <string name="one_month">1 Monat</string>
+    <string name="one_week">1 Woche</string>
+    <string name="purchase_failed_message">Dein Kauf konnte nicht abgeschlossen werden. Möchtest du es erneut versuchen?</string>
+    <string name="best_value">Bestes Angebot</string>
+
+    <!-- Paywall Strings -->
+    <string name="close">Schließen</string>
+    <string name="premium">Premium</string>
+    <string name="unlock_premium_features">Premium-Funktionen freischalten</string>
+    <string name="premium_description">Erhalte personalisierte Mahlzeitenpläne und erweiterte Nährwert-Verfolgung</string>
+    <string name="continue_text">Fortfahren</string>
+    <string name="restore_purchase">Kauf wiederherstellen</string>
+    <string name="payment_info">Die Zahlung wird bei Bestätigung des Kaufs deinem Konto belastet. Das Abonnement verlängert sich automatisch, wenn es nicht mindestens 24 Stunden vor Ende der aktuellen Periode gekündigt wird. Dein Konto wird innerhalb von 24 Stunden vor Ende der aktuellen Periode für die Verlängerung belastet.</string>
+    <string name="terms_and_privacy"><![CDATA[Nutzungsbedingungen • Datenschutzrichtlinie]]></string>
+
+    <!-- Subscription messages -->
+    <string name="year_message_1">Ein Jahr Premium für weniger als dein Mittagsbudget</string>
+    <string name="year_message_2">Vollständiger Premium-Zugang für ein Jahr zum Preis eines Kochbuchs</string>
+    <string name="year_message_3">365 Tage Premium-Begleitung für zwei Abendessen</string>
+    <string name="per_week_pr">pro Woche</string>
 </resources>
