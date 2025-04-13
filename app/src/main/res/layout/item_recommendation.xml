@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginTop="@dimen/dimen_8dp"
-    android:paddingVertical="2dp">
+    android:paddingVertical="8dp">
 
     <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_thumbs_up"
-        android:layout_marginEnd="5dp"
+        android:id="@+id/imgCheckmark"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_check_circle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/green" />
 
     <TextView
-        android:id="@+id/recommendationText"
-        android:layout_width="match_parent"
+        android:id="@+id/txtRecommendation"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:textColor="@color/white"
         android:textSize="14sp"
-        app:fontFamily="@font/euro_stile_regular" />
+        android:fontFamily="@font/euro_stile_regular"
+        android:alpha="0.9"
+        android:lineSpacingExtra="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgCheckmark"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Consider reducing the amount of saturated fats in your meal by replacing some ingredients with healthier alternatives." />
 
-</LinearLayout> 
+</androidx.constraintlayout.widget.ConstraintLayout>

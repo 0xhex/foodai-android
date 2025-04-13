@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_nutrition_details"
+    android:padding="16dp">
+
+    <!-- Content container - holds details content -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/detailsContentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Header with title -->
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/euro_stile_bold"
+            android:text="@string/nutritional_profile"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Fiber card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fiberCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_nutrient_item"
+            android:padding="12dp"
+            app:layout_constraintTop_toBottomOf="@id/txtTitle">
+
+            <FrameLayout
+                android:id="@+id/fiberEmojiContainer"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/circle_bg_fiber" />
+
+                <TextView
+                    android:id="@+id/txtFiberEmoji"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="24sp"
+                    tools:text="🥦" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@id/fiberEmojiContainer"
+                app:layout_constraintEnd_toStartOf="@id/fiberProgressContainer"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/euro_stile_bold"
+                    android:text="@string/dietary_fiber"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/txtFiberAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/euro_stile_bold"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        tools:text="3g" />
+
+                    <TextView
+                        android:id="@+id/txtFiberPercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/euro_stile_regular"
+                        android:textColor="@color/green"
+                        android:textSize="13sp"
+                        tools:text="(12% daily value)" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/fiberProgressContainer"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <com.codepad.foodai.ui.home.home.fooddetail.CircularProgressView
+                    android:id="@+id/fiberCircularProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/txtFiberProgressValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/euro_stile_bold"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    tools:text="12%" />
+            </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Tab Layout -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@color/custom_dark_gray"
+            app:tabTextAppearance="@style/NutritionTabTextAppearance"
+            app:tabIndicatorColor="@color/orange"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/gray"
+            app:tabIndicatorHeight="3dp"
+            app:tabIndicatorFullWidth="true"
+            app:layout_constraintTop_toBottomOf="@id/fiberCard">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/vitamins" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/minerals" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <!-- ViewPager for tab content -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@color/custom_dark_gray"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+            
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- State views in a FrameLayout to avoid constraint issues -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Initial View (Shown before details are loaded) -->
+        <LinearLayout
+            android:id="@+id/initialView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:gravity="center"
+            android:visibility="visible">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+
+                <View
+                    android:id="@+id/iconGlow"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/circle_glow_green"
+                    android:alpha="0.5" />
+
+                <View
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/circle_bg_dark"
+                    android:elevation="2dp" />
+
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:elevation="3dp">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="2dp"
+                        android:src="@drawable/ic_chart_bar_horizontal"
+                        app:tint="@color/green" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_marginEnd="4dp"
+                        android:elevation="2dp"
+                        android:textColor="@color/white"
+                        android:layout_marginBottom="4dp"
+                        android:text="🥦"
+                        android:textSize="18sp" />
+                </FrameLayout>
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/euro_stile_bold"
+                android:text="@string/discover_meals_nutrition"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:layout_marginBottom="8dp"
+                android:shadowColor="#40000000"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/euro_stile_regular"
+                android:text="@string/get_detailed_breakdown"
+                android:textColor="#B3FFFFFF"
+                android:textSize="14sp"
+                android:textAlignment="center"
+                android:layout_marginBottom="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp"
+                android:gravity="center">
+
+                <include layout="@layout/view_nutrition_indicator"
+                    android:id="@+id/vitaminIndicator"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp" />
+
+                <include layout="@layout/view_nutrition_indicator"
+                    android:id="@+id/mineralIndicator"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp" />
+
+                <include layout="@layout/view_nutrition_indicator"
+                    android:id="@+id/fiberIndicator"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAnalyzeNutrition"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/analyze_nutrition"
+                android:textSize="14sp"
+                android:fontFamily="@font/euro_stile_bold"
+                android:textColor="@color/white"
+                app:cornerRadius="16dp"
+                app:backgroundTint="@color/orange"
+                app:icon="@drawable/ic_sparkles"
+                app:iconTint="@color/white"
+                app:iconGravity="textEnd"
+                android:elevation="4dp"
+                app:rippleColor="@color/white"
+                android:stateListAnimator="@null" />
+        </LinearLayout>
+
+        <!-- Loading View -->
+        <LinearLayout
+            android:id="@+id/loadingView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="30dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:background="@drawable/bg_gradient_dark">
+
+            <ProgressBar
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginBottom="20dp"
+                android:indeterminateTint="@color/white" />
+
+            <TextView
+                android:id="@+id/txtLoadingMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/euro_stile_regular"
+                android:text="@string/analyzing_nutritional_content"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <!-- Error View -->
+        <LinearLayout
+            android:id="@+id/errorView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:background="@drawable/bg_gradient_dark">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_error_triangle"
+                android:layout_marginBottom="12dp"
+                app:tint="@color/red" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/euro_stile_bold"
+                android:text="@string/failed_to_get_nutrition_details"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"
+                android:shadowColor="#40000000"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="1" />
+
+            <TextView
+                android:id="@+id/txtErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/euro_stile_regular"
+                android:textColor="#B3FFFFFF"
+                android:textSize="14sp"
+                android:textAlignment="center"
+                android:layout_marginBottom="16dp"
+                tools:text="Error message here" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTryAgain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/try_again"
+                android:textSize="15sp"
+                android:fontFamily="@font/euro_stile_bold"
+                android:textColor="@color/white"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="12dp"
+                app:cornerRadius="12dp"
+                app:backgroundTint="@color/soft_blue"
+                android:elevation="3dp"
+                app:rippleColor="@color/white"
+                android:stateListAnimator="@null" />
+        </LinearLayout>
+
+        <!-- Premium Required View -->
+        <LinearLayout
+            android:id="@+id/premiumRequiredView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:background="@drawable/bg_gradient_dark">
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_premium"
+                android:layout_marginBottom="16dp"
+                app:tint="@color/gold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/euro_stile_bold"
+                android:text="@string/premium_required"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"
+                android:shadowColor="#40000000"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/euro_stile_regular"
+                android:text="@string/premium_required_nutrition_details"
+                android:textColor="#B3FFFFFF"
+                android:textSize="15sp"
+                android:textAlignment="center"
+                android:layout_marginBottom="20dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnUpgrade"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/upgrade_to_premium"
+                android:textSize="16sp"
+                android:fontFamily="@font/euro_stile_bold"
+                android:textColor="@color/white"
+                app:cornerRadius="16dp"
+                app:backgroundTint="@color/gold"
+                android:elevation="4dp"
+                app:rippleColor="@color/white"
+                android:stateListAnimator="@null" />
+        </LinearLayout>
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout> 

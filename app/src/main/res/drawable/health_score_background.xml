@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Base rectangle with rounded corners -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#BF000000" /> <!-- 75% opacity black -->
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+    
+    <!-- Gradient overlay for premium feel -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#14FFFFFF"
+                android:centerColor="#00FFFFFF"
+                android:endColor="#00FFFFFF"
+                android:angle="315" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+    
+    <!-- The outer stroke will be colored dynamically in code -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="10dp" />
+            <stroke
+                android:width="1dp"
+                android:color="#40FFFFFF" />
+            <padding
+                android:left="10dp"
+                android:top="6dp"
+                android:right="10dp"
+                android:bottom="6dp" />
+        </shape>
+    </item>
+</layer-list> 

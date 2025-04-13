@@ -16,10 +16,10 @@ class PurchaseSuccessPopup(context: Context, private val onContinue: () -> Unit)
         window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val lottieAnimationView: LottieAnimationView = findViewById(R.id.lottieAnimationView)
+        val lottieAnimationView: LottieAnimationView = findViewById(R.id.confettiAnimation)
         lottieAnimationView.playAnimation()
 
-        val continueButton: Button = findViewById(R.id.continueButton)
+        val continueButton: Button = findViewById(R.id.btnContinue)
         continueButton.setOnClickListener {
             dismiss()
             onContinue()

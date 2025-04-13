@@ -127,7 +127,7 @@ class LoadingFragment : BaseFragment<FragmentLoadingBinding>() {
                                 
                                 val navController = findNavController()
                                 if (navController.currentDestination?.id == R.id.loadingFragment) {
-                                    navController.navigate(R.id.action_loadingFragment_to_resultFragment)
+                                    navController.navigate(R.id.action_loadingFragment_to_newResultFragment)
                                 } else {
                                     Timber.w("Invalid navigation state: current destination is not loadingFragment")
                                 }

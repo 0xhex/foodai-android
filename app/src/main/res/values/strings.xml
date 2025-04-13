@@ -122,7 +122,7 @@
     <string name="metric">Metric</string>
     <string name="mock_data">Mock Data</string>
     <string name="monthly">Monthly</string>
-    <string name="most_popular">MOST POPULAR</string>
+    <string name="most_popular">Most popular</string>
     <string name="na">N/A</string>
     <string name="next">NEXT</string>
     <string name="no">No</string>
@@ -170,6 +170,7 @@
     <string name="run">Run</string>
     <string name="save">Save</string>
     <string name="save_changes">SAVE CHANGES</string>
+    <string name="save_format">Save %d%%</string>
     <string name="scan_food_and_get_the_macro_micro_details_of_your_food">
         Scan food and get the macro and micro details of your food
     </string>
@@ -218,6 +219,7 @@
     <string name="notify_when_done">We\'ll notify you when done!</string>
     <string name="setting_up">We\'re setting everything up for you</string>
     <string name="weekly">Weekly</string>
+    <string name="week">Week</string>
     <string name="weight">Weight</string>
     <string name="weight_progress_displayed">Weight progress will be displayed here!</string>
     <string name="weight_format">Weight: %1$lld kg on %2$%s</string>
@@ -507,4 +509,134 @@
     <string name="rating_dialog_2_message">We work super hard to serve you better and would love to know what you think of our app.</string>
     <string name="rate_on_play_store">Rate us on the Play Store</string>
     <string name="not_now">Not now</string>
+
+    <string name="you_can_edit_this_anytime">You can edit this anytime</string>
+    <string name="loading_your_plan">Loading your plan...</string>
+    <string name="camp_scene_image">Camp Scene Image</string>
+    <string name="error">Error</string>
+    
+    <!-- Adjust Goals Mode Strings -->
+    <string name="your_nutrition_goals">Your Daily \nNutrition Goals</string>
+    <string name="current_nutrition_goals">Current nutrition goals</string>
+    <string name="tap_values_to_adjust">Tap on values to adjust</string>
+
+    <!-- Food Detail Strings -->
+    <string name="share_with_friends">Share with Friends</string>
+    <string name="share_your_meal_details">Share your meal details</string>
+    <string name="post_to_community">Post to Community</string>
+    <string name="share_with_food_enthusiasts">Share with food enthusiasts</string>
+    <string name="already_shared_with_community">Already shared with community</string>
+    <string name="requires_health_score_above_7">Requires health score above 7</string>
+    <string name="remove_from_history">Remove from history</string>
+    <string name="analyze_nutrition">Analyze Nutrition</string>
+    <string name="analyzing_your_meal">Analyzing your meal…</string>
+    <string name="fetching_personalized_insights">Fetching personalized insights…</string>
+    <string name="finalizing_your_unique_recommendations">Finalizing your unique recommendations…</string>
+    <string name="unlock_detailed_nutrition">Unlock detailed nutrition analysis with premium</string>
+    <string name="unlock_personalized_recommendations">Unlock personalized meal recommendations with premium</string>
+    <string name="try_again">Try Again</string>
+    <string name="your_recommendations">Your Recommendations</string>
+    <string name="analyzing_nutritional_content">Analyzing nutritional content…</string>
+    <string name="calculating_vitamin_and_mineral_levels">Calculating vitamin and mineral levels…</string>
+    <string name="preparing_your_nutrition_profile">Preparing your detailed nutrition profile…</string>
+    <string name="nutritional_profile">Nutritional Profile</string>
+    <string name="dietary_fiber">Dietary Fiber</string>
+    <string name="daily_value">daily value</string>
+    <string name="vitamins">Vitamins</string>
+    <string name="minerals">Minerals</string>
+    <string name="meal_time">⏱ %s</string>
+    <string name="health_score_format">%.1f/10</string>
+    <string name="items_count">%d items</string>
+
+    <!-- Recommendation Card -->
+    <string name="ai_recommendations">AI Recommendations</string>
+    <string name="ai_recommendations_description">Get personalized recommendations to improve your meal based on nutritional analysis</string>
+    <string name="generating_recommendations">Generating Recommendations</string>
+    <string name="oops">Oops!</string>
+    <string name="something_went_wrong">Something went wrong. Please try again.</string>
+    <string name="premium_feature">Premium Feature</string>
+    <string name="premium_recommendations_description">Unlock personalized meal recommendations with premium subscription</string>
+    <string name="what_to_change">What to Change</string>
+    <string name="what_to_be_careful_about">What to Be Careful About</string>
+
+    <!-- Food details -->
+    <string name="already_shared_to_community">This dish has already been shared to community</string>
+    <string name="need_high_health_score_to_share">You need a health score above 7.0 to share to community</string>
+    <string name="ready_to_see_how_you_can_improve">Ready to see how you can improve your meal choices?</string>
+    <string name="failed_to_get_recommendations">Failed to get recommendations</string>
+
+    <!-- Add these new strings for NutritionDetailsView after existing strings -->
+    <string name="discover_meals_nutrition">Discover your meal\'s complete nutritional profile</string>
+    <string name="get_detailed_breakdown">Get detailed vitamin and mineral breakdown</string>
+    <string name="calculating_vitamin_mineral_levels">Calculating vitamin and mineral levels…</string>
+    <string name="preparing_nutrition_profile">Preparing your nutrition profile…</string>
+    <string name="failed_to_get_nutrition_details">Failed to get nutrition details</string>
+    <string name="premium_required_nutrition_details">You\'ve reached today\'s limit. Unlock unlimited access and exclusive features by upgrading to premium!</string>
+
+    <!-- Add this missing string for NutritionDetailsView -->
+    <string name="no_information_available">No information available</string>
+    <string name="percentage_daily_value_format">(%d%% daily value)</string>
+    <string name="items_format">%d items</string>
+    <string name="plus">Plus</string>
+    <string name="and">and</string>
+    <string name="period">.</string>
+
+    <!-- Paywall Strings -->
+    <string name="welcome_to_premium">Welcome to Premium</string>
+    <string name="enjoy_premium_features">Enjoy all premium features and unlock your full potential!</string>
+    <string name="a_personal_health_coach">A personal health coach in the palm of your hand</string>
+    <string name="make_a_commitment">Make a commitment to yourself - for a healthier, happier you!</string>
+    <string name="free_to_cancel_anytime">Free to cancel anytime</string>
+    <string name="subscription_details_1">Your subscription will continue until you cancel and renew. Subscription payments will be charged to your iTunes account at confirmation of purchase and at the start of each renewal term.</string>
+    <string name="subscription_details_2">*Any unused portion of a free trial period is forfeited when you purchase a premium subscription.</string>
+    <string name="subscription_details_3">*You can cancel a free trial or subscription anytime by cancelling your subscription through your iTunes account settings.</string>
+    <string name="if_you_choose_to_continue">If you choose to continue,</string>
+
+    <!-- Subscription Messages -->
+    <string name="yearly_message_1">A year of premium for less than your lunch budget</string>
+    <string name="yearly_message_2">Full year premium access at the price of a cookbook</string>
+    <string name="yearly_message_3">365 days of premium guidance for two dinners</string>
+    
+    <string name="monthly_message_1">One month of premium at the same price as a meal</string>
+    <string name="monthly_message_2">Monthly premium access costs less than a pizza delivery</string>
+    <string name="monthly_message_3">30 days of premium costs less than a movie night</string>
+    
+    <string name="weekly_message_1">A week of premium costs less than a morning latte</string>
+    <string name="weekly_message_2">7 days of premium guidance for a quick lunch price</string>
+    <string name="weekly_message_3">Weekly premium insights for less than a smoothie</string>
+
+    <!-- Purchase Confirmation Sheet Strings -->
+    <string name="you_have_chosen">You have chosen</string>
+    <string name="per_week">/Week</string>
+    <string name="total">Total</string>
+    <string name="incl_feel_good_guarantee">Incl. Feel Good Guarantee</string>
+    <string name="subscription_renewal_details">Your subscription will renew automatically unless it is canceled at least 24 hours before the end of the current period. You can manage and cancel your subscription in your App Store settings.</string>
+
+    <!-- Paywall Feature Row Strings -->
+    <string name="a_plan_just_for_you">A plan just for you</string>
+    <string name="stay_on_track_with_nutrition">Stay on track with a nutrition Plan tailored to you, with insights into your weekly performance</string>
+    <string name="always_motivated">Always motivated</string>
+    <string name="feel_rewarded_everyday">Feel rewarded everyday as you develop new, long lasting healthy habits</string>
+    <string name="you_save_format">You save %d%%</string>
+    <string name="twelve_months">12 Months</string>
+    <string name="one_month">1 Month</string>
+    <string name="one_week">1 Week</string>
+    <string name="purchase_failed_message">Your purchase could not be completed. Would you like to try again?</string>
+    <string name="best_value">Best value</string>
+
+    <!-- Paywall Strings -->
+    <string name="close">Close</string>
+    <string name="premium">Premium</string>
+    <string name="unlock_premium_features">Unlock Premium Features</string>
+    <string name="premium_description">Get personalized meal plans and advanced nutrition tracking</string>
+    <string name="continue_text">Continue</string>
+    <string name="restore_purchase">Restore Purchase</string>
+    <string name="payment_info">Payment will be charged to your account at the confirmation of purchase. Subscription automatically renews unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period.</string>
+    <string name="terms_and_privacy"><![CDATA[Terms of Use • Privacy Policy]]></string>
+
+    <!-- Subscription messages -->
+    <string name="year_message_1">A year of premium for less than your lunch budget</string>
+    <string name="year_message_2">Full year premium access at the price of a cookbook</string>
+    <string name="year_message_3">365 days of premium guidance for two dinners</string>
+    <string name="per_week_pr">per week</string>
 </resources>

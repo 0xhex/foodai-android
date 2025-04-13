@@ -302,7 +302,7 @@ class HomeTabFragment : BaseFragment<FragmentHomeTabBinding>() {
                         viewModel.dailySummary.value?.meals?.firstOrNull { it.url == item.image }
                     if (foodDetail != null) {
                         viewModel.setFoodDetail(foodDetail)
-                        findNavController().navigateSafely(R.id.action_home_tab_to_food_detail)
+                        findNavController().navigateSafely(R.id.action_home_tab_to_new_food_detail)
                     }
                 }
 

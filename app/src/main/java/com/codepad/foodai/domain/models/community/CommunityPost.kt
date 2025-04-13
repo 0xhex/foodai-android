@@ -1,5 +1,6 @@
 package com.codepad.foodai.domain.models.community
 import android.os.Parcelable
+import com.codepad.foodai.domain.models.image.Ingredient
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import java.util.Date
@@ -35,12 +36,6 @@ data class CommunityImage(
     @SerializedName("mealName") val mealName: String,
     @SerializedName("protein") val protein: Int,
     @SerializedName("id") val imageId: String? = null
-) : Parcelable
-
-@Parcelize
-data class Ingredient(
-    @SerializedName("name") val name: String,
-    @SerializedName("calory") val calory: Int
 ) : Parcelable
 
 data class ImageData(

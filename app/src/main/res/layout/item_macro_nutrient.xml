@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="nutrition"
+            type="com.codepad.foodai.ui.user_property.result.Nutrition" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <FrameLayout
+            android:id="@+id/macroCircleContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- Glow Circle -->
+            <View
+                android:id="@+id/glowCircle"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:background="@drawable/macro_circle_glow"
+                android:scaleX="0"
+                android:scaleY="0"/>
+
+            <!-- Main Circle -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/valueCircle"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white"
+                android:scaleX="0"
+                android:scaleY="0">
+
+                <TextView
+                    android:id="@+id/macroValueText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@{nutrition.value + 'g'}"
+                    android:textColor="@color/custom_black"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/euro_stile_regular"
+                    android:alpha="0"
+                    tools:text="60g"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Edit Icon positioned better to match iOS -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/editButton"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="end|top"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white"
+                android:alpha="0">
+
+                <ImageView
+                    android:id="@+id/editIcon"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_pencil"/>
+            </androidx.cardview.widget.CardView>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/macroTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{nutrition.title}"
+            android:textColor="@color/custom_black"
+            android:textSize="12sp"
+            android:fontFamily="@font/euro_stile_regular"
+            android:alpha="0"
+            tools:text="Protein"/>
+    </LinearLayout>
+</layout> 

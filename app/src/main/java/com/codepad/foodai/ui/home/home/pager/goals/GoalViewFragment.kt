@@ -4,10 +4,12 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.codepad.foodai.R
 import com.codepad.foodai.databinding.FragmentGoalViewBinding
 import com.codepad.foodai.ui.core.BaseFragment
 import com.codepad.foodai.ui.custom.MacroProgressBar
+import com.codepad.foodai.ui.home.HomeFragmentDirections
 import com.codepad.foodai.ui.home.HomeViewModel
 import com.codepad.foodai.ui.home.home.pager.HomePagerViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +29,7 @@ class GoalViewFragment : BaseFragment<FragmentGoalViewBinding>() {
 
     private fun setupClickListeners() {
         binding.root.setOnClickListener {
-            sharedViewModel.triggerAdjustGoalsOpen()
+            findNavController().navigate(HomeFragmentDirections.actionHomeToNewResultFragment(true))
         }
     }
 

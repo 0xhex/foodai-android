@@ -1,5 +1,6 @@
 package com.codepad.foodai.ui.home
 
+import android.content.Context
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -34,6 +35,11 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
 
     @Inject
     lateinit var firebaseManager: FirebaseManager
+
+    companion object {
+        private const val PREFS_NAME = "fastic_paywall_prefs"
+        private const val KEY_FASTIC_PAYWALL_SHOWN = "fastic_paywall_shown"
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.home_fragment
@@ -74,6 +80,33 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
 
         setupObservers()
         requestNotificationPermission()
+        checkAndShowFasticPaywall()
+    }
+
+    private fun checkAndShowFasticPaywall() {
+        // Check if user is subscribed, don't show paywall to premium users
+        if (revenueCatManager.isSubscribed.value) {
+            return
+        }
+
+        // Check if the Fastic paywall has been shown before
+        val sharedPreferences = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val fasticPaywallShown = sharedPreferences.getBoolean(KEY_FASTIC_PAYWALL_SHOWN, false)
+
+        if (!fasticPaywallShown) {
+            // Mark that the paywall has been shown
+            sharedPreferences.edit().putBoolean(KEY_FASTIC_PAYWALL_SHOWN, true).apply()
+            
+            // Log paywall view event
+            firebaseManager.logEvent("first_time_fastic_paywall_shown", null)
+            
+            // Show the Fastic paywall
+            try {
+                findNavController().navigateSafely(R.id.action_homeFragment_to_fasticPaywallFragment)
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to navigate to Fastic paywall: ${e.message}")
+            }
+        }
     }
 
     private fun setupObservers() {

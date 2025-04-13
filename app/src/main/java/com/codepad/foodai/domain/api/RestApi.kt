@@ -14,6 +14,8 @@ import com.codepad.foodai.domain.models.exercise.UpdateExerciseDescriptionReques
 import com.codepad.foodai.domain.models.image.FixImageResultsRequest
 import com.codepad.foodai.domain.models.image.ImageData
 import com.codepad.foodai.domain.models.image.ImageUploadResponse
+import com.codepad.foodai.domain.models.nutrition.NutritionDetailsData
+import com.codepad.foodai.domain.models.nutrition.NutritionDetailsRequest
 import com.codepad.foodai.domain.models.nutrition.NutritionResponseData
 import com.codepad.foodai.domain.models.recipe.GenerateRecipeRequest
 import com.codepad.foodai.domain.models.recipe.GenerateRecipeResponseData
@@ -181,5 +183,16 @@ interface RestApi {
         @Path("postId") postId: String,
         @Body request: DeleteCommentRequest,
     ): APIResponse<CommunityPost>
+
+    @POST("users/images/{imageId}/nutrition-details")
+    suspend fun createNutritionDetails(
+        @Path("imageId") imageId: String,
+        @Body request: NutritionDetailsRequest
+    ): APIResponse<NutritionDetailsData>
+
+    @GET("users/images/{imageId}/nutrition-details")
+    suspend fun getNutritionDetails(
+        @Path("imageId") imageId: String
+    ): APIResponse<NutritionDetailsData>
 
 }

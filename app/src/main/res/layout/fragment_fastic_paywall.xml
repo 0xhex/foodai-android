@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.codepad.foodai.ui.paywall.FasticPaywallViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Main background with gradient -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_paywall_main_gradient" />
+
+        <!-- Top section background with decorative elements -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.45"
+            android:background="@drawable/bg_paywall_top_section" />
+
+        <!-- Decorative circles -->
+        <View
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="-20dp"
+            android:layout_marginEnd="-50dp"
+            android:alpha="0.05"
+            android:background="@drawable/bg_circle_orange" />
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="start"
+            android:layout_marginStart="-50dp"
+            android:layout_marginTop="20dp"
+            android:alpha="0.05"
+            android:background="@drawable/bg_circle_green" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Top section with close button and branding -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <!-- Brand and PLUS badge -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginTop="@dimen/dimen_16dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txtBrandName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/euro_stile_bold"
+                                android:text="@string/food_ai"
+                                android:textColor="#2C415E"
+                                android:textSize="32sp" />
+
+                            <TextView
+                                android:id="@+id/txtPlusBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:background="@drawable/bg_plus_badge"
+                                android:fontFamily="@font/euro_stile_bold"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="4dp"
+                                android:text="@string/plus"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <!-- Title -->
+                        <TextView
+                            android:id="@+id/txtTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginHorizontal="@dimen/dimen_16dp"
+                            android:fontFamily="@font/euro_stile_regular"
+                            android:gravity="center"
+                            android:text="@string/a_personal_health_coach"
+                            android:textColor="#2C415E"
+                            android:textSize="24sp" />
+
+                        <!-- Subtitle -->
+                        <TextView
+                            android:id="@+id/txtSubtitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginHorizontal="@dimen/dimen_16dp"
+                            android:fontFamily="@font/euro_stile_regular"
+                            android:gravity="center"
+                            android:text="@string/make_a_commitment"
+                            android:textColor="#666666"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <!-- Close button -->
+                    <ImageButton
+                        android:id="@+id/btnClose"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="8dp"
+                        android:alpha=".2"
+                        android:layout_marginEnd="16dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/close"
+                        android:src="@drawable/ic_close_circle"
+                        app:tint="#2C415E" />
+                </FrameLayout>
+
+                <!-- Subscription options container with enhanced styling -->
+                <LinearLayout
+                    android:id="@+id/subscriptionOptionsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/bg_subscription_container_enhanced"
+                    android:orientation="vertical"
+                    android:paddingTop="24dp"
+                    android:paddingBottom="20dp"
+                    android:paddingHorizontal="8dp">
+
+                    <!-- Horizontal container for subscription options -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginHorizontal="@dimen/dimen_8dp"
+                        android:weightSum="3">
+
+                        <include
+                            android:id="@+id/yearlyOption"
+                            layout="@layout/item_subscription_option_enhanced"
+                            android:layout_width="0dp"
+                            android:layout_height="180dp"
+                            android:layout_marginEnd="4dp"
+                            android:layout_weight="1" />
+
+                        <include
+                            android:id="@+id/monthlyOption"
+                            layout="@layout/item_subscription_option_enhanced"
+                            android:layout_width="0dp"
+                            android:layout_height="180dp"
+                            android:layout_marginHorizontal="4dp"
+                            android:layout_weight="1" />
+
+                        <include
+                            android:id="@+id/weeklyOption"
+                            layout="@layout/item_subscription_option_enhanced"
+                            android:layout_width="0dp"
+                            android:layout_height="180dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+
+                    <!-- Subscription message -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_fork_knife"
+                            app:tint="@color/custom_green" />
+
+                        <TextView
+                            android:id="@+id/txtSubscriptionMessage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/euro_stile_regular"
+                            android:textColor="@color/custom_dark_gray"
+                            android:textSize="14sp"
+                            tools:text="365 days of premium guidance for two dinners" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Features section with improved styling -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="20dp">
+
+                    <include
+                        android:id="@+id/feature1"
+                        layout="@layout/item_feature_row_enhanced" />
+
+                    <include
+                        android:id="@+id/feature2"
+                        layout="@layout/item_feature_row_enhanced" />
+                </LinearLayout>
+
+                <!-- Bottom section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="20dp">
+
+                    <!-- Continue button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnContinue"
+                        android:layout_width="match_parent"
+                        android:layout_height="66dp"
+                        android:fontFamily="@font/euro_stile_bold"
+                        android:text="@string/continue_text"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:backgroundTint="@color/custom_green"
+                        app:cornerRadius="28dp" />
+
+                    <!-- Restore purchases -->
+                    <TextView
+                        android:id="@+id/btnRestorePurchases"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/euro_stile_regular"
+                        android:text="@string/restore_purchase"
+                        android:textColor="@color/soft_blue"
+                        android:textSize="14sp" />
+
+                    <!-- Cancel anytime text -->
+                    <TextView
+                        android:id="@+id/txtCancelAnytime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/euro_stile_regular"
+                        android:text="@string/free_to_cancel_anytime"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <!-- Legal text -->
+                    <TextView
+                        android:id="@+id/txtLegalText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:background="#F5F5F5"
+                        android:fontFamily="@font/euro_stile_regular"
+                        android:padding="16dp"
+                        android:text="@string/subscription_details_1"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <!-- Terms and Privacy -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/euro_stile_regular"
+                            android:text="@string/if_you_choose_to_continue"
+                            android:textColor="#666666"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/txtTerms"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:fontFamily="@font/euro_stile_regular"
+                            android:text="@string/terms_and_conditions"
+                            android:textColor="@color/orange"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="4dp"
+                            android:fontFamily="@font/euro_stile_regular"
+                            android:text="@string/and"
+                            android:textColor="#666666"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/txtPrivacy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/euro_stile_regular"
+                            android:text="@string/privacy_policy"
+                            android:textColor="@color/orange"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/euro_stile_regular"
+                            android:text="."
+                            android:textColor="#666666"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- Error text -->
+        <TextView
+            android:id="@+id/errorText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:textColor="@color/red"
+            android:textSize="14sp"
+            android:visibility="gone"
+            tools:text="Error message"
+            tools:visibility="visible" />
+
+        <!-- Loading Overlay -->
+        <FrameLayout
+            android:id="@+id/progressOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80000000"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ProgressBar
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:indeterminateTint="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/euro_stile_regular"
+                    android:text="@string/processing"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </FrameLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
