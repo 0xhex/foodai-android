@@ -71,12 +71,20 @@
         <action
             android:id="@+id/action_home_to_new_result_fragment"
             app:destination="@id/newResultFragment"/>
+        <action
+            android:id="@+id/action_homeFragment_to_fasticPaywallFragment"
+            app:destination="@id/fasticPaywallFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/paywallFragment"
         android:name="com.codepad.foodai.ui.paywall.FasticPaywallFragment"
         android:label="Paywall" />
+
+    <fragment
+        android:id="@+id/fasticPaywallFragment"
+        android:name="com.codepad.foodai.ui.paywall.FasticPaywallFragment"
+        android:label="FasticPaywall" />
 
     <fragment
         android:id="@+id/loadingFragment"
