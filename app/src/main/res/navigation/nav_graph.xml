@@ -75,7 +75,7 @@
 
     <fragment
         android:id="@+id/paywallFragment"
-        android:name="com.codepad.foodai.ui.paywall.PaywallFragment"
+        android:name="com.codepad.foodai.ui.paywall.FasticPaywallFragment"
         android:label="Paywall" />
 
     <fragment
